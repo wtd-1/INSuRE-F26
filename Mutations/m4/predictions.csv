@@ -1,0 +1,17 @@
+goal,predicted,rationale
+S1,VIOLATED,"Client-view goals do not assume (ugen y); a non-fresh server exponent may be adversary-generated, so g^xy is computable."
+S2,VIOLATED,Already violated in m0 (server-only authentication); removing a mechanism cannot restore it.
+S3,VIOLATED,"Client-view goals do not assume (ugen y); a non-fresh server exponent may be adversary-generated, so g^xy is computable."
+S4,VIOLATED,"Client-view goals do not assume (ugen y); a non-fresh server exponent may be adversary-generated, so g^xy is computable."
+S5,VIOLATED,Already violated in m0 (server-only authentication); removing a mechanism cannot restore it.
+S6,VIOLATED,Already violated in m0 (server-only authentication); removing a mechanism cannot restore it.
+S7,VIOLATED,"Client-view goals do not assume (ugen y); a non-fresh server exponent may be adversary-generated, so g^xy is computable."
+S8,VIOLATED,Already violated in m0 (server-only authentication); removing a mechanism cannot restore it.
+M1,VIOLATED,"Client-view goals do not assume (ugen y); a non-fresh server exponent may be adversary-generated, so g^xy is computable."
+M2,HOLDS,"Server-view goals assume (ugen y) in their hypotheses, which restores freshness for the server under analysis."
+M3,VIOLATED,"Client-view goals do not assume (ugen y); a non-fresh server exponent may be adversary-generated, so g^xy is computable."
+M4,VIOLATED,"Client-view goals do not assume (ugen y); a non-fresh server exponent may be adversary-generated, so g^xy is computable."
+M5,HOLDS,"Server-view goals assume (ugen y) in their hypotheses, which restores freshness for the server under analysis."
+M6,HOLDS,"Server-view goals assume (ugen y) in their hypotheses, which restores freshness for the server under analysis."
+M7,VIOLATED,"Client-view goals do not assume (ugen y); a non-fresh server exponent may be adversary-generated, so g^xy is computable."
+M8,HOLDS,"Server-view goals assume (ugen y) in their hypotheses, which restores freshness for the server under analysis. Assumes a faithful PFS model in which a client strand can be added (Task B)."

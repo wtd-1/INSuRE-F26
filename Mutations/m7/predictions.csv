@@ -1,0 +1,17 @@
+goal,predicted,rationale
+S1,HOLDS,Server-only family has no client Certificate; unchanged.
+S2,VIOLATED,Already violated in m0 (server-only authentication); removing a mechanism cannot restore it.
+S3,HOLDS,Server-only family has no client Certificate; unchanged.
+S4,HOLDS,Server-only family has no client Certificate; unchanged.
+S5,VIOLATED,Already violated in m0 (server-only authentication); removing a mechanism cannot restore it.
+S6,VIOLATED,Already violated in m0 (server-only authentication); removing a mechanism cannot restore it.
+S7,HOLDS,Server-only family has no client Certificate; unchanged.
+S8,VIOLATED,Already violated in m0 (server-only authentication); removing a mechanism cannot restore it.
+M1,VIOLATED,"Agreement is over all parameters including the client name c; with the certificate gone, c occurs in no message, so nothing forces the peer's c to match."
+M2,VIOLATED,"Agreement is over all parameters including the client name c; with the certificate gone, c occurs in no message, so nothing forces the peer's c to match."
+M3,HOLDS,"Client CertificateVerify under the uncompromised key (invk cpk) still binds the DH shares; the goals fix cpk in their hypotheses, standing in for the certificate's key binding."
+M4,HOLDS,"Client CertificateVerify under the uncompromised key (invk cpk) still binds the DH shares; the goals fix cpk in their hypotheses, standing in for the certificate's key binding."
+M5,HOLDS,"Client CertificateVerify under the uncompromised key (invk cpk) still binds the DH shares; the goals fix cpk in their hypotheses, standing in for the certificate's key binding."
+M6,HOLDS,"Client CertificateVerify under the uncompromised key (invk cpk) still binds the DH shares; the goals fix cpk in their hypotheses, standing in for the certificate's key binding."
+M7,HOLDS,"Client CertificateVerify under the uncompromised key (invk cpk) still binds the DH shares; the goals fix cpk in their hypotheses, standing in for the certificate's key binding."
+M8,HOLDS,"Client CertificateVerify under the uncompromised key (invk cpk) still binds the DH shares; the goals fix cpk in their hypotheses, standing in for the certificate's key binding. Assumes a faithful PFS model in which a client strand can be added (Task B)."

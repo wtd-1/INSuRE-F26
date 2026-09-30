@@ -1,0 +1,17 @@
+goal,predicted,rationale
+S1,HOLDS,Server signs the transcript with an uncompromised key; client agrees with a server run (Cremers et al. server authentication).
+S2,VIOLATED,Documented expected failure in tls13_final.scm: server-only authentication gives the server no evidence of any client.
+S3,HOLDS,Client view: ephemeral DH with authenticated server share; c ap key secret.
+S4,HOLDS,Client view: s ap key secret for the same reason as S3.
+S5,VIOLATED,Documented expected failure: the server cannot tell whether its peer is the adversary.
+S6,VIOLATED,Documented expected failure: as S5.
+S7,HOLDS,PFS from client view: later compromise of the server signing key does not reveal keys from ephemeral DH.
+S8,VIOLATED,Documented expected failure: server-view PFS needs client authentication.
+M1,HOLDS,mTLS: server authenticated as in S1.
+M2,HOLDS,mTLS: client CertificateVerify under an uncompromised key authenticates the client to the server.
+M3,HOLDS,mTLS client view key secrecy.
+M4,HOLDS,mTLS client view key secrecy.
+M5,HOLDS,mTLS server view key secrecy: client is authenticated.
+M6,HOLDS,mTLS server view key secrecy: client is authenticated.
+M7,HOLDS,mTLS PFS client view.
+M8,HOLDS,mTLS PFS server view: later compromise of the client signing key does not reveal keys from ephemeral DH.

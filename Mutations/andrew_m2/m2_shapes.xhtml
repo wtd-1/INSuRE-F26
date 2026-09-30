@@ -1,0 +1,2880 @@
+<?xml version="1.0"?>
+<!-- CPSA 4.4.8 -->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+ <title>Verification of TLS 1.3 security properties proven in Tamarin analysis</title>
+ <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
+ <style>
+  svg.diagram { border-width: 1px; border-style: solid }
+ </style>
+</head>
+<body>
+
+<pre>(comment &quot;CPSA 4.4.8&quot;)
+(comment &quot;Extracted shapes&quot;)
+(herald
+  &quot;Verification of TLS 1.3 security properties proven in Tamarin analysis&quot;)
+(comment &quot;CPSA 4.4.8&quot;)
+(comment &quot;All input read from tls13_m2.scm&quot;)</pre>
+
+<p id="top">Trees: <a href="#t0">0</a> <a href="#t48">48</a> <a href="#t49">49</a> <a href="#t62">62</a> <a href="#t75">75</a> <a href="#t77">77</a> <a href="#t79">79</a> <a href="#t99">99</a>.</p>
+
+<p id="t0">Tree <a href="#top">0</a>, POV <a href="#k0">0</a>.</p>
+
+<div>
+ <svg
+  class='diagram' width='129.840pt' height='79.920pt'
+  xmlns='http://www.w3.org/2000/svg' version='1.1'
+  viewBox='0 0 129.840 79.920' font-size='12.000'>
+  <text
+   x='89.880' y='26.040'
+   style='font-weight: bold; text-anchor: middle; fill: blue;'
+   onclick='window.open(&quot;#k24&quot;, &quot;_self&quot;)'>24</text>
+  <line
+   x1='39.960' y1='39.960' x2='89.880' y2='39.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <text
+   x='39.960' y='26.040' style='text-anchor: middle; fill: black;'
+   onclick='window.open(&quot;#k0&quot;, &quot;_self&quot;)'>0</text>
+  </svg></div>
+
+<pre>(defprotocol tls13 basic
+  (defrole client
+    (vars (s ca name) (cr sr random32) (x rndx) (y expt) (spk akey)
+      (request response text))
+    (trace (send (cat cr (exp (gen) x)))
+      (recv
+        (cat (cat sr (exp (gen) y))
+          (enc (cat s spk (enc (hash s spk) (privk ca)))
+            (enc
+              (hash (cat sr (exp (gen) y)) s spk
+                (enc (hash s spk) (privk ca))) (invk spk))
+            (hash
+              (hash &quot;finished&quot;
+                (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr))
+              (cat sr (exp (gen) y))
+              (cat s spk (enc (hash s spk) (privk ca)))
+              (enc
+                (hash (cat sr (exp (gen) y)) s spk
+                  (enc (hash s spk) (privk ca))) (invk spk)))
+            (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr))))
+      (send
+        (enc
+          (hash
+            (hash &quot;finished&quot;
+              (hash (exp (gen) (mul x y)) &quot;c hs traffic&quot; cr sr))
+            (cat sr (exp (gen) y))
+            (cat s spk (enc (hash s spk) (privk ca)))
+            (enc
+              (hash (cat sr (exp (gen) y)) s spk
+                (enc (hash s spk) (privk ca))) (invk spk))
+            (hash
+              (hash &quot;finished&quot;
+                (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr))
+              (cat sr (exp (gen) y))
+              (cat s spk (enc (hash s spk) (privk ca)))
+              (enc
+                (hash (cat sr (exp (gen) y)) s spk
+                  (enc (hash s spk) (privk ca))) (invk spk))))
+          (hash (exp (gen) (mul x y)) &quot;c hs traffic&quot; cr sr)))
+      (send
+        (enc request
+          (hash &quot;c ap traffic&quot; cr sr
+            (hash (exp (gen) (mul x y)) &quot;derived&quot;))))
+      (recv
+        (enc response
+          (hash &quot;s ap traffic&quot; cr sr
+            (hash (exp (gen) (mul x y)) &quot;derived&quot;)))))
+    (uniq-gen x))
+  (defrole server
+    (vars (s ca name) (cr sr random32) (y rndx) (x expt) (spk akey)
+      (request response text))
+    (trace (recv (cat cr (exp (gen) x)))
+      (send
+        (cat (cat sr (exp (gen) y))
+          (enc (cat s spk (enc (hash s spk) (privk ca)))
+            (enc
+              (hash (cat sr (exp (gen) y)) s spk
+                (enc (hash s spk) (privk ca))) (invk spk))
+            (hash
+              (hash &quot;finished&quot;
+                (hash (exp (gen) (mul y x)) &quot;s hs traffic&quot; cr sr))
+              (cat sr (exp (gen) y))
+              (cat s spk (enc (hash s spk) (privk ca)))
+              (enc
+                (hash (cat sr (exp (gen) y)) s spk
+                  (enc (hash s spk) (privk ca))) (invk spk)))
+            (hash (exp (gen) (mul y x)) &quot;s hs traffic&quot; cr sr))))
+      (recv
+        (enc
+          (hash
+            (hash &quot;finished&quot;
+              (hash (exp (gen) (mul y x)) &quot;c hs traffic&quot; cr sr))
+            (cat sr (exp (gen) y))
+            (cat s spk (enc (hash s spk) (privk ca)))
+            (enc
+              (hash (cat sr (exp (gen) y)) s spk
+                (enc (hash s spk) (privk ca))) (invk spk))
+            (hash
+              (hash &quot;finished&quot;
+                (hash (exp (gen) (mul y x)) &quot;s hs traffic&quot; cr sr))
+              (cat sr (exp (gen) y))
+              (cat s spk (enc (hash s spk) (privk ca)))
+              (enc
+                (hash (cat sr (exp (gen) y)) s spk
+                  (enc (hash s spk) (privk ca))) (invk spk))))
+          (hash (exp (gen) (mul y x)) &quot;c hs traffic&quot; cr sr)))
+      (recv
+        (enc request
+          (hash &quot;c ap traffic&quot; cr sr
+            (hash (exp (gen) (mul y x)) &quot;derived&quot;))))
+      (send
+        (enc response
+          (hash &quot;s ap traffic&quot; cr sr
+            (hash (exp (gen) (mul y x)) &quot;derived&quot;)))))
+    (uniq-gen y)
+    (absent (y x)))
+  (defgenrule neqRl_indx
+    (forall ((x indx)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_strd
+    (forall ((x strd)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_mesg
+    (forall ((x mesg)) (implies (fact neq x x) (false))))
+  (lang (random32 atom)))</pre>
+
+<p id="k0">Item <a href="#t0">0</a>, Child: <a href="#k24">24</a>.</p>
+
+<div>
+ <svg
+  class='diagram' width='79.920pt' height='454.920pt'
+  xmlns='http://www.w3.org/2000/svg' version='1.1'
+  viewBox='0 0 79.920 454.920' font-size='12.000'>
+  <defs>
+   <marker
+    id='arrow' orient='auto' markerWidth='5' markerHeight='10' refX='5'
+    refY='5'>
+    <path
+     d='M 0 0 5 5 0 10'
+     style='stroke-width: 2; fill: none; stroke: black;'/></marker>
+   </defs>
+  <line
+   x1='39.960' y1='114.960' x2='39.960' y2='414.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <g>
+   <title>(enc response (hash &quot;s ap traffic&quot; cr sr (hash (exp (gen) (mul x y)) &quot;derived&quot;)))</title>
+   <circle style='fill: blue;' cx='39.960' cy='414.960' r='6.000'/></g>
+  <g>
+   <title>(enc request (hash &quot;c ap traffic&quot; cr sr (hash (exp (gen) (mul x y)) &quot;derived&quot;)))</title>
+   <circle cx='39.960' cy='339.960' r='6.000'/></g>
+  <g>
+   <title>(enc (hash (hash &quot;finished&quot; (hash (exp (gen) (mul x y)) &quot;c hs traffic&quot; cr sr)) (cat sr (exp (gen) y)) (cat s spk (enc (hash s spk) (privk ca))) (enc (hash (cat sr (exp (gen) y)) s spk (enc (hash s spk) (privk ca))) (invk spk)) (hash (hash &quot;finished&quot; (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr)) (cat sr (exp (gen) y)) (cat s spk (enc (hash s spk) (privk ca))) (enc (hash (cat sr (exp (gen) y)) s spk (enc (hash s spk) (privk ca))) (invk spk)))) (hash (exp (gen) (mul x y)) &quot;c hs traffic&quot; cr sr))</title>
+   <circle cx='39.960' cy='264.960' r='6.000'/></g>
+  <g>
+   <title>(cat (cat sr (exp (gen) y)) (enc (cat s spk (enc (hash s spk) (privk ca))) (enc (hash (cat sr (exp (gen) y)) s spk (enc (hash s spk) (privk ca))) (invk spk)) (hash (hash &quot;finished&quot; (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr)) (cat sr (exp (gen) y)) (cat s spk (enc (hash s spk) (privk ca))) (enc (hash (cat sr (exp (gen) y)) s spk (enc (hash s spk) (privk ca))) (invk spk))) (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr)))</title>
+   <circle style='fill: red;' cx='39.960' cy='189.960' r='6.000'/></g>
+  <g><title>(cat cr (exp (gen) x))</title>
+   <circle cx='39.960' cy='114.960' r='6.000'/></g>
+  <g>
+   <title>((cr cr) (sr sr) (request request) (response response) (spk spk) (s s) (ca ca) (x x) (y y))</title>
+   <text
+    x='39.960' y='77.460' style='text-anchor: middle;'>client</text></g>
+  <text
+   x='39.960' y='39.960' style='text-anchor: middle;'>tls13 0</text>
+  </svg></div>
+
+<pre>(defskeleton tls13
+  (vars (cr sr random32) (request response text) (spk akey) (s ca name)
+    (x rndx) (y expt))
+  (defstrand client 5 (cr cr) (sr sr) (request request)
+    (response response) (spk spk) (s s) (ca ca) (x x) (y y))
+  (non-orig (invk spk) (privk ca))
+  (uniq-orig cr)
+  (uniq-gen x)
+  (goals
+    (forall
+      ((cr sr random32) (spk akey) (s ca name) (x rndx) (y expt)
+        (z strd))
+      (implies
+        (and (p &quot;client&quot; z 5) (p &quot;client&quot; &quot;cr&quot; z cr)
+          (p &quot;client&quot; &quot;sr&quot; z sr) (p &quot;client&quot; &quot;spk&quot; z spk)
+          (p &quot;client&quot; &quot;s&quot; z s) (p &quot;client&quot; &quot;ca&quot; z ca)
+          (p &quot;client&quot; &quot;x&quot; z x) (p &quot;client&quot; &quot;y&quot; z y) (non (invk spk))
+          (non (privk ca)) (ugen x) (uniq-at cr z 0))
+        (exists ((z-0 strd))
+          (and (p &quot;server&quot; z-0 4) (p &quot;server&quot; &quot;cr&quot; z-0 cr)
+            (p &quot;server&quot; &quot;sr&quot; z-0 sr) (p &quot;server&quot; &quot;spk&quot; z-0 spk)
+            (p &quot;server&quot; &quot;s&quot; z-0 s) (p &quot;server&quot; &quot;ca&quot; z-0 ca)
+            (p &quot;server&quot; &quot;y&quot; z-0 y) (p &quot;server&quot; &quot;x&quot; z-0 x))))))
+  (traces
+    ((send (cat cr (exp (gen) x)))
+      (recv
+        (cat (cat sr (exp (gen) y))
+          (enc (cat s spk (enc (hash s spk) (privk ca)))
+            (enc
+              (hash (cat sr (exp (gen) y)) s spk
+                (enc (hash s spk) (privk ca))) (invk spk))
+            (hash
+              (hash &quot;finished&quot;
+                (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr))
+              (cat sr (exp (gen) y))
+              (cat s spk (enc (hash s spk) (privk ca)))
+              (enc
+                (hash (cat sr (exp (gen) y)) s spk
+                  (enc (hash s spk) (privk ca))) (invk spk)))
+            (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr))))
+      (send
+        (enc
+          (hash
+            (hash &quot;finished&quot;
+              (hash (exp (gen) (mul x y)) &quot;c hs traffic&quot; cr sr))
+            (cat sr (exp (gen) y))
+            (cat s spk (enc (hash s spk) (privk ca)))
+            (enc
+              (hash (cat sr (exp (gen) y)) s spk
+                (enc (hash s spk) (privk ca))) (invk spk))
+            (hash
+              (hash &quot;finished&quot;
+                (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr))
+              (cat sr (exp (gen) y))
+              (cat s spk (enc (hash s spk) (privk ca)))
+              (enc
+                (hash (cat sr (exp (gen) y)) s spk
+                  (enc (hash s spk) (privk ca))) (invk spk))))
+          (hash (exp (gen) (mul x y)) &quot;c hs traffic&quot; cr sr)))
+      (send
+        (enc request
+          (hash &quot;c ap traffic&quot; cr sr
+            (hash (exp (gen) (mul x y)) &quot;derived&quot;))))
+      (recv
+        (enc response
+          (hash &quot;s ap traffic&quot; cr sr
+            (hash (exp (gen) (mul x y)) &quot;derived&quot;))))))
+  (label 0)
+  (unrealized (0 1))
+  (maps
+    ((0)
+      ((cr cr) (sr sr) (spk spk) (s s) (ca ca) (x x) (y y)
+        (request request) (response response))))
+  (origs (cr (0 0)))
+  (ugens (x (0 0)))
+  (comment &quot;1 in cohort - 1 not yet seen&quot;))</pre>
+
+<p id="k24">Item <a href="#t0">24</a>, Parent: <a href="#k0">0</a>.</p>
+
+<div>
+ <svg
+  class='diagram' width='179.880pt' height='454.920pt'
+  xmlns='http://www.w3.org/2000/svg' version='1.1'
+  viewBox='0 0 179.880 454.920' font-size='12.000'>
+  <defs>
+   <marker
+    id='arrow' orient='auto' markerWidth='5' markerHeight='10' refX='5'
+    refY='5'>
+    <path
+     d='M 0 0 5 5 0 10'
+     style='stroke-width: 2; fill: none; stroke: black;'/></marker>
+   </defs>
+  <line
+   x1='139.920' y1='114.960' x2='139.920' y2='414.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='39.960' y1='114.960' x2='39.960' y2='414.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <path
+   d='M 139.920 414.960 Q 92.940 414.960 45.960 414.960'
+   style='stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g>
+   <title>(enc response (hash &quot;s ap traffic&quot; cr sr (hash (exp (gen) (mul y x)) &quot;derived&quot;)))</title>
+   <circle cx='139.920' cy='414.960' r='6.000'/></g>
+  <g>
+   <title>(enc request (hash &quot;c ap traffic&quot; cr sr (hash (exp (gen) (mul y x)) &quot;derived&quot;)))</title>
+   <circle style='fill: blue;' cx='139.920' cy='339.960' r='6.000'/></g>
+  <g>
+   <title>(enc (hash (hash &quot;finished&quot; (hash (exp (gen) (mul y x)) &quot;c hs traffic&quot; cr sr)) (cat sr (exp (gen) y)) (cat s spk (enc (hash s spk) (privk ca))) (enc (hash (cat sr (exp (gen) y)) s spk (enc (hash s spk) (privk ca))) (invk spk)) (hash (hash &quot;finished&quot; (hash (exp (gen) (mul y x)) &quot;s hs traffic&quot; cr sr)) (cat sr (exp (gen) y)) (cat s spk (enc (hash s spk) (privk ca))) (enc (hash (cat sr (exp (gen) y)) s spk (enc (hash s spk) (privk ca))) (invk spk)))) (hash (exp (gen) (mul y x)) &quot;c hs traffic&quot; cr sr))</title>
+   <circle style='fill: blue;' cx='139.920' cy='264.960' r='6.000'/></g>
+  <path
+   d='M 139.920 189.960 Q 92.940 189.960 45.960 189.960'
+   style='stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g>
+   <title>(cat (cat sr (exp (gen) y)) (enc (cat s spk (enc (hash s spk) (privk ca))) (enc (hash (cat sr (exp (gen) y)) s spk (enc (hash s spk) (privk ca))) (invk spk)) (hash (hash &quot;finished&quot; (hash (exp (gen) (mul y x)) &quot;s hs traffic&quot; cr sr)) (cat sr (exp (gen) y)) (cat s spk (enc (hash s spk) (privk ca))) (enc (hash (cat sr (exp (gen) y)) s spk (enc (hash s spk) (privk ca))) (invk spk))) (hash (exp (gen) (mul y x)) &quot;s hs traffic&quot; cr sr)))</title>
+   <circle cx='139.920' cy='189.960' r='6.000'/></g>
+  <g><title>(cat cr (exp (gen) x))</title>
+   <circle style='fill: blue;' cx='139.920' cy='114.960' r='6.000'/></g>
+  <g>
+   <title>(enc response (hash &quot;s ap traffic&quot; cr sr (hash (exp (gen) (mul y x)) &quot;derived&quot;)))</title>
+   <circle style='fill: blue;' cx='39.960' cy='414.960' r='6.000'/></g>
+  <path
+   d='M 39.960 339.960 Q 86.940 339.960 133.920 339.960'
+   style='stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g>
+   <title>(enc request (hash &quot;c ap traffic&quot; cr sr (hash (exp (gen) (mul y x)) &quot;derived&quot;)))</title>
+   <circle cx='39.960' cy='339.960' r='6.000'/></g>
+  <path
+   d='M 39.960 264.960 Q 86.940 264.960 133.920 264.960'
+   style='stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g>
+   <title>(enc (hash (hash &quot;finished&quot; (hash (exp (gen) (mul y x)) &quot;c hs traffic&quot; cr sr)) (cat sr (exp (gen) y)) (cat s spk (enc (hash s spk) (privk ca))) (enc (hash (cat sr (exp (gen) y)) s spk (enc (hash s spk) (privk ca))) (invk spk)) (hash (hash &quot;finished&quot; (hash (exp (gen) (mul y x)) &quot;s hs traffic&quot; cr sr)) (cat sr (exp (gen) y)) (cat s spk (enc (hash s spk) (privk ca))) (enc (hash (cat sr (exp (gen) y)) s spk (enc (hash s spk) (privk ca))) (invk spk)))) (hash (exp (gen) (mul y x)) &quot;c hs traffic&quot; cr sr))</title>
+   <circle cx='39.960' cy='264.960' r='6.000'/></g>
+  <g>
+   <title>(cat (cat sr (exp (gen) y)) (enc (cat s spk (enc (hash s spk) (privk ca))) (enc (hash (cat sr (exp (gen) y)) s spk (enc (hash s spk) (privk ca))) (invk spk)) (hash (hash &quot;finished&quot; (hash (exp (gen) (mul y x)) &quot;s hs traffic&quot; cr sr)) (cat sr (exp (gen) y)) (cat s spk (enc (hash s spk) (privk ca))) (enc (hash (cat sr (exp (gen) y)) s spk (enc (hash s spk) (privk ca))) (invk spk))) (hash (exp (gen) (mul y x)) &quot;s hs traffic&quot; cr sr)))</title>
+   <circle style='fill: blue;' cx='39.960' cy='189.960' r='6.000'/></g>
+  <path
+   d='M 39.960 114.960 Q 86.940 114.960 133.920 114.960'
+   style='stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g><title>(cat cr (exp (gen) x))</title>
+   <circle cx='39.960' cy='114.960' r='6.000'/></g>
+  <g>
+   <title>((cr cr) (sr sr) (request request) (response response) (spk spk) (s s) (ca ca) (y y) (x x))</title>
+   <text
+    x='139.920' y='77.460' style='text-anchor: middle;'>server</text>
+   </g>
+  <g>
+   <title>((cr cr) (sr sr) (request request) (response response) (spk spk) (s s) (ca ca) (x x) (y y))</title>
+   <text
+    x='39.960' y='77.460' style='text-anchor: middle;'>client</text></g>
+  <text
+   x='89.940' y='39.960' style='text-anchor: middle;'>tls13 24</text>
+  </svg></div>
+
+<pre>(defskeleton tls13
+  (vars (cr sr random32) (request response text) (spk akey) (s ca name)
+    (y x rndx))
+  (defstrand client 5 (cr cr) (sr sr) (request request)
+    (response response) (spk spk) (s s) (ca ca) (x x) (y y))
+  (defstrand server 5 (cr cr) (sr sr) (request request)
+    (response response) (spk spk) (s s) (ca ca) (y y) (x x))
+  (precedes ((0 0) (1 0)) ((0 2) (1 2)) ((0 3) (1 3)) ((1 1) (0 1))
+    ((1 4) (0 4)))
+  (non-orig (invk spk) (privk ca))
+  (uniq-orig cr)
+  (uniq-gen y x)
+  (absent (y x))
+  (goals
+    (forall
+      ((cr sr random32) (spk akey) (s ca name) (x rndx) (y expt)
+        (z strd))
+      (implies
+        (and (p &quot;client&quot; z 5) (p &quot;client&quot; &quot;cr&quot; z cr)
+          (p &quot;client&quot; &quot;sr&quot; z sr) (p &quot;client&quot; &quot;spk&quot; z spk)
+          (p &quot;client&quot; &quot;s&quot; z s) (p &quot;client&quot; &quot;ca&quot; z ca)
+          (p &quot;client&quot; &quot;x&quot; z x) (p &quot;client&quot; &quot;y&quot; z y) (non (invk spk))
+          (non (privk ca)) (ugen x) (uniq-at cr z 0))
+        (exists ((z-0 strd))
+          (and (p &quot;server&quot; z-0 4) (p &quot;server&quot; &quot;cr&quot; z-0 cr)
+            (p &quot;server&quot; &quot;sr&quot; z-0 sr) (p &quot;server&quot; &quot;spk&quot; z-0 spk)
+            (p &quot;server&quot; &quot;s&quot; z-0 s) (p &quot;server&quot; &quot;ca&quot; z-0 ca)
+            (p &quot;server&quot; &quot;y&quot; z-0 y) (p &quot;server&quot; &quot;x&quot; z-0 x))))))
+  (operation encryption-test (displaced 2 0 client 4)
+    (enc request-0
+      (hash &quot;c ap traffic&quot; cr sr
+        (hash (exp (gen) (mul y x-0)) &quot;derived&quot;))) (1 3))
+  (strand-map 0 1)
+  (traces
+    ((send (cat cr (exp (gen) x)))
+      (recv
+        (cat (cat sr (exp (gen) y))
+          (enc (cat s spk (enc (hash s spk) (privk ca)))
+            (enc
+              (hash (cat sr (exp (gen) y)) s spk
+                (enc (hash s spk) (privk ca))) (invk spk))
+            (hash
+              (hash &quot;finished&quot;
+                (hash (exp (gen) (mul y x)) &quot;s hs traffic&quot; cr sr))
+              (cat sr (exp (gen) y))
+              (cat s spk (enc (hash s spk) (privk ca)))
+              (enc
+                (hash (cat sr (exp (gen) y)) s spk
+                  (enc (hash s spk) (privk ca))) (invk spk)))
+            (hash (exp (gen) (mul y x)) &quot;s hs traffic&quot; cr sr))))
+      (send
+        (enc
+          (hash
+            (hash &quot;finished&quot;
+              (hash (exp (gen) (mul y x)) &quot;c hs traffic&quot; cr sr))
+            (cat sr (exp (gen) y))
+            (cat s spk (enc (hash s spk) (privk ca)))
+            (enc
+              (hash (cat sr (exp (gen) y)) s spk
+                (enc (hash s spk) (privk ca))) (invk spk))
+            (hash
+              (hash &quot;finished&quot;
+                (hash (exp (gen) (mul y x)) &quot;s hs traffic&quot; cr sr))
+              (cat sr (exp (gen) y))
+              (cat s spk (enc (hash s spk) (privk ca)))
+              (enc
+                (hash (cat sr (exp (gen) y)) s spk
+                  (enc (hash s spk) (privk ca))) (invk spk))))
+          (hash (exp (gen) (mul y x)) &quot;c hs traffic&quot; cr sr)))
+      (send
+        (enc request
+          (hash &quot;c ap traffic&quot; cr sr
+            (hash (exp (gen) (mul y x)) &quot;derived&quot;))))
+      (recv
+        (enc response
+          (hash &quot;s ap traffic&quot; cr sr
+            (hash (exp (gen) (mul y x)) &quot;derived&quot;)))))
+    ((recv (cat cr (exp (gen) x)))
+      (send
+        (cat (cat sr (exp (gen) y))
+          (enc (cat s spk (enc (hash s spk) (privk ca)))
+            (enc
+              (hash (cat sr (exp (gen) y)) s spk
+                (enc (hash s spk) (privk ca))) (invk spk))
+            (hash
+              (hash &quot;finished&quot;
+                (hash (exp (gen) (mul y x)) &quot;s hs traffic&quot; cr sr))
+              (cat sr (exp (gen) y))
+              (cat s spk (enc (hash s spk) (privk ca)))
+              (enc
+                (hash (cat sr (exp (gen) y)) s spk
+                  (enc (hash s spk) (privk ca))) (invk spk)))
+            (hash (exp (gen) (mul y x)) &quot;s hs traffic&quot; cr sr))))
+      (recv
+        (enc
+          (hash
+            (hash &quot;finished&quot;
+              (hash (exp (gen) (mul y x)) &quot;c hs traffic&quot; cr sr))
+            (cat sr (exp (gen) y))
+            (cat s spk (enc (hash s spk) (privk ca)))
+            (enc
+              (hash (cat sr (exp (gen) y)) s spk
+                (enc (hash s spk) (privk ca))) (invk spk))
+            (hash
+              (hash &quot;finished&quot;
+                (hash (exp (gen) (mul y x)) &quot;s hs traffic&quot; cr sr))
+              (cat sr (exp (gen) y))
+              (cat s spk (enc (hash s spk) (privk ca)))
+              (enc
+                (hash (cat sr (exp (gen) y)) s spk
+                  (enc (hash s spk) (privk ca))) (invk spk))))
+          (hash (exp (gen) (mul y x)) &quot;c hs traffic&quot; cr sr)))
+      (recv
+        (enc request
+          (hash &quot;c ap traffic&quot; cr sr
+            (hash (exp (gen) (mul y x)) &quot;derived&quot;))))
+      (send
+        (enc response
+          (hash &quot;s ap traffic&quot; cr sr
+            (hash (exp (gen) (mul y x)) &quot;derived&quot;))))))
+  (label 24)
+  (parent 0)
+  (realized)
+  (shape)
+  (satisfies yes)
+  (maps
+    ((0)
+      ((cr cr) (sr sr) (spk spk) (s s) (ca ca) (x x) (y y)
+        (request request) (response response))))
+  (origs (cr (0 0)))
+  (ugens (x (0 0)) (y (1 1))))</pre>
+
+<p id="t48">Tree <a href="#top">48</a>, POV <a href="#k48">48</a>.</p>
+
+<div>
+ <svg
+  class='diagram' width='79.920pt' height='79.920pt'
+  xmlns='http://www.w3.org/2000/svg' version='1.1'
+  viewBox='0 0 79.920 79.920' font-size='12.000'>
+  <text
+   x='39.960' y='26.040'
+   style='font-weight: bold; text-anchor: middle; fill: blue;'
+   onclick='window.open(&quot;#k48&quot;, &quot;_self&quot;)'>48</text>
+  </svg></div>
+
+<pre>(defprotocol tls13 basic
+  (defrole client
+    (vars (s ca name) (cr sr random32) (x rndx) (y expt) (spk akey)
+      (request response text))
+    (trace (send (cat cr (exp (gen) x)))
+      (recv
+        (cat (cat sr (exp (gen) y))
+          (enc (cat s spk (enc (hash s spk) (privk ca)))
+            (enc
+              (hash (cat sr (exp (gen) y)) s spk
+                (enc (hash s spk) (privk ca))) (invk spk))
+            (hash
+              (hash &quot;finished&quot;
+                (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr))
+              (cat sr (exp (gen) y))
+              (cat s spk (enc (hash s spk) (privk ca)))
+              (enc
+                (hash (cat sr (exp (gen) y)) s spk
+                  (enc (hash s spk) (privk ca))) (invk spk)))
+            (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr))))
+      (send
+        (enc
+          (hash
+            (hash &quot;finished&quot;
+              (hash (exp (gen) (mul x y)) &quot;c hs traffic&quot; cr sr))
+            (cat sr (exp (gen) y))
+            (cat s spk (enc (hash s spk) (privk ca)))
+            (enc
+              (hash (cat sr (exp (gen) y)) s spk
+                (enc (hash s spk) (privk ca))) (invk spk))
+            (hash
+              (hash &quot;finished&quot;
+                (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr))
+              (cat sr (exp (gen) y))
+              (cat s spk (enc (hash s spk) (privk ca)))
+              (enc
+                (hash (cat sr (exp (gen) y)) s spk
+                  (enc (hash s spk) (privk ca))) (invk spk))))
+          (hash (exp (gen) (mul x y)) &quot;c hs traffic&quot; cr sr)))
+      (send
+        (enc request
+          (hash &quot;c ap traffic&quot; cr sr
+            (hash (exp (gen) (mul x y)) &quot;derived&quot;))))
+      (recv
+        (enc response
+          (hash &quot;s ap traffic&quot; cr sr
+            (hash (exp (gen) (mul x y)) &quot;derived&quot;)))))
+    (uniq-gen x))
+  (defrole server
+    (vars (s ca name) (cr sr random32) (y rndx) (x expt) (spk akey)
+      (request response text))
+    (trace (recv (cat cr (exp (gen) x)))
+      (send
+        (cat (cat sr (exp (gen) y))
+          (enc (cat s spk (enc (hash s spk) (privk ca)))
+            (enc
+              (hash (cat sr (exp (gen) y)) s spk
+                (enc (hash s spk) (privk ca))) (invk spk))
+            (hash
+              (hash &quot;finished&quot;
+                (hash (exp (gen) (mul y x)) &quot;s hs traffic&quot; cr sr))
+              (cat sr (exp (gen) y))
+              (cat s spk (enc (hash s spk) (privk ca)))
+              (enc
+                (hash (cat sr (exp (gen) y)) s spk
+                  (enc (hash s spk) (privk ca))) (invk spk)))
+            (hash (exp (gen) (mul y x)) &quot;s hs traffic&quot; cr sr))))
+      (recv
+        (enc
+          (hash
+            (hash &quot;finished&quot;
+              (hash (exp (gen) (mul y x)) &quot;c hs traffic&quot; cr sr))
+            (cat sr (exp (gen) y))
+            (cat s spk (enc (hash s spk) (privk ca)))
+            (enc
+              (hash (cat sr (exp (gen) y)) s spk
+                (enc (hash s spk) (privk ca))) (invk spk))
+            (hash
+              (hash &quot;finished&quot;
+                (hash (exp (gen) (mul y x)) &quot;s hs traffic&quot; cr sr))
+              (cat sr (exp (gen) y))
+              (cat s spk (enc (hash s spk) (privk ca)))
+              (enc
+                (hash (cat sr (exp (gen) y)) s spk
+                  (enc (hash s spk) (privk ca))) (invk spk))))
+          (hash (exp (gen) (mul y x)) &quot;c hs traffic&quot; cr sr)))
+      (recv
+        (enc request
+          (hash &quot;c ap traffic&quot; cr sr
+            (hash (exp (gen) (mul y x)) &quot;derived&quot;))))
+      (send
+        (enc response
+          (hash &quot;s ap traffic&quot; cr sr
+            (hash (exp (gen) (mul y x)) &quot;derived&quot;)))))
+    (uniq-gen y)
+    (absent (y x)))
+  (defgenrule neqRl_indx
+    (forall ((x indx)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_strd
+    (forall ((x strd)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_mesg
+    (forall ((x mesg)) (implies (fact neq x x) (false))))
+  (lang (random32 atom)))</pre>
+
+<p id="k48">Item <a href="#t48">48</a>.</p>
+
+<div>
+ <svg
+  class='diagram' width='79.920pt' height='379.920pt'
+  xmlns='http://www.w3.org/2000/svg' version='1.1'
+  viewBox='0 0 79.920 379.920' font-size='12.000'>
+  <defs>
+   <marker
+    id='arrow' orient='auto' markerWidth='5' markerHeight='10' refX='5'
+    refY='5'>
+    <path
+     d='M 0 0 5 5 0 10'
+     style='stroke-width: 2; fill: none; stroke: black;'/></marker>
+   </defs>
+  <line
+   x1='39.960' y1='114.960' x2='39.960' y2='339.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <g>
+   <title>(enc request (hash &quot;c ap traffic&quot; cr sr (hash (exp (gen) (mul x y)) &quot;derived&quot;)))</title>
+   <circle style='fill: blue;' cx='39.960' cy='339.960' r='6.000'/></g>
+  <g>
+   <title>(enc (hash (hash &quot;finished&quot; (hash (exp (gen) (mul x y)) &quot;c hs traffic&quot; cr sr)) (cat sr (exp (gen) y)) (cat s spk (enc (hash s spk) (privk ca))) (enc (hash (cat sr (exp (gen) y)) s spk (enc (hash s spk) (privk ca))) (invk spk)) (hash (hash &quot;finished&quot; (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr)) (cat sr (exp (gen) y)) (cat s spk (enc (hash s spk) (privk ca))) (enc (hash (cat sr (exp (gen) y)) s spk (enc (hash s spk) (privk ca))) (invk spk)))) (hash (exp (gen) (mul x y)) &quot;c hs traffic&quot; cr sr))</title>
+   <circle style='fill: blue;' cx='39.960' cy='264.960' r='6.000'/></g>
+  <g>
+   <title>(cat (cat sr (exp (gen) y)) (enc (cat s spk (enc (hash s spk) (privk ca))) (enc (hash (cat sr (exp (gen) y)) s spk (enc (hash s spk) (privk ca))) (invk spk)) (hash (hash &quot;finished&quot; (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr)) (cat sr (exp (gen) y)) (cat s spk (enc (hash s spk) (privk ca))) (enc (hash (cat sr (exp (gen) y)) s spk (enc (hash s spk) (privk ca))) (invk spk))) (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr)))</title>
+   <circle cx='39.960' cy='189.960' r='6.000'/></g>
+  <g><title>(cat cr (exp (gen) x))</title>
+   <circle style='fill: blue;' cx='39.960' cy='114.960' r='6.000'/></g>
+  <g>
+   <title>((cr cr) (sr sr) (request request) (spk spk) (s s) (ca ca) (y y) (x x))</title>
+   <text
+    x='39.960' y='77.460' style='text-anchor: middle;'>server</text></g>
+  <text
+   x='39.960' y='39.960' style='text-anchor: middle;'>tls13 48</text>
+  </svg></div>
+
+<pre>(defskeleton tls13
+  (vars (cr sr random32) (request text) (spk akey) (s ca name) (x expt)
+    (y rndx))
+  (defstrand server 4 (cr cr) (sr sr) (request request) (spk spk) (s s)
+    (ca ca) (y y) (x x))
+  (non-orig (privk ca))
+  (uniq-orig sr)
+  (uniq-gen y)
+  (absent (y x))
+  (goals
+    (forall
+      ((cr sr random32) (spk akey) (s ca name) (x expt) (y rndx)
+        (z strd))
+      (implies
+        (and (p &quot;server&quot; z 4) (p &quot;server&quot; &quot;cr&quot; z cr)
+          (p &quot;server&quot; &quot;sr&quot; z sr) (p &quot;server&quot; &quot;spk&quot; z spk)
+          (p &quot;server&quot; &quot;s&quot; z s) (p &quot;server&quot; &quot;ca&quot; z ca)
+          (p &quot;server&quot; &quot;x&quot; z x) (p &quot;server&quot; &quot;y&quot; z y) (non (privk ca))
+          (ugen y) (uniq-at sr z 1))
+        (exists ((z-0 strd))
+          (and (p &quot;client&quot; z-0 4) (p &quot;client&quot; &quot;cr&quot; z-0 cr)
+            (p &quot;client&quot; &quot;sr&quot; z-0 sr) (p &quot;client&quot; &quot;spk&quot; z-0 spk)
+            (p &quot;client&quot; &quot;s&quot; z-0 s) (p &quot;client&quot; &quot;ca&quot; z-0 ca)
+            (p &quot;client&quot; &quot;y&quot; z-0 y) (p &quot;client&quot; &quot;x&quot; z-0 x))))))
+  (traces
+    ((recv (cat cr (exp (gen) x)))
+      (send
+        (cat (cat sr (exp (gen) y))
+          (enc (cat s spk (enc (hash s spk) (privk ca)))
+            (enc
+              (hash (cat sr (exp (gen) y)) s spk
+                (enc (hash s spk) (privk ca))) (invk spk))
+            (hash
+              (hash &quot;finished&quot;
+                (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr))
+              (cat sr (exp (gen) y))
+              (cat s spk (enc (hash s spk) (privk ca)))
+              (enc
+                (hash (cat sr (exp (gen) y)) s spk
+                  (enc (hash s spk) (privk ca))) (invk spk)))
+            (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr))))
+      (recv
+        (enc
+          (hash
+            (hash &quot;finished&quot;
+              (hash (exp (gen) (mul x y)) &quot;c hs traffic&quot; cr sr))
+            (cat sr (exp (gen) y))
+            (cat s spk (enc (hash s spk) (privk ca)))
+            (enc
+              (hash (cat sr (exp (gen) y)) s spk
+                (enc (hash s spk) (privk ca))) (invk spk))
+            (hash
+              (hash &quot;finished&quot;
+                (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr))
+              (cat sr (exp (gen) y))
+              (cat s spk (enc (hash s spk) (privk ca)))
+              (enc
+                (hash (cat sr (exp (gen) y)) s spk
+                  (enc (hash s spk) (privk ca))) (invk spk))))
+          (hash (exp (gen) (mul x y)) &quot;c hs traffic&quot; cr sr)))
+      (recv
+        (enc request
+          (hash &quot;c ap traffic&quot; cr sr
+            (hash (exp (gen) (mul x y)) &quot;derived&quot;))))))
+  (label 48)
+  (realized)
+  (shape)
+  (satisfies
+    (no (p &quot;client&quot; z-0 (idx 4)) (p &quot;client&quot; &quot;x&quot; z-0 x)
+      (p &quot;client&quot; &quot;y&quot; z-0 y) (p &quot;client&quot; &quot;ca&quot; z-0 ca)
+      (p &quot;client&quot; &quot;s&quot; z-0 s) (p &quot;client&quot; &quot;spk&quot; z-0 spk)
+      (p &quot;client&quot; &quot;sr&quot; z-0 sr) (p &quot;client&quot; &quot;cr&quot; z-0 cr) (cr cr) (sr sr)
+      (spk spk) (s s) (ca ca) (x x) (y y) (z 0)))
+  (maps
+    ((0)
+      ((cr cr) (sr sr) (spk spk) (s s) (ca ca) (x x) (y y)
+        (request request))))
+  (origs (sr (0 1)))
+  (ugens (y (0 1))))</pre>
+
+<p id="t49">Tree <a href="#top">49</a>, POV <a href="#k49">49</a>.</p>
+
+<div>
+ <svg
+  class='diagram' width='79.920pt' height='79.920pt'
+  xmlns='http://www.w3.org/2000/svg' version='1.1'
+  viewBox='0 0 79.920 79.920' font-size='12.000'>
+  <text
+   x='39.960' y='26.040' style='text-anchor: middle; fill: black;'
+   onclick='window.open(&quot;#k49&quot;, &quot;_self&quot;)'>49</text>
+  </svg></div>
+
+<pre>(defprotocol tls13 basic
+  (defrole client
+    (vars (s ca name) (cr sr random32) (x rndx) (y expt) (spk akey)
+      (request response text))
+    (trace (send (cat cr (exp (gen) x)))
+      (recv
+        (cat (cat sr (exp (gen) y))
+          (enc (cat s spk (enc (hash s spk) (privk ca)))
+            (enc
+              (hash (cat sr (exp (gen) y)) s spk
+                (enc (hash s spk) (privk ca))) (invk spk))
+            (hash
+              (hash &quot;finished&quot;
+                (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr))
+              (cat sr (exp (gen) y))
+              (cat s spk (enc (hash s spk) (privk ca)))
+              (enc
+                (hash (cat sr (exp (gen) y)) s spk
+                  (enc (hash s spk) (privk ca))) (invk spk)))
+            (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr))))
+      (send
+        (enc
+          (hash
+            (hash &quot;finished&quot;
+              (hash (exp (gen) (mul x y)) &quot;c hs traffic&quot; cr sr))
+            (cat sr (exp (gen) y))
+            (cat s spk (enc (hash s spk) (privk ca)))
+            (enc
+              (hash (cat sr (exp (gen) y)) s spk
+                (enc (hash s spk) (privk ca))) (invk spk))
+            (hash
+              (hash &quot;finished&quot;
+                (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr))
+              (cat sr (exp (gen) y))
+              (cat s spk (enc (hash s spk) (privk ca)))
+              (enc
+                (hash (cat sr (exp (gen) y)) s spk
+                  (enc (hash s spk) (privk ca))) (invk spk))))
+          (hash (exp (gen) (mul x y)) &quot;c hs traffic&quot; cr sr)))
+      (send
+        (enc request
+          (hash &quot;c ap traffic&quot; cr sr
+            (hash (exp (gen) (mul x y)) &quot;derived&quot;))))
+      (recv
+        (enc response
+          (hash &quot;s ap traffic&quot; cr sr
+            (hash (exp (gen) (mul x y)) &quot;derived&quot;)))))
+    (uniq-gen x))
+  (defrole server
+    (vars (s ca name) (cr sr random32) (y rndx) (x expt) (spk akey)
+      (request response text))
+    (trace (recv (cat cr (exp (gen) x)))
+      (send
+        (cat (cat sr (exp (gen) y))
+          (enc (cat s spk (enc (hash s spk) (privk ca)))
+            (enc
+              (hash (cat sr (exp (gen) y)) s spk
+                (enc (hash s spk) (privk ca))) (invk spk))
+            (hash
+              (hash &quot;finished&quot;
+                (hash (exp (gen) (mul y x)) &quot;s hs traffic&quot; cr sr))
+              (cat sr (exp (gen) y))
+              (cat s spk (enc (hash s spk) (privk ca)))
+              (enc
+                (hash (cat sr (exp (gen) y)) s spk
+                  (enc (hash s spk) (privk ca))) (invk spk)))
+            (hash (exp (gen) (mul y x)) &quot;s hs traffic&quot; cr sr))))
+      (recv
+        (enc
+          (hash
+            (hash &quot;finished&quot;
+              (hash (exp (gen) (mul y x)) &quot;c hs traffic&quot; cr sr))
+            (cat sr (exp (gen) y))
+            (cat s spk (enc (hash s spk) (privk ca)))
+            (enc
+              (hash (cat sr (exp (gen) y)) s spk
+                (enc (hash s spk) (privk ca))) (invk spk))
+            (hash
+              (hash &quot;finished&quot;
+                (hash (exp (gen) (mul y x)) &quot;s hs traffic&quot; cr sr))
+              (cat sr (exp (gen) y))
+              (cat s spk (enc (hash s spk) (privk ca)))
+              (enc
+                (hash (cat sr (exp (gen) y)) s spk
+                  (enc (hash s spk) (privk ca))) (invk spk))))
+          (hash (exp (gen) (mul y x)) &quot;c hs traffic&quot; cr sr)))
+      (recv
+        (enc request
+          (hash &quot;c ap traffic&quot; cr sr
+            (hash (exp (gen) (mul y x)) &quot;derived&quot;))))
+      (send
+        (enc response
+          (hash &quot;s ap traffic&quot; cr sr
+            (hash (exp (gen) (mul y x)) &quot;derived&quot;)))))
+    (uniq-gen y)
+    (absent (y x)))
+  (defgenrule neqRl_indx
+    (forall ((x indx)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_strd
+    (forall ((x strd)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_mesg
+    (forall ((x mesg)) (implies (fact neq x x) (false))))
+  (lang (random32 atom)))</pre>
+
+<p id="k49">Item <a href="#t49">49</a>.</p>
+
+<div>
+ <svg
+  class='diagram' width='179.880pt' height='454.920pt'
+  xmlns='http://www.w3.org/2000/svg' version='1.1'
+  viewBox='0 0 179.880 454.920' font-size='12.000'>
+  <defs>
+   <marker
+    id='arrow' orient='auto' markerWidth='5' markerHeight='10' refX='5'
+    refY='5'>
+    <path
+     d='M 0 0 5 5 0 10'
+     style='stroke-width: 2; fill: none; stroke: black;'/></marker>
+   </defs>
+  <line
+   x1='139.920' y1='114.960' x2='139.920' y2='189.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='39.960' y1='114.960' x2='39.960' y2='414.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <g>
+   <title>(hash &quot;c ap traffic&quot; cr sr (hash (exp (gen) (mul x y)) &quot;derived&quot;))</title>
+   <circle cx='139.920' cy='189.960' r='6.000'/></g>
+  <g>
+   <title>(hash &quot;c ap traffic&quot; cr sr (hash (exp (gen) (mul x y)) &quot;derived&quot;))</title>
+   <circle style='fill: red;' cx='139.920' cy='114.960' r='6.000'/></g>
+  <g>
+   <title>(enc response (hash &quot;s ap traffic&quot; cr sr (hash (exp (gen) (mul x y)) &quot;derived&quot;)))</title>
+   <circle style='fill: blue;' cx='39.960' cy='414.960' r='6.000'/></g>
+  <g>
+   <title>(enc request (hash &quot;c ap traffic&quot; cr sr (hash (exp (gen) (mul x y)) &quot;derived&quot;)))</title>
+   <circle cx='39.960' cy='339.960' r='6.000'/></g>
+  <g>
+   <title>(enc (hash (hash &quot;finished&quot; (hash (exp (gen) (mul x y)) &quot;c hs traffic&quot; cr sr)) (cat sr (exp (gen) y)) (cat s spk (enc (hash s spk) (privk ca))) (enc (hash (cat sr (exp (gen) y)) s spk (enc (hash s spk) (privk ca))) (invk spk)) (hash (hash &quot;finished&quot; (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr)) (cat sr (exp (gen) y)) (cat s spk (enc (hash s spk) (privk ca))) (enc (hash (cat sr (exp (gen) y)) s spk (enc (hash s spk) (privk ca))) (invk spk)))) (hash (exp (gen) (mul x y)) &quot;c hs traffic&quot; cr sr))</title>
+   <circle cx='39.960' cy='264.960' r='6.000'/></g>
+  <g>
+   <title>(cat (cat sr (exp (gen) y)) (enc (cat s spk (enc (hash s spk) (privk ca))) (enc (hash (cat sr (exp (gen) y)) s spk (enc (hash s spk) (privk ca))) (invk spk)) (hash (hash &quot;finished&quot; (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr)) (cat sr (exp (gen) y)) (cat s spk (enc (hash s spk) (privk ca))) (enc (hash (cat sr (exp (gen) y)) s spk (enc (hash s spk) (privk ca))) (invk spk))) (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr)))</title>
+   <circle style='fill: red;' cx='39.960' cy='189.960' r='6.000'/></g>
+  <g><title>(cat cr (exp (gen) x))</title>
+   <circle cx='39.960' cy='114.960' r='6.000'/></g>
+  <g>
+   <title>((cr cr) (sr sr) (request request) (response response) (spk spk) (s s) (ca ca) (x x) (y y))</title>
+   <text
+    x='39.960' y='77.460' style='text-anchor: middle;'>client</text></g>
+  <text
+   x='89.940' y='39.960' style='text-anchor: middle;'>tls13 49</text>
+  </svg></div>
+
+<pre>(defskeleton tls13
+  (vars (cr sr random32) (request response text) (spk akey) (s ca name)
+    (x rndx) (y expt))
+  (defstrand client 5 (cr cr) (sr sr) (request request)
+    (response response) (spk spk) (s s) (ca ca) (x x) (y y))
+  (deflistener
+    (hash &quot;c ap traffic&quot; cr sr (hash (exp (gen) (mul x y)) &quot;derived&quot;)))
+  (non-orig (invk spk) (privk ca))
+  (uniq-orig cr)
+  (uniq-gen x)
+  (goals
+    (forall
+      ((cr sr random32) (request response text) (spk akey) (s ca name)
+        (x rndx) (y expt) (z z-0 strd))
+      (implies
+        (and (p &quot;client&quot; z 5) (p &quot;&quot; z-0 2) (p &quot;client&quot; &quot;cr&quot; z cr)
+          (p &quot;client&quot; &quot;sr&quot; z sr) (p &quot;client&quot; &quot;request&quot; z request)
+          (p &quot;client&quot; &quot;response&quot; z response) (p &quot;client&quot; &quot;spk&quot; z spk)
+          (p &quot;client&quot; &quot;s&quot; z s) (p &quot;client&quot; &quot;ca&quot; z ca)
+          (p &quot;client&quot; &quot;x&quot; z x) (p &quot;client&quot; &quot;y&quot; z y)
+          (p &quot;&quot; &quot;x&quot; z-0
+            (hash &quot;c ap traffic&quot; cr sr
+              (hash (exp (gen) (mul x y)) &quot;derived&quot;))) (non (invk spk))
+          (non (privk ca)) (ugen x) (uniq-at cr z 0)) (false))))
+  (traces
+    ((send (cat cr (exp (gen) x)))
+      (recv
+        (cat (cat sr (exp (gen) y))
+          (enc (cat s spk (enc (hash s spk) (privk ca)))
+            (enc
+              (hash (cat sr (exp (gen) y)) s spk
+                (enc (hash s spk) (privk ca))) (invk spk))
+            (hash
+              (hash &quot;finished&quot;
+                (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr))
+              (cat sr (exp (gen) y))
+              (cat s spk (enc (hash s spk) (privk ca)))
+              (enc
+                (hash (cat sr (exp (gen) y)) s spk
+                  (enc (hash s spk) (privk ca))) (invk spk)))
+            (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr))))
+      (send
+        (enc
+          (hash
+            (hash &quot;finished&quot;
+              (hash (exp (gen) (mul x y)) &quot;c hs traffic&quot; cr sr))
+            (cat sr (exp (gen) y))
+            (cat s spk (enc (hash s spk) (privk ca)))
+            (enc
+              (hash (cat sr (exp (gen) y)) s spk
+                (enc (hash s spk) (privk ca))) (invk spk))
+            (hash
+              (hash &quot;finished&quot;
+                (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr))
+              (cat sr (exp (gen) y))
+              (cat s spk (enc (hash s spk) (privk ca)))
+              (enc
+                (hash (cat sr (exp (gen) y)) s spk
+                  (enc (hash s spk) (privk ca))) (invk spk))))
+          (hash (exp (gen) (mul x y)) &quot;c hs traffic&quot; cr sr)))
+      (send
+        (enc request
+          (hash &quot;c ap traffic&quot; cr sr
+            (hash (exp (gen) (mul x y)) &quot;derived&quot;))))
+      (recv
+        (enc response
+          (hash &quot;s ap traffic&quot; cr sr
+            (hash (exp (gen) (mul x y)) &quot;derived&quot;)))))
+    ((recv
+       (hash &quot;c ap traffic&quot; cr sr
+         (hash (exp (gen) (mul x y)) &quot;derived&quot;)))
+      (send
+        (hash &quot;c ap traffic&quot; cr sr
+          (hash (exp (gen) (mul x y)) &quot;derived&quot;)))))
+  (label 49)
+  (unrealized (0 1) (1 0))
+  (preskeleton)
+  (maps)
+  (origs (cr (0 0)))
+  (ugens (x (0 0)))
+  (comment &quot;Not a skeleton&quot;))</pre>
+
+<p id="t62">Tree <a href="#top">62</a>, POV <a href="#k62">62</a>.</p>
+
+<div>
+ <svg
+  class='diagram' width='79.920pt' height='79.920pt'
+  xmlns='http://www.w3.org/2000/svg' version='1.1'
+  viewBox='0 0 79.920 79.920' font-size='12.000'>
+  <text
+   x='39.960' y='26.040' style='text-anchor: middle; fill: black;'
+   onclick='window.open(&quot;#k62&quot;, &quot;_self&quot;)'>62</text>
+  </svg></div>
+
+<pre>(defprotocol tls13 basic
+  (defrole client
+    (vars (s ca name) (cr sr random32) (x rndx) (y expt) (spk akey)
+      (request response text))
+    (trace (send (cat cr (exp (gen) x)))
+      (recv
+        (cat (cat sr (exp (gen) y))
+          (enc (cat s spk (enc (hash s spk) (privk ca)))
+            (enc
+              (hash (cat sr (exp (gen) y)) s spk
+                (enc (hash s spk) (privk ca))) (invk spk))
+            (hash
+              (hash &quot;finished&quot;
+                (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr))
+              (cat sr (exp (gen) y))
+              (cat s spk (enc (hash s spk) (privk ca)))
+              (enc
+                (hash (cat sr (exp (gen) y)) s spk
+                  (enc (hash s spk) (privk ca))) (invk spk)))
+            (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr))))
+      (send
+        (enc
+          (hash
+            (hash &quot;finished&quot;
+              (hash (exp (gen) (mul x y)) &quot;c hs traffic&quot; cr sr))
+            (cat sr (exp (gen) y))
+            (cat s spk (enc (hash s spk) (privk ca)))
+            (enc
+              (hash (cat sr (exp (gen) y)) s spk
+                (enc (hash s spk) (privk ca))) (invk spk))
+            (hash
+              (hash &quot;finished&quot;
+                (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr))
+              (cat sr (exp (gen) y))
+              (cat s spk (enc (hash s spk) (privk ca)))
+              (enc
+                (hash (cat sr (exp (gen) y)) s spk
+                  (enc (hash s spk) (privk ca))) (invk spk))))
+          (hash (exp (gen) (mul x y)) &quot;c hs traffic&quot; cr sr)))
+      (send
+        (enc request
+          (hash &quot;c ap traffic&quot; cr sr
+            (hash (exp (gen) (mul x y)) &quot;derived&quot;))))
+      (recv
+        (enc response
+          (hash &quot;s ap traffic&quot; cr sr
+            (hash (exp (gen) (mul x y)) &quot;derived&quot;)))))
+    (uniq-gen x))
+  (defrole server
+    (vars (s ca name) (cr sr random32) (y rndx) (x expt) (spk akey)
+      (request response text))
+    (trace (recv (cat cr (exp (gen) x)))
+      (send
+        (cat (cat sr (exp (gen) y))
+          (enc (cat s spk (enc (hash s spk) (privk ca)))
+            (enc
+              (hash (cat sr (exp (gen) y)) s spk
+                (enc (hash s spk) (privk ca))) (invk spk))
+            (hash
+              (hash &quot;finished&quot;
+                (hash (exp (gen) (mul y x)) &quot;s hs traffic&quot; cr sr))
+              (cat sr (exp (gen) y))
+              (cat s spk (enc (hash s spk) (privk ca)))
+              (enc
+                (hash (cat sr (exp (gen) y)) s spk
+                  (enc (hash s spk) (privk ca))) (invk spk)))
+            (hash (exp (gen) (mul y x)) &quot;s hs traffic&quot; cr sr))))
+      (recv
+        (enc
+          (hash
+            (hash &quot;finished&quot;
+              (hash (exp (gen) (mul y x)) &quot;c hs traffic&quot; cr sr))
+            (cat sr (exp (gen) y))
+            (cat s spk (enc (hash s spk) (privk ca)))
+            (enc
+              (hash (cat sr (exp (gen) y)) s spk
+                (enc (hash s spk) (privk ca))) (invk spk))
+            (hash
+              (hash &quot;finished&quot;
+                (hash (exp (gen) (mul y x)) &quot;s hs traffic&quot; cr sr))
+              (cat sr (exp (gen) y))
+              (cat s spk (enc (hash s spk) (privk ca)))
+              (enc
+                (hash (cat sr (exp (gen) y)) s spk
+                  (enc (hash s spk) (privk ca))) (invk spk))))
+          (hash (exp (gen) (mul y x)) &quot;c hs traffic&quot; cr sr)))
+      (recv
+        (enc request
+          (hash &quot;c ap traffic&quot; cr sr
+            (hash (exp (gen) (mul y x)) &quot;derived&quot;))))
+      (send
+        (enc response
+          (hash &quot;s ap traffic&quot; cr sr
+            (hash (exp (gen) (mul y x)) &quot;derived&quot;)))))
+    (uniq-gen y)
+    (absent (y x)))
+  (defgenrule neqRl_indx
+    (forall ((x indx)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_strd
+    (forall ((x strd)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_mesg
+    (forall ((x mesg)) (implies (fact neq x x) (false))))
+  (lang (random32 atom)))</pre>
+
+<p id="k62">Item <a href="#t62">62</a>.</p>
+
+<div>
+ <svg
+  class='diagram' width='179.880pt' height='454.920pt'
+  xmlns='http://www.w3.org/2000/svg' version='1.1'
+  viewBox='0 0 179.880 454.920' font-size='12.000'>
+  <defs>
+   <marker
+    id='arrow' orient='auto' markerWidth='5' markerHeight='10' refX='5'
+    refY='5'>
+    <path
+     d='M 0 0 5 5 0 10'
+     style='stroke-width: 2; fill: none; stroke: black;'/></marker>
+   </defs>
+  <line
+   x1='139.920' y1='114.960' x2='139.920' y2='189.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='39.960' y1='114.960' x2='39.960' y2='414.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <g>
+   <title>(hash &quot;s ap traffic&quot; cr sr (hash (exp (gen) (mul x y)) &quot;derived&quot;))</title>
+   <circle cx='139.920' cy='189.960' r='6.000'/></g>
+  <g>
+   <title>(hash &quot;s ap traffic&quot; cr sr (hash (exp (gen) (mul x y)) &quot;derived&quot;))</title>
+   <circle style='fill: red;' cx='139.920' cy='114.960' r='6.000'/></g>
+  <g>
+   <title>(enc response (hash &quot;s ap traffic&quot; cr sr (hash (exp (gen) (mul x y)) &quot;derived&quot;)))</title>
+   <circle style='fill: blue;' cx='39.960' cy='414.960' r='6.000'/></g>
+  <g>
+   <title>(enc request (hash &quot;c ap traffic&quot; cr sr (hash (exp (gen) (mul x y)) &quot;derived&quot;)))</title>
+   <circle cx='39.960' cy='339.960' r='6.000'/></g>
+  <g>
+   <title>(enc (hash (hash &quot;finished&quot; (hash (exp (gen) (mul x y)) &quot;c hs traffic&quot; cr sr)) (cat sr (exp (gen) y)) (cat s spk (enc (hash s spk) (privk ca))) (enc (hash (cat sr (exp (gen) y)) s spk (enc (hash s spk) (privk ca))) (invk spk)) (hash (hash &quot;finished&quot; (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr)) (cat sr (exp (gen) y)) (cat s spk (enc (hash s spk) (privk ca))) (enc (hash (cat sr (exp (gen) y)) s spk (enc (hash s spk) (privk ca))) (invk spk)))) (hash (exp (gen) (mul x y)) &quot;c hs traffic&quot; cr sr))</title>
+   <circle cx='39.960' cy='264.960' r='6.000'/></g>
+  <g>
+   <title>(cat (cat sr (exp (gen) y)) (enc (cat s spk (enc (hash s spk) (privk ca))) (enc (hash (cat sr (exp (gen) y)) s spk (enc (hash s spk) (privk ca))) (invk spk)) (hash (hash &quot;finished&quot; (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr)) (cat sr (exp (gen) y)) (cat s spk (enc (hash s spk) (privk ca))) (enc (hash (cat sr (exp (gen) y)) s spk (enc (hash s spk) (privk ca))) (invk spk))) (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr)))</title>
+   <circle style='fill: red;' cx='39.960' cy='189.960' r='6.000'/></g>
+  <g><title>(cat cr (exp (gen) x))</title>
+   <circle cx='39.960' cy='114.960' r='6.000'/></g>
+  <g>
+   <title>((cr cr) (sr sr) (request request) (response response) (spk spk) (s s) (ca ca) (x x) (y y))</title>
+   <text
+    x='39.960' y='77.460' style='text-anchor: middle;'>client</text></g>
+  <text
+   x='89.940' y='39.960' style='text-anchor: middle;'>tls13 62</text>
+  </svg></div>
+
+<pre>(defskeleton tls13
+  (vars (cr sr random32) (request response text) (spk akey) (s ca name)
+    (x rndx) (y expt))
+  (defstrand client 5 (cr cr) (sr sr) (request request)
+    (response response) (spk spk) (s s) (ca ca) (x x) (y y))
+  (deflistener
+    (hash &quot;s ap traffic&quot; cr sr (hash (exp (gen) (mul x y)) &quot;derived&quot;)))
+  (non-orig (invk spk) (privk ca))
+  (uniq-orig cr)
+  (uniq-gen x)
+  (goals
+    (forall
+      ((cr sr random32) (request response text) (spk akey) (s ca name)
+        (x rndx) (y expt) (z z-0 strd))
+      (implies
+        (and (p &quot;client&quot; z 5) (p &quot;&quot; z-0 2) (p &quot;client&quot; &quot;cr&quot; z cr)
+          (p &quot;client&quot; &quot;sr&quot; z sr) (p &quot;client&quot; &quot;request&quot; z request)
+          (p &quot;client&quot; &quot;response&quot; z response) (p &quot;client&quot; &quot;spk&quot; z spk)
+          (p &quot;client&quot; &quot;s&quot; z s) (p &quot;client&quot; &quot;ca&quot; z ca)
+          (p &quot;client&quot; &quot;x&quot; z x) (p &quot;client&quot; &quot;y&quot; z y)
+          (p &quot;&quot; &quot;x&quot; z-0
+            (hash &quot;s ap traffic&quot; cr sr
+              (hash (exp (gen) (mul x y)) &quot;derived&quot;))) (non (invk spk))
+          (non (privk ca)) (ugen x) (uniq-at cr z 0)) (false))))
+  (traces
+    ((send (cat cr (exp (gen) x)))
+      (recv
+        (cat (cat sr (exp (gen) y))
+          (enc (cat s spk (enc (hash s spk) (privk ca)))
+            (enc
+              (hash (cat sr (exp (gen) y)) s spk
+                (enc (hash s spk) (privk ca))) (invk spk))
+            (hash
+              (hash &quot;finished&quot;
+                (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr))
+              (cat sr (exp (gen) y))
+              (cat s spk (enc (hash s spk) (privk ca)))
+              (enc
+                (hash (cat sr (exp (gen) y)) s spk
+                  (enc (hash s spk) (privk ca))) (invk spk)))
+            (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr))))
+      (send
+        (enc
+          (hash
+            (hash &quot;finished&quot;
+              (hash (exp (gen) (mul x y)) &quot;c hs traffic&quot; cr sr))
+            (cat sr (exp (gen) y))
+            (cat s spk (enc (hash s spk) (privk ca)))
+            (enc
+              (hash (cat sr (exp (gen) y)) s spk
+                (enc (hash s spk) (privk ca))) (invk spk))
+            (hash
+              (hash &quot;finished&quot;
+                (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr))
+              (cat sr (exp (gen) y))
+              (cat s spk (enc (hash s spk) (privk ca)))
+              (enc
+                (hash (cat sr (exp (gen) y)) s spk
+                  (enc (hash s spk) (privk ca))) (invk spk))))
+          (hash (exp (gen) (mul x y)) &quot;c hs traffic&quot; cr sr)))
+      (send
+        (enc request
+          (hash &quot;c ap traffic&quot; cr sr
+            (hash (exp (gen) (mul x y)) &quot;derived&quot;))))
+      (recv
+        (enc response
+          (hash &quot;s ap traffic&quot; cr sr
+            (hash (exp (gen) (mul x y)) &quot;derived&quot;)))))
+    ((recv
+       (hash &quot;s ap traffic&quot; cr sr
+         (hash (exp (gen) (mul x y)) &quot;derived&quot;)))
+      (send
+        (hash &quot;s ap traffic&quot; cr sr
+          (hash (exp (gen) (mul x y)) &quot;derived&quot;)))))
+  (label 62)
+  (unrealized (0 1) (1 0))
+  (preskeleton)
+  (maps)
+  (origs (cr (0 0)))
+  (ugens (x (0 0)))
+  (comment &quot;Not a skeleton&quot;))</pre>
+
+<p id="t75">Tree <a href="#top">75</a>, POV <a href="#k75">75</a>.</p>
+
+<div>
+ <svg
+  class='diagram' width='129.840pt' height='79.920pt'
+  xmlns='http://www.w3.org/2000/svg' version='1.1'
+  viewBox='0 0 129.840 79.920' font-size='12.000'>
+  <text
+   x='89.880' y='26.040'
+   style='font-weight: bold; text-anchor: middle; fill: blue;'
+   onclick='window.open(&quot;#k76&quot;, &quot;_self&quot;)'>76</text>
+  <line
+   x1='39.960' y1='39.960' x2='89.880' y2='39.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <text
+   x='39.960' y='26.040' style='text-anchor: middle; fill: black;'
+   onclick='window.open(&quot;#k75&quot;, &quot;_self&quot;)'>75</text>
+  </svg></div>
+
+<pre>(defprotocol tls13 basic
+  (defrole client
+    (vars (s ca name) (cr sr random32) (x rndx) (y expt) (spk akey)
+      (request response text))
+    (trace (send (cat cr (exp (gen) x)))
+      (recv
+        (cat (cat sr (exp (gen) y))
+          (enc (cat s spk (enc (hash s spk) (privk ca)))
+            (enc
+              (hash (cat sr (exp (gen) y)) s spk
+                (enc (hash s spk) (privk ca))) (invk spk))
+            (hash
+              (hash &quot;finished&quot;
+                (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr))
+              (cat sr (exp (gen) y))
+              (cat s spk (enc (hash s spk) (privk ca)))
+              (enc
+                (hash (cat sr (exp (gen) y)) s spk
+                  (enc (hash s spk) (privk ca))) (invk spk)))
+            (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr))))
+      (send
+        (enc
+          (hash
+            (hash &quot;finished&quot;
+              (hash (exp (gen) (mul x y)) &quot;c hs traffic&quot; cr sr))
+            (cat sr (exp (gen) y))
+            (cat s spk (enc (hash s spk) (privk ca)))
+            (enc
+              (hash (cat sr (exp (gen) y)) s spk
+                (enc (hash s spk) (privk ca))) (invk spk))
+            (hash
+              (hash &quot;finished&quot;
+                (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr))
+              (cat sr (exp (gen) y))
+              (cat s spk (enc (hash s spk) (privk ca)))
+              (enc
+                (hash (cat sr (exp (gen) y)) s spk
+                  (enc (hash s spk) (privk ca))) (invk spk))))
+          (hash (exp (gen) (mul x y)) &quot;c hs traffic&quot; cr sr)))
+      (send
+        (enc request
+          (hash &quot;c ap traffic&quot; cr sr
+            (hash (exp (gen) (mul x y)) &quot;derived&quot;))))
+      (recv
+        (enc response
+          (hash &quot;s ap traffic&quot; cr sr
+            (hash (exp (gen) (mul x y)) &quot;derived&quot;)))))
+    (uniq-gen x))
+  (defrole server
+    (vars (s ca name) (cr sr random32) (y rndx) (x expt) (spk akey)
+      (request response text))
+    (trace (recv (cat cr (exp (gen) x)))
+      (send
+        (cat (cat sr (exp (gen) y))
+          (enc (cat s spk (enc (hash s spk) (privk ca)))
+            (enc
+              (hash (cat sr (exp (gen) y)) s spk
+                (enc (hash s spk) (privk ca))) (invk spk))
+            (hash
+              (hash &quot;finished&quot;
+                (hash (exp (gen) (mul y x)) &quot;s hs traffic&quot; cr sr))
+              (cat sr (exp (gen) y))
+              (cat s spk (enc (hash s spk) (privk ca)))
+              (enc
+                (hash (cat sr (exp (gen) y)) s spk
+                  (enc (hash s spk) (privk ca))) (invk spk)))
+            (hash (exp (gen) (mul y x)) &quot;s hs traffic&quot; cr sr))))
+      (recv
+        (enc
+          (hash
+            (hash &quot;finished&quot;
+              (hash (exp (gen) (mul y x)) &quot;c hs traffic&quot; cr sr))
+            (cat sr (exp (gen) y))
+            (cat s spk (enc (hash s spk) (privk ca)))
+            (enc
+              (hash (cat sr (exp (gen) y)) s spk
+                (enc (hash s spk) (privk ca))) (invk spk))
+            (hash
+              (hash &quot;finished&quot;
+                (hash (exp (gen) (mul y x)) &quot;s hs traffic&quot; cr sr))
+              (cat sr (exp (gen) y))
+              (cat s spk (enc (hash s spk) (privk ca)))
+              (enc
+                (hash (cat sr (exp (gen) y)) s spk
+                  (enc (hash s spk) (privk ca))) (invk spk))))
+          (hash (exp (gen) (mul y x)) &quot;c hs traffic&quot; cr sr)))
+      (recv
+        (enc request
+          (hash &quot;c ap traffic&quot; cr sr
+            (hash (exp (gen) (mul y x)) &quot;derived&quot;))))
+      (send
+        (enc response
+          (hash &quot;s ap traffic&quot; cr sr
+            (hash (exp (gen) (mul y x)) &quot;derived&quot;)))))
+    (uniq-gen y)
+    (absent (y x)))
+  (defgenrule neqRl_indx
+    (forall ((x indx)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_strd
+    (forall ((x strd)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_mesg
+    (forall ((x mesg)) (implies (fact neq x x) (false))))
+  (lang (random32 atom)))</pre>
+
+<p id="k75">Item <a href="#t75">75</a>, Child: <a href="#k76">76</a>.</p>
+
+<div>
+ <svg
+  class='diagram' width='179.880pt' height='379.920pt'
+  xmlns='http://www.w3.org/2000/svg' version='1.1'
+  viewBox='0 0 179.880 379.920' font-size='12.000'>
+  <defs>
+   <marker
+    id='arrow' orient='auto' markerWidth='5' markerHeight='10' refX='5'
+    refY='5'>
+    <path
+     d='M 0 0 5 5 0 10'
+     style='stroke-width: 2; fill: none; stroke: black;'/></marker>
+   </defs>
+  <line
+   x1='139.920' y1='114.960' x2='139.920' y2='189.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='39.960' y1='114.960' x2='39.960' y2='339.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <g>
+   <title>(hash &quot;s ap traffic&quot; cr sr (hash (exp (gen) (mul x y)) &quot;derived&quot;))</title>
+   <circle cx='139.920' cy='189.960' r='6.000'/></g>
+  <g>
+   <title>(hash &quot;s ap traffic&quot; cr sr (hash (exp (gen) (mul x y)) &quot;derived&quot;))</title>
+   <circle style='fill: red;' cx='139.920' cy='114.960' r='6.000'/></g>
+  <g>
+   <title>(enc request (hash &quot;c ap traffic&quot; cr sr (hash (exp (gen) (mul x y)) &quot;derived&quot;)))</title>
+   <circle style='fill: blue;' cx='39.960' cy='339.960' r='6.000'/></g>
+  <g>
+   <title>(enc (hash (hash &quot;finished&quot; (hash (exp (gen) (mul x y)) &quot;c hs traffic&quot; cr sr)) (cat sr (exp (gen) y)) (cat s spk (enc (hash s spk) (privk ca))) (enc (hash (cat sr (exp (gen) y)) s spk (enc (hash s spk) (privk ca))) (invk spk)) (hash (hash &quot;finished&quot; (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr)) (cat sr (exp (gen) y)) (cat s spk (enc (hash s spk) (privk ca))) (enc (hash (cat sr (exp (gen) y)) s spk (enc (hash s spk) (privk ca))) (invk spk)))) (hash (exp (gen) (mul x y)) &quot;c hs traffic&quot; cr sr))</title>
+   <circle style='fill: blue;' cx='39.960' cy='264.960' r='6.000'/></g>
+  <g>
+   <title>(cat (cat sr (exp (gen) y)) (enc (cat s spk (enc (hash s spk) (privk ca))) (enc (hash (cat sr (exp (gen) y)) s spk (enc (hash s spk) (privk ca))) (invk spk)) (hash (hash &quot;finished&quot; (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr)) (cat sr (exp (gen) y)) (cat s spk (enc (hash s spk) (privk ca))) (enc (hash (cat sr (exp (gen) y)) s spk (enc (hash s spk) (privk ca))) (invk spk))) (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr)))</title>
+   <circle cx='39.960' cy='189.960' r='6.000'/></g>
+  <g><title>(cat cr (exp (gen) x))</title>
+   <circle style='fill: blue;' cx='39.960' cy='114.960' r='6.000'/></g>
+  <g>
+   <title>((cr cr) (sr sr) (request request) (spk spk) (s s) (ca ca) (y y) (x x))</title>
+   <text
+    x='39.960' y='77.460' style='text-anchor: middle;'>server</text></g>
+  <text
+   x='89.940' y='39.960' style='text-anchor: middle;'>tls13 75</text>
+  </svg></div>
+
+<pre>(defskeleton tls13
+  (vars (cr sr random32) (request text) (spk akey) (s ca name) (x expt)
+    (y rndx))
+  (defstrand server 4 (cr cr) (sr sr) (request request) (spk spk) (s s)
+    (ca ca) (y y) (x x))
+  (deflistener
+    (hash &quot;s ap traffic&quot; cr sr (hash (exp (gen) (mul x y)) &quot;derived&quot;)))
+  (non-orig (privk ca))
+  (uniq-orig sr)
+  (uniq-gen y)
+  (absent (y x))
+  (goals
+    (forall
+      ((cr sr random32) (request text) (spk akey) (s ca name) (x expt)
+        (y rndx) (z z-0 strd))
+      (implies
+        (and (p &quot;server&quot; z 4) (p &quot;&quot; z-0 2) (p &quot;server&quot; &quot;cr&quot; z cr)
+          (p &quot;server&quot; &quot;sr&quot; z sr) (p &quot;server&quot; &quot;request&quot; z request)
+          (p &quot;server&quot; &quot;spk&quot; z spk) (p &quot;server&quot; &quot;s&quot; z s)
+          (p &quot;server&quot; &quot;ca&quot; z ca) (p &quot;server&quot; &quot;y&quot; z y)
+          (p &quot;server&quot; &quot;x&quot; z x)
+          (p &quot;&quot; &quot;x&quot; z-0
+            (hash &quot;s ap traffic&quot; cr sr
+              (hash (exp (gen) (mul x y)) &quot;derived&quot;))) (non (privk ca))
+          (ugen y) (uniq-at sr z 1)) (false))))
+  (traces
+    ((recv (cat cr (exp (gen) x)))
+      (send
+        (cat (cat sr (exp (gen) y))
+          (enc (cat s spk (enc (hash s spk) (privk ca)))
+            (enc
+              (hash (cat sr (exp (gen) y)) s spk
+                (enc (hash s spk) (privk ca))) (invk spk))
+            (hash
+              (hash &quot;finished&quot;
+                (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr))
+              (cat sr (exp (gen) y))
+              (cat s spk (enc (hash s spk) (privk ca)))
+              (enc
+                (hash (cat sr (exp (gen) y)) s spk
+                  (enc (hash s spk) (privk ca))) (invk spk)))
+            (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr))))
+      (recv
+        (enc
+          (hash
+            (hash &quot;finished&quot;
+              (hash (exp (gen) (mul x y)) &quot;c hs traffic&quot; cr sr))
+            (cat sr (exp (gen) y))
+            (cat s spk (enc (hash s spk) (privk ca)))
+            (enc
+              (hash (cat sr (exp (gen) y)) s spk
+                (enc (hash s spk) (privk ca))) (invk spk))
+            (hash
+              (hash &quot;finished&quot;
+                (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr))
+              (cat sr (exp (gen) y))
+              (cat s spk (enc (hash s spk) (privk ca)))
+              (enc
+                (hash (cat sr (exp (gen) y)) s spk
+                  (enc (hash s spk) (privk ca))) (invk spk))))
+          (hash (exp (gen) (mul x y)) &quot;c hs traffic&quot; cr sr)))
+      (recv
+        (enc request
+          (hash &quot;c ap traffic&quot; cr sr
+            (hash (exp (gen) (mul x y)) &quot;derived&quot;)))))
+    ((recv
+       (hash &quot;s ap traffic&quot; cr sr
+         (hash (exp (gen) (mul x y)) &quot;derived&quot;)))
+      (send
+        (hash &quot;s ap traffic&quot; cr sr
+          (hash (exp (gen) (mul x y)) &quot;derived&quot;)))))
+  (label 75)
+  (unrealized (1 0))
+  (preskeleton)
+  (maps)
+  (origs (sr (0 1)))
+  (ugens (y (0 1)))
+  (comment &quot;Not a skeleton&quot;))</pre>
+
+<p id="k76">Item <a href="#t75">76</a>, Parent: <a href="#k75">75</a>.</p>
+
+<div>
+ <svg
+  class='diagram' width='179.880pt' height='379.920pt'
+  xmlns='http://www.w3.org/2000/svg' version='1.1'
+  viewBox='0 0 179.880 379.920' font-size='12.000'>
+  <defs>
+   <marker
+    id='arrow' orient='auto' markerWidth='5' markerHeight='10' refX='5'
+    refY='5'>
+    <path
+     d='M 0 0 5 5 0 10'
+     style='stroke-width: 2; fill: none; stroke: black;'/></marker>
+   </defs>
+  <line
+   x1='139.920' y1='189.960' x2='139.920' y2='264.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='39.960' y1='114.960' x2='39.960' y2='339.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <g>
+   <title>(hash &quot;s ap traffic&quot; cr sr (hash (exp (gen) (mul x y)) &quot;derived&quot;))</title>
+   <circle cx='139.920' cy='264.960' r='6.000'/></g>
+  <g>
+   <title>(hash &quot;s ap traffic&quot; cr sr (hash (exp (gen) (mul x y)) &quot;derived&quot;))</title>
+   <circle style='fill: blue;' cx='139.920' cy='189.960' r='6.000'/></g>
+  <g>
+   <title>(enc request (hash &quot;c ap traffic&quot; cr sr (hash (exp (gen) (mul x y)) &quot;derived&quot;)))</title>
+   <circle style='fill: blue;' cx='39.960' cy='339.960' r='6.000'/></g>
+  <g>
+   <title>(enc (hash (hash &quot;finished&quot; (hash (exp (gen) (mul x y)) &quot;c hs traffic&quot; cr sr)) (cat sr (exp (gen) y)) (cat s spk (enc (hash s spk) (privk ca))) (enc (hash (cat sr (exp (gen) y)) s spk (enc (hash s spk) (privk ca))) (invk spk)) (hash (hash &quot;finished&quot; (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr)) (cat sr (exp (gen) y)) (cat s spk (enc (hash s spk) (privk ca))) (enc (hash (cat sr (exp (gen) y)) s spk (enc (hash s spk) (privk ca))) (invk spk)))) (hash (exp (gen) (mul x y)) &quot;c hs traffic&quot; cr sr))</title>
+   <circle style='fill: blue;' cx='39.960' cy='264.960' r='6.000'/></g>
+  <path
+   d='M 39.960 189.960 Q 86.940 189.960 133.920 189.960'
+   style='stroke-dasharray: 6.000,2.400; stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g>
+   <title>(cat (cat sr (exp (gen) y)) (enc (cat s spk (enc (hash s spk) (privk ca))) (enc (hash (cat sr (exp (gen) y)) s spk (enc (hash s spk) (privk ca))) (invk spk)) (hash (hash &quot;finished&quot; (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr)) (cat sr (exp (gen) y)) (cat s spk (enc (hash s spk) (privk ca))) (enc (hash (cat sr (exp (gen) y)) s spk (enc (hash s spk) (privk ca))) (invk spk))) (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr)))</title>
+   <circle cx='39.960' cy='189.960' r='6.000'/></g>
+  <g><title>(cat cr (exp (gen) x))</title>
+   <circle style='fill: blue;' cx='39.960' cy='114.960' r='6.000'/></g>
+  <g>
+   <title>((cr cr) (sr sr) (request request) (spk spk) (s s) (ca ca) (y y) (x x))</title>
+   <text
+    x='39.960' y='77.460' style='text-anchor: middle;'>server</text></g>
+  <text
+   x='89.940' y='39.960' style='text-anchor: middle;'>tls13 76</text>
+  </svg></div>
+
+<pre>(defskeleton tls13
+  (vars (cr sr random32) (request text) (spk akey) (s ca name) (x expt)
+    (y rndx))
+  (defstrand server 4 (cr cr) (sr sr) (request request) (spk spk) (s s)
+    (ca ca) (y y) (x x))
+  (deflistener
+    (hash &quot;s ap traffic&quot; cr sr (hash (exp (gen) (mul x y)) &quot;derived&quot;)))
+  (precedes ((0 1) (1 0)))
+  (non-orig (privk ca))
+  (uniq-orig sr)
+  (uniq-gen y)
+  (absent (y x))
+  (goals
+    (forall
+      ((cr sr random32) (request text) (spk akey) (s ca name) (x expt)
+        (y rndx) (z z-0 strd))
+      (implies
+        (and (p &quot;server&quot; z 4) (p &quot;&quot; z-0 2) (p &quot;server&quot; &quot;cr&quot; z cr)
+          (p &quot;server&quot; &quot;sr&quot; z sr) (p &quot;server&quot; &quot;request&quot; z request)
+          (p &quot;server&quot; &quot;spk&quot; z spk) (p &quot;server&quot; &quot;s&quot; z s)
+          (p &quot;server&quot; &quot;ca&quot; z ca) (p &quot;server&quot; &quot;y&quot; z y)
+          (p &quot;server&quot; &quot;x&quot; z x)
+          (p &quot;&quot; &quot;x&quot; z-0
+            (hash &quot;s ap traffic&quot; cr sr
+              (hash (exp (gen) (mul x y)) &quot;derived&quot;))) (non (privk ca))
+          (ugen y) (uniq-at sr z 1)) (false))))
+  (traces
+    ((recv (cat cr (exp (gen) x)))
+      (send
+        (cat (cat sr (exp (gen) y))
+          (enc (cat s spk (enc (hash s spk) (privk ca)))
+            (enc
+              (hash (cat sr (exp (gen) y)) s spk
+                (enc (hash s spk) (privk ca))) (invk spk))
+            (hash
+              (hash &quot;finished&quot;
+                (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr))
+              (cat sr (exp (gen) y))
+              (cat s spk (enc (hash s spk) (privk ca)))
+              (enc
+                (hash (cat sr (exp (gen) y)) s spk
+                  (enc (hash s spk) (privk ca))) (invk spk)))
+            (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr))))
+      (recv
+        (enc
+          (hash
+            (hash &quot;finished&quot;
+              (hash (exp (gen) (mul x y)) &quot;c hs traffic&quot; cr sr))
+            (cat sr (exp (gen) y))
+            (cat s spk (enc (hash s spk) (privk ca)))
+            (enc
+              (hash (cat sr (exp (gen) y)) s spk
+                (enc (hash s spk) (privk ca))) (invk spk))
+            (hash
+              (hash &quot;finished&quot;
+                (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr))
+              (cat sr (exp (gen) y))
+              (cat s spk (enc (hash s spk) (privk ca)))
+              (enc
+                (hash (cat sr (exp (gen) y)) s spk
+                  (enc (hash s spk) (privk ca))) (invk spk))))
+          (hash (exp (gen) (mul x y)) &quot;c hs traffic&quot; cr sr)))
+      (recv
+        (enc request
+          (hash &quot;c ap traffic&quot; cr sr
+            (hash (exp (gen) (mul x y)) &quot;derived&quot;)))))
+    ((recv
+       (hash &quot;s ap traffic&quot; cr sr
+         (hash (exp (gen) (mul x y)) &quot;derived&quot;)))
+      (send
+        (hash &quot;s ap traffic&quot; cr sr
+          (hash (exp (gen) (mul x y)) &quot;derived&quot;)))))
+  (label 76)
+  (parent 75)
+  (realized)
+  (shape)
+  (satisfies
+    (no (fact false) (cr cr) (sr sr) (request request) (spk spk) (s s)
+      (ca ca) (x x) (y y) (z 0) (z-0 1)))
+  (maps
+    ((0 1)
+      ((cr cr) (sr sr) (request request) (spk spk) (s s) (ca ca) (x x)
+        (y y))))
+  (origs (sr (0 1)))
+  (ugens (y (0 1))))</pre>
+
+<p id="t77">Tree <a href="#top">77</a>, POV <a href="#k77">77</a>.</p>
+
+<div>
+ <svg
+  class='diagram' width='129.840pt' height='79.920pt'
+  xmlns='http://www.w3.org/2000/svg' version='1.1'
+  viewBox='0 0 129.840 79.920' font-size='12.000'>
+  <text
+   x='89.880' y='26.040'
+   style='font-weight: bold; text-anchor: middle; fill: blue;'
+   onclick='window.open(&quot;#k78&quot;, &quot;_self&quot;)'>78</text>
+  <line
+   x1='39.960' y1='39.960' x2='89.880' y2='39.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <text
+   x='39.960' y='26.040' style='text-anchor: middle; fill: black;'
+   onclick='window.open(&quot;#k77&quot;, &quot;_self&quot;)'>77</text>
+  </svg></div>
+
+<pre>(defprotocol tls13 basic
+  (defrole client
+    (vars (s ca name) (cr sr random32) (x rndx) (y expt) (spk akey)
+      (request response text))
+    (trace (send (cat cr (exp (gen) x)))
+      (recv
+        (cat (cat sr (exp (gen) y))
+          (enc (cat s spk (enc (hash s spk) (privk ca)))
+            (enc
+              (hash (cat sr (exp (gen) y)) s spk
+                (enc (hash s spk) (privk ca))) (invk spk))
+            (hash
+              (hash &quot;finished&quot;
+                (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr))
+              (cat sr (exp (gen) y))
+              (cat s spk (enc (hash s spk) (privk ca)))
+              (enc
+                (hash (cat sr (exp (gen) y)) s spk
+                  (enc (hash s spk) (privk ca))) (invk spk)))
+            (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr))))
+      (send
+        (enc
+          (hash
+            (hash &quot;finished&quot;
+              (hash (exp (gen) (mul x y)) &quot;c hs traffic&quot; cr sr))
+            (cat sr (exp (gen) y))
+            (cat s spk (enc (hash s spk) (privk ca)))
+            (enc
+              (hash (cat sr (exp (gen) y)) s spk
+                (enc (hash s spk) (privk ca))) (invk spk))
+            (hash
+              (hash &quot;finished&quot;
+                (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr))
+              (cat sr (exp (gen) y))
+              (cat s spk (enc (hash s spk) (privk ca)))
+              (enc
+                (hash (cat sr (exp (gen) y)) s spk
+                  (enc (hash s spk) (privk ca))) (invk spk))))
+          (hash (exp (gen) (mul x y)) &quot;c hs traffic&quot; cr sr)))
+      (send
+        (enc request
+          (hash &quot;c ap traffic&quot; cr sr
+            (hash (exp (gen) (mul x y)) &quot;derived&quot;))))
+      (recv
+        (enc response
+          (hash &quot;s ap traffic&quot; cr sr
+            (hash (exp (gen) (mul x y)) &quot;derived&quot;)))))
+    (uniq-gen x))
+  (defrole server
+    (vars (s ca name) (cr sr random32) (y rndx) (x expt) (spk akey)
+      (request response text))
+    (trace (recv (cat cr (exp (gen) x)))
+      (send
+        (cat (cat sr (exp (gen) y))
+          (enc (cat s spk (enc (hash s spk) (privk ca)))
+            (enc
+              (hash (cat sr (exp (gen) y)) s spk
+                (enc (hash s spk) (privk ca))) (invk spk))
+            (hash
+              (hash &quot;finished&quot;
+                (hash (exp (gen) (mul y x)) &quot;s hs traffic&quot; cr sr))
+              (cat sr (exp (gen) y))
+              (cat s spk (enc (hash s spk) (privk ca)))
+              (enc
+                (hash (cat sr (exp (gen) y)) s spk
+                  (enc (hash s spk) (privk ca))) (invk spk)))
+            (hash (exp (gen) (mul y x)) &quot;s hs traffic&quot; cr sr))))
+      (recv
+        (enc
+          (hash
+            (hash &quot;finished&quot;
+              (hash (exp (gen) (mul y x)) &quot;c hs traffic&quot; cr sr))
+            (cat sr (exp (gen) y))
+            (cat s spk (enc (hash s spk) (privk ca)))
+            (enc
+              (hash (cat sr (exp (gen) y)) s spk
+                (enc (hash s spk) (privk ca))) (invk spk))
+            (hash
+              (hash &quot;finished&quot;
+                (hash (exp (gen) (mul y x)) &quot;s hs traffic&quot; cr sr))
+              (cat sr (exp (gen) y))
+              (cat s spk (enc (hash s spk) (privk ca)))
+              (enc
+                (hash (cat sr (exp (gen) y)) s spk
+                  (enc (hash s spk) (privk ca))) (invk spk))))
+          (hash (exp (gen) (mul y x)) &quot;c hs traffic&quot; cr sr)))
+      (recv
+        (enc request
+          (hash &quot;c ap traffic&quot; cr sr
+            (hash (exp (gen) (mul y x)) &quot;derived&quot;))))
+      (send
+        (enc response
+          (hash &quot;s ap traffic&quot; cr sr
+            (hash (exp (gen) (mul y x)) &quot;derived&quot;)))))
+    (uniq-gen y)
+    (absent (y x)))
+  (defgenrule neqRl_indx
+    (forall ((x indx)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_strd
+    (forall ((x strd)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_mesg
+    (forall ((x mesg)) (implies (fact neq x x) (false))))
+  (lang (random32 atom)))</pre>
+
+<p id="k77">Item <a href="#t77">77</a>, Child: <a href="#k78">78</a>.</p>
+
+<div>
+ <svg
+  class='diagram' width='179.880pt' height='379.920pt'
+  xmlns='http://www.w3.org/2000/svg' version='1.1'
+  viewBox='0 0 179.880 379.920' font-size='12.000'>
+  <defs>
+   <marker
+    id='arrow' orient='auto' markerWidth='5' markerHeight='10' refX='5'
+    refY='5'>
+    <path
+     d='M 0 0 5 5 0 10'
+     style='stroke-width: 2; fill: none; stroke: black;'/></marker>
+   </defs>
+  <line
+   x1='139.920' y1='114.960' x2='139.920' y2='189.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='39.960' y1='114.960' x2='39.960' y2='339.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <g>
+   <title>(hash &quot;c ap traffic&quot; cr sr (hash (exp (gen) (mul x y)) &quot;derived&quot;))</title>
+   <circle cx='139.920' cy='189.960' r='6.000'/></g>
+  <g>
+   <title>(hash &quot;c ap traffic&quot; cr sr (hash (exp (gen) (mul x y)) &quot;derived&quot;))</title>
+   <circle style='fill: red;' cx='139.920' cy='114.960' r='6.000'/></g>
+  <g>
+   <title>(enc request (hash &quot;c ap traffic&quot; cr sr (hash (exp (gen) (mul x y)) &quot;derived&quot;)))</title>
+   <circle style='fill: blue;' cx='39.960' cy='339.960' r='6.000'/></g>
+  <g>
+   <title>(enc (hash (hash &quot;finished&quot; (hash (exp (gen) (mul x y)) &quot;c hs traffic&quot; cr sr)) (cat sr (exp (gen) y)) (cat s spk (enc (hash s spk) (privk ca))) (enc (hash (cat sr (exp (gen) y)) s spk (enc (hash s spk) (privk ca))) (invk spk)) (hash (hash &quot;finished&quot; (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr)) (cat sr (exp (gen) y)) (cat s spk (enc (hash s spk) (privk ca))) (enc (hash (cat sr (exp (gen) y)) s spk (enc (hash s spk) (privk ca))) (invk spk)))) (hash (exp (gen) (mul x y)) &quot;c hs traffic&quot; cr sr))</title>
+   <circle style='fill: blue;' cx='39.960' cy='264.960' r='6.000'/></g>
+  <g>
+   <title>(cat (cat sr (exp (gen) y)) (enc (cat s spk (enc (hash s spk) (privk ca))) (enc (hash (cat sr (exp (gen) y)) s spk (enc (hash s spk) (privk ca))) (invk spk)) (hash (hash &quot;finished&quot; (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr)) (cat sr (exp (gen) y)) (cat s spk (enc (hash s spk) (privk ca))) (enc (hash (cat sr (exp (gen) y)) s spk (enc (hash s spk) (privk ca))) (invk spk))) (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr)))</title>
+   <circle cx='39.960' cy='189.960' r='6.000'/></g>
+  <g><title>(cat cr (exp (gen) x))</title>
+   <circle style='fill: blue;' cx='39.960' cy='114.960' r='6.000'/></g>
+  <g>
+   <title>((cr cr) (sr sr) (request request) (spk spk) (s s) (ca ca) (y y) (x x))</title>
+   <text
+    x='39.960' y='77.460' style='text-anchor: middle;'>server</text></g>
+  <text
+   x='89.940' y='39.960' style='text-anchor: middle;'>tls13 77</text>
+  </svg></div>
+
+<pre>(defskeleton tls13
+  (vars (cr sr random32) (request text) (spk akey) (s ca name) (x expt)
+    (y rndx))
+  (defstrand server 4 (cr cr) (sr sr) (request request) (spk spk) (s s)
+    (ca ca) (y y) (x x))
+  (deflistener
+    (hash &quot;c ap traffic&quot; cr sr (hash (exp (gen) (mul x y)) &quot;derived&quot;)))
+  (non-orig (privk ca))
+  (uniq-orig sr)
+  (uniq-gen y)
+  (absent (y x))
+  (goals
+    (forall
+      ((cr sr random32) (request text) (spk akey) (s ca name) (x expt)
+        (y rndx) (z z-0 strd))
+      (implies
+        (and (p &quot;server&quot; z 4) (p &quot;&quot; z-0 2) (p &quot;server&quot; &quot;cr&quot; z cr)
+          (p &quot;server&quot; &quot;sr&quot; z sr) (p &quot;server&quot; &quot;request&quot; z request)
+          (p &quot;server&quot; &quot;spk&quot; z spk) (p &quot;server&quot; &quot;s&quot; z s)
+          (p &quot;server&quot; &quot;ca&quot; z ca) (p &quot;server&quot; &quot;y&quot; z y)
+          (p &quot;server&quot; &quot;x&quot; z x)
+          (p &quot;&quot; &quot;x&quot; z-0
+            (hash &quot;c ap traffic&quot; cr sr
+              (hash (exp (gen) (mul x y)) &quot;derived&quot;))) (non (privk ca))
+          (ugen y) (uniq-at sr z 1)) (false))))
+  (traces
+    ((recv (cat cr (exp (gen) x)))
+      (send
+        (cat (cat sr (exp (gen) y))
+          (enc (cat s spk (enc (hash s spk) (privk ca)))
+            (enc
+              (hash (cat sr (exp (gen) y)) s spk
+                (enc (hash s spk) (privk ca))) (invk spk))
+            (hash
+              (hash &quot;finished&quot;
+                (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr))
+              (cat sr (exp (gen) y))
+              (cat s spk (enc (hash s spk) (privk ca)))
+              (enc
+                (hash (cat sr (exp (gen) y)) s spk
+                  (enc (hash s spk) (privk ca))) (invk spk)))
+            (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr))))
+      (recv
+        (enc
+          (hash
+            (hash &quot;finished&quot;
+              (hash (exp (gen) (mul x y)) &quot;c hs traffic&quot; cr sr))
+            (cat sr (exp (gen) y))
+            (cat s spk (enc (hash s spk) (privk ca)))
+            (enc
+              (hash (cat sr (exp (gen) y)) s spk
+                (enc (hash s spk) (privk ca))) (invk spk))
+            (hash
+              (hash &quot;finished&quot;
+                (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr))
+              (cat sr (exp (gen) y))
+              (cat s spk (enc (hash s spk) (privk ca)))
+              (enc
+                (hash (cat sr (exp (gen) y)) s spk
+                  (enc (hash s spk) (privk ca))) (invk spk))))
+          (hash (exp (gen) (mul x y)) &quot;c hs traffic&quot; cr sr)))
+      (recv
+        (enc request
+          (hash &quot;c ap traffic&quot; cr sr
+            (hash (exp (gen) (mul x y)) &quot;derived&quot;)))))
+    ((recv
+       (hash &quot;c ap traffic&quot; cr sr
+         (hash (exp (gen) (mul x y)) &quot;derived&quot;)))
+      (send
+        (hash &quot;c ap traffic&quot; cr sr
+          (hash (exp (gen) (mul x y)) &quot;derived&quot;)))))
+  (label 77)
+  (unrealized (1 0))
+  (preskeleton)
+  (maps)
+  (origs (sr (0 1)))
+  (ugens (y (0 1)))
+  (comment &quot;Not a skeleton&quot;))</pre>
+
+<p id="k78">Item <a href="#t77">78</a>, Parent: <a href="#k77">77</a>.</p>
+
+<div>
+ <svg
+  class='diagram' width='179.880pt' height='379.920pt'
+  xmlns='http://www.w3.org/2000/svg' version='1.1'
+  viewBox='0 0 179.880 379.920' font-size='12.000'>
+  <defs>
+   <marker
+    id='arrow' orient='auto' markerWidth='5' markerHeight='10' refX='5'
+    refY='5'>
+    <path
+     d='M 0 0 5 5 0 10'
+     style='stroke-width: 2; fill: none; stroke: black;'/></marker>
+   </defs>
+  <line
+   x1='139.920' y1='189.960' x2='139.920' y2='264.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='39.960' y1='114.960' x2='39.960' y2='339.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <g>
+   <title>(hash &quot;c ap traffic&quot; cr sr (hash (exp (gen) (mul x y)) &quot;derived&quot;))</title>
+   <circle cx='139.920' cy='264.960' r='6.000'/></g>
+  <g>
+   <title>(hash &quot;c ap traffic&quot; cr sr (hash (exp (gen) (mul x y)) &quot;derived&quot;))</title>
+   <circle style='fill: blue;' cx='139.920' cy='189.960' r='6.000'/></g>
+  <g>
+   <title>(enc request (hash &quot;c ap traffic&quot; cr sr (hash (exp (gen) (mul x y)) &quot;derived&quot;)))</title>
+   <circle style='fill: blue;' cx='39.960' cy='339.960' r='6.000'/></g>
+  <g>
+   <title>(enc (hash (hash &quot;finished&quot; (hash (exp (gen) (mul x y)) &quot;c hs traffic&quot; cr sr)) (cat sr (exp (gen) y)) (cat s spk (enc (hash s spk) (privk ca))) (enc (hash (cat sr (exp (gen) y)) s spk (enc (hash s spk) (privk ca))) (invk spk)) (hash (hash &quot;finished&quot; (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr)) (cat sr (exp (gen) y)) (cat s spk (enc (hash s spk) (privk ca))) (enc (hash (cat sr (exp (gen) y)) s spk (enc (hash s spk) (privk ca))) (invk spk)))) (hash (exp (gen) (mul x y)) &quot;c hs traffic&quot; cr sr))</title>
+   <circle style='fill: blue;' cx='39.960' cy='264.960' r='6.000'/></g>
+  <path
+   d='M 39.960 189.960 Q 86.940 189.960 133.920 189.960'
+   style='stroke-dasharray: 6.000,2.400; stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g>
+   <title>(cat (cat sr (exp (gen) y)) (enc (cat s spk (enc (hash s spk) (privk ca))) (enc (hash (cat sr (exp (gen) y)) s spk (enc (hash s spk) (privk ca))) (invk spk)) (hash (hash &quot;finished&quot; (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr)) (cat sr (exp (gen) y)) (cat s spk (enc (hash s spk) (privk ca))) (enc (hash (cat sr (exp (gen) y)) s spk (enc (hash s spk) (privk ca))) (invk spk))) (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr)))</title>
+   <circle cx='39.960' cy='189.960' r='6.000'/></g>
+  <g><title>(cat cr (exp (gen) x))</title>
+   <circle style='fill: blue;' cx='39.960' cy='114.960' r='6.000'/></g>
+  <g>
+   <title>((cr cr) (sr sr) (request request) (spk spk) (s s) (ca ca) (y y) (x x))</title>
+   <text
+    x='39.960' y='77.460' style='text-anchor: middle;'>server</text></g>
+  <text
+   x='89.940' y='39.960' style='text-anchor: middle;'>tls13 78</text>
+  </svg></div>
+
+<pre>(defskeleton tls13
+  (vars (cr sr random32) (request text) (spk akey) (s ca name) (x expt)
+    (y rndx))
+  (defstrand server 4 (cr cr) (sr sr) (request request) (spk spk) (s s)
+    (ca ca) (y y) (x x))
+  (deflistener
+    (hash &quot;c ap traffic&quot; cr sr (hash (exp (gen) (mul x y)) &quot;derived&quot;)))
+  (precedes ((0 1) (1 0)))
+  (non-orig (privk ca))
+  (uniq-orig sr)
+  (uniq-gen y)
+  (absent (y x))
+  (goals
+    (forall
+      ((cr sr random32) (request text) (spk akey) (s ca name) (x expt)
+        (y rndx) (z z-0 strd))
+      (implies
+        (and (p &quot;server&quot; z 4) (p &quot;&quot; z-0 2) (p &quot;server&quot; &quot;cr&quot; z cr)
+          (p &quot;server&quot; &quot;sr&quot; z sr) (p &quot;server&quot; &quot;request&quot; z request)
+          (p &quot;server&quot; &quot;spk&quot; z spk) (p &quot;server&quot; &quot;s&quot; z s)
+          (p &quot;server&quot; &quot;ca&quot; z ca) (p &quot;server&quot; &quot;y&quot; z y)
+          (p &quot;server&quot; &quot;x&quot; z x)
+          (p &quot;&quot; &quot;x&quot; z-0
+            (hash &quot;c ap traffic&quot; cr sr
+              (hash (exp (gen) (mul x y)) &quot;derived&quot;))) (non (privk ca))
+          (ugen y) (uniq-at sr z 1)) (false))))
+  (traces
+    ((recv (cat cr (exp (gen) x)))
+      (send
+        (cat (cat sr (exp (gen) y))
+          (enc (cat s spk (enc (hash s spk) (privk ca)))
+            (enc
+              (hash (cat sr (exp (gen) y)) s spk
+                (enc (hash s spk) (privk ca))) (invk spk))
+            (hash
+              (hash &quot;finished&quot;
+                (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr))
+              (cat sr (exp (gen) y))
+              (cat s spk (enc (hash s spk) (privk ca)))
+              (enc
+                (hash (cat sr (exp (gen) y)) s spk
+                  (enc (hash s spk) (privk ca))) (invk spk)))
+            (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr))))
+      (recv
+        (enc
+          (hash
+            (hash &quot;finished&quot;
+              (hash (exp (gen) (mul x y)) &quot;c hs traffic&quot; cr sr))
+            (cat sr (exp (gen) y))
+            (cat s spk (enc (hash s spk) (privk ca)))
+            (enc
+              (hash (cat sr (exp (gen) y)) s spk
+                (enc (hash s spk) (privk ca))) (invk spk))
+            (hash
+              (hash &quot;finished&quot;
+                (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr))
+              (cat sr (exp (gen) y))
+              (cat s spk (enc (hash s spk) (privk ca)))
+              (enc
+                (hash (cat sr (exp (gen) y)) s spk
+                  (enc (hash s spk) (privk ca))) (invk spk))))
+          (hash (exp (gen) (mul x y)) &quot;c hs traffic&quot; cr sr)))
+      (recv
+        (enc request
+          (hash &quot;c ap traffic&quot; cr sr
+            (hash (exp (gen) (mul x y)) &quot;derived&quot;)))))
+    ((recv
+       (hash &quot;c ap traffic&quot; cr sr
+         (hash (exp (gen) (mul x y)) &quot;derived&quot;)))
+      (send
+        (hash &quot;c ap traffic&quot; cr sr
+          (hash (exp (gen) (mul x y)) &quot;derived&quot;)))))
+  (label 78)
+  (parent 77)
+  (realized)
+  (shape)
+  (satisfies
+    (no (fact false) (cr cr) (sr sr) (request request) (spk spk) (s s)
+      (ca ca) (x x) (y y) (z 0) (z-0 1)))
+  (maps
+    ((0 1)
+      ((cr cr) (sr sr) (request request) (spk spk) (s s) (ca ca) (x x)
+        (y y))))
+  (origs (sr (0 1)))
+  (ugens (y (0 1))))</pre>
+
+<p id="t79">Tree <a href="#top">79</a>, POV <a href="#k79">79</a>.</p>
+
+<div>
+ <svg
+  class='diagram' width='79.920pt' height='79.920pt'
+  xmlns='http://www.w3.org/2000/svg' version='1.1'
+  viewBox='0 0 79.920 79.920' font-size='12.000'>
+  <text
+   x='39.960' y='26.040' style='text-anchor: middle; fill: black;'
+   onclick='window.open(&quot;#k79&quot;, &quot;_self&quot;)'>79</text>
+  </svg></div>
+
+<pre>(defprotocol tls13fs basic
+  (defrole client
+    (vars (s ca name) (cr sr random32) (x rndx) (y expt) (spk akey)
+      (request response text))
+    (trace (send (cat cr (exp (gen) x)))
+      (recv
+        (cat (cat sr (exp (gen) y))
+          (enc (cat s (invk spk) (enc (hash s (invk spk)) (privk ca)))
+            (enc
+              (hash (cat sr (exp (gen) y)) s (invk spk)
+                (enc (hash s (invk spk)) (privk ca))) spk)
+            (hash
+              (hash &quot;finished&quot;
+                (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr))
+              (cat sr (exp (gen) y))
+              (cat s (invk spk) (enc (hash s (invk spk)) (privk ca)))
+              (enc
+                (hash (cat sr (exp (gen) y)) s (invk spk)
+                  (enc (hash s (invk spk)) (privk ca))) spk))
+            (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr))))
+      (send
+        (enc
+          (hash
+            (hash &quot;finished&quot;
+              (hash (exp (gen) (mul x y)) &quot;c hs traffic&quot; cr sr))
+            (cat sr (exp (gen) y))
+            (cat s (invk spk) (enc (hash s (invk spk)) (privk ca)))
+            (enc
+              (hash (cat sr (exp (gen) y)) s (invk spk)
+                (enc (hash s (invk spk)) (privk ca))) spk)
+            (hash
+              (hash &quot;finished&quot;
+                (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr))
+              (cat sr (exp (gen) y))
+              (cat s (invk spk) (enc (hash s (invk spk)) (privk ca)))
+              (enc
+                (hash (cat sr (exp (gen) y)) s (invk spk)
+                  (enc (hash s (invk spk)) (privk ca))) spk)))
+          (hash (exp (gen) (mul x y)) &quot;c hs traffic&quot; cr sr)))
+      (send
+        (enc request
+          (hash &quot;c ap traffic&quot; cr sr
+            (hash (exp (gen) (mul x y)) &quot;derived&quot;))))
+      (recv
+        (enc response
+          (hash &quot;s ap traffic&quot; cr sr
+            (hash (exp (gen) (mul x y)) &quot;derived&quot;)))))
+    (uniq-gen x))
+  (defrole server
+    (vars (s ca name) (cr sr random32) (y rndx) (x expt) (spk akey)
+      (request response text) (priv-stor locn))
+    (trace (load priv-stor (pv s spk (invk spk)))
+      (recv (cat cr (exp (gen) x)))
+      (send
+        (cat (cat sr (exp (gen) y))
+          (enc (cat s (invk spk) (enc (hash s (invk spk)) (privk ca)))
+            (enc
+              (hash (cat sr (exp (gen) y)) s (invk spk)
+                (enc (hash s (invk spk)) (privk ca))) spk)
+            (hash
+              (hash &quot;finished&quot;
+                (hash (exp (gen) (mul y x)) &quot;s hs traffic&quot; cr sr))
+              (cat sr (exp (gen) y))
+              (cat s (invk spk) (enc (hash s (invk spk)) (privk ca)))
+              (enc
+                (hash (cat sr (exp (gen) y)) s (invk spk)
+                  (enc (hash s (invk spk)) (privk ca))) spk))
+            (hash (exp (gen) (mul y x)) &quot;s hs traffic&quot; cr sr))))
+      (recv
+        (enc
+          (hash
+            (hash &quot;finished&quot;
+              (hash (exp (gen) (mul y x)) &quot;c hs traffic&quot; cr sr))
+            (cat sr (exp (gen) y))
+            (cat s (invk spk) (enc (hash s (invk spk)) (privk ca)))
+            (enc
+              (hash (cat sr (exp (gen) y)) s (invk spk)
+                (enc (hash s (invk spk)) (privk ca))) spk)
+            (hash
+              (hash &quot;finished&quot;
+                (hash (exp (gen) (mul y x)) &quot;s hs traffic&quot; cr sr))
+              (cat sr (exp (gen) y))
+              (cat s (invk spk) (enc (hash s (invk spk)) (privk ca)))
+              (enc
+                (hash (cat sr (exp (gen) y)) s (invk spk)
+                  (enc (hash s (invk spk)) (privk ca))) spk)))
+          (hash (exp (gen) (mul y x)) &quot;c hs traffic&quot; cr sr)))
+      (recv
+        (enc request
+          (hash &quot;c ap traffic&quot; cr sr
+            (hash (exp (gen) (mul y x)) &quot;derived&quot;))))
+      (send
+        (enc response
+          (hash &quot;s ap traffic&quot; cr sr
+            (hash (exp (gen) (mul y x)) &quot;derived&quot;)))))
+    (uniq-gen y)
+    (absent (y x))
+    (gen-st (pv s spk (invk spk))))
+  (defrole cert-gen
+    (vars (self name) (pk akey) (priv-stor locn) (ignore mesg))
+    (trace (load priv-stor ignore)
+      (stor priv-stor (pv self pk (invk pk))))
+    (uniq-gen pk))
+  (defrole privkey-disclose
+    (vars (self name) (pk akey) (priv-stor locn))
+    (trace (load priv-stor (pv self pk (invk pk)))
+      (stor priv-stor &quot;nil&quot;) (send pk))
+    (gen-st (pv self pk (invk pk))))
+  (defrule undisclosed-not-disclosed
+    (forall ((z strd) (pk akey))
+      (implies
+        (and (p &quot;privkey-disclose&quot; z (idx 2))
+          (p &quot;privkey-disclose&quot; &quot;pk&quot; z pk) (fact undisclosed pk))
+        (false))))
+  (defrule cert-gen-once-interference
+    (forall ((z1 z2 strd) (self name))
+      (implies
+        (and (p &quot;cert-gen&quot; z2 (idx 2)) (p &quot;cert-gen&quot; z1 (idx 2))
+          (p &quot;cert-gen&quot; &quot;self&quot; z2 self) (p &quot;cert-gen&quot; &quot;self&quot; z1 self)
+          (fact cert-gen-once self))
+        (= z1 z2))))
+  (defgenrule neqRl_indx
+    (forall ((x indx)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_strd
+    (forall ((x strd)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_mesg
+    (forall ((x mesg)) (implies (fact neq x x) (false))))
+  (defgenrule scissorsRule
+    (forall ((z0 z1 z2 strd) (i0 i1 i2 indx))
+      (implies
+        (and (trans z0 i0) (trans z1 i1) (trans z2 i2)
+          (leads-to z0 i0 z1 i1) (leads-to z0 i0 z2 i2))
+        (and (= z1 z2) (= i1 i2)))))
+  (defgenrule cakeRule
+    (forall ((z0 z1 z2 strd) (i0 i1 i2 indx))
+      (implies
+        (and (trans z0 i0) (trans z1 i1) (leads-to z0 i0 z1 i1)
+          (leads-to z0 i0 z2 i2) (prec z1 i1 z2 i2)) (false))))
+  (defgenrule no-interruption
+    (forall ((z0 z1 z2 strd) (i0 i1 i2 indx))
+      (implies
+        (and (leads-to z0 i0 z2 i2) (trans z1 i1)
+          (same-locn z0 i0 z1 i1) (prec z0 i0 z1 i1) (prec z1 i1 z2 i2))
+        (false))))
+  (defgenrule discreteAfter
+    (forall ((z0 z1 z2 strd) (i0 i1 i2 indx))
+      (implies
+        (and (trans z0 i0) (trans z2 i2) (leads-to z0 i0 z1 i1)
+          (same-locn z0 i0 z2 i2) (prec z0 i0 z2 i2))
+        (or (and (= z1 z2) (= i1 i2)) (prec z1 i1 z2 i2)))))
+  (defgenrule discreteBefore
+    (forall ((z0 z1 z2 strd) (i0 i1 i2 indx))
+      (implies
+        (and (trans z0 i0) (trans z1 i1) (same-locn z0 i0 z1 i1)
+          (leads-to z1 i1 z2 i2) (prec z0 i0 z2 i2))
+        (or (and (= z0 z1) (= i0 i1)) (prec z0 i0 z1 i1)))))
+  (defgenrule trRl_cert-gen-at-1
+    (forall ((z strd))
+      (implies (p &quot;cert-gen&quot; z (idx 2)) (trans z (idx 1)))))
+  (defgenrule trRl_cert-gen-at-0
+    (forall ((z strd))
+      (implies (p &quot;cert-gen&quot; z (idx 2)) (trans z (idx 0)))))
+  (defgenrule trRl_privkey-disclose-at-1
+    (forall ((z strd))
+      (implies (p &quot;privkey-disclose&quot; z (idx 2)) (trans z (idx 1)))))
+  (defgenrule trRl_privkey-disclose-at-0
+    (forall ((z strd))
+      (implies (p &quot;privkey-disclose&quot; z (idx 2)) (trans z (idx 0)))))
+  (defgenrule eff-server-1
+    (forall ((i indx) (z1 z strd))
+      (implies (and (p &quot;server&quot; z (idx 2)) (prec z (idx 1) z1 i))
+        (or (= z z1)
+          (and (p &quot;server&quot; z (idx 1)) (prec z (idx 0) z1 i))))))
+  (defgenrule gen-st-server-0
+    (forall ((z strd) (s name) (spk akey))
+      (implies
+        (and (p &quot;server&quot; z (idx 1)) (p &quot;server&quot; &quot;spk&quot; z spk)
+          (p &quot;server&quot; &quot;s&quot; z s)) (gen-st (pv s spk (invk spk))))))
+  (defgenrule gen-st-privkey-disclose-0
+    (forall ((z strd) (self name) (pk akey))
+      (implies
+        (and (p &quot;privkey-disclose&quot; z (idx 1))
+          (p &quot;privkey-disclose&quot; &quot;pk&quot; z pk)
+          (p &quot;privkey-disclose&quot; &quot;self&quot; z self))
+        (gen-st (pv self pk (invk pk))))))
+  (lang (random32 atom) (pv (tuple 3))))</pre>
+
+<p id="k79">Item <a href="#t79">79</a>.</p>
+
+<div>
+ <svg
+  class='diagram' width='279.840pt' height='454.920pt'
+  xmlns='http://www.w3.org/2000/svg' version='1.1'
+  viewBox='0 0 279.840 454.920' font-size='12.000'>
+  <defs>
+   <marker
+    id='arrow' orient='auto' markerWidth='5' markerHeight='10' refX='5'
+    refY='5'>
+    <path
+     d='M 0 0 5 5 0 10'
+     style='stroke-width: 2; fill: none; stroke: black;'/></marker>
+   </defs>
+  <line
+   x1='239.880' y1='264.960' x2='239.880' y2='414.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='139.920' y1='114.960' x2='139.920' y2='189.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='39.960' y1='114.960' x2='39.960' y2='414.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <g><title>spk</title><circle cx='239.880' cy='414.960' r='6.000'/></g>
+  <g><title>(ch-msg priv-stor (cat pt-0 &quot;nil&quot;))</title>
+   <circle style='fill: gray;' cx='239.880' cy='339.960' r='6.000'/></g>
+  <g><title>(ch-msg priv-stor (cat pt (pv self spk (invk spk))))</title>
+   <circle
+    style='fill: lightsteelblue;' cx='239.880' cy='264.960' r='6.000'/>
+   </g>
+  <g><title>request</title><circle cx='139.920' cy='189.960' r='6.000'/>
+   </g>
+  <g><title>request</title>
+   <circle style='fill: red;' cx='139.920' cy='114.960' r='6.000'/></g>
+  <g>
+   <title>(enc response (hash &quot;s ap traffic&quot; cr sr (hash (exp (gen) (mul x y)) &quot;derived&quot;)))</title>
+   <circle style='fill: blue;' cx='39.960' cy='414.960' r='6.000'/></g>
+  <g>
+   <title>(enc request (hash &quot;c ap traffic&quot; cr sr (hash (exp (gen) (mul x y)) &quot;derived&quot;)))</title>
+   <circle cx='39.960' cy='339.960' r='6.000'/></g>
+  <path
+   d='M 39.960 264.960 Q 136.920 227.460 233.880 264.960'
+   style='stroke-dasharray: 6.000,2.400; stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g>
+   <title>(enc (hash (hash &quot;finished&quot; (hash (exp (gen) (mul x y)) &quot;c hs traffic&quot; cr sr)) (cat sr (exp (gen) y)) (cat s (invk spk) (enc (hash s (invk spk)) (privk ca))) (enc (hash (cat sr (exp (gen) y)) s (invk spk) (enc (hash s (invk spk)) (privk ca))) spk) (hash (hash &quot;finished&quot; (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr)) (cat sr (exp (gen) y)) (cat s (invk spk) (enc (hash s (invk spk)) (privk ca))) (enc (hash (cat sr (exp (gen) y)) s (invk spk) (enc (hash s (invk spk)) (privk ca))) spk))) (hash (exp (gen) (mul x y)) &quot;c hs traffic&quot; cr sr))</title>
+   <circle cx='39.960' cy='264.960' r='6.000'/></g>
+  <g>
+   <title>(cat (cat sr (exp (gen) y)) (enc (cat s (invk spk) (enc (hash s (invk spk)) (privk ca))) (enc (hash (cat sr (exp (gen) y)) s (invk spk) (enc (hash s (invk spk)) (privk ca))) spk) (hash (hash &quot;finished&quot; (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr)) (cat sr (exp (gen) y)) (cat s (invk spk) (enc (hash s (invk spk)) (privk ca))) (enc (hash (cat sr (exp (gen) y)) s (invk spk) (enc (hash s (invk spk)) (privk ca))) spk)) (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr)))</title>
+   <circle style='fill: red;' cx='39.960' cy='189.960' r='6.000'/></g>
+  <g><title>(cat cr (exp (gen) x))</title>
+   <circle cx='39.960' cy='114.960' r='6.000'/></g>
+  <g><title>((pk spk) (self self) (priv-stor priv-stor))</title>
+   <text
+    x='239.880' y='77.460'
+    style='text-anchor: middle;'>privkey-disclose</text></g>
+  <g>
+   <title>((cr cr) (sr sr) (request request) (response response) (spk spk) (s s) (ca ca) (x x) (y y))</title>
+   <text
+    x='39.960' y='77.460' style='text-anchor: middle;'>client</text></g>
+  <text
+   x='139.920' y='39.960' style='text-anchor: middle;'>tls13fs 79</text>
+  </svg></div>
+
+<pre>(defskeleton tls13fs
+  (vars (cr sr random32) (request response text) (spk akey)
+    (ca s self name) (pt pt-0 pval) (priv-stor locn) (x rndx) (y expt))
+  (defstrand client 5 (cr cr) (sr sr) (request request)
+    (response response) (spk spk) (s s) (ca ca) (x x) (y y))
+  (deflistener request)
+  (defstrand privkey-disclose 3 (pk spk) (self self)
+    (priv-stor priv-stor))
+  (precedes ((0 2) (2 0)))
+  (non-orig (privk ca))
+  (uniq-orig cr request)
+  (uniq-gen x)
+  (goals
+    (forall
+      ((cr sr random32) (request response text) (spk akey)
+        (ca s self name) (priv-stor locn) (x rndx) (y expt)
+        (z z-0 z-1 strd))
+      (implies
+        (and (p &quot;client&quot; z 5) (p &quot;&quot; z-0 2) (p &quot;privkey-disclose&quot; z-1 3)
+          (p &quot;client&quot; &quot;cr&quot; z cr) (p &quot;client&quot; &quot;sr&quot; z sr)
+          (p &quot;client&quot; &quot;request&quot; z request)
+          (p &quot;client&quot; &quot;response&quot; z response) (p &quot;client&quot; &quot;spk&quot; z spk)
+          (p &quot;client&quot; &quot;s&quot; z s) (p &quot;client&quot; &quot;ca&quot; z ca)
+          (p &quot;client&quot; &quot;x&quot; z x) (p &quot;client&quot; &quot;y&quot; z y)
+          (p &quot;&quot; &quot;x&quot; z-0 request) (p &quot;privkey-disclose&quot; &quot;pk&quot; z-1 spk)
+          (p &quot;privkey-disclose&quot; &quot;self&quot; z-1 self)
+          (p &quot;privkey-disclose&quot; &quot;priv-stor&quot; z-1 priv-stor)
+          (prec z 2 z-1 0) (non (privk ca)) (ugen x) (uniq-at cr z 0)
+          (uniq-at request z 3)) (false))))
+  (traces
+    ((send (cat cr (exp (gen) x)))
+      (recv
+        (cat (cat sr (exp (gen) y))
+          (enc (cat s (invk spk) (enc (hash s (invk spk)) (privk ca)))
+            (enc
+              (hash (cat sr (exp (gen) y)) s (invk spk)
+                (enc (hash s (invk spk)) (privk ca))) spk)
+            (hash
+              (hash &quot;finished&quot;
+                (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr))
+              (cat sr (exp (gen) y))
+              (cat s (invk spk) (enc (hash s (invk spk)) (privk ca)))
+              (enc
+                (hash (cat sr (exp (gen) y)) s (invk spk)
+                  (enc (hash s (invk spk)) (privk ca))) spk))
+            (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr))))
+      (send
+        (enc
+          (hash
+            (hash &quot;finished&quot;
+              (hash (exp (gen) (mul x y)) &quot;c hs traffic&quot; cr sr))
+            (cat sr (exp (gen) y))
+            (cat s (invk spk) (enc (hash s (invk spk)) (privk ca)))
+            (enc
+              (hash (cat sr (exp (gen) y)) s (invk spk)
+                (enc (hash s (invk spk)) (privk ca))) spk)
+            (hash
+              (hash &quot;finished&quot;
+                (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr))
+              (cat sr (exp (gen) y))
+              (cat s (invk spk) (enc (hash s (invk spk)) (privk ca)))
+              (enc
+                (hash (cat sr (exp (gen) y)) s (invk spk)
+                  (enc (hash s (invk spk)) (privk ca))) spk)))
+          (hash (exp (gen) (mul x y)) &quot;c hs traffic&quot; cr sr)))
+      (send
+        (enc request
+          (hash &quot;c ap traffic&quot; cr sr
+            (hash (exp (gen) (mul x y)) &quot;derived&quot;))))
+      (recv
+        (enc response
+          (hash &quot;s ap traffic&quot; cr sr
+            (hash (exp (gen) (mul x y)) &quot;derived&quot;)))))
+    ((recv request) (send request))
+    ((load priv-stor (cat pt (pv self spk (invk spk))))
+      (stor priv-stor (cat pt-0 &quot;nil&quot;)) (send spk)))
+  (label 79)
+  (unrealized (0 1) (1 0))
+  (preskeleton)
+  (maps)
+  (origs (pt-0 (2 1)) (request (0 3)) (cr (0 0)))
+  (ugens (x (0 0)))
+  (comment &quot;Not a skeleton&quot;))</pre>
+
+<p id="t99">Tree <a href="#top">99</a>, POV <a href="#k99">99</a>.</p>
+
+<div>
+ <svg
+  class='diagram' width='129.840pt' height='79.920pt'
+  xmlns='http://www.w3.org/2000/svg' version='1.1'
+  viewBox='0 0 129.840 79.920' font-size='12.000'>
+  <text
+   x='89.880' y='26.040'
+   style='font-weight: bold; text-anchor: middle; fill: blue;'
+   onclick='window.open(&quot;#k103&quot;, &quot;_self&quot;)'>103</text>
+  <line
+   x1='39.960' y1='39.960' x2='89.880' y2='39.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <text
+   x='39.960' y='26.040' style='text-anchor: middle; fill: black;'
+   onclick='window.open(&quot;#k99&quot;, &quot;_self&quot;)'>99</text>
+  </svg></div>
+
+<pre>(defprotocol tls13fs basic
+  (defrole client
+    (vars (s ca name) (cr sr random32) (x rndx) (y expt) (spk akey)
+      (request response text))
+    (trace (send (cat cr (exp (gen) x)))
+      (recv
+        (cat (cat sr (exp (gen) y))
+          (enc (cat s (invk spk) (enc (hash s (invk spk)) (privk ca)))
+            (enc
+              (hash (cat sr (exp (gen) y)) s (invk spk)
+                (enc (hash s (invk spk)) (privk ca))) spk)
+            (hash
+              (hash &quot;finished&quot;
+                (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr))
+              (cat sr (exp (gen) y))
+              (cat s (invk spk) (enc (hash s (invk spk)) (privk ca)))
+              (enc
+                (hash (cat sr (exp (gen) y)) s (invk spk)
+                  (enc (hash s (invk spk)) (privk ca))) spk))
+            (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr))))
+      (send
+        (enc
+          (hash
+            (hash &quot;finished&quot;
+              (hash (exp (gen) (mul x y)) &quot;c hs traffic&quot; cr sr))
+            (cat sr (exp (gen) y))
+            (cat s (invk spk) (enc (hash s (invk spk)) (privk ca)))
+            (enc
+              (hash (cat sr (exp (gen) y)) s (invk spk)
+                (enc (hash s (invk spk)) (privk ca))) spk)
+            (hash
+              (hash &quot;finished&quot;
+                (hash (exp (gen) (mul x y)) &quot;s hs traffic&quot; cr sr))
+              (cat sr (exp (gen) y))
+              (cat s (invk spk) (enc (hash s (invk spk)) (privk ca)))
+              (enc
+                (hash (cat sr (exp (gen) y)) s (invk spk)
+                  (enc (hash s (invk spk)) (privk ca))) spk)))
+          (hash (exp (gen) (mul x y)) &quot;c hs traffic&quot; cr sr)))
+      (send
+        (enc request
+          (hash &quot;c ap traffic&quot; cr sr
+            (hash (exp (gen) (mul x y)) &quot;derived&quot;))))
+      (recv
+        (enc response
+          (hash &quot;s ap traffic&quot; cr sr
+            (hash (exp (gen) (mul x y)) &quot;derived&quot;)))))
+    (uniq-gen x))
+  (defrole server
+    (vars (s ca name) (cr sr random32) (y rndx) (x expt) (spk akey)
+      (request response text) (priv-stor locn))
+    (trace (load priv-stor (pv s spk (invk spk)))
+      (recv (cat cr (exp (gen) x)))
+      (send
+        (cat (cat sr (exp (gen) y))
+          (enc (cat s (invk spk) (enc (hash s (invk spk)) (privk ca)))
+            (enc
+              (hash (cat sr (exp (gen) y)) s (invk spk)
+                (enc (hash s (invk spk)) (privk ca))) spk)
+            (hash
+              (hash &quot;finished&quot;
+                (hash (exp (gen) (mul y x)) &quot;s hs traffic&quot; cr sr))
+              (cat sr (exp (gen) y))
+              (cat s (invk spk) (enc (hash s (invk spk)) (privk ca)))
+              (enc
+                (hash (cat sr (exp (gen) y)) s (invk spk)
+                  (enc (hash s (invk spk)) (privk ca))) spk))
+            (hash (exp (gen) (mul y x)) &quot;s hs traffic&quot; cr sr))))
+      (recv
+        (enc
+          (hash
+            (hash &quot;finished&quot;
+              (hash (exp (gen) (mul y x)) &quot;c hs traffic&quot; cr sr))
+            (cat sr (exp (gen) y))
+            (cat s (invk spk) (enc (hash s (invk spk)) (privk ca)))
+            (enc
+              (hash (cat sr (exp (gen) y)) s (invk spk)
+                (enc (hash s (invk spk)) (privk ca))) spk)
+            (hash
+              (hash &quot;finished&quot;
+                (hash (exp (gen) (mul y x)) &quot;s hs traffic&quot; cr sr))
+              (cat sr (exp (gen) y))
+              (cat s (invk spk) (enc (hash s (invk spk)) (privk ca)))
+              (enc
+                (hash (cat sr (exp (gen) y)) s (invk spk)
+                  (enc (hash s (invk spk)) (privk ca))) spk)))
+          (hash (exp (gen) (mul y x)) &quot;c hs traffic&quot; cr sr)))
+      (recv
+        (enc request
+          (hash &quot;c ap traffic&quot; cr sr
+            (hash (exp (gen) (mul y x)) &quot;derived&quot;))))
+      (send
+        (enc response
+          (hash &quot;s ap traffic&quot; cr sr
+            (hash (exp (gen) (mul y x)) &quot;derived&quot;)))))
+    (uniq-gen y)
+    (absent (y x))
+    (gen-st (pv s spk (invk spk))))
+  (defrole cert-gen
+    (vars (self name) (pk akey) (priv-stor locn) (ignore mesg))
+    (trace (load priv-stor ignore)
+      (stor priv-stor (pv self pk (invk pk))))
+    (uniq-gen pk))
+  (defrole privkey-disclose
+    (vars (self name) (pk akey) (priv-stor locn))
+    (trace (load priv-stor (pv self pk (invk pk)))
+      (stor priv-stor &quot;nil&quot;) (send pk))
+    (gen-st (pv self pk (invk pk))))
+  (defrule undisclosed-not-disclosed
+    (forall ((z strd) (pk akey))
+      (implies
+        (and (p &quot;privkey-disclose&quot; z (idx 2))
+          (p &quot;privkey-disclose&quot; &quot;pk&quot; z pk) (fact undisclosed pk))
+        (false))))
+  (defrule cert-gen-once-interference
+    (forall ((z1 z2 strd) (self name))
+      (implies
+        (and (p &quot;cert-gen&quot; z2 (idx 2)) (p &quot;cert-gen&quot; z1 (idx 2))
+          (p &quot;cert-gen&quot; &quot;self&quot; z2 self) (p &quot;cert-gen&quot; &quot;self&quot; z1 self)
+          (fact cert-gen-once self))
+        (= z1 z2))))
+  (defgenrule neqRl_indx
+    (forall ((x indx)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_strd
+    (forall ((x strd)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_mesg
+    (forall ((x mesg)) (implies (fact neq x x) (false))))
+  (defgenrule scissorsRule
+    (forall ((z0 z1 z2 strd) (i0 i1 i2 indx))
+      (implies
+        (and (trans z0 i0) (trans z1 i1) (trans z2 i2)
+          (leads-to z0 i0 z1 i1) (leads-to z0 i0 z2 i2))
+        (and (= z1 z2) (= i1 i2)))))
+  (defgenrule cakeRule
+    (forall ((z0 z1 z2 strd) (i0 i1 i2 indx))
+      (implies
+        (and (trans z0 i0) (trans z1 i1) (leads-to z0 i0 z1 i1)
+          (leads-to z0 i0 z2 i2) (prec z1 i1 z2 i2)) (false))))
+  (defgenrule no-interruption
+    (forall ((z0 z1 z2 strd) (i0 i1 i2 indx))
+      (implies
+        (and (leads-to z0 i0 z2 i2) (trans z1 i1)
+          (same-locn z0 i0 z1 i1) (prec z0 i0 z1 i1) (prec z1 i1 z2 i2))
+        (false))))
+  (defgenrule discreteAfter
+    (forall ((z0 z1 z2 strd) (i0 i1 i2 indx))
+      (implies
+        (and (trans z0 i0) (trans z2 i2) (leads-to z0 i0 z1 i1)
+          (same-locn z0 i0 z2 i2) (prec z0 i0 z2 i2))
+        (or (and (= z1 z2) (= i1 i2)) (prec z1 i1 z2 i2)))))
+  (defgenrule discreteBefore
+    (forall ((z0 z1 z2 strd) (i0 i1 i2 indx))
+      (implies
+        (and (trans z0 i0) (trans z1 i1) (same-locn z0 i0 z1 i1)
+          (leads-to z1 i1 z2 i2) (prec z0 i0 z2 i2))
+        (or (and (= z0 z1) (= i0 i1)) (prec z0 i0 z1 i1)))))
+  (defgenrule trRl_cert-gen-at-1
+    (forall ((z strd))
+      (implies (p &quot;cert-gen&quot; z (idx 2)) (trans z (idx 1)))))
+  (defgenrule trRl_cert-gen-at-0
+    (forall ((z strd))
+      (implies (p &quot;cert-gen&quot; z (idx 2)) (trans z (idx 0)))))
+  (defgenrule trRl_privkey-disclose-at-1
+    (forall ((z strd))
+      (implies (p &quot;privkey-disclose&quot; z (idx 2)) (trans z (idx 1)))))
+  (defgenrule trRl_privkey-disclose-at-0
+    (forall ((z strd))
+      (implies (p &quot;privkey-disclose&quot; z (idx 2)) (trans z (idx 0)))))
+  (defgenrule eff-server-1
+    (forall ((i indx) (z1 z strd))
+      (implies (and (p &quot;server&quot; z (idx 2)) (prec z (idx 1) z1 i))
+        (or (= z z1)
+          (and (p &quot;server&quot; z (idx 1)) (prec z (idx 0) z1 i))))))
+  (defgenrule gen-st-server-0
+    (forall ((z strd) (s name) (spk akey))
+      (implies
+        (and (p &quot;server&quot; z (idx 1)) (p &quot;server&quot; &quot;spk&quot; z spk)
+          (p &quot;server&quot; &quot;s&quot; z s)) (gen-st (pv s spk (invk spk))))))
+  (defgenrule gen-st-privkey-disclose-0
+    (forall ((z strd) (self name) (pk akey))
+      (implies
+        (and (p &quot;privkey-disclose&quot; z (idx 1))
+          (p &quot;privkey-disclose&quot; &quot;pk&quot; z pk)
+          (p &quot;privkey-disclose&quot; &quot;self&quot; z self))
+        (gen-st (pv self pk (invk pk))))))
+  (lang (random32 atom) (pv (tuple 3))))</pre>
+
+<p id="k99">Item <a href="#t99">99</a>, Child: <a href="#k103">103</a>.</p>
+
+<div>
+ <svg
+  class='diagram' width='279.840pt' height='529.920pt'
+  xmlns='http://www.w3.org/2000/svg' version='1.1'
+  viewBox='0 0 279.840 529.920' font-size='12.000'>
+  <defs>
+   <marker
+    id='arrow' orient='auto' markerWidth='5' markerHeight='10' refX='5'
+    refY='5'>
+    <path
+     d='M 0 0 5 5 0 10'
+     style='stroke-width: 2; fill: none; stroke: black;'/></marker>
+   </defs>
+  <line
+   x1='239.880' y1='264.960' x2='239.880' y2='414.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='139.920' y1='114.960' x2='139.920' y2='189.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='39.960' y1='114.960' x2='39.960' y2='489.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <g><title>spk</title><circle cx='239.880' cy='414.960' r='6.000'/></g>
+  <g><title>(ch-msg priv-stor-0 (cat pt-1 &quot;nil&quot;))</title>
+   <circle style='fill: gray;' cx='239.880' cy='339.960' r='6.000'/></g>
+  <g>
+   <title>(ch-msg priv-stor-0 (cat pt-0 (pv self spk (invk spk))))</title>
+   <circle
+    style='fill: lightsteelblue;' cx='239.880' cy='264.960' r='6.000'/>
+   </g>
+  <g><title>response</title>
+   <circle cx='139.920' cy='189.960' r='6.000'/></g>
+  <g><title>response</title>
+   <circle style='fill: red;' cx='139.920' cy='114.960' r='6.000'/></g>
+  <g>
+   <title>(enc response (hash &quot;s ap traffic&quot; cr sr (hash (exp (gen) (mul y x)) &quot;derived&quot;)))</title>
+   <circle cx='39.960' cy='489.960' r='6.000'/></g>
+  <g>
+   <title>(enc request (hash &quot;c ap traffic&quot; cr sr (hash (exp (gen) (mul y x)) &quot;derived&quot;)))</title>
+   <circle style='fill: blue;' cx='39.960' cy='414.960' r='6.000'/></g>
+  <g>
+   <title>(enc (hash (hash &quot;finished&quot; (hash (exp (gen) (mul y x)) &quot;c hs traffic&quot; cr sr)) (cat sr (exp (gen) y)) (cat s (invk spk) (enc (hash s (invk spk)) (privk ca))) (enc (hash (cat sr (exp (gen) y)) s (invk spk) (enc (hash s (invk spk)) (privk ca))) spk) (hash (hash &quot;finished&quot; (hash (exp (gen) (mul y x)) &quot;s hs traffic&quot; cr sr)) (cat sr (exp (gen) y)) (cat s (invk spk) (enc (hash s (invk spk)) (privk ca))) (enc (hash (cat sr (exp (gen) y)) s (invk spk) (enc (hash s (invk spk)) (privk ca))) spk))) (hash (exp (gen) (mul y x)) &quot;c hs traffic&quot; cr sr))</title>
+   <circle style='fill: blue;' cx='39.960' cy='339.960' r='6.000'/></g>
+  <path
+   d='M 39.960 264.960 Q 136.920 227.460 233.880 264.960'
+   style='stroke-dasharray: 6.000,2.400; stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g>
+   <title>(cat (cat sr (exp (gen) y)) (enc (cat s (invk spk) (enc (hash s (invk spk)) (privk ca))) (enc (hash (cat sr (exp (gen) y)) s (invk spk) (enc (hash s (invk spk)) (privk ca))) spk) (hash (hash &quot;finished&quot; (hash (exp (gen) (mul y x)) &quot;s hs traffic&quot; cr sr)) (cat sr (exp (gen) y)) (cat s (invk spk) (enc (hash s (invk spk)) (privk ca))) (enc (hash (cat sr (exp (gen) y)) s (invk spk) (enc (hash s (invk spk)) (privk ca))) spk)) (hash (exp (gen) (mul y x)) &quot;s hs traffic&quot; cr sr)))</title>
+   <circle cx='39.960' cy='264.960' r='6.000'/></g>
+  <g><title>(cat cr (exp (gen) x))</title>
+   <circle style='fill: blue;' cx='39.960' cy='189.960' r='6.000'/></g>
+  <g><title>(ch-msg priv-stor (cat pt (pv s spk (invk spk))))</title>
+   <circle
+    style='fill: lightsteelblue;' cx='39.960' cy='114.960' r='6.000'/>
+   </g>
+  <g><title>((pk spk) (self self) (priv-stor priv-stor-0))</title>
+   <text
+    x='239.880' y='77.460'
+    style='text-anchor: middle;'>privkey-disclose</text></g>
+  <g>
+   <title>((cr cr) (sr sr) (request request) (response response) (spk spk) (s s) (ca ca) (priv-stor priv-stor) (y y) (x x))</title>
+   <text
+    x='39.960' y='77.460' style='text-anchor: middle;'>server</text></g>
+  <text
+   x='139.920' y='39.960' style='text-anchor: middle;'>tls13fs 99</text>
+  </svg></div>
+
+<pre>(defskeleton tls13fs
+  (vars (sr cr random32) (response request text) (spk akey)
+    (ca s self name) (pt pt-0 pt-1 pval) (priv-stor priv-stor-0 locn)
+    (y rndx) (x expt))
+  (defstrand server 6 (cr cr) (sr sr) (request request)
+    (response response) (spk spk) (s s) (ca ca) (priv-stor priv-stor)
+    (y y) (x x))
+  (deflistener response)
+  (defstrand privkey-disclose 3 (pk spk) (self self)
+    (priv-stor priv-stor-0))
+  (precedes ((0 2) (2 0)))
+  (non-orig (privk ca))
+  (uniq-orig sr response)
+  (uniq-gen y)
+  (absent (y x))
+  (goals
+    (forall
+      ((sr cr random32) (response request text) (spk akey)
+        (ca s self name) (priv-stor priv-stor-0 locn) (y rndx) (x expt)
+        (z z-0 z-1 strd))
+      (implies
+        (and (p &quot;server&quot; z 6) (p &quot;&quot; z-0 2) (p &quot;privkey-disclose&quot; z-1 3)
+          (p &quot;server&quot; &quot;cr&quot; z cr) (p &quot;server&quot; &quot;sr&quot; z sr)
+          (p &quot;server&quot; &quot;request&quot; z request)
+          (p &quot;server&quot; &quot;response&quot; z response) (p &quot;server&quot; &quot;spk&quot; z spk)
+          (p &quot;server&quot; &quot;s&quot; z s) (p &quot;server&quot; &quot;ca&quot; z ca)
+          (p &quot;server&quot; &quot;priv-stor&quot; z priv-stor) (p &quot;server&quot; &quot;y&quot; z y)
+          (p &quot;server&quot; &quot;x&quot; z x) (p &quot;&quot; &quot;x&quot; z-0 response)
+          (p &quot;privkey-disclose&quot; &quot;pk&quot; z-1 spk)
+          (p &quot;privkey-disclose&quot; &quot;self&quot; z-1 self)
+          (p &quot;privkey-disclose&quot; &quot;priv-stor&quot; z-1 priv-stor-0)
+          (prec z 2 z-1 0) (non (privk ca)) (ugen y) (uniq-at sr z 2)
+          (uniq-at response z 5)) (false))))
+  (traces
+    ((load priv-stor (cat pt (pv s spk (invk spk))))
+      (recv (cat cr (exp (gen) x)))
+      (send
+        (cat (cat sr (exp (gen) y))
+          (enc (cat s (invk spk) (enc (hash s (invk spk)) (privk ca)))
+            (enc
+              (hash (cat sr (exp (gen) y)) s (invk spk)
+                (enc (hash s (invk spk)) (privk ca))) spk)
+            (hash
+              (hash &quot;finished&quot;
+                (hash (exp (gen) (mul y x)) &quot;s hs traffic&quot; cr sr))
+              (cat sr (exp (gen) y))
+              (cat s (invk spk) (enc (hash s (invk spk)) (privk ca)))
+              (enc
+                (hash (cat sr (exp (gen) y)) s (invk spk)
+                  (enc (hash s (invk spk)) (privk ca))) spk))
+            (hash (exp (gen) (mul y x)) &quot;s hs traffic&quot; cr sr))))
+      (recv
+        (enc
+          (hash
+            (hash &quot;finished&quot;
+              (hash (exp (gen) (mul y x)) &quot;c hs traffic&quot; cr sr))
+            (cat sr (exp (gen) y))
+            (cat s (invk spk) (enc (hash s (invk spk)) (privk ca)))
+            (enc
+              (hash (cat sr (exp (gen) y)) s (invk spk)
+                (enc (hash s (invk spk)) (privk ca))) spk)
+            (hash
+              (hash &quot;finished&quot;
+                (hash (exp (gen) (mul y x)) &quot;s hs traffic&quot; cr sr))
+              (cat sr (exp (gen) y))
+              (cat s (invk spk) (enc (hash s (invk spk)) (privk ca)))
+              (enc
+                (hash (cat sr (exp (gen) y)) s (invk spk)
+                  (enc (hash s (invk spk)) (privk ca))) spk)))
+          (hash (exp (gen) (mul y x)) &quot;c hs traffic&quot; cr sr)))
+      (recv
+        (enc request
+          (hash &quot;c ap traffic&quot; cr sr
+            (hash (exp (gen) (mul y x)) &quot;derived&quot;))))
+      (send
+        (enc response
+          (hash &quot;s ap traffic&quot; cr sr
+            (hash (exp (gen) (mul y x)) &quot;derived&quot;)))))
+    ((recv response) (send response))
+    ((load priv-stor-0 (cat pt-0 (pv self spk (invk spk))))
+      (stor priv-stor-0 (cat pt-1 &quot;nil&quot;)) (send spk)))
+  (label 99)
+  (unrealized (1 0))
+  (preskeleton)
+  (maps)
+  (origs (pt-1 (2 1)) (response (0 5)) (sr (0 2)))
+  (ugens (y (0 2)))
+  (comment &quot;Not a skeleton&quot;))</pre>
+
+<p id="k103">Item <a href="#t99">103</a>, Parent: <a href="#k99">99</a>.</p>
+
+<div>
+ <svg
+  class='diagram' width='379.800pt' height='679.920pt'
+  xmlns='http://www.w3.org/2000/svg' version='1.1'
+  viewBox='0 0 379.800 679.920' font-size='12.000'>
+  <defs>
+   <marker
+    id='arrow' orient='auto' markerWidth='5' markerHeight='10' refX='5'
+    refY='5'>
+    <path
+     d='M 0 0 5 5 0 10'
+     style='stroke-width: 2; fill: none; stroke: black;'/></marker>
+   </defs>
+  <line
+   x1='339.840' y1='114.960' x2='339.840' y2='189.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='239.880' y1='339.960' x2='239.880' y2='489.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='139.920' y1='564.960' x2='139.920' y2='639.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='39.960' y1='189.960' x2='39.960' y2='564.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <path
+   d='M 339.840 189.960 Q 192.900 152.460 45.960 189.960'
+   style='stroke-width: 0.960; stroke: blue; marker-end: url(#arrow); fill: none;'/>
+  <path
+   d='M 339.840 189.960 Q 291.524 262.464 243.207 334.967'
+   style='stroke-width: 0.960; stroke: blue; marker-end: url(#arrow); fill: none;'/>
+  <g><title>(ch-msg priv-stor (cat pt (pv self spk (invk spk))))</title>
+   <circle style='fill: gray;' cx='339.840' cy='189.960' r='6.000'/></g>
+  <g><title>(ch-msg priv-stor (cat pt-1 ignore))</title>
+   <circle
+    style='fill: lightsteelblue;' cx='339.840' cy='114.960' r='6.000'/>
+   </g>
+  <g><title>spk</title><circle cx='239.880' cy='489.960' r='6.000'/></g>
+  <g><title>(ch-msg priv-stor (cat pt-0 &quot;nil&quot;))</title>
+   <circle style='fill: gray;' cx='239.880' cy='414.960' r='6.000'/></g>
+  <g><title>(ch-msg priv-stor (cat pt (pv self spk (invk spk))))</title>
+   <circle
+    style='fill: lightsteelblue;' cx='239.880' cy='339.960' r='6.000'/>
+   </g>
+  <g><title>response</title>
+   <circle cx='139.920' cy='639.960' r='6.000'/></g>
+  <g><title>response</title>
+   <circle style='fill: blue;' cx='139.920' cy='564.960' r='6.000'/></g>
+  <path
+   d='M 39.960 564.960 Q 86.940 564.960 133.920 564.960'
+   style='stroke-dasharray: 6.000,2.400; stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g>
+   <title>(enc response (hash &quot;s ap traffic&quot; cr sr (hash (exp (gen) (mul y x)) &quot;derived&quot;)))</title>
+   <circle cx='39.960' cy='564.960' r='6.000'/></g>
+  <g>
+   <title>(enc request (hash &quot;c ap traffic&quot; cr sr (hash (exp (gen) (mul y x)) &quot;derived&quot;)))</title>
+   <circle style='fill: blue;' cx='39.960' cy='489.960' r='6.000'/></g>
+  <g>
+   <title>(enc (hash (hash &quot;finished&quot; (hash (exp (gen) (mul y x)) &quot;c hs traffic&quot; cr sr)) (cat sr (exp (gen) y)) (cat self (invk spk) (enc (hash self (invk spk)) (privk ca))) (enc (hash (cat sr (exp (gen) y)) self (invk spk) (enc (hash self (invk spk)) (privk ca))) spk) (hash (hash &quot;finished&quot; (hash (exp (gen) (mul y x)) &quot;s hs traffic&quot; cr sr)) (cat sr (exp (gen) y)) (cat self (invk spk) (enc (hash self (invk spk)) (privk ca))) (enc (hash (cat sr (exp (gen) y)) self (invk spk) (enc (hash self (invk spk)) (privk ca))) spk))) (hash (exp (gen) (mul y x)) &quot;c hs traffic&quot; cr sr))</title>
+   <circle style='fill: blue;' cx='39.960' cy='414.960' r='6.000'/></g>
+  <path
+   d='M 39.960 339.960 Q 136.920 302.460 233.880 339.960'
+   style='stroke-dasharray: 6.000,2.400; stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g>
+   <title>(cat (cat sr (exp (gen) y)) (enc (cat self (invk spk) (enc (hash self (invk spk)) (privk ca))) (enc (hash (cat sr (exp (gen) y)) self (invk spk) (enc (hash self (invk spk)) (privk ca))) spk) (hash (hash &quot;finished&quot; (hash (exp (gen) (mul y x)) &quot;s hs traffic&quot; cr sr)) (cat sr (exp (gen) y)) (cat self (invk spk) (enc (hash self (invk spk)) (privk ca))) (enc (hash (cat sr (exp (gen) y)) self (invk spk) (enc (hash self (invk spk)) (privk ca))) spk)) (hash (exp (gen) (mul y x)) &quot;s hs traffic&quot; cr sr)))</title>
+   <circle cx='39.960' cy='339.960' r='6.000'/></g>
+  <g><title>(cat cr (exp (gen) x))</title>
+   <circle style='fill: blue;' cx='39.960' cy='264.960' r='6.000'/></g>
+  <g><title>(ch-msg priv-stor (cat pt (pv self spk (invk spk))))</title>
+   <circle
+    style='fill: lightsteelblue;' cx='39.960' cy='189.960' r='6.000'/>
+   </g>
+  <g>
+   <title>((ignore ignore) (pk spk) (self self) (priv-stor priv-stor))</title>
+   <text
+    x='339.840' y='77.460' style='text-anchor: middle;'>cert-gen</text>
+   </g>
+  <g><title>((pk spk) (self self) (priv-stor priv-stor))</title>
+   <text
+    x='239.880' y='77.460'
+    style='text-anchor: middle;'>privkey-disclose</text></g>
+  <g>
+   <title>((cr cr) (sr sr) (request request) (response response) (spk spk) (s self) (ca ca) (priv-stor priv-stor) (y y) (x x))</title>
+   <text
+    x='39.960' y='77.460' style='text-anchor: middle;'>server</text></g>
+  <text
+   x='189.900' y='39.960'
+   style='text-anchor: middle;'>tls13fs 103</text></svg></div>
+
+<pre>(defskeleton tls13fs
+  (vars (ignore mesg) (sr cr random32) (response request text)
+    (spk akey) (ca self name) (pt pt-0 pt-1 pval) (priv-stor locn)
+    (y rndx) (x expt))
+  (defstrand server 6 (cr cr) (sr sr) (request request)
+    (response response) (spk spk) (s self) (ca ca) (priv-stor priv-stor)
+    (y y) (x x))
+  (deflistener response)
+  (defstrand privkey-disclose 3 (pk spk) (self self)
+    (priv-stor priv-stor))
+  (defstrand cert-gen 2 (ignore ignore) (pk spk) (self self)
+    (priv-stor priv-stor))
+  (precedes ((0 2) (2 0)) ((0 5) (1 0)) ((3 1) (0 0)))
+  (non-orig (privk ca))
+  (uniq-orig sr response)
+  (uniq-gen spk y)
+  (absent (y x))
+  (gen-st (pv self spk (invk spk)))
+  (leads-to ((3 1) (0 0)) ((3 1) (2 0)))
+  (goals
+    (forall
+      ((sr cr random32) (response request text) (spk akey)
+        (ca s self name) (priv-stor priv-stor-0 locn) (y rndx) (x expt)
+        (z z-0 z-1 strd))
+      (implies
+        (and (p &quot;server&quot; z 6) (p &quot;&quot; z-0 2) (p &quot;privkey-disclose&quot; z-1 3)
+          (p &quot;server&quot; &quot;cr&quot; z cr) (p &quot;server&quot; &quot;sr&quot; z sr)
+          (p &quot;server&quot; &quot;request&quot; z request)
+          (p &quot;server&quot; &quot;response&quot; z response) (p &quot;server&quot; &quot;spk&quot; z spk)
+          (p &quot;server&quot; &quot;s&quot; z s) (p &quot;server&quot; &quot;ca&quot; z ca)
+          (p &quot;server&quot; &quot;priv-stor&quot; z priv-stor) (p &quot;server&quot; &quot;y&quot; z y)
+          (p &quot;server&quot; &quot;x&quot; z x) (p &quot;&quot; &quot;x&quot; z-0 response)
+          (p &quot;privkey-disclose&quot; &quot;pk&quot; z-1 spk)
+          (p &quot;privkey-disclose&quot; &quot;self&quot; z-1 self)
+          (p &quot;privkey-disclose&quot; &quot;priv-stor&quot; z-1 priv-stor-0)
+          (prec z 2 z-1 0) (non (privk ca)) (ugen y) (uniq-at sr z 2)
+          (uniq-at response z 5)) (false))))
+  (operation channel-test (displaced 4 3 cert-gen 2)
+    (ch-msg priv-stor-0 (cat pt-2 (pv s spk (invk spk)))) (0 0))
+  (strand-map 0 1 2 3)
+  (traces
+    ((load priv-stor (cat pt (pv self spk (invk spk))))
+      (recv (cat cr (exp (gen) x)))
+      (send
+        (cat (cat sr (exp (gen) y))
+          (enc
+            (cat self (invk spk)
+              (enc (hash self (invk spk)) (privk ca)))
+            (enc
+              (hash (cat sr (exp (gen) y)) self (invk spk)
+                (enc (hash self (invk spk)) (privk ca))) spk)
+            (hash
+              (hash &quot;finished&quot;
+                (hash (exp (gen) (mul y x)) &quot;s hs traffic&quot; cr sr))
+              (cat sr (exp (gen) y))
+              (cat self (invk spk)
+                (enc (hash self (invk spk)) (privk ca)))
+              (enc
+                (hash (cat sr (exp (gen) y)) self (invk spk)
+                  (enc (hash self (invk spk)) (privk ca))) spk))
+            (hash (exp (gen) (mul y x)) &quot;s hs traffic&quot; cr sr))))
+      (recv
+        (enc
+          (hash
+            (hash &quot;finished&quot;
+              (hash (exp (gen) (mul y x)) &quot;c hs traffic&quot; cr sr))
+            (cat sr (exp (gen) y))
+            (cat self (invk spk)
+              (enc (hash self (invk spk)) (privk ca)))
+            (enc
+              (hash (cat sr (exp (gen) y)) self (invk spk)
+                (enc (hash self (invk spk)) (privk ca))) spk)
+            (hash
+              (hash &quot;finished&quot;
+                (hash (exp (gen) (mul y x)) &quot;s hs traffic&quot; cr sr))
+              (cat sr (exp (gen) y))
+              (cat self (invk spk)
+                (enc (hash self (invk spk)) (privk ca)))
+              (enc
+                (hash (cat sr (exp (gen) y)) self (invk spk)
+                  (enc (hash self (invk spk)) (privk ca))) spk)))
+          (hash (exp (gen) (mul y x)) &quot;c hs traffic&quot; cr sr)))
+      (recv
+        (enc request
+          (hash &quot;c ap traffic&quot; cr sr
+            (hash (exp (gen) (mul y x)) &quot;derived&quot;))))
+      (send
+        (enc response
+          (hash &quot;s ap traffic&quot; cr sr
+            (hash (exp (gen) (mul y x)) &quot;derived&quot;)))))
+    ((recv response) (send response))
+    ((load priv-stor (cat pt (pv self spk (invk spk))))
+      (stor priv-stor (cat pt-0 &quot;nil&quot;)) (send spk))
+    ((load priv-stor (cat pt-1 ignore))
+      (stor priv-stor (cat pt (pv self spk (invk spk))))))
+  (label 103)
+  (parent 99)
+  (realized)
+  (shape)
+  (satisfies
+    (no (fact false) (sr sr) (cr cr) (response response)
+      (request request) (spk spk) (ca ca) (s self) (self self)
+      (priv-stor priv-stor) (priv-stor-0 priv-stor) (y y) (x x) (z 0)
+      (z-0 1) (z-1 2)))
+  (maps
+    ((0 1 2)
+      ((sr sr) (cr cr) (response response) (request request) (spk spk)
+        (ca ca) (s self) (self self) (priv-stor priv-stor)
+        (priv-stor-0 priv-stor) (y y) (x x))))
+  (origs (pt (3 1)) (pt-0 (2 1)) (response (0 5)) (sr (0 2)))
+  (ugens (spk (3 1)) (y (0 2))))</pre>
+
+</body>
+</html>

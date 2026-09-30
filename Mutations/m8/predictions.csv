@@ -1,0 +1,17 @@
+goal,predicted,rationale
+S1,VIOLATED,No signatures at all: certificates are replayable and the adversary can play either role.
+S2,VIOLATED,Already violated in m0 (server-only authentication); removing a mechanism cannot restore it.
+S3,VIOLATED,No signatures at all: certificates are replayable and the adversary can play either role.
+S4,VIOLATED,No signatures at all: certificates are replayable and the adversary can play either role.
+S5,VIOLATED,Already violated in m0 (server-only authentication); removing a mechanism cannot restore it.
+S6,VIOLATED,Already violated in m0 (server-only authentication); removing a mechanism cannot restore it.
+S7,VIOLATED,Same edit as m1 within the server-only family: No signatures at all: certificates are replayable and the adversary can play either role.
+S8,VIOLATED,Already violated in m0 (server-only authentication); removing a mechanism cannot restore it.
+M1,VIOLATED,No signatures at all: certificates are replayable and the adversary can play either role.
+M2,VIOLATED,No signatures at all: certificates are replayable and the adversary can play either role.
+M3,VIOLATED,No signatures at all: certificates are replayable and the adversary can play either role.
+M4,VIOLATED,No signatures at all: certificates are replayable and the adversary can play either role.
+M5,VIOLATED,No signatures at all: certificates are replayable and the adversary can play either role.
+M6,VIOLATED,No signatures at all: certificates are replayable and the adversary can play either role.
+M7,VIOLATED,No signatures at all: certificates are replayable and the adversary can play either role.
+M8,VIOLATED,No signatures at all: certificates are replayable and the adversary can play either role. Assumes a faithful PFS model in which a client strand can be added (Task B).

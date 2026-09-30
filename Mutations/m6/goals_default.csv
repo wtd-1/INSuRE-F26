@@ -1,0 +1,17 @@
+goal,proto,name,verdict,search_complete,skeletons,shapes,peer_strand_added
+S1,tls13,Client->server injective agreement,HOLDS,True,38,1,True
+S2,tls13,Server->client injective agreement,VIOLATED,True,1,1,False
+S3,tls13,Client view: c ap traffic key secrecy,HOLDS,True,13,0,True
+S4,tls13,Client view: s ap traffic key secrecy,HOLDS,True,13,0,True
+S5,tls13,Server view: s ap traffic key secrecy,VIOLATED,True,2,1,False
+S6,tls13,Server view: c ap traffic key secrecy,VIOLATED,True,2,1,False
+S7,tls13fs,"PFS, client view (server key leaked later)",HOLDS,True,20,0,True
+S8,tls13fs,"PFS, server view (server key leaked later)",VIOLATED,True,5,1,False
+M1,tls13-mtls,Client->server injective agreement,HOLDS,True,38,1,True
+M2,tls13-mtls,Server->client injective agreement,VIOLATED,True,4,2,True
+M3,tls13-mtls,Client view: c ap traffic key secrecy,HOLDS,True,13,0,True
+M4,tls13-mtls,Client view: s ap traffic key secrecy,HOLDS,True,13,0,True
+M5,tls13-mtls,Server view: s ap traffic key secrecy,VIOLATED,True,5,2,True
+M6,tls13-mtls,Server view: c ap traffic key secrecy,VIOLATED,True,5,2,True
+M7,tls13mtlspfs,"PFS, client view (server key leaked later)",HOLDS,True,38,0,True
+M8,tls13mtlspfs,"PFS, server view (client key leaked later)",VIOLATED,False,2003,3,True

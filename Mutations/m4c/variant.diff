@@ -1,0 +1,11 @@
+--- BASELINE-v2/TLS1.3_macros.lisp
++++ m4c/TLS1.3_macros.lisp
+@@ -62,7 +62,7 @@
+ 
+ ;; [m4c] Freshness of the client's DH exponent (role annotation).
+ (defmacro (ClientDHFresh exponent)
+-    (uniq-gen exponent))
++    (^))
+ 
+ ;; [m8] CertificateVerify, both roles.
+ (defmacro (CertificateVerify messages key)

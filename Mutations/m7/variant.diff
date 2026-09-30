@@ -1,0 +1,11 @@
+--- BASELINE-v2/TLS1.3_macros.lisp
++++ m7/TLS1.3_macros.lisp
+@@ -70,7 +70,7 @@
+ 
+ ;; [m7] Client Certificate. F5: tagged "client" (X.509 clientAuth key usage).
+ (defmacro (ClientCertificate party publickey ca)
+-    (cat party publickey (enc (hash "client" party publickey) (privk ca))))
++    (^))
+ 
+ ;; [m2] Transcript covered by the server's CertificateVerify signature.
+ (defmacro (ServerSignedMesgs client_random server_random client_expt

@@ -1,0 +1,40 @@
+cpsa4shapes: Uncaught exception ghc-internal:GHC.Internal.IO.Exception.IOException:
+
+output_tight.txt: openFile: does not exist (No such file or directory)
+
+HasCallStack backtrace:
+  ioError, called at libraries/ghc-internal/src/GHC/Internal/Foreign/C/Error.hs:291:5 in ghc-internal:GHC.Internal.Foreign.C.Error
+
+m0 tight: exit=1 57.70s S1=H S2=V S3=H S4=H S5=V S6=V S7=H S8=V M1=H M2=H M3=H M4=H M5=H M6=H M7=H M8=I
+m0 default: exit=1 394.49s S1=H S2=V S3=H S4=H S5=V S6=V S7=H S8=V M1=H M2=H M3=H M4=H M5=H M6=H M7=H M8=I
+m5 tight: exit=1 57.62s S1=H S2=V S3=H S4=H S5=V S6=V S7=H S8=V M1=H M2=H M3=H M4=H M5=H M6=H M7=H M8=I
+m5 default: exit=1 390.64s S1=H S2=V S3=H S4=H S5=V S6=V S7=H S8=V M1=H M2=H M3=H M4=H M5=H M6=H M7=H M8=I
+m1 tight: exit=1 5.63s S1=V S2=V S3=V S4=V S5=V S6=V S7=V S8=V M1=V M2=H M3=V M4=V M5=H M6=H M7=V M8=I
+m1 default: exit=1 5.64s S1=V S2=V S3=V S4=V S5=V S6=V S7=V S8=V M1=V M2=H M3=V M4=V M5=H M6=H M7=V M8=I
+m2 tight: exit=1 25.79s S1=H S2=V S3=H S4=H S5=V S6=V S7=H S8=V M1=H M2=H M3=H M4=H M5=H M6=H M7=H M8=I
+m2 default: exit=1 224.69s S1=H S2=V S3=H S4=H S5=V S6=V S7=H S8=V M1=H M2=H M3=H M4=H M5=H M6=H M7=H M8=I
+m3 tight: exit=1 37.07s S1=H S2=V S3=H S4=H S5=V S6=V S7=H S8=V M1=H M2=H M3=H M4=H M5=H M6=H M7=H M8=I
+m3 default: exit=1 226.35s S1=H S2=V S3=H S4=H S5=V S6=V S7=H S8=V M1=H M2=H M3=H M4=H M5=H M6=H M7=H M8=I
+m3c tight: exit=1 44.79s S1=H S2=V S3=H S4=H S5=V S6=V S7=H S8=V M1=H M2=H M3=H M4=H M5=H M6=H M7=H M8=I
+m3c default: exit=1 287.04s S1=H S2=V S3=H S4=H S5=V S6=V S7=H S8=V M1=H M2=H M3=H M4=H M5=H M6=H M7=H M8=I
+m3s tight: exit=1 44.27s S1=H S2=V S3=H S4=H S5=V S6=V S7=H S8=V M1=H M2=H M3=H M4=H M5=H M6=H M7=H M8=I
+m3s default: exit=1 286.43s S1=H S2=V S3=H S4=H S5=V S6=V S7=H S8=V M1=H M2=H M3=H M4=H M5=H M6=H M7=H M8=I
+m4 tight: exit=1 11.05s S1=V S2=V S3=V S4=V S5=V S6=V S7=V S8=V M1=V M2=H M3=V M4=V M5=H M6=H M7=V M8=I
+m4 default: exit=1 11.06s S1=V S2=V S3=V S4=V S5=V S6=V S7=V S8=V M1=V M2=H M3=V M4=V M5=H M6=H M7=V M8=I
+m4c tight: exit=0 19.22s S1=H S2=V S3=H S4=H S5=V S6=V S7=H S8=V M1=H M2=V M3=H M4=H M5=V M6=V M7=H M8=V
+m4c default: exit=0 19.20s S1=H S2=V S3=H S4=H S5=V S6=V S7=H S8=V M1=H M2=V M3=H M4=H M5=V M6=V M7=H M8=V
+m6 tight: exit=1 61.82s S1=H S2=V S3=H S4=H S5=V S6=V S7=H S8=V M1=H M2=V M3=H M4=H M5=V M6=V M7=H M8=V
+m6 default: exit=1 314.64s S1=H S2=V S3=H S4=H S5=V S6=V S7=H S8=V M1=H M2=V M3=H M4=H M5=V M6=V M7=H M8=V
+Traceback (most recent call last):
+  File "/Users/wtdoan/Documents/INSuRE_Project/Mutations/tools/run_variant.py", line 72, in <module>
+    run(v)
+  File "/Users/wtdoan/Documents/INSuRE_Project/Mutations/tools/run_variant.py", line 55, in run
+    subprocess.run([os.path.join(BIN, "cpsa4shapes"), "-o", f"shapes_{tag}.txt", out], cwd=d, check=True)
+  File "/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/subprocess.py", line 528, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/Users/wtdoan/.local/bin/cpsa4shapes', '-o', 'shapes_tight.txt', 'output_tight.txt']' returned non-zero exit status 1.
+--- rerun after runner fix (m7 input rejected by cpsa4; m8 not yet run) ---
+m7 tight: exit=1 0.02s S1=E S2=E S3=E S4=E S5=E S6=E S7=E S8=E M1=E M2=E M3=E M4=E M5=E M6=E M7=E M8=E
+m7 default: exit=1 0.03s S1=E S2=E S3=E S4=E S5=E S6=E S7=E S8=E M1=E M2=E M3=E M4=E M5=E M6=E M7=E M8=E
+m8 tight: exit=0 24.71s S1=V S2=V S3=V S4=V S5=V S6=V S7=V S8=V M1=V M2=V M3=V M4=V M5=V M6=V M7=V M8=V
+m8 default: exit=0 24.21s S1=V S2=V S3=V S4=V S5=V S6=V S7=V S8=V M1=V M2=V M3=V M4=V M5=V M6=V M7=V M8=V

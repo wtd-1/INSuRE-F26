@@ -1,0 +1,11 @@
+--- BASELINE-v2/TLS1.3_macros.lisp
++++ m6/TLS1.3_macros.lisp
+@@ -88,7 +88,7 @@
+ 				   server_expt server serverpubkey serverprivkey
+ 				   client clientpubkey clientprivkey ca
+ 				   handshakesecret)
+-    (CertificateVerify (ClientCertVerifyMesgs client_random server_random client_expt server_expt server serverpubkey serverprivkey client clientpubkey ca handshakesecret) clientprivkey))
++    (^))
+ 
+ ;; [m3, m3s, m3c] Finished selectors. Each call site passes the present term
+ ;; and its deleted form. Inside a list the deleted form is (^); where the

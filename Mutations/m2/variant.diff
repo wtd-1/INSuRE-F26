@@ -1,0 +1,11 @@
+--- BASELINE-v2/TLS1.3_macros.lisp
++++ m2/TLS1.3_macros.lisp
+@@ -75,7 +75,7 @@
+ ;; [m2] Transcript covered by the server's CertificateVerify signature.
+ (defmacro (ServerSignedMesgs client_random server_random client_expt
+ 			     server_expt server serverpubkey ca)
+-    (ServerCertVerifyMesgs client_random server_random client_expt server_expt server serverpubkey ca))
++    (^ (ServerHello server_random server_expt) (Certificate server serverpubkey ca)))
+ 
+ ;; [m1] The server's CertificateVerify, on the wire and in every transcript.
+ (defmacro (ServerCertificateVerify client_random server_random client_expt

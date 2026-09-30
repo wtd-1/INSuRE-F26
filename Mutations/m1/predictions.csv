@@ -1,0 +1,17 @@
+goal,predicted,rationale
+S1,VIOLATED,No server signature: the replayable server certificate plus an adversary DH share lets the adversary play the server.
+S2,VIOLATED,Already violated in m0 (server-only authentication); removing a mechanism cannot restore it.
+S3,VIOLATED,No server signature: the replayable server certificate plus an adversary DH share lets the adversary play the server.
+S4,VIOLATED,No server signature: the replayable server certificate plus an adversary DH share lets the adversary play the server.
+S5,VIOLATED,Already violated in m0 (server-only authentication); removing a mechanism cannot restore it.
+S6,VIOLATED,Already violated in m0 (server-only authentication); removing a mechanism cannot restore it.
+S7,VIOLATED,No server signature: the replayable server certificate plus an adversary DH share lets the adversary play the server.
+S8,VIOLATED,Already violated in m0 (server-only authentication); removing a mechanism cannot restore it.
+M1,VIOLATED,No server signature: the replayable server certificate plus an adversary DH share lets the adversary play the server.
+M2,HOLDS,"Client CertificateVerify still signs ClientHello, ServerHello and the server Certificate, binding both DH shares to an honest client run."
+M3,VIOLATED,No server signature: the replayable server certificate plus an adversary DH share lets the adversary play the server.
+M4,VIOLATED,No server signature: the replayable server certificate plus an adversary DH share lets the adversary play the server.
+M5,HOLDS,"Client CertificateVerify still signs ClientHello, ServerHello and the server Certificate, binding both DH shares to an honest client run."
+M6,HOLDS,"Client CertificateVerify still signs ClientHello, ServerHello and the server Certificate, binding both DH shares to an honest client run."
+M7,VIOLATED,No server signature: the replayable server certificate plus an adversary DH share lets the adversary play the server.
+M8,HOLDS,"Client CertificateVerify still signs ClientHello, ServerHello and the server Certificate, binding both DH shares to an honest client run. Assumes a faithful PFS model in which a client strand can be added (Task B)."

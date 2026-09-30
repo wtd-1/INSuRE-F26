@@ -1,0 +1,17 @@
+goal,predicted,rationale
+S1,HOLDS,"The signature no longer covers g^x, but the server flight is encrypted and MACed under keys derived from g^xy and cr, which the adversary cannot compute; the Finished transcripts still contain the ClientHello."
+S2,VIOLATED,Already violated in m0 (server-only authentication); removing a mechanism cannot restore it.
+S3,HOLDS,"The signature no longer covers g^x, but the server flight is encrypted and MACed under keys derived from g^xy and cr, which the adversary cannot compute; the Finished transcripts still contain the ClientHello."
+S4,HOLDS,"The signature no longer covers g^x, but the server flight is encrypted and MACed under keys derived from g^xy and cr, which the adversary cannot compute; the Finished transcripts still contain the ClientHello."
+S5,VIOLATED,Already violated in m0 (server-only authentication); removing a mechanism cannot restore it.
+S6,VIOLATED,Already violated in m0 (server-only authentication); removing a mechanism cannot restore it.
+S7,HOLDS,"The signature no longer covers g^x, but the server flight is encrypted and MACed under keys derived from g^xy and cr, which the adversary cannot compute; the Finished transcripts still contain the ClientHello."
+S8,VIOLATED,Already violated in m0 (server-only authentication); removing a mechanism cannot restore it.
+M1,HOLDS,"The signature no longer covers g^x, but the server flight is encrypted and MACed under keys derived from g^xy and cr, which the adversary cannot compute; the Finished transcripts still contain the ClientHello."
+M2,HOLDS,"The signature no longer covers g^x, but the server flight is encrypted and MACed under keys derived from g^xy and cr, which the adversary cannot compute; the Finished transcripts still contain the ClientHello."
+M3,HOLDS,"The signature no longer covers g^x, but the server flight is encrypted and MACed under keys derived from g^xy and cr, which the adversary cannot compute; the Finished transcripts still contain the ClientHello."
+M4,HOLDS,"The signature no longer covers g^x, but the server flight is encrypted and MACed under keys derived from g^xy and cr, which the adversary cannot compute; the Finished transcripts still contain the ClientHello."
+M5,HOLDS,"The signature no longer covers g^x, but the server flight is encrypted and MACed under keys derived from g^xy and cr, which the adversary cannot compute; the Finished transcripts still contain the ClientHello."
+M6,HOLDS,"The signature no longer covers g^x, but the server flight is encrypted and MACed under keys derived from g^xy and cr, which the adversary cannot compute; the Finished transcripts still contain the ClientHello."
+M7,HOLDS,"The signature no longer covers g^x, but the server flight is encrypted and MACed under keys derived from g^xy and cr, which the adversary cannot compute; the Finished transcripts still contain the ClientHello."
+M8,HOLDS,"The signature no longer covers g^x, but the server flight is encrypted and MACed under keys derived from g^xy and cr, which the adversary cannot compute; the Finished transcripts still contain the ClientHello."

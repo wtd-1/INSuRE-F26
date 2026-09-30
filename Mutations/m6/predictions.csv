@@ -1,0 +1,17 @@
+goal,predicted,rationale
+S1,HOLDS,Server-only family has no client CertificateVerify; unchanged.
+S2,VIOLATED,Already violated in m0 (server-only authentication); removing a mechanism cannot restore it.
+S3,HOLDS,Server-only family has no client CertificateVerify; unchanged.
+S4,HOLDS,Server-only family has no client CertificateVerify; unchanged.
+S5,VIOLATED,Already violated in m0 (server-only authentication); removing a mechanism cannot restore it.
+S6,VIOLATED,Already violated in m0 (server-only authentication); removing a mechanism cannot restore it.
+S7,HOLDS,Server-only family has no client CertificateVerify; unchanged.
+S8,VIOLATED,Already violated in m0 (server-only authentication); removing a mechanism cannot restore it.
+M1,HOLDS,Server CertificateVerify intact; client-view goals unaffected.
+M2,VIOLATED,"Client certificate is a public, replayable value; without a client signature the adversary pairs it with its own DH share."
+M3,HOLDS,Server CertificateVerify intact; client-view goals unaffected.
+M4,HOLDS,Server CertificateVerify intact; client-view goals unaffected.
+M5,VIOLATED,"Client certificate is a public, replayable value; without a client signature the adversary pairs it with its own DH share."
+M6,VIOLATED,"Client certificate is a public, replayable value; without a client signature the adversary pairs it with its own DH share."
+M7,HOLDS,Server CertificateVerify intact; client-view goals unaffected.
+M8,VIOLATED,"Client certificate is a public, replayable value; without a client signature the adversary pairs it with its own DH share. The adversary obtains the keys with no compromise, so PFS must fail. Assumes a faithful PFS model in which a client strand can be added (Task B)."

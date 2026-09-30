@@ -1,0 +1,17 @@
+goal,predicted,rationale
+S1,HOLDS,"Client-view goals assume (ugen x) in their hypotheses, which restores freshness for the client under analysis."
+S2,VIOLATED,Already violated in m0 (server-only authentication); removing a mechanism cannot restore it.
+S3,HOLDS,"Client-view goals assume (ugen x) in their hypotheses, which restores freshness for the client under analysis."
+S4,HOLDS,"Client-view goals assume (ugen x) in their hypotheses, which restores freshness for the client under analysis."
+S5,VIOLATED,Already violated in m0 (server-only authentication); removing a mechanism cannot restore it.
+S6,VIOLATED,Already violated in m0 (server-only authentication); removing a mechanism cannot restore it.
+S7,HOLDS,"Client-view goals assume (ugen x) in their hypotheses, which restores freshness for the client under analysis."
+S8,VIOLATED,Already violated in m0 (server-only authentication); removing a mechanism cannot restore it.
+M1,HOLDS,"Client-view goals assume (ugen x) in their hypotheses, which restores freshness for the client under analysis."
+M2,VIOLATED,"Server-view goals do not assume (ugen x); the adversary may know the client exponent, so it can compute g^xy and forge the client's request (a client at height 3 suffices)."
+M3,HOLDS,"Client-view goals assume (ugen x) in their hypotheses, which restores freshness for the client under analysis."
+M4,HOLDS,"Client-view goals assume (ugen x) in their hypotheses, which restores freshness for the client under analysis."
+M5,VIOLATED,"Server-view goals do not assume (ugen x); the adversary may know the client exponent, so it can compute g^xy and forge the client's request (a client at height 3 suffices)."
+M6,VIOLATED,"Server-view goals do not assume (ugen x); the adversary may know the client exponent, so it can compute g^xy and forge the client's request (a client at height 3 suffices)."
+M7,HOLDS,"Client-view goals assume (ugen x) in their hypotheses, which restores freshness for the client under analysis."
+M8,VIOLATED,"Server-view goals do not assume (ugen x); the adversary may know the client exponent, so it can compute g^xy and forge the client's request (a client at height 3 suffices). Assumes a faithful PFS model in which a client strand can be added (Task B)."

@@ -1,0 +1,2 @@
+tight	flags=-b 12 -l 500	exit=1	seconds=44.271	cpsa=4.4.9
+default	flags=(defaults)	exit=1	seconds=286.427	cpsa=4.4.9

@@ -1,0 +1,17 @@
+goal,predicted,rationale
+S1,HOLDS,Every goal here is carried by a CertificateVerify signature over the DH shares plus key derivation from g^xy; the Finished MAC adds no guarantee the goals measure (no negotiated parameters in the model).
+S2,VIOLATED,Already violated in m0 (server-only authentication); removing a mechanism cannot restore it.
+S3,HOLDS,Every goal here is carried by a CertificateVerify signature over the DH shares plus key derivation from g^xy; the Finished MAC adds no guarantee the goals measure (no negotiated parameters in the model).
+S4,HOLDS,Every goal here is carried by a CertificateVerify signature over the DH shares plus key derivation from g^xy; the Finished MAC adds no guarantee the goals measure (no negotiated parameters in the model).
+S5,VIOLATED,Already violated in m0 (server-only authentication); removing a mechanism cannot restore it.
+S6,VIOLATED,Already violated in m0 (server-only authentication); removing a mechanism cannot restore it.
+S7,HOLDS,Every goal here is carried by a CertificateVerify signature over the DH shares plus key derivation from g^xy; the Finished MAC adds no guarantee the goals measure (no negotiated parameters in the model).
+S8,VIOLATED,Already violated in m0 (server-only authentication); removing a mechanism cannot restore it.
+M1,HOLDS,Every goal here is carried by a CertificateVerify signature over the DH shares plus key derivation from g^xy; the Finished MAC adds no guarantee the goals measure (no negotiated parameters in the model).
+M2,HOLDS,Every goal here is carried by a CertificateVerify signature over the DH shares plus key derivation from g^xy; the Finished MAC adds no guarantee the goals measure (no negotiated parameters in the model).
+M3,HOLDS,Every goal here is carried by a CertificateVerify signature over the DH shares plus key derivation from g^xy; the Finished MAC adds no guarantee the goals measure (no negotiated parameters in the model).
+M4,HOLDS,Every goal here is carried by a CertificateVerify signature over the DH shares plus key derivation from g^xy; the Finished MAC adds no guarantee the goals measure (no negotiated parameters in the model).
+M5,HOLDS,Every goal here is carried by a CertificateVerify signature over the DH shares plus key derivation from g^xy; the Finished MAC adds no guarantee the goals measure (no negotiated parameters in the model).
+M6,HOLDS,Every goal here is carried by a CertificateVerify signature over the DH shares plus key derivation from g^xy; the Finished MAC adds no guarantee the goals measure (no negotiated parameters in the model).
+M7,HOLDS,Every goal here is carried by a CertificateVerify signature over the DH shares plus key derivation from g^xy; the Finished MAC adds no guarantee the goals measure (no negotiated parameters in the model).
+M8,HOLDS,Every goal here is carried by a CertificateVerify signature over the DH shares plus key derivation from g^xy; the Finished MAC adds no guarantee the goals measure (no negotiated parameters in the model).

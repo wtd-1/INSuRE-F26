@@ -1,0 +1,3392 @@
+(herald "Verification of TLS 1.3 mutual authentication properties")
+
+(comment "CPSA 4.4.9")
+(comment "All input read from tls13_m5.scm")
+
+(defprotocol tls13-mtls basic
+  (defrole client
+    (vars (s ca c name) (cr sr random32) (x rndx) (y expt)
+      (spk cpk akey) (request response text))
+    (trace (send (cat cr (exp (gen) x)))
+      (recv
+        (cat (cat sr (exp (gen) y))
+          (enc (cat s spk (enc (hash s spk) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x y)) "s hs traffic" cr sr))
+              (cat cr (exp (gen) x)) (cat sr (exp (gen) y)) s spk
+              (enc (hash s spk) (privk ca)))
+            (hash (exp (gen) (mul x y)) "s hs traffic" cr sr))))
+      (send
+        (enc (cat c cpk (enc (hash c cpk) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x y)) "c hs traffic" cr sr))
+            (cat cr (exp (gen) x)) (cat sr (exp (gen) y))
+            (cat s spk (enc (hash s spk) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x y)) "s hs traffic" cr sr))
+              (cat cr (exp (gen) y)) (cat sr (exp (gen) x)) s spk
+              (enc (hash s spk) (privk ca))) c cpk
+            (enc (hash c cpk) (privk ca)))
+          (hash (exp (gen) (mul x y)) "c hs traffic" cr sr)))
+      (send
+        (enc request
+          (hash "c ap traffic" cr sr
+            (hash (exp (gen) (mul x y)) "derived"))))
+      (recv
+        (enc response
+          (hash "s ap traffic" cr sr
+            (hash (exp (gen) (mul x y)) "derived")))))
+    (uniq-gen x))
+  (defrole server
+    (vars (s ca c name) (cr sr random32) (y rndx) (x expt)
+      (spk cpk akey) (request response text))
+    (trace (recv (cat cr (exp (gen) x)))
+      (send
+        (cat (cat sr (exp (gen) y))
+          (enc (cat s (invk spk) (enc (hash s (invk spk)) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul y x)) "s hs traffic" cr sr))
+              (cat cr (exp (gen) x)) (cat sr (exp (gen) y)) s (invk spk)
+              (enc (hash s (invk spk)) (privk ca)))
+            (hash (exp (gen) (mul y x)) "s hs traffic" cr sr))))
+      (recv
+        (enc (cat c cpk (enc (hash c cpk) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul y x)) "c hs traffic" cr sr))
+            (cat cr (exp (gen) x)) (cat sr (exp (gen) y))
+            (cat s (invk spk) (enc (hash s (invk spk)) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul y x)) "s hs traffic" cr sr))
+              (cat cr (exp (gen) y)) (cat sr (exp (gen) x)) s (invk spk)
+              (enc (hash s (invk spk)) (privk ca))) c cpk
+            (enc (hash c cpk) (privk ca)))
+          (hash (exp (gen) (mul y x)) "c hs traffic" cr sr)))
+      (recv
+        (enc request
+          (hash "c ap traffic" cr sr
+            (hash (exp (gen) (mul y x)) "derived"))))
+      (send
+        (enc response
+          (hash "s ap traffic" cr sr
+            (hash (exp (gen) (mul y x)) "derived")))))
+    (uniq-gen y)
+    (absent (y x)))
+  (defgenrule neqRl_indx
+    (forall ((x indx)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_strd
+    (forall ((x strd)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_mesg
+    (forall ((x mesg)) (implies (fact neq x x) (false))))
+  (lang (random32 atom)))
+
+(defskeleton tls13-mtls
+  (vars (cr sr random32) (request response text) (spk cpk akey)
+    (s ca c name) (x rndx) (y expt))
+  (defstrand client 5 (cr cr) (sr sr) (request request)
+    (response response) (spk spk) (cpk cpk) (s s) (ca ca) (c c) (x x)
+    (y y))
+  (non-orig (invk spk) (invk cpk) (privk ca))
+  (uniq-orig cr)
+  (uniq-gen x)
+  (goals
+    (forall
+      ((cr sr random32) (spk cpk akey) (s ca c name) (x rndx) (y expt)
+        (z strd))
+      (implies
+        (and (p "client" z 5) (p "client" "cr" z cr)
+          (p "client" "sr" z sr) (p "client" "spk" z spk)
+          (p "client" "cpk" z cpk) (p "client" "s" z s)
+          (p "client" "c" z c) (p "client" "ca" z ca)
+          (p "client" "x" z x) (p "client" "y" z y) (non (invk spk))
+          (non (invk cpk)) (non (privk ca)) (ugen x) (uniq-at cr z 0))
+        (exists ((z-0 strd))
+          (and (p "server" z-0 5) (p "server" "cr" z-0 cr)
+            (p "server" "sr" z-0 sr) (p "server" "spk" z-0 spk)
+            (p "server" "cpk" z-0 cpk) (p "server" "s" z-0 s)
+            (p "server" "c" z-0 c) (p "server" "ca" z-0 ca)
+            (p "server" "y" z-0 y) (p "server" "x" z-0 x))))))
+  (traces
+    ((send (cat cr (exp (gen) x)))
+      (recv
+        (cat (cat sr (exp (gen) y))
+          (enc (cat s spk (enc (hash s spk) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x y)) "s hs traffic" cr sr))
+              (cat cr (exp (gen) x)) (cat sr (exp (gen) y)) s spk
+              (enc (hash s spk) (privk ca)))
+            (hash (exp (gen) (mul x y)) "s hs traffic" cr sr))))
+      (send
+        (enc (cat c cpk (enc (hash c cpk) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x y)) "c hs traffic" cr sr))
+            (cat cr (exp (gen) x)) (cat sr (exp (gen) y))
+            (cat s spk (enc (hash s spk) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x y)) "s hs traffic" cr sr))
+              (cat cr (exp (gen) y)) (cat sr (exp (gen) x)) s spk
+              (enc (hash s spk) (privk ca))) c cpk
+            (enc (hash c cpk) (privk ca)))
+          (hash (exp (gen) (mul x y)) "c hs traffic" cr sr)))
+      (send
+        (enc request
+          (hash "c ap traffic" cr sr
+            (hash (exp (gen) (mul x y)) "derived"))))
+      (recv
+        (enc response
+          (hash "s ap traffic" cr sr
+            (hash (exp (gen) (mul x y)) "derived"))))))
+  (label 0)
+  (unrealized (0 1))
+  (maps
+    ((0)
+      ((cr cr) (sr sr) (spk spk) (cpk cpk) (s s) (ca ca) (c c) (x x)
+        (y y) (request request) (response response))))
+  (origs (cr (0 0)))
+  (ugens (x (0 0)))
+  (comment "2 in cohort - 2 not yet seen"))
+
+(defskeleton tls13-mtls
+  (vars (cr sr cr-0 sr-0 random32) (request response text)
+    (spk cpk spk-0 akey) (s ca c s-0 name) (x rndx) (y expt) (x-0 rndx)
+    (y-0 expt))
+  (defstrand client 5 (cr cr) (sr sr) (request request)
+    (response response) (spk spk) (cpk cpk) (s s) (ca ca) (c c) (x x)
+    (y y))
+  (defstrand client 3 (cr cr-0) (sr sr-0) (spk spk-0) (cpk spk) (s s-0)
+    (ca ca) (c s) (x x-0) (y y-0))
+  (precedes ((1 2) (0 1)))
+  (non-orig (invk spk) (invk cpk) (privk ca))
+  (uniq-orig cr)
+  (uniq-gen x x-0)
+  (goals
+    (forall
+      ((cr sr random32) (spk cpk akey) (s ca c name) (x rndx) (y expt)
+        (z strd))
+      (implies
+        (and (p "client" z 5) (p "client" "cr" z cr)
+          (p "client" "sr" z sr) (p "client" "spk" z spk)
+          (p "client" "cpk" z cpk) (p "client" "s" z s)
+          (p "client" "c" z c) (p "client" "ca" z ca)
+          (p "client" "x" z x) (p "client" "y" z y) (non (invk spk))
+          (non (invk cpk)) (non (privk ca)) (ugen x) (uniq-at cr z 0))
+        (exists ((z-0 strd))
+          (and (p "server" z-0 5) (p "server" "cr" z-0 cr)
+            (p "server" "sr" z-0 sr) (p "server" "spk" z-0 spk)
+            (p "server" "cpk" z-0 cpk) (p "server" "s" z-0 s)
+            (p "server" "c" z-0 c) (p "server" "ca" z-0 ca)
+            (p "server" "y" z-0 y) (p "server" "x" z-0 x))))))
+  (operation encryption-test (added-strand client 3)
+    (enc (hash s spk) (privk ca)) (0 1))
+  (strand-map 0)
+  (traces
+    ((send (cat cr (exp (gen) x)))
+      (recv
+        (cat (cat sr (exp (gen) y))
+          (enc (cat s spk (enc (hash s spk) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x y)) "s hs traffic" cr sr))
+              (cat cr (exp (gen) x)) (cat sr (exp (gen) y)) s spk
+              (enc (hash s spk) (privk ca)))
+            (hash (exp (gen) (mul x y)) "s hs traffic" cr sr))))
+      (send
+        (enc (cat c cpk (enc (hash c cpk) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x y)) "c hs traffic" cr sr))
+            (cat cr (exp (gen) x)) (cat sr (exp (gen) y))
+            (cat s spk (enc (hash s spk) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x y)) "s hs traffic" cr sr))
+              (cat cr (exp (gen) y)) (cat sr (exp (gen) x)) s spk
+              (enc (hash s spk) (privk ca))) c cpk
+            (enc (hash c cpk) (privk ca)))
+          (hash (exp (gen) (mul x y)) "c hs traffic" cr sr)))
+      (send
+        (enc request
+          (hash "c ap traffic" cr sr
+            (hash (exp (gen) (mul x y)) "derived"))))
+      (recv
+        (enc response
+          (hash "s ap traffic" cr sr
+            (hash (exp (gen) (mul x y)) "derived")))))
+    ((send (cat cr-0 (exp (gen) x-0)))
+      (recv
+        (cat (cat sr-0 (exp (gen) y-0))
+          (enc (cat s-0 spk-0 (enc (hash s-0 spk-0) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-0 y-0)) "s hs traffic" cr-0
+                  sr-0)) (cat cr-0 (exp (gen) x-0))
+              (cat sr-0 (exp (gen) y-0)) s-0 spk-0
+              (enc (hash s-0 spk-0) (privk ca)))
+            (hash (exp (gen) (mul x-0 y-0)) "s hs traffic" cr-0 sr-0))))
+      (send
+        (enc (cat s spk (enc (hash s spk) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x-0 y-0)) "c hs traffic" cr-0 sr-0))
+            (cat cr-0 (exp (gen) x-0)) (cat sr-0 (exp (gen) y-0))
+            (cat s-0 spk-0 (enc (hash s-0 spk-0) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-0 y-0)) "s hs traffic" cr-0
+                  sr-0)) (cat cr-0 (exp (gen) y-0))
+              (cat sr-0 (exp (gen) x-0)) s-0 spk-0
+              (enc (hash s-0 spk-0) (privk ca))) s spk
+            (enc (hash s spk) (privk ca)))
+          (hash (exp (gen) (mul x-0 y-0)) "c hs traffic" cr-0 sr-0)))))
+  (label 1)
+  (parent 0)
+  (unrealized (1 1))
+  (maps
+    ((0)
+      ((cr cr) (sr sr) (spk spk) (cpk cpk) (s s) (ca ca) (c c) (x x)
+        (y y) (request request) (response response))))
+  (comment "2 in cohort - 2 not yet seen"))
+
+(defskeleton tls13-mtls
+  (vars (cr sr cr-0 sr-0 random32) (request response text)
+    (cpk spk akey) (s ca c name) (x rndx) (y expt) (y-0 rndx)
+    (x-0 expt))
+  (defstrand client 5 (cr cr) (sr sr) (request request)
+    (response response) (spk (invk spk)) (cpk cpk) (s s) (ca ca) (c c)
+    (x x) (y y))
+  (defstrand server 2 (cr cr-0) (sr sr-0) (spk spk) (s s) (ca ca)
+    (y y-0) (x x-0))
+  (precedes ((1 1) (0 1)))
+  (non-orig spk (invk cpk) (privk ca))
+  (uniq-orig cr)
+  (uniq-gen x y-0)
+  (absent (y-0 x-0))
+  (goals
+    (forall
+      ((cr sr random32) (spk cpk akey) (s ca c name) (x rndx) (y expt)
+        (z strd))
+      (implies
+        (and (p "client" z 5) (p "client" "cr" z cr)
+          (p "client" "sr" z sr) (p "client" "spk" z spk)
+          (p "client" "cpk" z cpk) (p "client" "s" z s)
+          (p "client" "c" z c) (p "client" "ca" z ca)
+          (p "client" "x" z x) (p "client" "y" z y) (non (invk spk))
+          (non (invk cpk)) (non (privk ca)) (ugen x) (uniq-at cr z 0))
+        (exists ((z-0 strd))
+          (and (p "server" z-0 5) (p "server" "cr" z-0 cr)
+            (p "server" "sr" z-0 sr) (p "server" "spk" z-0 spk)
+            (p "server" "cpk" z-0 cpk) (p "server" "s" z-0 s)
+            (p "server" "c" z-0 c) (p "server" "ca" z-0 ca)
+            (p "server" "y" z-0 y) (p "server" "x" z-0 x))))))
+  (operation encryption-test (added-strand server 2)
+    (enc (hash s (invk spk)) (privk ca)) (0 1))
+  (strand-map 0)
+  (traces
+    ((send (cat cr (exp (gen) x)))
+      (recv
+        (cat (cat sr (exp (gen) y))
+          (enc (cat s (invk spk) (enc (hash s (invk spk)) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x y)) "s hs traffic" cr sr))
+              (cat cr (exp (gen) x)) (cat sr (exp (gen) y)) s (invk spk)
+              (enc (hash s (invk spk)) (privk ca)))
+            (hash (exp (gen) (mul x y)) "s hs traffic" cr sr))))
+      (send
+        (enc (cat c cpk (enc (hash c cpk) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x y)) "c hs traffic" cr sr))
+            (cat cr (exp (gen) x)) (cat sr (exp (gen) y))
+            (cat s (invk spk) (enc (hash s (invk spk)) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x y)) "s hs traffic" cr sr))
+              (cat cr (exp (gen) y)) (cat sr (exp (gen) x)) s (invk spk)
+              (enc (hash s (invk spk)) (privk ca))) c cpk
+            (enc (hash c cpk) (privk ca)))
+          (hash (exp (gen) (mul x y)) "c hs traffic" cr sr)))
+      (send
+        (enc request
+          (hash "c ap traffic" cr sr
+            (hash (exp (gen) (mul x y)) "derived"))))
+      (recv
+        (enc response
+          (hash "s ap traffic" cr sr
+            (hash (exp (gen) (mul x y)) "derived")))))
+    ((recv (cat cr-0 (exp (gen) x-0)))
+      (send
+        (cat (cat sr-0 (exp (gen) y-0))
+          (enc (cat s (invk spk) (enc (hash s (invk spk)) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul y-0 x-0)) "s hs traffic" cr-0
+                  sr-0)) (cat cr-0 (exp (gen) x-0))
+              (cat sr-0 (exp (gen) y-0)) s (invk spk)
+              (enc (hash s (invk spk)) (privk ca)))
+            (hash (exp (gen) (mul y-0 x-0)) "s hs traffic" cr-0
+              sr-0))))))
+  (label 2)
+  (parent 0)
+  (realized)
+  (shape)
+  (satisfies
+    (no (p "server" z-0 (idx 5)) (p "server" "x" z-0 x)
+      (p "server" "y" z-0 y) (p "server" "c" z-0 c)
+      (p "server" "cpk" z-0 cpk) (p "server" "spk" z-0 spk)
+      (p "server" "sr" z-0 sr) (p "server" "cr" z-0 cr) (cr cr) (sr sr)
+      (spk (invk spk)) (cpk cpk) (s s) (ca ca) (c c) (x x) (y y) (z 0)))
+  (maps
+    ((0)
+      ((cr cr) (sr sr) (spk (invk spk)) (cpk cpk) (s s) (ca ca) (c c)
+        (x x) (y y) (request request) (response response))))
+  (origs (cr (0 0)))
+  (ugens (y-0 (1 1)) (x (0 0))))
+
+(defskeleton tls13-mtls
+  (vars (cr sr cr-0 sr-0 cr-1 sr-1 random32) (request response text)
+    (spk cpk spk-0 spk-1 akey) (s ca c s-0 s-1 name) (x rndx) (y expt)
+    (x-0 rndx) (y-0 expt) (x-1 rndx) (y-1 expt))
+  (defstrand client 5 (cr cr) (sr sr) (request request)
+    (response response) (spk spk) (cpk cpk) (s s) (ca ca) (c c) (x x)
+    (y y))
+  (defstrand client 3 (cr cr-0) (sr sr-0) (spk spk-0) (cpk spk) (s s-0)
+    (ca ca) (c s) (x x-0) (y y-0))
+  (defstrand client 3 (cr cr-1) (sr sr-1) (spk spk-1) (cpk spk-0)
+    (s s-1) (ca ca) (c s-0) (x x-1) (y y-1))
+  (precedes ((1 2) (0 1)) ((2 2) (1 1)))
+  (non-orig (invk spk) (invk cpk) (privk ca))
+  (uniq-orig cr)
+  (uniq-gen x x-0 x-1)
+  (goals
+    (forall
+      ((cr sr random32) (spk cpk akey) (s ca c name) (x rndx) (y expt)
+        (z strd))
+      (implies
+        (and (p "client" z 5) (p "client" "cr" z cr)
+          (p "client" "sr" z sr) (p "client" "spk" z spk)
+          (p "client" "cpk" z cpk) (p "client" "s" z s)
+          (p "client" "c" z c) (p "client" "ca" z ca)
+          (p "client" "x" z x) (p "client" "y" z y) (non (invk spk))
+          (non (invk cpk)) (non (privk ca)) (ugen x) (uniq-at cr z 0))
+        (exists ((z-0 strd))
+          (and (p "server" z-0 5) (p "server" "cr" z-0 cr)
+            (p "server" "sr" z-0 sr) (p "server" "spk" z-0 spk)
+            (p "server" "cpk" z-0 cpk) (p "server" "s" z-0 s)
+            (p "server" "c" z-0 c) (p "server" "ca" z-0 ca)
+            (p "server" "y" z-0 y) (p "server" "x" z-0 x))))))
+  (operation encryption-test (added-strand client 3)
+    (enc (hash s-0 spk-0) (privk ca)) (1 1))
+  (strand-map 0 1)
+  (traces
+    ((send (cat cr (exp (gen) x)))
+      (recv
+        (cat (cat sr (exp (gen) y))
+          (enc (cat s spk (enc (hash s spk) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x y)) "s hs traffic" cr sr))
+              (cat cr (exp (gen) x)) (cat sr (exp (gen) y)) s spk
+              (enc (hash s spk) (privk ca)))
+            (hash (exp (gen) (mul x y)) "s hs traffic" cr sr))))
+      (send
+        (enc (cat c cpk (enc (hash c cpk) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x y)) "c hs traffic" cr sr))
+            (cat cr (exp (gen) x)) (cat sr (exp (gen) y))
+            (cat s spk (enc (hash s spk) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x y)) "s hs traffic" cr sr))
+              (cat cr (exp (gen) y)) (cat sr (exp (gen) x)) s spk
+              (enc (hash s spk) (privk ca))) c cpk
+            (enc (hash c cpk) (privk ca)))
+          (hash (exp (gen) (mul x y)) "c hs traffic" cr sr)))
+      (send
+        (enc request
+          (hash "c ap traffic" cr sr
+            (hash (exp (gen) (mul x y)) "derived"))))
+      (recv
+        (enc response
+          (hash "s ap traffic" cr sr
+            (hash (exp (gen) (mul x y)) "derived")))))
+    ((send (cat cr-0 (exp (gen) x-0)))
+      (recv
+        (cat (cat sr-0 (exp (gen) y-0))
+          (enc (cat s-0 spk-0 (enc (hash s-0 spk-0) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-0 y-0)) "s hs traffic" cr-0
+                  sr-0)) (cat cr-0 (exp (gen) x-0))
+              (cat sr-0 (exp (gen) y-0)) s-0 spk-0
+              (enc (hash s-0 spk-0) (privk ca)))
+            (hash (exp (gen) (mul x-0 y-0)) "s hs traffic" cr-0 sr-0))))
+      (send
+        (enc (cat s spk (enc (hash s spk) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x-0 y-0)) "c hs traffic" cr-0 sr-0))
+            (cat cr-0 (exp (gen) x-0)) (cat sr-0 (exp (gen) y-0))
+            (cat s-0 spk-0 (enc (hash s-0 spk-0) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-0 y-0)) "s hs traffic" cr-0
+                  sr-0)) (cat cr-0 (exp (gen) y-0))
+              (cat sr-0 (exp (gen) x-0)) s-0 spk-0
+              (enc (hash s-0 spk-0) (privk ca))) s spk
+            (enc (hash s spk) (privk ca)))
+          (hash (exp (gen) (mul x-0 y-0)) "c hs traffic" cr-0 sr-0))))
+    ((send (cat cr-1 (exp (gen) x-1)))
+      (recv
+        (cat (cat sr-1 (exp (gen) y-1))
+          (enc (cat s-1 spk-1 (enc (hash s-1 spk-1) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-1 y-1)) "s hs traffic" cr-1
+                  sr-1)) (cat cr-1 (exp (gen) x-1))
+              (cat sr-1 (exp (gen) y-1)) s-1 spk-1
+              (enc (hash s-1 spk-1) (privk ca)))
+            (hash (exp (gen) (mul x-1 y-1)) "s hs traffic" cr-1 sr-1))))
+      (send
+        (enc (cat s-0 spk-0 (enc (hash s-0 spk-0) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x-1 y-1)) "c hs traffic" cr-1 sr-1))
+            (cat cr-1 (exp (gen) x-1)) (cat sr-1 (exp (gen) y-1))
+            (cat s-1 spk-1 (enc (hash s-1 spk-1) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-1 y-1)) "s hs traffic" cr-1
+                  sr-1)) (cat cr-1 (exp (gen) y-1))
+              (cat sr-1 (exp (gen) x-1)) s-1 spk-1
+              (enc (hash s-1 spk-1) (privk ca))) s-0 spk-0
+            (enc (hash s-0 spk-0) (privk ca)))
+          (hash (exp (gen) (mul x-1 y-1)) "c hs traffic" cr-1 sr-1)))))
+  (label 3)
+  (parent 1)
+  (unrealized (2 1))
+  (maps
+    ((0)
+      ((cr cr) (sr sr) (spk spk) (cpk cpk) (s s) (ca ca) (c c) (x x)
+        (y y) (request request) (response response))))
+  (comment "2 in cohort - 2 not yet seen"))
+
+(defskeleton tls13-mtls
+  (vars (cr sr cr-0 sr-0 cr-1 sr-1 random32) (request response text)
+    (spk cpk spk-0 akey) (s ca c s-0 name) (x rndx) (y expt) (x-0 rndx)
+    (y-0 expt) (y-1 rndx) (x-1 expt))
+  (defstrand client 5 (cr cr) (sr sr) (request request)
+    (response response) (spk spk) (cpk cpk) (s s) (ca ca) (c c) (x x)
+    (y y))
+  (defstrand client 3 (cr cr-0) (sr sr-0) (spk (invk spk-0)) (cpk spk)
+    (s s-0) (ca ca) (c s) (x x-0) (y y-0))
+  (defstrand server 2 (cr cr-1) (sr sr-1) (spk spk-0) (s s-0) (ca ca)
+    (y y-1) (x x-1))
+  (precedes ((1 2) (0 1)) ((2 1) (1 1)))
+  (non-orig (invk spk) (invk cpk) (privk ca))
+  (uniq-orig cr)
+  (uniq-gen x x-0 y-1)
+  (absent (y-1 x-1))
+  (goals
+    (forall
+      ((cr sr random32) (spk cpk akey) (s ca c name) (x rndx) (y expt)
+        (z strd))
+      (implies
+        (and (p "client" z 5) (p "client" "cr" z cr)
+          (p "client" "sr" z sr) (p "client" "spk" z spk)
+          (p "client" "cpk" z cpk) (p "client" "s" z s)
+          (p "client" "c" z c) (p "client" "ca" z ca)
+          (p "client" "x" z x) (p "client" "y" z y) (non (invk spk))
+          (non (invk cpk)) (non (privk ca)) (ugen x) (uniq-at cr z 0))
+        (exists ((z-0 strd))
+          (and (p "server" z-0 5) (p "server" "cr" z-0 cr)
+            (p "server" "sr" z-0 sr) (p "server" "spk" z-0 spk)
+            (p "server" "cpk" z-0 cpk) (p "server" "s" z-0 s)
+            (p "server" "c" z-0 c) (p "server" "ca" z-0 ca)
+            (p "server" "y" z-0 y) (p "server" "x" z-0 x))))))
+  (operation encryption-test (added-strand server 2)
+    (enc (hash s-0 (invk spk-0)) (privk ca)) (1 1))
+  (strand-map 0 1)
+  (traces
+    ((send (cat cr (exp (gen) x)))
+      (recv
+        (cat (cat sr (exp (gen) y))
+          (enc (cat s spk (enc (hash s spk) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x y)) "s hs traffic" cr sr))
+              (cat cr (exp (gen) x)) (cat sr (exp (gen) y)) s spk
+              (enc (hash s spk) (privk ca)))
+            (hash (exp (gen) (mul x y)) "s hs traffic" cr sr))))
+      (send
+        (enc (cat c cpk (enc (hash c cpk) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x y)) "c hs traffic" cr sr))
+            (cat cr (exp (gen) x)) (cat sr (exp (gen) y))
+            (cat s spk (enc (hash s spk) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x y)) "s hs traffic" cr sr))
+              (cat cr (exp (gen) y)) (cat sr (exp (gen) x)) s spk
+              (enc (hash s spk) (privk ca))) c cpk
+            (enc (hash c cpk) (privk ca)))
+          (hash (exp (gen) (mul x y)) "c hs traffic" cr sr)))
+      (send
+        (enc request
+          (hash "c ap traffic" cr sr
+            (hash (exp (gen) (mul x y)) "derived"))))
+      (recv
+        (enc response
+          (hash "s ap traffic" cr sr
+            (hash (exp (gen) (mul x y)) "derived")))))
+    ((send (cat cr-0 (exp (gen) x-0)))
+      (recv
+        (cat (cat sr-0 (exp (gen) y-0))
+          (enc
+            (cat s-0 (invk spk-0)
+              (enc (hash s-0 (invk spk-0)) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-0 y-0)) "s hs traffic" cr-0
+                  sr-0)) (cat cr-0 (exp (gen) x-0))
+              (cat sr-0 (exp (gen) y-0)) s-0 (invk spk-0)
+              (enc (hash s-0 (invk spk-0)) (privk ca)))
+            (hash (exp (gen) (mul x-0 y-0)) "s hs traffic" cr-0 sr-0))))
+      (send
+        (enc (cat s spk (enc (hash s spk) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x-0 y-0)) "c hs traffic" cr-0 sr-0))
+            (cat cr-0 (exp (gen) x-0)) (cat sr-0 (exp (gen) y-0))
+            (cat s-0 (invk spk-0)
+              (enc (hash s-0 (invk spk-0)) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-0 y-0)) "s hs traffic" cr-0
+                  sr-0)) (cat cr-0 (exp (gen) y-0))
+              (cat sr-0 (exp (gen) x-0)) s-0 (invk spk-0)
+              (enc (hash s-0 (invk spk-0)) (privk ca))) s spk
+            (enc (hash s spk) (privk ca)))
+          (hash (exp (gen) (mul x-0 y-0)) "c hs traffic" cr-0 sr-0))))
+    ((recv (cat cr-1 (exp (gen) x-1)))
+      (send
+        (cat (cat sr-1 (exp (gen) y-1))
+          (enc
+            (cat s-0 (invk spk-0)
+              (enc (hash s-0 (invk spk-0)) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul y-1 x-1)) "s hs traffic" cr-1
+                  sr-1)) (cat cr-1 (exp (gen) x-1))
+              (cat sr-1 (exp (gen) y-1)) s-0 (invk spk-0)
+              (enc (hash s-0 (invk spk-0)) (privk ca)))
+            (hash (exp (gen) (mul y-1 x-1)) "s hs traffic" cr-1
+              sr-1))))))
+  (label 4)
+  (parent 1)
+  (realized)
+  (shape)
+  (satisfies
+    (no (p "server" z-0 (idx 5)) (p "server" "x" z-0 x)
+      (p "server" "y" z-0 y) (p "server" "c" z-0 c)
+      (p "server" "s" z-0 s) (p "server" "cpk" z-0 cpk)
+      (p "server" "spk" z-0 spk) (p "server" "sr" z-0 sr)
+      (p "server" "cr" z-0 cr) (cr cr) (sr sr) (spk spk) (cpk cpk) (s s)
+      (ca ca) (c c) (x x) (y y) (z 0)))
+  (maps
+    ((0)
+      ((cr cr) (sr sr) (spk spk) (cpk cpk) (s s) (ca ca) (c c) (x x)
+        (y y) (request request) (response response))))
+  (origs (cr (0 0)))
+  (ugens (y-1 (2 1)) (x-0 (1 0)) (x (0 0))))
+
+(defskeleton tls13-mtls
+  (vars (cr sr cr-0 sr-0 cr-1 sr-1 cr-2 sr-2 random32)
+    (request response text) (spk cpk spk-0 spk-1 spk-2 akey)
+    (s ca c s-0 s-1 s-2 name) (x rndx) (y expt) (x-0 rndx) (y-0 expt)
+    (x-1 rndx) (y-1 expt) (x-2 rndx) (y-2 expt))
+  (defstrand client 5 (cr cr) (sr sr) (request request)
+    (response response) (spk spk) (cpk cpk) (s s) (ca ca) (c c) (x x)
+    (y y))
+  (defstrand client 3 (cr cr-0) (sr sr-0) (spk spk-0) (cpk spk) (s s-0)
+    (ca ca) (c s) (x x-0) (y y-0))
+  (defstrand client 3 (cr cr-1) (sr sr-1) (spk spk-1) (cpk spk-0)
+    (s s-1) (ca ca) (c s-0) (x x-1) (y y-1))
+  (defstrand client 3 (cr cr-2) (sr sr-2) (spk spk-2) (cpk spk-1)
+    (s s-2) (ca ca) (c s-1) (x x-2) (y y-2))
+  (precedes ((1 2) (0 1)) ((2 2) (1 1)) ((3 2) (2 1)))
+  (non-orig (invk spk) (invk cpk) (privk ca))
+  (uniq-orig cr)
+  (uniq-gen x x-0 x-1 x-2)
+  (goals
+    (forall
+      ((cr sr random32) (spk cpk akey) (s ca c name) (x rndx) (y expt)
+        (z strd))
+      (implies
+        (and (p "client" z 5) (p "client" "cr" z cr)
+          (p "client" "sr" z sr) (p "client" "spk" z spk)
+          (p "client" "cpk" z cpk) (p "client" "s" z s)
+          (p "client" "c" z c) (p "client" "ca" z ca)
+          (p "client" "x" z x) (p "client" "y" z y) (non (invk spk))
+          (non (invk cpk)) (non (privk ca)) (ugen x) (uniq-at cr z 0))
+        (exists ((z-0 strd))
+          (and (p "server" z-0 5) (p "server" "cr" z-0 cr)
+            (p "server" "sr" z-0 sr) (p "server" "spk" z-0 spk)
+            (p "server" "cpk" z-0 cpk) (p "server" "s" z-0 s)
+            (p "server" "c" z-0 c) (p "server" "ca" z-0 ca)
+            (p "server" "y" z-0 y) (p "server" "x" z-0 x))))))
+  (operation encryption-test (added-strand client 3)
+    (enc (hash s-1 spk-1) (privk ca)) (2 1))
+  (strand-map 0 1 2)
+  (traces
+    ((send (cat cr (exp (gen) x)))
+      (recv
+        (cat (cat sr (exp (gen) y))
+          (enc (cat s spk (enc (hash s spk) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x y)) "s hs traffic" cr sr))
+              (cat cr (exp (gen) x)) (cat sr (exp (gen) y)) s spk
+              (enc (hash s spk) (privk ca)))
+            (hash (exp (gen) (mul x y)) "s hs traffic" cr sr))))
+      (send
+        (enc (cat c cpk (enc (hash c cpk) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x y)) "c hs traffic" cr sr))
+            (cat cr (exp (gen) x)) (cat sr (exp (gen) y))
+            (cat s spk (enc (hash s spk) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x y)) "s hs traffic" cr sr))
+              (cat cr (exp (gen) y)) (cat sr (exp (gen) x)) s spk
+              (enc (hash s spk) (privk ca))) c cpk
+            (enc (hash c cpk) (privk ca)))
+          (hash (exp (gen) (mul x y)) "c hs traffic" cr sr)))
+      (send
+        (enc request
+          (hash "c ap traffic" cr sr
+            (hash (exp (gen) (mul x y)) "derived"))))
+      (recv
+        (enc response
+          (hash "s ap traffic" cr sr
+            (hash (exp (gen) (mul x y)) "derived")))))
+    ((send (cat cr-0 (exp (gen) x-0)))
+      (recv
+        (cat (cat sr-0 (exp (gen) y-0))
+          (enc (cat s-0 spk-0 (enc (hash s-0 spk-0) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-0 y-0)) "s hs traffic" cr-0
+                  sr-0)) (cat cr-0 (exp (gen) x-0))
+              (cat sr-0 (exp (gen) y-0)) s-0 spk-0
+              (enc (hash s-0 spk-0) (privk ca)))
+            (hash (exp (gen) (mul x-0 y-0)) "s hs traffic" cr-0 sr-0))))
+      (send
+        (enc (cat s spk (enc (hash s spk) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x-0 y-0)) "c hs traffic" cr-0 sr-0))
+            (cat cr-0 (exp (gen) x-0)) (cat sr-0 (exp (gen) y-0))
+            (cat s-0 spk-0 (enc (hash s-0 spk-0) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-0 y-0)) "s hs traffic" cr-0
+                  sr-0)) (cat cr-0 (exp (gen) y-0))
+              (cat sr-0 (exp (gen) x-0)) s-0 spk-0
+              (enc (hash s-0 spk-0) (privk ca))) s spk
+            (enc (hash s spk) (privk ca)))
+          (hash (exp (gen) (mul x-0 y-0)) "c hs traffic" cr-0 sr-0))))
+    ((send (cat cr-1 (exp (gen) x-1)))
+      (recv
+        (cat (cat sr-1 (exp (gen) y-1))
+          (enc (cat s-1 spk-1 (enc (hash s-1 spk-1) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-1 y-1)) "s hs traffic" cr-1
+                  sr-1)) (cat cr-1 (exp (gen) x-1))
+              (cat sr-1 (exp (gen) y-1)) s-1 spk-1
+              (enc (hash s-1 spk-1) (privk ca)))
+            (hash (exp (gen) (mul x-1 y-1)) "s hs traffic" cr-1 sr-1))))
+      (send
+        (enc (cat s-0 spk-0 (enc (hash s-0 spk-0) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x-1 y-1)) "c hs traffic" cr-1 sr-1))
+            (cat cr-1 (exp (gen) x-1)) (cat sr-1 (exp (gen) y-1))
+            (cat s-1 spk-1 (enc (hash s-1 spk-1) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-1 y-1)) "s hs traffic" cr-1
+                  sr-1)) (cat cr-1 (exp (gen) y-1))
+              (cat sr-1 (exp (gen) x-1)) s-1 spk-1
+              (enc (hash s-1 spk-1) (privk ca))) s-0 spk-0
+            (enc (hash s-0 spk-0) (privk ca)))
+          (hash (exp (gen) (mul x-1 y-1)) "c hs traffic" cr-1 sr-1))))
+    ((send (cat cr-2 (exp (gen) x-2)))
+      (recv
+        (cat (cat sr-2 (exp (gen) y-2))
+          (enc (cat s-2 spk-2 (enc (hash s-2 spk-2) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-2 y-2)) "s hs traffic" cr-2
+                  sr-2)) (cat cr-2 (exp (gen) x-2))
+              (cat sr-2 (exp (gen) y-2)) s-2 spk-2
+              (enc (hash s-2 spk-2) (privk ca)))
+            (hash (exp (gen) (mul x-2 y-2)) "s hs traffic" cr-2 sr-2))))
+      (send
+        (enc (cat s-1 spk-1 (enc (hash s-1 spk-1) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x-2 y-2)) "c hs traffic" cr-2 sr-2))
+            (cat cr-2 (exp (gen) x-2)) (cat sr-2 (exp (gen) y-2))
+            (cat s-2 spk-2 (enc (hash s-2 spk-2) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-2 y-2)) "s hs traffic" cr-2
+                  sr-2)) (cat cr-2 (exp (gen) y-2))
+              (cat sr-2 (exp (gen) x-2)) s-2 spk-2
+              (enc (hash s-2 spk-2) (privk ca))) s-1 spk-1
+            (enc (hash s-1 spk-1) (privk ca)))
+          (hash (exp (gen) (mul x-2 y-2)) "c hs traffic" cr-2 sr-2)))))
+  (label 5)
+  (parent 3)
+  (unrealized (3 1))
+  (maps
+    ((0)
+      ((cr cr) (sr sr) (spk spk) (cpk cpk) (s s) (ca ca) (c c) (x x)
+        (y y) (request request) (response response))))
+  (comment "2 in cohort - 2 not yet seen"))
+
+(defskeleton tls13-mtls
+  (vars (cr sr cr-0 sr-0 cr-1 sr-1 cr-2 sr-2 random32)
+    (request response text) (spk cpk spk-0 spk-1 akey)
+    (s ca c s-0 s-1 name) (x rndx) (y expt) (x-0 rndx) (y-0 expt)
+    (x-1 rndx) (y-1 expt) (y-2 rndx) (x-2 expt))
+  (defstrand client 5 (cr cr) (sr sr) (request request)
+    (response response) (spk spk) (cpk cpk) (s s) (ca ca) (c c) (x x)
+    (y y))
+  (defstrand client 3 (cr cr-0) (sr sr-0) (spk spk-0) (cpk spk) (s s-0)
+    (ca ca) (c s) (x x-0) (y y-0))
+  (defstrand client 3 (cr cr-1) (sr sr-1) (spk (invk spk-1)) (cpk spk-0)
+    (s s-1) (ca ca) (c s-0) (x x-1) (y y-1))
+  (defstrand server 2 (cr cr-2) (sr sr-2) (spk spk-1) (s s-1) (ca ca)
+    (y y-2) (x x-2))
+  (precedes ((1 2) (0 1)) ((2 2) (1 1)) ((3 1) (2 1)))
+  (non-orig (invk spk) (invk cpk) (privk ca))
+  (uniq-orig cr)
+  (uniq-gen x x-0 x-1 y-2)
+  (absent (y-2 x-2))
+  (goals
+    (forall
+      ((cr sr random32) (spk cpk akey) (s ca c name) (x rndx) (y expt)
+        (z strd))
+      (implies
+        (and (p "client" z 5) (p "client" "cr" z cr)
+          (p "client" "sr" z sr) (p "client" "spk" z spk)
+          (p "client" "cpk" z cpk) (p "client" "s" z s)
+          (p "client" "c" z c) (p "client" "ca" z ca)
+          (p "client" "x" z x) (p "client" "y" z y) (non (invk spk))
+          (non (invk cpk)) (non (privk ca)) (ugen x) (uniq-at cr z 0))
+        (exists ((z-0 strd))
+          (and (p "server" z-0 5) (p "server" "cr" z-0 cr)
+            (p "server" "sr" z-0 sr) (p "server" "spk" z-0 spk)
+            (p "server" "cpk" z-0 cpk) (p "server" "s" z-0 s)
+            (p "server" "c" z-0 c) (p "server" "ca" z-0 ca)
+            (p "server" "y" z-0 y) (p "server" "x" z-0 x))))))
+  (operation encryption-test (added-strand server 2)
+    (enc (hash s-1 (invk spk-1)) (privk ca)) (2 1))
+  (strand-map 0 1 2)
+  (traces
+    ((send (cat cr (exp (gen) x)))
+      (recv
+        (cat (cat sr (exp (gen) y))
+          (enc (cat s spk (enc (hash s spk) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x y)) "s hs traffic" cr sr))
+              (cat cr (exp (gen) x)) (cat sr (exp (gen) y)) s spk
+              (enc (hash s spk) (privk ca)))
+            (hash (exp (gen) (mul x y)) "s hs traffic" cr sr))))
+      (send
+        (enc (cat c cpk (enc (hash c cpk) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x y)) "c hs traffic" cr sr))
+            (cat cr (exp (gen) x)) (cat sr (exp (gen) y))
+            (cat s spk (enc (hash s spk) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x y)) "s hs traffic" cr sr))
+              (cat cr (exp (gen) y)) (cat sr (exp (gen) x)) s spk
+              (enc (hash s spk) (privk ca))) c cpk
+            (enc (hash c cpk) (privk ca)))
+          (hash (exp (gen) (mul x y)) "c hs traffic" cr sr)))
+      (send
+        (enc request
+          (hash "c ap traffic" cr sr
+            (hash (exp (gen) (mul x y)) "derived"))))
+      (recv
+        (enc response
+          (hash "s ap traffic" cr sr
+            (hash (exp (gen) (mul x y)) "derived")))))
+    ((send (cat cr-0 (exp (gen) x-0)))
+      (recv
+        (cat (cat sr-0 (exp (gen) y-0))
+          (enc (cat s-0 spk-0 (enc (hash s-0 spk-0) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-0 y-0)) "s hs traffic" cr-0
+                  sr-0)) (cat cr-0 (exp (gen) x-0))
+              (cat sr-0 (exp (gen) y-0)) s-0 spk-0
+              (enc (hash s-0 spk-0) (privk ca)))
+            (hash (exp (gen) (mul x-0 y-0)) "s hs traffic" cr-0 sr-0))))
+      (send
+        (enc (cat s spk (enc (hash s spk) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x-0 y-0)) "c hs traffic" cr-0 sr-0))
+            (cat cr-0 (exp (gen) x-0)) (cat sr-0 (exp (gen) y-0))
+            (cat s-0 spk-0 (enc (hash s-0 spk-0) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-0 y-0)) "s hs traffic" cr-0
+                  sr-0)) (cat cr-0 (exp (gen) y-0))
+              (cat sr-0 (exp (gen) x-0)) s-0 spk-0
+              (enc (hash s-0 spk-0) (privk ca))) s spk
+            (enc (hash s spk) (privk ca)))
+          (hash (exp (gen) (mul x-0 y-0)) "c hs traffic" cr-0 sr-0))))
+    ((send (cat cr-1 (exp (gen) x-1)))
+      (recv
+        (cat (cat sr-1 (exp (gen) y-1))
+          (enc
+            (cat s-1 (invk spk-1)
+              (enc (hash s-1 (invk spk-1)) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-1 y-1)) "s hs traffic" cr-1
+                  sr-1)) (cat cr-1 (exp (gen) x-1))
+              (cat sr-1 (exp (gen) y-1)) s-1 (invk spk-1)
+              (enc (hash s-1 (invk spk-1)) (privk ca)))
+            (hash (exp (gen) (mul x-1 y-1)) "s hs traffic" cr-1 sr-1))))
+      (send
+        (enc (cat s-0 spk-0 (enc (hash s-0 spk-0) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x-1 y-1)) "c hs traffic" cr-1 sr-1))
+            (cat cr-1 (exp (gen) x-1)) (cat sr-1 (exp (gen) y-1))
+            (cat s-1 (invk spk-1)
+              (enc (hash s-1 (invk spk-1)) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-1 y-1)) "s hs traffic" cr-1
+                  sr-1)) (cat cr-1 (exp (gen) y-1))
+              (cat sr-1 (exp (gen) x-1)) s-1 (invk spk-1)
+              (enc (hash s-1 (invk spk-1)) (privk ca))) s-0 spk-0
+            (enc (hash s-0 spk-0) (privk ca)))
+          (hash (exp (gen) (mul x-1 y-1)) "c hs traffic" cr-1 sr-1))))
+    ((recv (cat cr-2 (exp (gen) x-2)))
+      (send
+        (cat (cat sr-2 (exp (gen) y-2))
+          (enc
+            (cat s-1 (invk spk-1)
+              (enc (hash s-1 (invk spk-1)) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul y-2 x-2)) "s hs traffic" cr-2
+                  sr-2)) (cat cr-2 (exp (gen) x-2))
+              (cat sr-2 (exp (gen) y-2)) s-1 (invk spk-1)
+              (enc (hash s-1 (invk spk-1)) (privk ca)))
+            (hash (exp (gen) (mul y-2 x-2)) "s hs traffic" cr-2
+              sr-2))))))
+  (label 6)
+  (parent 3)
+  (realized)
+  (shape)
+  (satisfies
+    (no (p "server" z-0 (idx 5)) (p "server" "x" z-0 x)
+      (p "server" "y" z-0 y) (p "server" "c" z-0 c)
+      (p "server" "s" z-0 s) (p "server" "cpk" z-0 cpk)
+      (p "server" "spk" z-0 spk) (p "server" "sr" z-0 sr)
+      (p "server" "cr" z-0 cr) (cr cr) (sr sr) (spk spk) (cpk cpk) (s s)
+      (ca ca) (c c) (x x) (y y) (z 0)))
+  (maps
+    ((0)
+      ((cr cr) (sr sr) (spk spk) (cpk cpk) (s s) (ca ca) (c c) (x x)
+        (y y) (request request) (response response))))
+  (origs (cr (0 0)))
+  (ugens (y-2 (3 1)) (x-1 (2 0)) (x-0 (1 0)) (x (0 0))))
+
+(defskeleton tls13-mtls
+  (vars (cr sr cr-0 sr-0 cr-1 sr-1 cr-2 sr-2 cr-3 sr-3 random32)
+    (request response text) (spk cpk spk-0 spk-1 spk-2 spk-3 akey)
+    (s ca c s-0 s-1 s-2 s-3 name) (x rndx) (y expt) (x-0 rndx)
+    (y-0 expt) (x-1 rndx) (y-1 expt) (x-2 rndx) (y-2 expt) (x-3 rndx)
+    (y-3 expt))
+  (defstrand client 5 (cr cr) (sr sr) (request request)
+    (response response) (spk spk) (cpk cpk) (s s) (ca ca) (c c) (x x)
+    (y y))
+  (defstrand client 3 (cr cr-0) (sr sr-0) (spk spk-0) (cpk spk) (s s-0)
+    (ca ca) (c s) (x x-0) (y y-0))
+  (defstrand client 3 (cr cr-1) (sr sr-1) (spk spk-1) (cpk spk-0)
+    (s s-1) (ca ca) (c s-0) (x x-1) (y y-1))
+  (defstrand client 3 (cr cr-2) (sr sr-2) (spk spk-2) (cpk spk-1)
+    (s s-2) (ca ca) (c s-1) (x x-2) (y y-2))
+  (defstrand client 3 (cr cr-3) (sr sr-3) (spk spk-3) (cpk spk-2)
+    (s s-3) (ca ca) (c s-2) (x x-3) (y y-3))
+  (precedes ((1 2) (0 1)) ((2 2) (1 1)) ((3 2) (2 1)) ((4 2) (3 1)))
+  (non-orig (invk spk) (invk cpk) (privk ca))
+  (uniq-orig cr)
+  (uniq-gen x x-0 x-1 x-2 x-3)
+  (goals
+    (forall
+      ((cr sr random32) (spk cpk akey) (s ca c name) (x rndx) (y expt)
+        (z strd))
+      (implies
+        (and (p "client" z 5) (p "client" "cr" z cr)
+          (p "client" "sr" z sr) (p "client" "spk" z spk)
+          (p "client" "cpk" z cpk) (p "client" "s" z s)
+          (p "client" "c" z c) (p "client" "ca" z ca)
+          (p "client" "x" z x) (p "client" "y" z y) (non (invk spk))
+          (non (invk cpk)) (non (privk ca)) (ugen x) (uniq-at cr z 0))
+        (exists ((z-0 strd))
+          (and (p "server" z-0 5) (p "server" "cr" z-0 cr)
+            (p "server" "sr" z-0 sr) (p "server" "spk" z-0 spk)
+            (p "server" "cpk" z-0 cpk) (p "server" "s" z-0 s)
+            (p "server" "c" z-0 c) (p "server" "ca" z-0 ca)
+            (p "server" "y" z-0 y) (p "server" "x" z-0 x))))))
+  (operation encryption-test (added-strand client 3)
+    (enc (hash s-2 spk-2) (privk ca)) (3 1))
+  (strand-map 0 1 2 3)
+  (traces
+    ((send (cat cr (exp (gen) x)))
+      (recv
+        (cat (cat sr (exp (gen) y))
+          (enc (cat s spk (enc (hash s spk) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x y)) "s hs traffic" cr sr))
+              (cat cr (exp (gen) x)) (cat sr (exp (gen) y)) s spk
+              (enc (hash s spk) (privk ca)))
+            (hash (exp (gen) (mul x y)) "s hs traffic" cr sr))))
+      (send
+        (enc (cat c cpk (enc (hash c cpk) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x y)) "c hs traffic" cr sr))
+            (cat cr (exp (gen) x)) (cat sr (exp (gen) y))
+            (cat s spk (enc (hash s spk) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x y)) "s hs traffic" cr sr))
+              (cat cr (exp (gen) y)) (cat sr (exp (gen) x)) s spk
+              (enc (hash s spk) (privk ca))) c cpk
+            (enc (hash c cpk) (privk ca)))
+          (hash (exp (gen) (mul x y)) "c hs traffic" cr sr)))
+      (send
+        (enc request
+          (hash "c ap traffic" cr sr
+            (hash (exp (gen) (mul x y)) "derived"))))
+      (recv
+        (enc response
+          (hash "s ap traffic" cr sr
+            (hash (exp (gen) (mul x y)) "derived")))))
+    ((send (cat cr-0 (exp (gen) x-0)))
+      (recv
+        (cat (cat sr-0 (exp (gen) y-0))
+          (enc (cat s-0 spk-0 (enc (hash s-0 spk-0) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-0 y-0)) "s hs traffic" cr-0
+                  sr-0)) (cat cr-0 (exp (gen) x-0))
+              (cat sr-0 (exp (gen) y-0)) s-0 spk-0
+              (enc (hash s-0 spk-0) (privk ca)))
+            (hash (exp (gen) (mul x-0 y-0)) "s hs traffic" cr-0 sr-0))))
+      (send
+        (enc (cat s spk (enc (hash s spk) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x-0 y-0)) "c hs traffic" cr-0 sr-0))
+            (cat cr-0 (exp (gen) x-0)) (cat sr-0 (exp (gen) y-0))
+            (cat s-0 spk-0 (enc (hash s-0 spk-0) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-0 y-0)) "s hs traffic" cr-0
+                  sr-0)) (cat cr-0 (exp (gen) y-0))
+              (cat sr-0 (exp (gen) x-0)) s-0 spk-0
+              (enc (hash s-0 spk-0) (privk ca))) s spk
+            (enc (hash s spk) (privk ca)))
+          (hash (exp (gen) (mul x-0 y-0)) "c hs traffic" cr-0 sr-0))))
+    ((send (cat cr-1 (exp (gen) x-1)))
+      (recv
+        (cat (cat sr-1 (exp (gen) y-1))
+          (enc (cat s-1 spk-1 (enc (hash s-1 spk-1) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-1 y-1)) "s hs traffic" cr-1
+                  sr-1)) (cat cr-1 (exp (gen) x-1))
+              (cat sr-1 (exp (gen) y-1)) s-1 spk-1
+              (enc (hash s-1 spk-1) (privk ca)))
+            (hash (exp (gen) (mul x-1 y-1)) "s hs traffic" cr-1 sr-1))))
+      (send
+        (enc (cat s-0 spk-0 (enc (hash s-0 spk-0) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x-1 y-1)) "c hs traffic" cr-1 sr-1))
+            (cat cr-1 (exp (gen) x-1)) (cat sr-1 (exp (gen) y-1))
+            (cat s-1 spk-1 (enc (hash s-1 spk-1) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-1 y-1)) "s hs traffic" cr-1
+                  sr-1)) (cat cr-1 (exp (gen) y-1))
+              (cat sr-1 (exp (gen) x-1)) s-1 spk-1
+              (enc (hash s-1 spk-1) (privk ca))) s-0 spk-0
+            (enc (hash s-0 spk-0) (privk ca)))
+          (hash (exp (gen) (mul x-1 y-1)) "c hs traffic" cr-1 sr-1))))
+    ((send (cat cr-2 (exp (gen) x-2)))
+      (recv
+        (cat (cat sr-2 (exp (gen) y-2))
+          (enc (cat s-2 spk-2 (enc (hash s-2 spk-2) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-2 y-2)) "s hs traffic" cr-2
+                  sr-2)) (cat cr-2 (exp (gen) x-2))
+              (cat sr-2 (exp (gen) y-2)) s-2 spk-2
+              (enc (hash s-2 spk-2) (privk ca)))
+            (hash (exp (gen) (mul x-2 y-2)) "s hs traffic" cr-2 sr-2))))
+      (send
+        (enc (cat s-1 spk-1 (enc (hash s-1 spk-1) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x-2 y-2)) "c hs traffic" cr-2 sr-2))
+            (cat cr-2 (exp (gen) x-2)) (cat sr-2 (exp (gen) y-2))
+            (cat s-2 spk-2 (enc (hash s-2 spk-2) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-2 y-2)) "s hs traffic" cr-2
+                  sr-2)) (cat cr-2 (exp (gen) y-2))
+              (cat sr-2 (exp (gen) x-2)) s-2 spk-2
+              (enc (hash s-2 spk-2) (privk ca))) s-1 spk-1
+            (enc (hash s-1 spk-1) (privk ca)))
+          (hash (exp (gen) (mul x-2 y-2)) "c hs traffic" cr-2 sr-2))))
+    ((send (cat cr-3 (exp (gen) x-3)))
+      (recv
+        (cat (cat sr-3 (exp (gen) y-3))
+          (enc (cat s-3 spk-3 (enc (hash s-3 spk-3) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-3 y-3)) "s hs traffic" cr-3
+                  sr-3)) (cat cr-3 (exp (gen) x-3))
+              (cat sr-3 (exp (gen) y-3)) s-3 spk-3
+              (enc (hash s-3 spk-3) (privk ca)))
+            (hash (exp (gen) (mul x-3 y-3)) "s hs traffic" cr-3 sr-3))))
+      (send
+        (enc (cat s-2 spk-2 (enc (hash s-2 spk-2) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x-3 y-3)) "c hs traffic" cr-3 sr-3))
+            (cat cr-3 (exp (gen) x-3)) (cat sr-3 (exp (gen) y-3))
+            (cat s-3 spk-3 (enc (hash s-3 spk-3) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-3 y-3)) "s hs traffic" cr-3
+                  sr-3)) (cat cr-3 (exp (gen) y-3))
+              (cat sr-3 (exp (gen) x-3)) s-3 spk-3
+              (enc (hash s-3 spk-3) (privk ca))) s-2 spk-2
+            (enc (hash s-2 spk-2) (privk ca)))
+          (hash (exp (gen) (mul x-3 y-3)) "c hs traffic" cr-3 sr-3)))))
+  (label 7)
+  (parent 5)
+  (unrealized (4 1))
+  (maps
+    ((0)
+      ((cr cr) (sr sr) (spk spk) (cpk cpk) (s s) (ca ca) (c c) (x x)
+        (y y) (request request) (response response))))
+  (comment "2 in cohort - 2 not yet seen"))
+
+(defskeleton tls13-mtls
+  (vars (cr sr cr-0 sr-0 cr-1 sr-1 cr-2 sr-2 cr-3 sr-3 random32)
+    (request response text) (spk cpk spk-0 spk-1 spk-2 akey)
+    (s ca c s-0 s-1 s-2 name) (x rndx) (y expt) (x-0 rndx) (y-0 expt)
+    (x-1 rndx) (y-1 expt) (x-2 rndx) (y-2 expt) (y-3 rndx) (x-3 expt))
+  (defstrand client 5 (cr cr) (sr sr) (request request)
+    (response response) (spk spk) (cpk cpk) (s s) (ca ca) (c c) (x x)
+    (y y))
+  (defstrand client 3 (cr cr-0) (sr sr-0) (spk spk-0) (cpk spk) (s s-0)
+    (ca ca) (c s) (x x-0) (y y-0))
+  (defstrand client 3 (cr cr-1) (sr sr-1) (spk spk-1) (cpk spk-0)
+    (s s-1) (ca ca) (c s-0) (x x-1) (y y-1))
+  (defstrand client 3 (cr cr-2) (sr sr-2) (spk (invk spk-2)) (cpk spk-1)
+    (s s-2) (ca ca) (c s-1) (x x-2) (y y-2))
+  (defstrand server 2 (cr cr-3) (sr sr-3) (spk spk-2) (s s-2) (ca ca)
+    (y y-3) (x x-3))
+  (precedes ((1 2) (0 1)) ((2 2) (1 1)) ((3 2) (2 1)) ((4 1) (3 1)))
+  (non-orig (invk spk) (invk cpk) (privk ca))
+  (uniq-orig cr)
+  (uniq-gen x x-0 x-1 x-2 y-3)
+  (absent (y-3 x-3))
+  (goals
+    (forall
+      ((cr sr random32) (spk cpk akey) (s ca c name) (x rndx) (y expt)
+        (z strd))
+      (implies
+        (and (p "client" z 5) (p "client" "cr" z cr)
+          (p "client" "sr" z sr) (p "client" "spk" z spk)
+          (p "client" "cpk" z cpk) (p "client" "s" z s)
+          (p "client" "c" z c) (p "client" "ca" z ca)
+          (p "client" "x" z x) (p "client" "y" z y) (non (invk spk))
+          (non (invk cpk)) (non (privk ca)) (ugen x) (uniq-at cr z 0))
+        (exists ((z-0 strd))
+          (and (p "server" z-0 5) (p "server" "cr" z-0 cr)
+            (p "server" "sr" z-0 sr) (p "server" "spk" z-0 spk)
+            (p "server" "cpk" z-0 cpk) (p "server" "s" z-0 s)
+            (p "server" "c" z-0 c) (p "server" "ca" z-0 ca)
+            (p "server" "y" z-0 y) (p "server" "x" z-0 x))))))
+  (operation encryption-test (added-strand server 2)
+    (enc (hash s-2 (invk spk-2)) (privk ca)) (3 1))
+  (strand-map 0 1 2 3)
+  (traces
+    ((send (cat cr (exp (gen) x)))
+      (recv
+        (cat (cat sr (exp (gen) y))
+          (enc (cat s spk (enc (hash s spk) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x y)) "s hs traffic" cr sr))
+              (cat cr (exp (gen) x)) (cat sr (exp (gen) y)) s spk
+              (enc (hash s spk) (privk ca)))
+            (hash (exp (gen) (mul x y)) "s hs traffic" cr sr))))
+      (send
+        (enc (cat c cpk (enc (hash c cpk) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x y)) "c hs traffic" cr sr))
+            (cat cr (exp (gen) x)) (cat sr (exp (gen) y))
+            (cat s spk (enc (hash s spk) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x y)) "s hs traffic" cr sr))
+              (cat cr (exp (gen) y)) (cat sr (exp (gen) x)) s spk
+              (enc (hash s spk) (privk ca))) c cpk
+            (enc (hash c cpk) (privk ca)))
+          (hash (exp (gen) (mul x y)) "c hs traffic" cr sr)))
+      (send
+        (enc request
+          (hash "c ap traffic" cr sr
+            (hash (exp (gen) (mul x y)) "derived"))))
+      (recv
+        (enc response
+          (hash "s ap traffic" cr sr
+            (hash (exp (gen) (mul x y)) "derived")))))
+    ((send (cat cr-0 (exp (gen) x-0)))
+      (recv
+        (cat (cat sr-0 (exp (gen) y-0))
+          (enc (cat s-0 spk-0 (enc (hash s-0 spk-0) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-0 y-0)) "s hs traffic" cr-0
+                  sr-0)) (cat cr-0 (exp (gen) x-0))
+              (cat sr-0 (exp (gen) y-0)) s-0 spk-0
+              (enc (hash s-0 spk-0) (privk ca)))
+            (hash (exp (gen) (mul x-0 y-0)) "s hs traffic" cr-0 sr-0))))
+      (send
+        (enc (cat s spk (enc (hash s spk) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x-0 y-0)) "c hs traffic" cr-0 sr-0))
+            (cat cr-0 (exp (gen) x-0)) (cat sr-0 (exp (gen) y-0))
+            (cat s-0 spk-0 (enc (hash s-0 spk-0) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-0 y-0)) "s hs traffic" cr-0
+                  sr-0)) (cat cr-0 (exp (gen) y-0))
+              (cat sr-0 (exp (gen) x-0)) s-0 spk-0
+              (enc (hash s-0 spk-0) (privk ca))) s spk
+            (enc (hash s spk) (privk ca)))
+          (hash (exp (gen) (mul x-0 y-0)) "c hs traffic" cr-0 sr-0))))
+    ((send (cat cr-1 (exp (gen) x-1)))
+      (recv
+        (cat (cat sr-1 (exp (gen) y-1))
+          (enc (cat s-1 spk-1 (enc (hash s-1 spk-1) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-1 y-1)) "s hs traffic" cr-1
+                  sr-1)) (cat cr-1 (exp (gen) x-1))
+              (cat sr-1 (exp (gen) y-1)) s-1 spk-1
+              (enc (hash s-1 spk-1) (privk ca)))
+            (hash (exp (gen) (mul x-1 y-1)) "s hs traffic" cr-1 sr-1))))
+      (send
+        (enc (cat s-0 spk-0 (enc (hash s-0 spk-0) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x-1 y-1)) "c hs traffic" cr-1 sr-1))
+            (cat cr-1 (exp (gen) x-1)) (cat sr-1 (exp (gen) y-1))
+            (cat s-1 spk-1 (enc (hash s-1 spk-1) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-1 y-1)) "s hs traffic" cr-1
+                  sr-1)) (cat cr-1 (exp (gen) y-1))
+              (cat sr-1 (exp (gen) x-1)) s-1 spk-1
+              (enc (hash s-1 spk-1) (privk ca))) s-0 spk-0
+            (enc (hash s-0 spk-0) (privk ca)))
+          (hash (exp (gen) (mul x-1 y-1)) "c hs traffic" cr-1 sr-1))))
+    ((send (cat cr-2 (exp (gen) x-2)))
+      (recv
+        (cat (cat sr-2 (exp (gen) y-2))
+          (enc
+            (cat s-2 (invk spk-2)
+              (enc (hash s-2 (invk spk-2)) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-2 y-2)) "s hs traffic" cr-2
+                  sr-2)) (cat cr-2 (exp (gen) x-2))
+              (cat sr-2 (exp (gen) y-2)) s-2 (invk spk-2)
+              (enc (hash s-2 (invk spk-2)) (privk ca)))
+            (hash (exp (gen) (mul x-2 y-2)) "s hs traffic" cr-2 sr-2))))
+      (send
+        (enc (cat s-1 spk-1 (enc (hash s-1 spk-1) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x-2 y-2)) "c hs traffic" cr-2 sr-2))
+            (cat cr-2 (exp (gen) x-2)) (cat sr-2 (exp (gen) y-2))
+            (cat s-2 (invk spk-2)
+              (enc (hash s-2 (invk spk-2)) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-2 y-2)) "s hs traffic" cr-2
+                  sr-2)) (cat cr-2 (exp (gen) y-2))
+              (cat sr-2 (exp (gen) x-2)) s-2 (invk spk-2)
+              (enc (hash s-2 (invk spk-2)) (privk ca))) s-1 spk-1
+            (enc (hash s-1 spk-1) (privk ca)))
+          (hash (exp (gen) (mul x-2 y-2)) "c hs traffic" cr-2 sr-2))))
+    ((recv (cat cr-3 (exp (gen) x-3)))
+      (send
+        (cat (cat sr-3 (exp (gen) y-3))
+          (enc
+            (cat s-2 (invk spk-2)
+              (enc (hash s-2 (invk spk-2)) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul y-3 x-3)) "s hs traffic" cr-3
+                  sr-3)) (cat cr-3 (exp (gen) x-3))
+              (cat sr-3 (exp (gen) y-3)) s-2 (invk spk-2)
+              (enc (hash s-2 (invk spk-2)) (privk ca)))
+            (hash (exp (gen) (mul y-3 x-3)) "s hs traffic" cr-3
+              sr-3))))))
+  (label 8)
+  (parent 5)
+  (realized)
+  (shape)
+  (satisfies
+    (no (p "server" z-0 (idx 5)) (p "server" "x" z-0 x)
+      (p "server" "y" z-0 y) (p "server" "c" z-0 c)
+      (p "server" "s" z-0 s) (p "server" "cpk" z-0 cpk)
+      (p "server" "spk" z-0 spk) (p "server" "sr" z-0 sr)
+      (p "server" "cr" z-0 cr) (cr cr) (sr sr) (spk spk) (cpk cpk) (s s)
+      (ca ca) (c c) (x x) (y y) (z 0)))
+  (maps
+    ((0)
+      ((cr cr) (sr sr) (spk spk) (cpk cpk) (s s) (ca ca) (c c) (x x)
+        (y y) (request request) (response response))))
+  (origs (cr (0 0)))
+  (ugens (y-3 (4 1)) (x-2 (3 0)) (x-1 (2 0)) (x-0 (1 0)) (x (0 0))))
+
+(defskeleton tls13-mtls
+  (vars
+    (cr sr cr-0 sr-0 cr-1 sr-1 cr-2 sr-2 cr-3 sr-3 cr-4 sr-4 random32)
+    (request response text) (spk cpk spk-0 spk-1 spk-2 spk-3 spk-4 akey)
+    (s ca c s-0 s-1 s-2 s-3 s-4 name) (x rndx) (y expt) (x-0 rndx)
+    (y-0 expt) (x-1 rndx) (y-1 expt) (x-2 rndx) (y-2 expt) (x-3 rndx)
+    (y-3 expt) (x-4 rndx) (y-4 expt))
+  (defstrand client 5 (cr cr) (sr sr) (request request)
+    (response response) (spk spk) (cpk cpk) (s s) (ca ca) (c c) (x x)
+    (y y))
+  (defstrand client 3 (cr cr-0) (sr sr-0) (spk spk-0) (cpk spk) (s s-0)
+    (ca ca) (c s) (x x-0) (y y-0))
+  (defstrand client 3 (cr cr-1) (sr sr-1) (spk spk-1) (cpk spk-0)
+    (s s-1) (ca ca) (c s-0) (x x-1) (y y-1))
+  (defstrand client 3 (cr cr-2) (sr sr-2) (spk spk-2) (cpk spk-1)
+    (s s-2) (ca ca) (c s-1) (x x-2) (y y-2))
+  (defstrand client 3 (cr cr-3) (sr sr-3) (spk spk-3) (cpk spk-2)
+    (s s-3) (ca ca) (c s-2) (x x-3) (y y-3))
+  (defstrand client 3 (cr cr-4) (sr sr-4) (spk spk-4) (cpk spk-3)
+    (s s-4) (ca ca) (c s-3) (x x-4) (y y-4))
+  (precedes ((1 2) (0 1)) ((2 2) (1 1)) ((3 2) (2 1)) ((4 2) (3 1))
+    ((5 2) (4 1)))
+  (non-orig (invk spk) (invk cpk) (privk ca))
+  (uniq-orig cr)
+  (uniq-gen x x-0 x-1 x-2 x-3 x-4)
+  (goals
+    (forall
+      ((cr sr random32) (spk cpk akey) (s ca c name) (x rndx) (y expt)
+        (z strd))
+      (implies
+        (and (p "client" z 5) (p "client" "cr" z cr)
+          (p "client" "sr" z sr) (p "client" "spk" z spk)
+          (p "client" "cpk" z cpk) (p "client" "s" z s)
+          (p "client" "c" z c) (p "client" "ca" z ca)
+          (p "client" "x" z x) (p "client" "y" z y) (non (invk spk))
+          (non (invk cpk)) (non (privk ca)) (ugen x) (uniq-at cr z 0))
+        (exists ((z-0 strd))
+          (and (p "server" z-0 5) (p "server" "cr" z-0 cr)
+            (p "server" "sr" z-0 sr) (p "server" "spk" z-0 spk)
+            (p "server" "cpk" z-0 cpk) (p "server" "s" z-0 s)
+            (p "server" "c" z-0 c) (p "server" "ca" z-0 ca)
+            (p "server" "y" z-0 y) (p "server" "x" z-0 x))))))
+  (operation encryption-test (added-strand client 3)
+    (enc (hash s-3 spk-3) (privk ca)) (4 1))
+  (strand-map 0 1 2 3 4)
+  (traces
+    ((send (cat cr (exp (gen) x)))
+      (recv
+        (cat (cat sr (exp (gen) y))
+          (enc (cat s spk (enc (hash s spk) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x y)) "s hs traffic" cr sr))
+              (cat cr (exp (gen) x)) (cat sr (exp (gen) y)) s spk
+              (enc (hash s spk) (privk ca)))
+            (hash (exp (gen) (mul x y)) "s hs traffic" cr sr))))
+      (send
+        (enc (cat c cpk (enc (hash c cpk) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x y)) "c hs traffic" cr sr))
+            (cat cr (exp (gen) x)) (cat sr (exp (gen) y))
+            (cat s spk (enc (hash s spk) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x y)) "s hs traffic" cr sr))
+              (cat cr (exp (gen) y)) (cat sr (exp (gen) x)) s spk
+              (enc (hash s spk) (privk ca))) c cpk
+            (enc (hash c cpk) (privk ca)))
+          (hash (exp (gen) (mul x y)) "c hs traffic" cr sr)))
+      (send
+        (enc request
+          (hash "c ap traffic" cr sr
+            (hash (exp (gen) (mul x y)) "derived"))))
+      (recv
+        (enc response
+          (hash "s ap traffic" cr sr
+            (hash (exp (gen) (mul x y)) "derived")))))
+    ((send (cat cr-0 (exp (gen) x-0)))
+      (recv
+        (cat (cat sr-0 (exp (gen) y-0))
+          (enc (cat s-0 spk-0 (enc (hash s-0 spk-0) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-0 y-0)) "s hs traffic" cr-0
+                  sr-0)) (cat cr-0 (exp (gen) x-0))
+              (cat sr-0 (exp (gen) y-0)) s-0 spk-0
+              (enc (hash s-0 spk-0) (privk ca)))
+            (hash (exp (gen) (mul x-0 y-0)) "s hs traffic" cr-0 sr-0))))
+      (send
+        (enc (cat s spk (enc (hash s spk) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x-0 y-0)) "c hs traffic" cr-0 sr-0))
+            (cat cr-0 (exp (gen) x-0)) (cat sr-0 (exp (gen) y-0))
+            (cat s-0 spk-0 (enc (hash s-0 spk-0) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-0 y-0)) "s hs traffic" cr-0
+                  sr-0)) (cat cr-0 (exp (gen) y-0))
+              (cat sr-0 (exp (gen) x-0)) s-0 spk-0
+              (enc (hash s-0 spk-0) (privk ca))) s spk
+            (enc (hash s spk) (privk ca)))
+          (hash (exp (gen) (mul x-0 y-0)) "c hs traffic" cr-0 sr-0))))
+    ((send (cat cr-1 (exp (gen) x-1)))
+      (recv
+        (cat (cat sr-1 (exp (gen) y-1))
+          (enc (cat s-1 spk-1 (enc (hash s-1 spk-1) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-1 y-1)) "s hs traffic" cr-1
+                  sr-1)) (cat cr-1 (exp (gen) x-1))
+              (cat sr-1 (exp (gen) y-1)) s-1 spk-1
+              (enc (hash s-1 spk-1) (privk ca)))
+            (hash (exp (gen) (mul x-1 y-1)) "s hs traffic" cr-1 sr-1))))
+      (send
+        (enc (cat s-0 spk-0 (enc (hash s-0 spk-0) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x-1 y-1)) "c hs traffic" cr-1 sr-1))
+            (cat cr-1 (exp (gen) x-1)) (cat sr-1 (exp (gen) y-1))
+            (cat s-1 spk-1 (enc (hash s-1 spk-1) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-1 y-1)) "s hs traffic" cr-1
+                  sr-1)) (cat cr-1 (exp (gen) y-1))
+              (cat sr-1 (exp (gen) x-1)) s-1 spk-1
+              (enc (hash s-1 spk-1) (privk ca))) s-0 spk-0
+            (enc (hash s-0 spk-0) (privk ca)))
+          (hash (exp (gen) (mul x-1 y-1)) "c hs traffic" cr-1 sr-1))))
+    ((send (cat cr-2 (exp (gen) x-2)))
+      (recv
+        (cat (cat sr-2 (exp (gen) y-2))
+          (enc (cat s-2 spk-2 (enc (hash s-2 spk-2) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-2 y-2)) "s hs traffic" cr-2
+                  sr-2)) (cat cr-2 (exp (gen) x-2))
+              (cat sr-2 (exp (gen) y-2)) s-2 spk-2
+              (enc (hash s-2 spk-2) (privk ca)))
+            (hash (exp (gen) (mul x-2 y-2)) "s hs traffic" cr-2 sr-2))))
+      (send
+        (enc (cat s-1 spk-1 (enc (hash s-1 spk-1) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x-2 y-2)) "c hs traffic" cr-2 sr-2))
+            (cat cr-2 (exp (gen) x-2)) (cat sr-2 (exp (gen) y-2))
+            (cat s-2 spk-2 (enc (hash s-2 spk-2) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-2 y-2)) "s hs traffic" cr-2
+                  sr-2)) (cat cr-2 (exp (gen) y-2))
+              (cat sr-2 (exp (gen) x-2)) s-2 spk-2
+              (enc (hash s-2 spk-2) (privk ca))) s-1 spk-1
+            (enc (hash s-1 spk-1) (privk ca)))
+          (hash (exp (gen) (mul x-2 y-2)) "c hs traffic" cr-2 sr-2))))
+    ((send (cat cr-3 (exp (gen) x-3)))
+      (recv
+        (cat (cat sr-3 (exp (gen) y-3))
+          (enc (cat s-3 spk-3 (enc (hash s-3 spk-3) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-3 y-3)) "s hs traffic" cr-3
+                  sr-3)) (cat cr-3 (exp (gen) x-3))
+              (cat sr-3 (exp (gen) y-3)) s-3 spk-3
+              (enc (hash s-3 spk-3) (privk ca)))
+            (hash (exp (gen) (mul x-3 y-3)) "s hs traffic" cr-3 sr-3))))
+      (send
+        (enc (cat s-2 spk-2 (enc (hash s-2 spk-2) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x-3 y-3)) "c hs traffic" cr-3 sr-3))
+            (cat cr-3 (exp (gen) x-3)) (cat sr-3 (exp (gen) y-3))
+            (cat s-3 spk-3 (enc (hash s-3 spk-3) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-3 y-3)) "s hs traffic" cr-3
+                  sr-3)) (cat cr-3 (exp (gen) y-3))
+              (cat sr-3 (exp (gen) x-3)) s-3 spk-3
+              (enc (hash s-3 spk-3) (privk ca))) s-2 spk-2
+            (enc (hash s-2 spk-2) (privk ca)))
+          (hash (exp (gen) (mul x-3 y-3)) "c hs traffic" cr-3 sr-3))))
+    ((send (cat cr-4 (exp (gen) x-4)))
+      (recv
+        (cat (cat sr-4 (exp (gen) y-4))
+          (enc (cat s-4 spk-4 (enc (hash s-4 spk-4) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-4 y-4)) "s hs traffic" cr-4
+                  sr-4)) (cat cr-4 (exp (gen) x-4))
+              (cat sr-4 (exp (gen) y-4)) s-4 spk-4
+              (enc (hash s-4 spk-4) (privk ca)))
+            (hash (exp (gen) (mul x-4 y-4)) "s hs traffic" cr-4 sr-4))))
+      (send
+        (enc (cat s-3 spk-3 (enc (hash s-3 spk-3) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x-4 y-4)) "c hs traffic" cr-4 sr-4))
+            (cat cr-4 (exp (gen) x-4)) (cat sr-4 (exp (gen) y-4))
+            (cat s-4 spk-4 (enc (hash s-4 spk-4) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-4 y-4)) "s hs traffic" cr-4
+                  sr-4)) (cat cr-4 (exp (gen) y-4))
+              (cat sr-4 (exp (gen) x-4)) s-4 spk-4
+              (enc (hash s-4 spk-4) (privk ca))) s-3 spk-3
+            (enc (hash s-3 spk-3) (privk ca)))
+          (hash (exp (gen) (mul x-4 y-4)) "c hs traffic" cr-4 sr-4)))))
+  (label 9)
+  (parent 7)
+  (unrealized (5 1))
+  (maps
+    ((0)
+      ((cr cr) (sr sr) (spk spk) (cpk cpk) (s s) (ca ca) (c c) (x x)
+        (y y) (request request) (response response))))
+  (comment "2 in cohort - 2 not yet seen"))
+
+(defskeleton tls13-mtls
+  (vars
+    (cr sr cr-0 sr-0 cr-1 sr-1 cr-2 sr-2 cr-3 sr-3 cr-4 sr-4 random32)
+    (request response text) (spk cpk spk-0 spk-1 spk-2 spk-3 akey)
+    (s ca c s-0 s-1 s-2 s-3 name) (x rndx) (y expt) (x-0 rndx)
+    (y-0 expt) (x-1 rndx) (y-1 expt) (x-2 rndx) (y-2 expt) (x-3 rndx)
+    (y-3 expt) (y-4 rndx) (x-4 expt))
+  (defstrand client 5 (cr cr) (sr sr) (request request)
+    (response response) (spk spk) (cpk cpk) (s s) (ca ca) (c c) (x x)
+    (y y))
+  (defstrand client 3 (cr cr-0) (sr sr-0) (spk spk-0) (cpk spk) (s s-0)
+    (ca ca) (c s) (x x-0) (y y-0))
+  (defstrand client 3 (cr cr-1) (sr sr-1) (spk spk-1) (cpk spk-0)
+    (s s-1) (ca ca) (c s-0) (x x-1) (y y-1))
+  (defstrand client 3 (cr cr-2) (sr sr-2) (spk spk-2) (cpk spk-1)
+    (s s-2) (ca ca) (c s-1) (x x-2) (y y-2))
+  (defstrand client 3 (cr cr-3) (sr sr-3) (spk (invk spk-3)) (cpk spk-2)
+    (s s-3) (ca ca) (c s-2) (x x-3) (y y-3))
+  (defstrand server 2 (cr cr-4) (sr sr-4) (spk spk-3) (s s-3) (ca ca)
+    (y y-4) (x x-4))
+  (precedes ((1 2) (0 1)) ((2 2) (1 1)) ((3 2) (2 1)) ((4 2) (3 1))
+    ((5 1) (4 1)))
+  (non-orig (invk spk) (invk cpk) (privk ca))
+  (uniq-orig cr)
+  (uniq-gen x x-0 x-1 x-2 x-3 y-4)
+  (absent (y-4 x-4))
+  (goals
+    (forall
+      ((cr sr random32) (spk cpk akey) (s ca c name) (x rndx) (y expt)
+        (z strd))
+      (implies
+        (and (p "client" z 5) (p "client" "cr" z cr)
+          (p "client" "sr" z sr) (p "client" "spk" z spk)
+          (p "client" "cpk" z cpk) (p "client" "s" z s)
+          (p "client" "c" z c) (p "client" "ca" z ca)
+          (p "client" "x" z x) (p "client" "y" z y) (non (invk spk))
+          (non (invk cpk)) (non (privk ca)) (ugen x) (uniq-at cr z 0))
+        (exists ((z-0 strd))
+          (and (p "server" z-0 5) (p "server" "cr" z-0 cr)
+            (p "server" "sr" z-0 sr) (p "server" "spk" z-0 spk)
+            (p "server" "cpk" z-0 cpk) (p "server" "s" z-0 s)
+            (p "server" "c" z-0 c) (p "server" "ca" z-0 ca)
+            (p "server" "y" z-0 y) (p "server" "x" z-0 x))))))
+  (operation encryption-test (added-strand server 2)
+    (enc (hash s-3 (invk spk-3)) (privk ca)) (4 1))
+  (strand-map 0 1 2 3 4)
+  (traces
+    ((send (cat cr (exp (gen) x)))
+      (recv
+        (cat (cat sr (exp (gen) y))
+          (enc (cat s spk (enc (hash s spk) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x y)) "s hs traffic" cr sr))
+              (cat cr (exp (gen) x)) (cat sr (exp (gen) y)) s spk
+              (enc (hash s spk) (privk ca)))
+            (hash (exp (gen) (mul x y)) "s hs traffic" cr sr))))
+      (send
+        (enc (cat c cpk (enc (hash c cpk) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x y)) "c hs traffic" cr sr))
+            (cat cr (exp (gen) x)) (cat sr (exp (gen) y))
+            (cat s spk (enc (hash s spk) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x y)) "s hs traffic" cr sr))
+              (cat cr (exp (gen) y)) (cat sr (exp (gen) x)) s spk
+              (enc (hash s spk) (privk ca))) c cpk
+            (enc (hash c cpk) (privk ca)))
+          (hash (exp (gen) (mul x y)) "c hs traffic" cr sr)))
+      (send
+        (enc request
+          (hash "c ap traffic" cr sr
+            (hash (exp (gen) (mul x y)) "derived"))))
+      (recv
+        (enc response
+          (hash "s ap traffic" cr sr
+            (hash (exp (gen) (mul x y)) "derived")))))
+    ((send (cat cr-0 (exp (gen) x-0)))
+      (recv
+        (cat (cat sr-0 (exp (gen) y-0))
+          (enc (cat s-0 spk-0 (enc (hash s-0 spk-0) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-0 y-0)) "s hs traffic" cr-0
+                  sr-0)) (cat cr-0 (exp (gen) x-0))
+              (cat sr-0 (exp (gen) y-0)) s-0 spk-0
+              (enc (hash s-0 spk-0) (privk ca)))
+            (hash (exp (gen) (mul x-0 y-0)) "s hs traffic" cr-0 sr-0))))
+      (send
+        (enc (cat s spk (enc (hash s spk) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x-0 y-0)) "c hs traffic" cr-0 sr-0))
+            (cat cr-0 (exp (gen) x-0)) (cat sr-0 (exp (gen) y-0))
+            (cat s-0 spk-0 (enc (hash s-0 spk-0) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-0 y-0)) "s hs traffic" cr-0
+                  sr-0)) (cat cr-0 (exp (gen) y-0))
+              (cat sr-0 (exp (gen) x-0)) s-0 spk-0
+              (enc (hash s-0 spk-0) (privk ca))) s spk
+            (enc (hash s spk) (privk ca)))
+          (hash (exp (gen) (mul x-0 y-0)) "c hs traffic" cr-0 sr-0))))
+    ((send (cat cr-1 (exp (gen) x-1)))
+      (recv
+        (cat (cat sr-1 (exp (gen) y-1))
+          (enc (cat s-1 spk-1 (enc (hash s-1 spk-1) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-1 y-1)) "s hs traffic" cr-1
+                  sr-1)) (cat cr-1 (exp (gen) x-1))
+              (cat sr-1 (exp (gen) y-1)) s-1 spk-1
+              (enc (hash s-1 spk-1) (privk ca)))
+            (hash (exp (gen) (mul x-1 y-1)) "s hs traffic" cr-1 sr-1))))
+      (send
+        (enc (cat s-0 spk-0 (enc (hash s-0 spk-0) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x-1 y-1)) "c hs traffic" cr-1 sr-1))
+            (cat cr-1 (exp (gen) x-1)) (cat sr-1 (exp (gen) y-1))
+            (cat s-1 spk-1 (enc (hash s-1 spk-1) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-1 y-1)) "s hs traffic" cr-1
+                  sr-1)) (cat cr-1 (exp (gen) y-1))
+              (cat sr-1 (exp (gen) x-1)) s-1 spk-1
+              (enc (hash s-1 spk-1) (privk ca))) s-0 spk-0
+            (enc (hash s-0 spk-0) (privk ca)))
+          (hash (exp (gen) (mul x-1 y-1)) "c hs traffic" cr-1 sr-1))))
+    ((send (cat cr-2 (exp (gen) x-2)))
+      (recv
+        (cat (cat sr-2 (exp (gen) y-2))
+          (enc (cat s-2 spk-2 (enc (hash s-2 spk-2) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-2 y-2)) "s hs traffic" cr-2
+                  sr-2)) (cat cr-2 (exp (gen) x-2))
+              (cat sr-2 (exp (gen) y-2)) s-2 spk-2
+              (enc (hash s-2 spk-2) (privk ca)))
+            (hash (exp (gen) (mul x-2 y-2)) "s hs traffic" cr-2 sr-2))))
+      (send
+        (enc (cat s-1 spk-1 (enc (hash s-1 spk-1) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x-2 y-2)) "c hs traffic" cr-2 sr-2))
+            (cat cr-2 (exp (gen) x-2)) (cat sr-2 (exp (gen) y-2))
+            (cat s-2 spk-2 (enc (hash s-2 spk-2) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-2 y-2)) "s hs traffic" cr-2
+                  sr-2)) (cat cr-2 (exp (gen) y-2))
+              (cat sr-2 (exp (gen) x-2)) s-2 spk-2
+              (enc (hash s-2 spk-2) (privk ca))) s-1 spk-1
+            (enc (hash s-1 spk-1) (privk ca)))
+          (hash (exp (gen) (mul x-2 y-2)) "c hs traffic" cr-2 sr-2))))
+    ((send (cat cr-3 (exp (gen) x-3)))
+      (recv
+        (cat (cat sr-3 (exp (gen) y-3))
+          (enc
+            (cat s-3 (invk spk-3)
+              (enc (hash s-3 (invk spk-3)) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-3 y-3)) "s hs traffic" cr-3
+                  sr-3)) (cat cr-3 (exp (gen) x-3))
+              (cat sr-3 (exp (gen) y-3)) s-3 (invk spk-3)
+              (enc (hash s-3 (invk spk-3)) (privk ca)))
+            (hash (exp (gen) (mul x-3 y-3)) "s hs traffic" cr-3 sr-3))))
+      (send
+        (enc (cat s-2 spk-2 (enc (hash s-2 spk-2) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x-3 y-3)) "c hs traffic" cr-3 sr-3))
+            (cat cr-3 (exp (gen) x-3)) (cat sr-3 (exp (gen) y-3))
+            (cat s-3 (invk spk-3)
+              (enc (hash s-3 (invk spk-3)) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-3 y-3)) "s hs traffic" cr-3
+                  sr-3)) (cat cr-3 (exp (gen) y-3))
+              (cat sr-3 (exp (gen) x-3)) s-3 (invk spk-3)
+              (enc (hash s-3 (invk spk-3)) (privk ca))) s-2 spk-2
+            (enc (hash s-2 spk-2) (privk ca)))
+          (hash (exp (gen) (mul x-3 y-3)) "c hs traffic" cr-3 sr-3))))
+    ((recv (cat cr-4 (exp (gen) x-4)))
+      (send
+        (cat (cat sr-4 (exp (gen) y-4))
+          (enc
+            (cat s-3 (invk spk-3)
+              (enc (hash s-3 (invk spk-3)) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul y-4 x-4)) "s hs traffic" cr-4
+                  sr-4)) (cat cr-4 (exp (gen) x-4))
+              (cat sr-4 (exp (gen) y-4)) s-3 (invk spk-3)
+              (enc (hash s-3 (invk spk-3)) (privk ca)))
+            (hash (exp (gen) (mul y-4 x-4)) "s hs traffic" cr-4
+              sr-4))))))
+  (label 10)
+  (parent 7)
+  (realized)
+  (shape)
+  (satisfies
+    (no (p "server" z-0 (idx 5)) (p "server" "x" z-0 x)
+      (p "server" "y" z-0 y) (p "server" "c" z-0 c)
+      (p "server" "s" z-0 s) (p "server" "cpk" z-0 cpk)
+      (p "server" "spk" z-0 spk) (p "server" "sr" z-0 sr)
+      (p "server" "cr" z-0 cr) (cr cr) (sr sr) (spk spk) (cpk cpk) (s s)
+      (ca ca) (c c) (x x) (y y) (z 0)))
+  (maps
+    ((0)
+      ((cr cr) (sr sr) (spk spk) (cpk cpk) (s s) (ca ca) (c c) (x x)
+        (y y) (request request) (response response))))
+  (origs (cr (0 0)))
+  (ugens (y-4 (5 1)) (x-3 (4 0)) (x-2 (3 0)) (x-1 (2 0)) (x-0 (1 0))
+    (x (0 0))))
+
+(defskeleton tls13-mtls
+  (vars
+    (cr sr cr-0 sr-0 cr-1 sr-1 cr-2 sr-2 cr-3 sr-3 cr-4 sr-4 cr-5 sr-5
+      random32) (request response text)
+    (spk cpk spk-0 spk-1 spk-2 spk-3 spk-4 spk-5 akey)
+    (s ca c s-0 s-1 s-2 s-3 s-4 s-5 name) (x rndx) (y expt) (x-0 rndx)
+    (y-0 expt) (x-1 rndx) (y-1 expt) (x-2 rndx) (y-2 expt) (x-3 rndx)
+    (y-3 expt) (x-4 rndx) (y-4 expt) (x-5 rndx) (y-5 expt))
+  (defstrand client 5 (cr cr) (sr sr) (request request)
+    (response response) (spk spk) (cpk cpk) (s s) (ca ca) (c c) (x x)
+    (y y))
+  (defstrand client 3 (cr cr-0) (sr sr-0) (spk spk-0) (cpk spk) (s s-0)
+    (ca ca) (c s) (x x-0) (y y-0))
+  (defstrand client 3 (cr cr-1) (sr sr-1) (spk spk-1) (cpk spk-0)
+    (s s-1) (ca ca) (c s-0) (x x-1) (y y-1))
+  (defstrand client 3 (cr cr-2) (sr sr-2) (spk spk-2) (cpk spk-1)
+    (s s-2) (ca ca) (c s-1) (x x-2) (y y-2))
+  (defstrand client 3 (cr cr-3) (sr sr-3) (spk spk-3) (cpk spk-2)
+    (s s-3) (ca ca) (c s-2) (x x-3) (y y-3))
+  (defstrand client 3 (cr cr-4) (sr sr-4) (spk spk-4) (cpk spk-3)
+    (s s-4) (ca ca) (c s-3) (x x-4) (y y-4))
+  (defstrand client 3 (cr cr-5) (sr sr-5) (spk spk-5) (cpk spk-4)
+    (s s-5) (ca ca) (c s-4) (x x-5) (y y-5))
+  (precedes ((1 2) (0 1)) ((2 2) (1 1)) ((3 2) (2 1)) ((4 2) (3 1))
+    ((5 2) (4 1)) ((6 2) (5 1)))
+  (non-orig (invk spk) (invk cpk) (privk ca))
+  (uniq-orig cr)
+  (uniq-gen x x-0 x-1 x-2 x-3 x-4 x-5)
+  (goals
+    (forall
+      ((cr sr random32) (spk cpk akey) (s ca c name) (x rndx) (y expt)
+        (z strd))
+      (implies
+        (and (p "client" z 5) (p "client" "cr" z cr)
+          (p "client" "sr" z sr) (p "client" "spk" z spk)
+          (p "client" "cpk" z cpk) (p "client" "s" z s)
+          (p "client" "c" z c) (p "client" "ca" z ca)
+          (p "client" "x" z x) (p "client" "y" z y) (non (invk spk))
+          (non (invk cpk)) (non (privk ca)) (ugen x) (uniq-at cr z 0))
+        (exists ((z-0 strd))
+          (and (p "server" z-0 5) (p "server" "cr" z-0 cr)
+            (p "server" "sr" z-0 sr) (p "server" "spk" z-0 spk)
+            (p "server" "cpk" z-0 cpk) (p "server" "s" z-0 s)
+            (p "server" "c" z-0 c) (p "server" "ca" z-0 ca)
+            (p "server" "y" z-0 y) (p "server" "x" z-0 x))))))
+  (operation encryption-test (added-strand client 3)
+    (enc (hash s-4 spk-4) (privk ca)) (5 1))
+  (strand-map 0 1 2 3 4 5)
+  (traces
+    ((send (cat cr (exp (gen) x)))
+      (recv
+        (cat (cat sr (exp (gen) y))
+          (enc (cat s spk (enc (hash s spk) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x y)) "s hs traffic" cr sr))
+              (cat cr (exp (gen) x)) (cat sr (exp (gen) y)) s spk
+              (enc (hash s spk) (privk ca)))
+            (hash (exp (gen) (mul x y)) "s hs traffic" cr sr))))
+      (send
+        (enc (cat c cpk (enc (hash c cpk) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x y)) "c hs traffic" cr sr))
+            (cat cr (exp (gen) x)) (cat sr (exp (gen) y))
+            (cat s spk (enc (hash s spk) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x y)) "s hs traffic" cr sr))
+              (cat cr (exp (gen) y)) (cat sr (exp (gen) x)) s spk
+              (enc (hash s spk) (privk ca))) c cpk
+            (enc (hash c cpk) (privk ca)))
+          (hash (exp (gen) (mul x y)) "c hs traffic" cr sr)))
+      (send
+        (enc request
+          (hash "c ap traffic" cr sr
+            (hash (exp (gen) (mul x y)) "derived"))))
+      (recv
+        (enc response
+          (hash "s ap traffic" cr sr
+            (hash (exp (gen) (mul x y)) "derived")))))
+    ((send (cat cr-0 (exp (gen) x-0)))
+      (recv
+        (cat (cat sr-0 (exp (gen) y-0))
+          (enc (cat s-0 spk-0 (enc (hash s-0 spk-0) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-0 y-0)) "s hs traffic" cr-0
+                  sr-0)) (cat cr-0 (exp (gen) x-0))
+              (cat sr-0 (exp (gen) y-0)) s-0 spk-0
+              (enc (hash s-0 spk-0) (privk ca)))
+            (hash (exp (gen) (mul x-0 y-0)) "s hs traffic" cr-0 sr-0))))
+      (send
+        (enc (cat s spk (enc (hash s spk) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x-0 y-0)) "c hs traffic" cr-0 sr-0))
+            (cat cr-0 (exp (gen) x-0)) (cat sr-0 (exp (gen) y-0))
+            (cat s-0 spk-0 (enc (hash s-0 spk-0) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-0 y-0)) "s hs traffic" cr-0
+                  sr-0)) (cat cr-0 (exp (gen) y-0))
+              (cat sr-0 (exp (gen) x-0)) s-0 spk-0
+              (enc (hash s-0 spk-0) (privk ca))) s spk
+            (enc (hash s spk) (privk ca)))
+          (hash (exp (gen) (mul x-0 y-0)) "c hs traffic" cr-0 sr-0))))
+    ((send (cat cr-1 (exp (gen) x-1)))
+      (recv
+        (cat (cat sr-1 (exp (gen) y-1))
+          (enc (cat s-1 spk-1 (enc (hash s-1 spk-1) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-1 y-1)) "s hs traffic" cr-1
+                  sr-1)) (cat cr-1 (exp (gen) x-1))
+              (cat sr-1 (exp (gen) y-1)) s-1 spk-1
+              (enc (hash s-1 spk-1) (privk ca)))
+            (hash (exp (gen) (mul x-1 y-1)) "s hs traffic" cr-1 sr-1))))
+      (send
+        (enc (cat s-0 spk-0 (enc (hash s-0 spk-0) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x-1 y-1)) "c hs traffic" cr-1 sr-1))
+            (cat cr-1 (exp (gen) x-1)) (cat sr-1 (exp (gen) y-1))
+            (cat s-1 spk-1 (enc (hash s-1 spk-1) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-1 y-1)) "s hs traffic" cr-1
+                  sr-1)) (cat cr-1 (exp (gen) y-1))
+              (cat sr-1 (exp (gen) x-1)) s-1 spk-1
+              (enc (hash s-1 spk-1) (privk ca))) s-0 spk-0
+            (enc (hash s-0 spk-0) (privk ca)))
+          (hash (exp (gen) (mul x-1 y-1)) "c hs traffic" cr-1 sr-1))))
+    ((send (cat cr-2 (exp (gen) x-2)))
+      (recv
+        (cat (cat sr-2 (exp (gen) y-2))
+          (enc (cat s-2 spk-2 (enc (hash s-2 spk-2) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-2 y-2)) "s hs traffic" cr-2
+                  sr-2)) (cat cr-2 (exp (gen) x-2))
+              (cat sr-2 (exp (gen) y-2)) s-2 spk-2
+              (enc (hash s-2 spk-2) (privk ca)))
+            (hash (exp (gen) (mul x-2 y-2)) "s hs traffic" cr-2 sr-2))))
+      (send
+        (enc (cat s-1 spk-1 (enc (hash s-1 spk-1) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x-2 y-2)) "c hs traffic" cr-2 sr-2))
+            (cat cr-2 (exp (gen) x-2)) (cat sr-2 (exp (gen) y-2))
+            (cat s-2 spk-2 (enc (hash s-2 spk-2) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-2 y-2)) "s hs traffic" cr-2
+                  sr-2)) (cat cr-2 (exp (gen) y-2))
+              (cat sr-2 (exp (gen) x-2)) s-2 spk-2
+              (enc (hash s-2 spk-2) (privk ca))) s-1 spk-1
+            (enc (hash s-1 spk-1) (privk ca)))
+          (hash (exp (gen) (mul x-2 y-2)) "c hs traffic" cr-2 sr-2))))
+    ((send (cat cr-3 (exp (gen) x-3)))
+      (recv
+        (cat (cat sr-3 (exp (gen) y-3))
+          (enc (cat s-3 spk-3 (enc (hash s-3 spk-3) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-3 y-3)) "s hs traffic" cr-3
+                  sr-3)) (cat cr-3 (exp (gen) x-3))
+              (cat sr-3 (exp (gen) y-3)) s-3 spk-3
+              (enc (hash s-3 spk-3) (privk ca)))
+            (hash (exp (gen) (mul x-3 y-3)) "s hs traffic" cr-3 sr-3))))
+      (send
+        (enc (cat s-2 spk-2 (enc (hash s-2 spk-2) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x-3 y-3)) "c hs traffic" cr-3 sr-3))
+            (cat cr-3 (exp (gen) x-3)) (cat sr-3 (exp (gen) y-3))
+            (cat s-3 spk-3 (enc (hash s-3 spk-3) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-3 y-3)) "s hs traffic" cr-3
+                  sr-3)) (cat cr-3 (exp (gen) y-3))
+              (cat sr-3 (exp (gen) x-3)) s-3 spk-3
+              (enc (hash s-3 spk-3) (privk ca))) s-2 spk-2
+            (enc (hash s-2 spk-2) (privk ca)))
+          (hash (exp (gen) (mul x-3 y-3)) "c hs traffic" cr-3 sr-3))))
+    ((send (cat cr-4 (exp (gen) x-4)))
+      (recv
+        (cat (cat sr-4 (exp (gen) y-4))
+          (enc (cat s-4 spk-4 (enc (hash s-4 spk-4) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-4 y-4)) "s hs traffic" cr-4
+                  sr-4)) (cat cr-4 (exp (gen) x-4))
+              (cat sr-4 (exp (gen) y-4)) s-4 spk-4
+              (enc (hash s-4 spk-4) (privk ca)))
+            (hash (exp (gen) (mul x-4 y-4)) "s hs traffic" cr-4 sr-4))))
+      (send
+        (enc (cat s-3 spk-3 (enc (hash s-3 spk-3) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x-4 y-4)) "c hs traffic" cr-4 sr-4))
+            (cat cr-4 (exp (gen) x-4)) (cat sr-4 (exp (gen) y-4))
+            (cat s-4 spk-4 (enc (hash s-4 spk-4) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-4 y-4)) "s hs traffic" cr-4
+                  sr-4)) (cat cr-4 (exp (gen) y-4))
+              (cat sr-4 (exp (gen) x-4)) s-4 spk-4
+              (enc (hash s-4 spk-4) (privk ca))) s-3 spk-3
+            (enc (hash s-3 spk-3) (privk ca)))
+          (hash (exp (gen) (mul x-4 y-4)) "c hs traffic" cr-4 sr-4))))
+    ((send (cat cr-5 (exp (gen) x-5)))
+      (recv
+        (cat (cat sr-5 (exp (gen) y-5))
+          (enc (cat s-5 spk-5 (enc (hash s-5 spk-5) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-5 y-5)) "s hs traffic" cr-5
+                  sr-5)) (cat cr-5 (exp (gen) x-5))
+              (cat sr-5 (exp (gen) y-5)) s-5 spk-5
+              (enc (hash s-5 spk-5) (privk ca)))
+            (hash (exp (gen) (mul x-5 y-5)) "s hs traffic" cr-5 sr-5))))
+      (send
+        (enc (cat s-4 spk-4 (enc (hash s-4 spk-4) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x-5 y-5)) "c hs traffic" cr-5 sr-5))
+            (cat cr-5 (exp (gen) x-5)) (cat sr-5 (exp (gen) y-5))
+            (cat s-5 spk-5 (enc (hash s-5 spk-5) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-5 y-5)) "s hs traffic" cr-5
+                  sr-5)) (cat cr-5 (exp (gen) y-5))
+              (cat sr-5 (exp (gen) x-5)) s-5 spk-5
+              (enc (hash s-5 spk-5) (privk ca))) s-4 spk-4
+            (enc (hash s-4 spk-4) (privk ca)))
+          (hash (exp (gen) (mul x-5 y-5)) "c hs traffic" cr-5 sr-5)))))
+  (label 11)
+  (parent 9)
+  (unrealized (6 1))
+  (maps
+    ((0)
+      ((cr cr) (sr sr) (spk spk) (cpk cpk) (s s) (ca ca) (c c) (x x)
+        (y y) (request request) (response response))))
+  (comment "2 in cohort - 2 not yet seen"))
+
+(defskeleton tls13-mtls
+  (vars
+    (cr sr cr-0 sr-0 cr-1 sr-1 cr-2 sr-2 cr-3 sr-3 cr-4 sr-4 cr-5 sr-5
+      random32) (request response text)
+    (spk cpk spk-0 spk-1 spk-2 spk-3 spk-4 akey)
+    (s ca c s-0 s-1 s-2 s-3 s-4 name) (x rndx) (y expt) (x-0 rndx)
+    (y-0 expt) (x-1 rndx) (y-1 expt) (x-2 rndx) (y-2 expt) (x-3 rndx)
+    (y-3 expt) (x-4 rndx) (y-4 expt) (y-5 rndx) (x-5 expt))
+  (defstrand client 5 (cr cr) (sr sr) (request request)
+    (response response) (spk spk) (cpk cpk) (s s) (ca ca) (c c) (x x)
+    (y y))
+  (defstrand client 3 (cr cr-0) (sr sr-0) (spk spk-0) (cpk spk) (s s-0)
+    (ca ca) (c s) (x x-0) (y y-0))
+  (defstrand client 3 (cr cr-1) (sr sr-1) (spk spk-1) (cpk spk-0)
+    (s s-1) (ca ca) (c s-0) (x x-1) (y y-1))
+  (defstrand client 3 (cr cr-2) (sr sr-2) (spk spk-2) (cpk spk-1)
+    (s s-2) (ca ca) (c s-1) (x x-2) (y y-2))
+  (defstrand client 3 (cr cr-3) (sr sr-3) (spk spk-3) (cpk spk-2)
+    (s s-3) (ca ca) (c s-2) (x x-3) (y y-3))
+  (defstrand client 3 (cr cr-4) (sr sr-4) (spk (invk spk-4)) (cpk spk-3)
+    (s s-4) (ca ca) (c s-3) (x x-4) (y y-4))
+  (defstrand server 2 (cr cr-5) (sr sr-5) (spk spk-4) (s s-4) (ca ca)
+    (y y-5) (x x-5))
+  (precedes ((1 2) (0 1)) ((2 2) (1 1)) ((3 2) (2 1)) ((4 2) (3 1))
+    ((5 2) (4 1)) ((6 1) (5 1)))
+  (non-orig (invk spk) (invk cpk) (privk ca))
+  (uniq-orig cr)
+  (uniq-gen x x-0 x-1 x-2 x-3 x-4 y-5)
+  (absent (y-5 x-5))
+  (goals
+    (forall
+      ((cr sr random32) (spk cpk akey) (s ca c name) (x rndx) (y expt)
+        (z strd))
+      (implies
+        (and (p "client" z 5) (p "client" "cr" z cr)
+          (p "client" "sr" z sr) (p "client" "spk" z spk)
+          (p "client" "cpk" z cpk) (p "client" "s" z s)
+          (p "client" "c" z c) (p "client" "ca" z ca)
+          (p "client" "x" z x) (p "client" "y" z y) (non (invk spk))
+          (non (invk cpk)) (non (privk ca)) (ugen x) (uniq-at cr z 0))
+        (exists ((z-0 strd))
+          (and (p "server" z-0 5) (p "server" "cr" z-0 cr)
+            (p "server" "sr" z-0 sr) (p "server" "spk" z-0 spk)
+            (p "server" "cpk" z-0 cpk) (p "server" "s" z-0 s)
+            (p "server" "c" z-0 c) (p "server" "ca" z-0 ca)
+            (p "server" "y" z-0 y) (p "server" "x" z-0 x))))))
+  (operation encryption-test (added-strand server 2)
+    (enc (hash s-4 (invk spk-4)) (privk ca)) (5 1))
+  (strand-map 0 1 2 3 4 5)
+  (traces
+    ((send (cat cr (exp (gen) x)))
+      (recv
+        (cat (cat sr (exp (gen) y))
+          (enc (cat s spk (enc (hash s spk) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x y)) "s hs traffic" cr sr))
+              (cat cr (exp (gen) x)) (cat sr (exp (gen) y)) s spk
+              (enc (hash s spk) (privk ca)))
+            (hash (exp (gen) (mul x y)) "s hs traffic" cr sr))))
+      (send
+        (enc (cat c cpk (enc (hash c cpk) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x y)) "c hs traffic" cr sr))
+            (cat cr (exp (gen) x)) (cat sr (exp (gen) y))
+            (cat s spk (enc (hash s spk) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x y)) "s hs traffic" cr sr))
+              (cat cr (exp (gen) y)) (cat sr (exp (gen) x)) s spk
+              (enc (hash s spk) (privk ca))) c cpk
+            (enc (hash c cpk) (privk ca)))
+          (hash (exp (gen) (mul x y)) "c hs traffic" cr sr)))
+      (send
+        (enc request
+          (hash "c ap traffic" cr sr
+            (hash (exp (gen) (mul x y)) "derived"))))
+      (recv
+        (enc response
+          (hash "s ap traffic" cr sr
+            (hash (exp (gen) (mul x y)) "derived")))))
+    ((send (cat cr-0 (exp (gen) x-0)))
+      (recv
+        (cat (cat sr-0 (exp (gen) y-0))
+          (enc (cat s-0 spk-0 (enc (hash s-0 spk-0) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-0 y-0)) "s hs traffic" cr-0
+                  sr-0)) (cat cr-0 (exp (gen) x-0))
+              (cat sr-0 (exp (gen) y-0)) s-0 spk-0
+              (enc (hash s-0 spk-0) (privk ca)))
+            (hash (exp (gen) (mul x-0 y-0)) "s hs traffic" cr-0 sr-0))))
+      (send
+        (enc (cat s spk (enc (hash s spk) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x-0 y-0)) "c hs traffic" cr-0 sr-0))
+            (cat cr-0 (exp (gen) x-0)) (cat sr-0 (exp (gen) y-0))
+            (cat s-0 spk-0 (enc (hash s-0 spk-0) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-0 y-0)) "s hs traffic" cr-0
+                  sr-0)) (cat cr-0 (exp (gen) y-0))
+              (cat sr-0 (exp (gen) x-0)) s-0 spk-0
+              (enc (hash s-0 spk-0) (privk ca))) s spk
+            (enc (hash s spk) (privk ca)))
+          (hash (exp (gen) (mul x-0 y-0)) "c hs traffic" cr-0 sr-0))))
+    ((send (cat cr-1 (exp (gen) x-1)))
+      (recv
+        (cat (cat sr-1 (exp (gen) y-1))
+          (enc (cat s-1 spk-1 (enc (hash s-1 spk-1) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-1 y-1)) "s hs traffic" cr-1
+                  sr-1)) (cat cr-1 (exp (gen) x-1))
+              (cat sr-1 (exp (gen) y-1)) s-1 spk-1
+              (enc (hash s-1 spk-1) (privk ca)))
+            (hash (exp (gen) (mul x-1 y-1)) "s hs traffic" cr-1 sr-1))))
+      (send
+        (enc (cat s-0 spk-0 (enc (hash s-0 spk-0) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x-1 y-1)) "c hs traffic" cr-1 sr-1))
+            (cat cr-1 (exp (gen) x-1)) (cat sr-1 (exp (gen) y-1))
+            (cat s-1 spk-1 (enc (hash s-1 spk-1) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-1 y-1)) "s hs traffic" cr-1
+                  sr-1)) (cat cr-1 (exp (gen) y-1))
+              (cat sr-1 (exp (gen) x-1)) s-1 spk-1
+              (enc (hash s-1 spk-1) (privk ca))) s-0 spk-0
+            (enc (hash s-0 spk-0) (privk ca)))
+          (hash (exp (gen) (mul x-1 y-1)) "c hs traffic" cr-1 sr-1))))
+    ((send (cat cr-2 (exp (gen) x-2)))
+      (recv
+        (cat (cat sr-2 (exp (gen) y-2))
+          (enc (cat s-2 spk-2 (enc (hash s-2 spk-2) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-2 y-2)) "s hs traffic" cr-2
+                  sr-2)) (cat cr-2 (exp (gen) x-2))
+              (cat sr-2 (exp (gen) y-2)) s-2 spk-2
+              (enc (hash s-2 spk-2) (privk ca)))
+            (hash (exp (gen) (mul x-2 y-2)) "s hs traffic" cr-2 sr-2))))
+      (send
+        (enc (cat s-1 spk-1 (enc (hash s-1 spk-1) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x-2 y-2)) "c hs traffic" cr-2 sr-2))
+            (cat cr-2 (exp (gen) x-2)) (cat sr-2 (exp (gen) y-2))
+            (cat s-2 spk-2 (enc (hash s-2 spk-2) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-2 y-2)) "s hs traffic" cr-2
+                  sr-2)) (cat cr-2 (exp (gen) y-2))
+              (cat sr-2 (exp (gen) x-2)) s-2 spk-2
+              (enc (hash s-2 spk-2) (privk ca))) s-1 spk-1
+            (enc (hash s-1 spk-1) (privk ca)))
+          (hash (exp (gen) (mul x-2 y-2)) "c hs traffic" cr-2 sr-2))))
+    ((send (cat cr-3 (exp (gen) x-3)))
+      (recv
+        (cat (cat sr-3 (exp (gen) y-3))
+          (enc (cat s-3 spk-3 (enc (hash s-3 spk-3) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-3 y-3)) "s hs traffic" cr-3
+                  sr-3)) (cat cr-3 (exp (gen) x-3))
+              (cat sr-3 (exp (gen) y-3)) s-3 spk-3
+              (enc (hash s-3 spk-3) (privk ca)))
+            (hash (exp (gen) (mul x-3 y-3)) "s hs traffic" cr-3 sr-3))))
+      (send
+        (enc (cat s-2 spk-2 (enc (hash s-2 spk-2) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x-3 y-3)) "c hs traffic" cr-3 sr-3))
+            (cat cr-3 (exp (gen) x-3)) (cat sr-3 (exp (gen) y-3))
+            (cat s-3 spk-3 (enc (hash s-3 spk-3) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-3 y-3)) "s hs traffic" cr-3
+                  sr-3)) (cat cr-3 (exp (gen) y-3))
+              (cat sr-3 (exp (gen) x-3)) s-3 spk-3
+              (enc (hash s-3 spk-3) (privk ca))) s-2 spk-2
+            (enc (hash s-2 spk-2) (privk ca)))
+          (hash (exp (gen) (mul x-3 y-3)) "c hs traffic" cr-3 sr-3))))
+    ((send (cat cr-4 (exp (gen) x-4)))
+      (recv
+        (cat (cat sr-4 (exp (gen) y-4))
+          (enc
+            (cat s-4 (invk spk-4)
+              (enc (hash s-4 (invk spk-4)) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-4 y-4)) "s hs traffic" cr-4
+                  sr-4)) (cat cr-4 (exp (gen) x-4))
+              (cat sr-4 (exp (gen) y-4)) s-4 (invk spk-4)
+              (enc (hash s-4 (invk spk-4)) (privk ca)))
+            (hash (exp (gen) (mul x-4 y-4)) "s hs traffic" cr-4 sr-4))))
+      (send
+        (enc (cat s-3 spk-3 (enc (hash s-3 spk-3) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x-4 y-4)) "c hs traffic" cr-4 sr-4))
+            (cat cr-4 (exp (gen) x-4)) (cat sr-4 (exp (gen) y-4))
+            (cat s-4 (invk spk-4)
+              (enc (hash s-4 (invk spk-4)) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-4 y-4)) "s hs traffic" cr-4
+                  sr-4)) (cat cr-4 (exp (gen) y-4))
+              (cat sr-4 (exp (gen) x-4)) s-4 (invk spk-4)
+              (enc (hash s-4 (invk spk-4)) (privk ca))) s-3 spk-3
+            (enc (hash s-3 spk-3) (privk ca)))
+          (hash (exp (gen) (mul x-4 y-4)) "c hs traffic" cr-4 sr-4))))
+    ((recv (cat cr-5 (exp (gen) x-5)))
+      (send
+        (cat (cat sr-5 (exp (gen) y-5))
+          (enc
+            (cat s-4 (invk spk-4)
+              (enc (hash s-4 (invk spk-4)) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul y-5 x-5)) "s hs traffic" cr-5
+                  sr-5)) (cat cr-5 (exp (gen) x-5))
+              (cat sr-5 (exp (gen) y-5)) s-4 (invk spk-4)
+              (enc (hash s-4 (invk spk-4)) (privk ca)))
+            (hash (exp (gen) (mul y-5 x-5)) "s hs traffic" cr-5
+              sr-5))))))
+  (label 12)
+  (parent 9)
+  (realized)
+  (shape)
+  (satisfies
+    (no (p "server" z-0 (idx 5)) (p "server" "x" z-0 x)
+      (p "server" "y" z-0 y) (p "server" "c" z-0 c)
+      (p "server" "s" z-0 s) (p "server" "cpk" z-0 cpk)
+      (p "server" "spk" z-0 spk) (p "server" "sr" z-0 sr)
+      (p "server" "cr" z-0 cr) (cr cr) (sr sr) (spk spk) (cpk cpk) (s s)
+      (ca ca) (c c) (x x) (y y) (z 0)))
+  (maps
+    ((0)
+      ((cr cr) (sr sr) (spk spk) (cpk cpk) (s s) (ca ca) (c c) (x x)
+        (y y) (request request) (response response))))
+  (origs (cr (0 0)))
+  (ugens (y-5 (6 1)) (x-4 (5 0)) (x-3 (4 0)) (x-2 (3 0)) (x-1 (2 0))
+    (x-0 (1 0)) (x (0 0))))
+
+(defskeleton tls13-mtls
+  (vars
+    (cr sr cr-0 sr-0 cr-1 sr-1 cr-2 sr-2 cr-3 sr-3 cr-4 sr-4 cr-5 sr-5
+      cr-6 sr-6 random32) (request response text)
+    (spk cpk spk-0 spk-1 spk-2 spk-3 spk-4 spk-5 spk-6 akey)
+    (s ca c s-0 s-1 s-2 s-3 s-4 s-5 s-6 name) (x rndx) (y expt)
+    (x-0 rndx) (y-0 expt) (x-1 rndx) (y-1 expt) (x-2 rndx) (y-2 expt)
+    (x-3 rndx) (y-3 expt) (x-4 rndx) (y-4 expt) (x-5 rndx) (y-5 expt)
+    (x-6 rndx) (y-6 expt))
+  (defstrand client 5 (cr cr) (sr sr) (request request)
+    (response response) (spk spk) (cpk cpk) (s s) (ca ca) (c c) (x x)
+    (y y))
+  (defstrand client 3 (cr cr-0) (sr sr-0) (spk spk-0) (cpk spk) (s s-0)
+    (ca ca) (c s) (x x-0) (y y-0))
+  (defstrand client 3 (cr cr-1) (sr sr-1) (spk spk-1) (cpk spk-0)
+    (s s-1) (ca ca) (c s-0) (x x-1) (y y-1))
+  (defstrand client 3 (cr cr-2) (sr sr-2) (spk spk-2) (cpk spk-1)
+    (s s-2) (ca ca) (c s-1) (x x-2) (y y-2))
+  (defstrand client 3 (cr cr-3) (sr sr-3) (spk spk-3) (cpk spk-2)
+    (s s-3) (ca ca) (c s-2) (x x-3) (y y-3))
+  (defstrand client 3 (cr cr-4) (sr sr-4) (spk spk-4) (cpk spk-3)
+    (s s-4) (ca ca) (c s-3) (x x-4) (y y-4))
+  (defstrand client 3 (cr cr-5) (sr sr-5) (spk spk-5) (cpk spk-4)
+    (s s-5) (ca ca) (c s-4) (x x-5) (y y-5))
+  (defstrand client 3 (cr cr-6) (sr sr-6) (spk spk-6) (cpk spk-5)
+    (s s-6) (ca ca) (c s-5) (x x-6) (y y-6))
+  (precedes ((1 2) (0 1)) ((2 2) (1 1)) ((3 2) (2 1)) ((4 2) (3 1))
+    ((5 2) (4 1)) ((6 2) (5 1)) ((7 2) (6 1)))
+  (non-orig (invk spk) (invk cpk) (privk ca))
+  (uniq-orig cr)
+  (uniq-gen x x-0 x-1 x-2 x-3 x-4 x-5 x-6)
+  (goals
+    (forall
+      ((cr sr random32) (spk cpk akey) (s ca c name) (x rndx) (y expt)
+        (z strd))
+      (implies
+        (and (p "client" z 5) (p "client" "cr" z cr)
+          (p "client" "sr" z sr) (p "client" "spk" z spk)
+          (p "client" "cpk" z cpk) (p "client" "s" z s)
+          (p "client" "c" z c) (p "client" "ca" z ca)
+          (p "client" "x" z x) (p "client" "y" z y) (non (invk spk))
+          (non (invk cpk)) (non (privk ca)) (ugen x) (uniq-at cr z 0))
+        (exists ((z-0 strd))
+          (and (p "server" z-0 5) (p "server" "cr" z-0 cr)
+            (p "server" "sr" z-0 sr) (p "server" "spk" z-0 spk)
+            (p "server" "cpk" z-0 cpk) (p "server" "s" z-0 s)
+            (p "server" "c" z-0 c) (p "server" "ca" z-0 ca)
+            (p "server" "y" z-0 y) (p "server" "x" z-0 x))))))
+  (operation encryption-test (added-strand client 3)
+    (enc (hash s-5 spk-5) (privk ca)) (6 1))
+  (strand-map 0 1 2 3 4 5 6)
+  (traces
+    ((send (cat cr (exp (gen) x)))
+      (recv
+        (cat (cat sr (exp (gen) y))
+          (enc (cat s spk (enc (hash s spk) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x y)) "s hs traffic" cr sr))
+              (cat cr (exp (gen) x)) (cat sr (exp (gen) y)) s spk
+              (enc (hash s spk) (privk ca)))
+            (hash (exp (gen) (mul x y)) "s hs traffic" cr sr))))
+      (send
+        (enc (cat c cpk (enc (hash c cpk) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x y)) "c hs traffic" cr sr))
+            (cat cr (exp (gen) x)) (cat sr (exp (gen) y))
+            (cat s spk (enc (hash s spk) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x y)) "s hs traffic" cr sr))
+              (cat cr (exp (gen) y)) (cat sr (exp (gen) x)) s spk
+              (enc (hash s spk) (privk ca))) c cpk
+            (enc (hash c cpk) (privk ca)))
+          (hash (exp (gen) (mul x y)) "c hs traffic" cr sr)))
+      (send
+        (enc request
+          (hash "c ap traffic" cr sr
+            (hash (exp (gen) (mul x y)) "derived"))))
+      (recv
+        (enc response
+          (hash "s ap traffic" cr sr
+            (hash (exp (gen) (mul x y)) "derived")))))
+    ((send (cat cr-0 (exp (gen) x-0)))
+      (recv
+        (cat (cat sr-0 (exp (gen) y-0))
+          (enc (cat s-0 spk-0 (enc (hash s-0 spk-0) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-0 y-0)) "s hs traffic" cr-0
+                  sr-0)) (cat cr-0 (exp (gen) x-0))
+              (cat sr-0 (exp (gen) y-0)) s-0 spk-0
+              (enc (hash s-0 spk-0) (privk ca)))
+            (hash (exp (gen) (mul x-0 y-0)) "s hs traffic" cr-0 sr-0))))
+      (send
+        (enc (cat s spk (enc (hash s spk) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x-0 y-0)) "c hs traffic" cr-0 sr-0))
+            (cat cr-0 (exp (gen) x-0)) (cat sr-0 (exp (gen) y-0))
+            (cat s-0 spk-0 (enc (hash s-0 spk-0) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-0 y-0)) "s hs traffic" cr-0
+                  sr-0)) (cat cr-0 (exp (gen) y-0))
+              (cat sr-0 (exp (gen) x-0)) s-0 spk-0
+              (enc (hash s-0 spk-0) (privk ca))) s spk
+            (enc (hash s spk) (privk ca)))
+          (hash (exp (gen) (mul x-0 y-0)) "c hs traffic" cr-0 sr-0))))
+    ((send (cat cr-1 (exp (gen) x-1)))
+      (recv
+        (cat (cat sr-1 (exp (gen) y-1))
+          (enc (cat s-1 spk-1 (enc (hash s-1 spk-1) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-1 y-1)) "s hs traffic" cr-1
+                  sr-1)) (cat cr-1 (exp (gen) x-1))
+              (cat sr-1 (exp (gen) y-1)) s-1 spk-1
+              (enc (hash s-1 spk-1) (privk ca)))
+            (hash (exp (gen) (mul x-1 y-1)) "s hs traffic" cr-1 sr-1))))
+      (send
+        (enc (cat s-0 spk-0 (enc (hash s-0 spk-0) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x-1 y-1)) "c hs traffic" cr-1 sr-1))
+            (cat cr-1 (exp (gen) x-1)) (cat sr-1 (exp (gen) y-1))
+            (cat s-1 spk-1 (enc (hash s-1 spk-1) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-1 y-1)) "s hs traffic" cr-1
+                  sr-1)) (cat cr-1 (exp (gen) y-1))
+              (cat sr-1 (exp (gen) x-1)) s-1 spk-1
+              (enc (hash s-1 spk-1) (privk ca))) s-0 spk-0
+            (enc (hash s-0 spk-0) (privk ca)))
+          (hash (exp (gen) (mul x-1 y-1)) "c hs traffic" cr-1 sr-1))))
+    ((send (cat cr-2 (exp (gen) x-2)))
+      (recv
+        (cat (cat sr-2 (exp (gen) y-2))
+          (enc (cat s-2 spk-2 (enc (hash s-2 spk-2) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-2 y-2)) "s hs traffic" cr-2
+                  sr-2)) (cat cr-2 (exp (gen) x-2))
+              (cat sr-2 (exp (gen) y-2)) s-2 spk-2
+              (enc (hash s-2 spk-2) (privk ca)))
+            (hash (exp (gen) (mul x-2 y-2)) "s hs traffic" cr-2 sr-2))))
+      (send
+        (enc (cat s-1 spk-1 (enc (hash s-1 spk-1) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x-2 y-2)) "c hs traffic" cr-2 sr-2))
+            (cat cr-2 (exp (gen) x-2)) (cat sr-2 (exp (gen) y-2))
+            (cat s-2 spk-2 (enc (hash s-2 spk-2) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-2 y-2)) "s hs traffic" cr-2
+                  sr-2)) (cat cr-2 (exp (gen) y-2))
+              (cat sr-2 (exp (gen) x-2)) s-2 spk-2
+              (enc (hash s-2 spk-2) (privk ca))) s-1 spk-1
+            (enc (hash s-1 spk-1) (privk ca)))
+          (hash (exp (gen) (mul x-2 y-2)) "c hs traffic" cr-2 sr-2))))
+    ((send (cat cr-3 (exp (gen) x-3)))
+      (recv
+        (cat (cat sr-3 (exp (gen) y-3))
+          (enc (cat s-3 spk-3 (enc (hash s-3 spk-3) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-3 y-3)) "s hs traffic" cr-3
+                  sr-3)) (cat cr-3 (exp (gen) x-3))
+              (cat sr-3 (exp (gen) y-3)) s-3 spk-3
+              (enc (hash s-3 spk-3) (privk ca)))
+            (hash (exp (gen) (mul x-3 y-3)) "s hs traffic" cr-3 sr-3))))
+      (send
+        (enc (cat s-2 spk-2 (enc (hash s-2 spk-2) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x-3 y-3)) "c hs traffic" cr-3 sr-3))
+            (cat cr-3 (exp (gen) x-3)) (cat sr-3 (exp (gen) y-3))
+            (cat s-3 spk-3 (enc (hash s-3 spk-3) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-3 y-3)) "s hs traffic" cr-3
+                  sr-3)) (cat cr-3 (exp (gen) y-3))
+              (cat sr-3 (exp (gen) x-3)) s-3 spk-3
+              (enc (hash s-3 spk-3) (privk ca))) s-2 spk-2
+            (enc (hash s-2 spk-2) (privk ca)))
+          (hash (exp (gen) (mul x-3 y-3)) "c hs traffic" cr-3 sr-3))))
+    ((send (cat cr-4 (exp (gen) x-4)))
+      (recv
+        (cat (cat sr-4 (exp (gen) y-4))
+          (enc (cat s-4 spk-4 (enc (hash s-4 spk-4) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-4 y-4)) "s hs traffic" cr-4
+                  sr-4)) (cat cr-4 (exp (gen) x-4))
+              (cat sr-4 (exp (gen) y-4)) s-4 spk-4
+              (enc (hash s-4 spk-4) (privk ca)))
+            (hash (exp (gen) (mul x-4 y-4)) "s hs traffic" cr-4 sr-4))))
+      (send
+        (enc (cat s-3 spk-3 (enc (hash s-3 spk-3) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x-4 y-4)) "c hs traffic" cr-4 sr-4))
+            (cat cr-4 (exp (gen) x-4)) (cat sr-4 (exp (gen) y-4))
+            (cat s-4 spk-4 (enc (hash s-4 spk-4) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-4 y-4)) "s hs traffic" cr-4
+                  sr-4)) (cat cr-4 (exp (gen) y-4))
+              (cat sr-4 (exp (gen) x-4)) s-4 spk-4
+              (enc (hash s-4 spk-4) (privk ca))) s-3 spk-3
+            (enc (hash s-3 spk-3) (privk ca)))
+          (hash (exp (gen) (mul x-4 y-4)) "c hs traffic" cr-4 sr-4))))
+    ((send (cat cr-5 (exp (gen) x-5)))
+      (recv
+        (cat (cat sr-5 (exp (gen) y-5))
+          (enc (cat s-5 spk-5 (enc (hash s-5 spk-5) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-5 y-5)) "s hs traffic" cr-5
+                  sr-5)) (cat cr-5 (exp (gen) x-5))
+              (cat sr-5 (exp (gen) y-5)) s-5 spk-5
+              (enc (hash s-5 spk-5) (privk ca)))
+            (hash (exp (gen) (mul x-5 y-5)) "s hs traffic" cr-5 sr-5))))
+      (send
+        (enc (cat s-4 spk-4 (enc (hash s-4 spk-4) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x-5 y-5)) "c hs traffic" cr-5 sr-5))
+            (cat cr-5 (exp (gen) x-5)) (cat sr-5 (exp (gen) y-5))
+            (cat s-5 spk-5 (enc (hash s-5 spk-5) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-5 y-5)) "s hs traffic" cr-5
+                  sr-5)) (cat cr-5 (exp (gen) y-5))
+              (cat sr-5 (exp (gen) x-5)) s-5 spk-5
+              (enc (hash s-5 spk-5) (privk ca))) s-4 spk-4
+            (enc (hash s-4 spk-4) (privk ca)))
+          (hash (exp (gen) (mul x-5 y-5)) "c hs traffic" cr-5 sr-5))))
+    ((send (cat cr-6 (exp (gen) x-6)))
+      (recv
+        (cat (cat sr-6 (exp (gen) y-6))
+          (enc (cat s-6 spk-6 (enc (hash s-6 spk-6) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-6 y-6)) "s hs traffic" cr-6
+                  sr-6)) (cat cr-6 (exp (gen) x-6))
+              (cat sr-6 (exp (gen) y-6)) s-6 spk-6
+              (enc (hash s-6 spk-6) (privk ca)))
+            (hash (exp (gen) (mul x-6 y-6)) "s hs traffic" cr-6 sr-6))))
+      (send
+        (enc (cat s-5 spk-5 (enc (hash s-5 spk-5) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x-6 y-6)) "c hs traffic" cr-6 sr-6))
+            (cat cr-6 (exp (gen) x-6)) (cat sr-6 (exp (gen) y-6))
+            (cat s-6 spk-6 (enc (hash s-6 spk-6) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-6 y-6)) "s hs traffic" cr-6
+                  sr-6)) (cat cr-6 (exp (gen) y-6))
+              (cat sr-6 (exp (gen) x-6)) s-6 spk-6
+              (enc (hash s-6 spk-6) (privk ca))) s-5 spk-5
+            (enc (hash s-5 spk-5) (privk ca)))
+          (hash (exp (gen) (mul x-6 y-6)) "c hs traffic" cr-6 sr-6)))))
+  (label 13)
+  (parent 11)
+  (unrealized (7 1))
+  (maps
+    ((0)
+      ((cr cr) (sr sr) (spk spk) (cpk cpk) (s s) (ca ca) (c c) (x x)
+        (y y) (request request) (response response))))
+  (comment "2 in cohort - 2 not yet seen"))
+
+(defskeleton tls13-mtls
+  (vars
+    (cr sr cr-0 sr-0 cr-1 sr-1 cr-2 sr-2 cr-3 sr-3 cr-4 sr-4 cr-5 sr-5
+      cr-6 sr-6 random32) (request response text)
+    (spk cpk spk-0 spk-1 spk-2 spk-3 spk-4 spk-5 akey)
+    (s ca c s-0 s-1 s-2 s-3 s-4 s-5 name) (x rndx) (y expt) (x-0 rndx)
+    (y-0 expt) (x-1 rndx) (y-1 expt) (x-2 rndx) (y-2 expt) (x-3 rndx)
+    (y-3 expt) (x-4 rndx) (y-4 expt) (x-5 rndx) (y-5 expt) (y-6 rndx)
+    (x-6 expt))
+  (defstrand client 5 (cr cr) (sr sr) (request request)
+    (response response) (spk spk) (cpk cpk) (s s) (ca ca) (c c) (x x)
+    (y y))
+  (defstrand client 3 (cr cr-0) (sr sr-0) (spk spk-0) (cpk spk) (s s-0)
+    (ca ca) (c s) (x x-0) (y y-0))
+  (defstrand client 3 (cr cr-1) (sr sr-1) (spk spk-1) (cpk spk-0)
+    (s s-1) (ca ca) (c s-0) (x x-1) (y y-1))
+  (defstrand client 3 (cr cr-2) (sr sr-2) (spk spk-2) (cpk spk-1)
+    (s s-2) (ca ca) (c s-1) (x x-2) (y y-2))
+  (defstrand client 3 (cr cr-3) (sr sr-3) (spk spk-3) (cpk spk-2)
+    (s s-3) (ca ca) (c s-2) (x x-3) (y y-3))
+  (defstrand client 3 (cr cr-4) (sr sr-4) (spk spk-4) (cpk spk-3)
+    (s s-4) (ca ca) (c s-3) (x x-4) (y y-4))
+  (defstrand client 3 (cr cr-5) (sr sr-5) (spk (invk spk-5)) (cpk spk-4)
+    (s s-5) (ca ca) (c s-4) (x x-5) (y y-5))
+  (defstrand server 2 (cr cr-6) (sr sr-6) (spk spk-5) (s s-5) (ca ca)
+    (y y-6) (x x-6))
+  (precedes ((1 2) (0 1)) ((2 2) (1 1)) ((3 2) (2 1)) ((4 2) (3 1))
+    ((5 2) (4 1)) ((6 2) (5 1)) ((7 1) (6 1)))
+  (non-orig (invk spk) (invk cpk) (privk ca))
+  (uniq-orig cr)
+  (uniq-gen x x-0 x-1 x-2 x-3 x-4 x-5 y-6)
+  (absent (y-6 x-6))
+  (goals
+    (forall
+      ((cr sr random32) (spk cpk akey) (s ca c name) (x rndx) (y expt)
+        (z strd))
+      (implies
+        (and (p "client" z 5) (p "client" "cr" z cr)
+          (p "client" "sr" z sr) (p "client" "spk" z spk)
+          (p "client" "cpk" z cpk) (p "client" "s" z s)
+          (p "client" "c" z c) (p "client" "ca" z ca)
+          (p "client" "x" z x) (p "client" "y" z y) (non (invk spk))
+          (non (invk cpk)) (non (privk ca)) (ugen x) (uniq-at cr z 0))
+        (exists ((z-0 strd))
+          (and (p "server" z-0 5) (p "server" "cr" z-0 cr)
+            (p "server" "sr" z-0 sr) (p "server" "spk" z-0 spk)
+            (p "server" "cpk" z-0 cpk) (p "server" "s" z-0 s)
+            (p "server" "c" z-0 c) (p "server" "ca" z-0 ca)
+            (p "server" "y" z-0 y) (p "server" "x" z-0 x))))))
+  (operation encryption-test (added-strand server 2)
+    (enc (hash s-5 (invk spk-5)) (privk ca)) (6 1))
+  (strand-map 0 1 2 3 4 5 6)
+  (traces
+    ((send (cat cr (exp (gen) x)))
+      (recv
+        (cat (cat sr (exp (gen) y))
+          (enc (cat s spk (enc (hash s spk) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x y)) "s hs traffic" cr sr))
+              (cat cr (exp (gen) x)) (cat sr (exp (gen) y)) s spk
+              (enc (hash s spk) (privk ca)))
+            (hash (exp (gen) (mul x y)) "s hs traffic" cr sr))))
+      (send
+        (enc (cat c cpk (enc (hash c cpk) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x y)) "c hs traffic" cr sr))
+            (cat cr (exp (gen) x)) (cat sr (exp (gen) y))
+            (cat s spk (enc (hash s spk) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x y)) "s hs traffic" cr sr))
+              (cat cr (exp (gen) y)) (cat sr (exp (gen) x)) s spk
+              (enc (hash s spk) (privk ca))) c cpk
+            (enc (hash c cpk) (privk ca)))
+          (hash (exp (gen) (mul x y)) "c hs traffic" cr sr)))
+      (send
+        (enc request
+          (hash "c ap traffic" cr sr
+            (hash (exp (gen) (mul x y)) "derived"))))
+      (recv
+        (enc response
+          (hash "s ap traffic" cr sr
+            (hash (exp (gen) (mul x y)) "derived")))))
+    ((send (cat cr-0 (exp (gen) x-0)))
+      (recv
+        (cat (cat sr-0 (exp (gen) y-0))
+          (enc (cat s-0 spk-0 (enc (hash s-0 spk-0) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-0 y-0)) "s hs traffic" cr-0
+                  sr-0)) (cat cr-0 (exp (gen) x-0))
+              (cat sr-0 (exp (gen) y-0)) s-0 spk-0
+              (enc (hash s-0 spk-0) (privk ca)))
+            (hash (exp (gen) (mul x-0 y-0)) "s hs traffic" cr-0 sr-0))))
+      (send
+        (enc (cat s spk (enc (hash s spk) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x-0 y-0)) "c hs traffic" cr-0 sr-0))
+            (cat cr-0 (exp (gen) x-0)) (cat sr-0 (exp (gen) y-0))
+            (cat s-0 spk-0 (enc (hash s-0 spk-0) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-0 y-0)) "s hs traffic" cr-0
+                  sr-0)) (cat cr-0 (exp (gen) y-0))
+              (cat sr-0 (exp (gen) x-0)) s-0 spk-0
+              (enc (hash s-0 spk-0) (privk ca))) s spk
+            (enc (hash s spk) (privk ca)))
+          (hash (exp (gen) (mul x-0 y-0)) "c hs traffic" cr-0 sr-0))))
+    ((send (cat cr-1 (exp (gen) x-1)))
+      (recv
+        (cat (cat sr-1 (exp (gen) y-1))
+          (enc (cat s-1 spk-1 (enc (hash s-1 spk-1) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-1 y-1)) "s hs traffic" cr-1
+                  sr-1)) (cat cr-1 (exp (gen) x-1))
+              (cat sr-1 (exp (gen) y-1)) s-1 spk-1
+              (enc (hash s-1 spk-1) (privk ca)))
+            (hash (exp (gen) (mul x-1 y-1)) "s hs traffic" cr-1 sr-1))))
+      (send
+        (enc (cat s-0 spk-0 (enc (hash s-0 spk-0) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x-1 y-1)) "c hs traffic" cr-1 sr-1))
+            (cat cr-1 (exp (gen) x-1)) (cat sr-1 (exp (gen) y-1))
+            (cat s-1 spk-1 (enc (hash s-1 spk-1) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-1 y-1)) "s hs traffic" cr-1
+                  sr-1)) (cat cr-1 (exp (gen) y-1))
+              (cat sr-1 (exp (gen) x-1)) s-1 spk-1
+              (enc (hash s-1 spk-1) (privk ca))) s-0 spk-0
+            (enc (hash s-0 spk-0) (privk ca)))
+          (hash (exp (gen) (mul x-1 y-1)) "c hs traffic" cr-1 sr-1))))
+    ((send (cat cr-2 (exp (gen) x-2)))
+      (recv
+        (cat (cat sr-2 (exp (gen) y-2))
+          (enc (cat s-2 spk-2 (enc (hash s-2 spk-2) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-2 y-2)) "s hs traffic" cr-2
+                  sr-2)) (cat cr-2 (exp (gen) x-2))
+              (cat sr-2 (exp (gen) y-2)) s-2 spk-2
+              (enc (hash s-2 spk-2) (privk ca)))
+            (hash (exp (gen) (mul x-2 y-2)) "s hs traffic" cr-2 sr-2))))
+      (send
+        (enc (cat s-1 spk-1 (enc (hash s-1 spk-1) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x-2 y-2)) "c hs traffic" cr-2 sr-2))
+            (cat cr-2 (exp (gen) x-2)) (cat sr-2 (exp (gen) y-2))
+            (cat s-2 spk-2 (enc (hash s-2 spk-2) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-2 y-2)) "s hs traffic" cr-2
+                  sr-2)) (cat cr-2 (exp (gen) y-2))
+              (cat sr-2 (exp (gen) x-2)) s-2 spk-2
+              (enc (hash s-2 spk-2) (privk ca))) s-1 spk-1
+            (enc (hash s-1 spk-1) (privk ca)))
+          (hash (exp (gen) (mul x-2 y-2)) "c hs traffic" cr-2 sr-2))))
+    ((send (cat cr-3 (exp (gen) x-3)))
+      (recv
+        (cat (cat sr-3 (exp (gen) y-3))
+          (enc (cat s-3 spk-3 (enc (hash s-3 spk-3) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-3 y-3)) "s hs traffic" cr-3
+                  sr-3)) (cat cr-3 (exp (gen) x-3))
+              (cat sr-3 (exp (gen) y-3)) s-3 spk-3
+              (enc (hash s-3 spk-3) (privk ca)))
+            (hash (exp (gen) (mul x-3 y-3)) "s hs traffic" cr-3 sr-3))))
+      (send
+        (enc (cat s-2 spk-2 (enc (hash s-2 spk-2) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x-3 y-3)) "c hs traffic" cr-3 sr-3))
+            (cat cr-3 (exp (gen) x-3)) (cat sr-3 (exp (gen) y-3))
+            (cat s-3 spk-3 (enc (hash s-3 spk-3) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-3 y-3)) "s hs traffic" cr-3
+                  sr-3)) (cat cr-3 (exp (gen) y-3))
+              (cat sr-3 (exp (gen) x-3)) s-3 spk-3
+              (enc (hash s-3 spk-3) (privk ca))) s-2 spk-2
+            (enc (hash s-2 spk-2) (privk ca)))
+          (hash (exp (gen) (mul x-3 y-3)) "c hs traffic" cr-3 sr-3))))
+    ((send (cat cr-4 (exp (gen) x-4)))
+      (recv
+        (cat (cat sr-4 (exp (gen) y-4))
+          (enc (cat s-4 spk-4 (enc (hash s-4 spk-4) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-4 y-4)) "s hs traffic" cr-4
+                  sr-4)) (cat cr-4 (exp (gen) x-4))
+              (cat sr-4 (exp (gen) y-4)) s-4 spk-4
+              (enc (hash s-4 spk-4) (privk ca)))
+            (hash (exp (gen) (mul x-4 y-4)) "s hs traffic" cr-4 sr-4))))
+      (send
+        (enc (cat s-3 spk-3 (enc (hash s-3 spk-3) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x-4 y-4)) "c hs traffic" cr-4 sr-4))
+            (cat cr-4 (exp (gen) x-4)) (cat sr-4 (exp (gen) y-4))
+            (cat s-4 spk-4 (enc (hash s-4 spk-4) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-4 y-4)) "s hs traffic" cr-4
+                  sr-4)) (cat cr-4 (exp (gen) y-4))
+              (cat sr-4 (exp (gen) x-4)) s-4 spk-4
+              (enc (hash s-4 spk-4) (privk ca))) s-3 spk-3
+            (enc (hash s-3 spk-3) (privk ca)))
+          (hash (exp (gen) (mul x-4 y-4)) "c hs traffic" cr-4 sr-4))))
+    ((send (cat cr-5 (exp (gen) x-5)))
+      (recv
+        (cat (cat sr-5 (exp (gen) y-5))
+          (enc
+            (cat s-5 (invk spk-5)
+              (enc (hash s-5 (invk spk-5)) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-5 y-5)) "s hs traffic" cr-5
+                  sr-5)) (cat cr-5 (exp (gen) x-5))
+              (cat sr-5 (exp (gen) y-5)) s-5 (invk spk-5)
+              (enc (hash s-5 (invk spk-5)) (privk ca)))
+            (hash (exp (gen) (mul x-5 y-5)) "s hs traffic" cr-5 sr-5))))
+      (send
+        (enc (cat s-4 spk-4 (enc (hash s-4 spk-4) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x-5 y-5)) "c hs traffic" cr-5 sr-5))
+            (cat cr-5 (exp (gen) x-5)) (cat sr-5 (exp (gen) y-5))
+            (cat s-5 (invk spk-5)
+              (enc (hash s-5 (invk spk-5)) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-5 y-5)) "s hs traffic" cr-5
+                  sr-5)) (cat cr-5 (exp (gen) y-5))
+              (cat sr-5 (exp (gen) x-5)) s-5 (invk spk-5)
+              (enc (hash s-5 (invk spk-5)) (privk ca))) s-4 spk-4
+            (enc (hash s-4 spk-4) (privk ca)))
+          (hash (exp (gen) (mul x-5 y-5)) "c hs traffic" cr-5 sr-5))))
+    ((recv (cat cr-6 (exp (gen) x-6)))
+      (send
+        (cat (cat sr-6 (exp (gen) y-6))
+          (enc
+            (cat s-5 (invk spk-5)
+              (enc (hash s-5 (invk spk-5)) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul y-6 x-6)) "s hs traffic" cr-6
+                  sr-6)) (cat cr-6 (exp (gen) x-6))
+              (cat sr-6 (exp (gen) y-6)) s-5 (invk spk-5)
+              (enc (hash s-5 (invk spk-5)) (privk ca)))
+            (hash (exp (gen) (mul y-6 x-6)) "s hs traffic" cr-6
+              sr-6))))))
+  (label 14)
+  (parent 11)
+  (realized)
+  (shape)
+  (satisfies
+    (no (p "server" z-0 (idx 5)) (p "server" "x" z-0 x)
+      (p "server" "y" z-0 y) (p "server" "c" z-0 c)
+      (p "server" "s" z-0 s) (p "server" "cpk" z-0 cpk)
+      (p "server" "spk" z-0 spk) (p "server" "sr" z-0 sr)
+      (p "server" "cr" z-0 cr) (cr cr) (sr sr) (spk spk) (cpk cpk) (s s)
+      (ca ca) (c c) (x x) (y y) (z 0)))
+  (maps
+    ((0)
+      ((cr cr) (sr sr) (spk spk) (cpk cpk) (s s) (ca ca) (c c) (x x)
+        (y y) (request request) (response response))))
+  (origs (cr (0 0)))
+  (ugens (y-6 (7 1)) (x-5 (6 0)) (x-4 (5 0)) (x-3 (4 0)) (x-2 (3 0))
+    (x-1 (2 0)) (x-0 (1 0)) (x (0 0))))
+
+(defskeleton tls13-mtls
+  (vars
+    (cr sr cr-0 sr-0 cr-1 sr-1 cr-2 sr-2 cr-3 sr-3 cr-4 sr-4 cr-5 sr-5
+      cr-6 sr-6 cr-7 sr-7 random32) (request response text)
+    (spk cpk spk-0 spk-1 spk-2 spk-3 spk-4 spk-5 spk-6 spk-7 akey)
+    (s ca c s-0 s-1 s-2 s-3 s-4 s-5 s-6 s-7 name) (x rndx) (y expt)
+    (x-0 rndx) (y-0 expt) (x-1 rndx) (y-1 expt) (x-2 rndx) (y-2 expt)
+    (x-3 rndx) (y-3 expt) (x-4 rndx) (y-4 expt) (x-5 rndx) (y-5 expt)
+    (x-6 rndx) (y-6 expt) (x-7 rndx) (y-7 expt))
+  (defstrand client 5 (cr cr) (sr sr) (request request)
+    (response response) (spk spk) (cpk cpk) (s s) (ca ca) (c c) (x x)
+    (y y))
+  (defstrand client 3 (cr cr-0) (sr sr-0) (spk spk-0) (cpk spk) (s s-0)
+    (ca ca) (c s) (x x-0) (y y-0))
+  (defstrand client 3 (cr cr-1) (sr sr-1) (spk spk-1) (cpk spk-0)
+    (s s-1) (ca ca) (c s-0) (x x-1) (y y-1))
+  (defstrand client 3 (cr cr-2) (sr sr-2) (spk spk-2) (cpk spk-1)
+    (s s-2) (ca ca) (c s-1) (x x-2) (y y-2))
+  (defstrand client 3 (cr cr-3) (sr sr-3) (spk spk-3) (cpk spk-2)
+    (s s-3) (ca ca) (c s-2) (x x-3) (y y-3))
+  (defstrand client 3 (cr cr-4) (sr sr-4) (spk spk-4) (cpk spk-3)
+    (s s-4) (ca ca) (c s-3) (x x-4) (y y-4))
+  (defstrand client 3 (cr cr-5) (sr sr-5) (spk spk-5) (cpk spk-4)
+    (s s-5) (ca ca) (c s-4) (x x-5) (y y-5))
+  (defstrand client 3 (cr cr-6) (sr sr-6) (spk spk-6) (cpk spk-5)
+    (s s-6) (ca ca) (c s-5) (x x-6) (y y-6))
+  (defstrand client 3 (cr cr-7) (sr sr-7) (spk spk-7) (cpk spk-6)
+    (s s-7) (ca ca) (c s-6) (x x-7) (y y-7))
+  (precedes ((1 2) (0 1)) ((2 2) (1 1)) ((3 2) (2 1)) ((4 2) (3 1))
+    ((5 2) (4 1)) ((6 2) (5 1)) ((7 2) (6 1)) ((8 2) (7 1)))
+  (non-orig (invk spk) (invk cpk) (privk ca))
+  (uniq-orig cr)
+  (uniq-gen x x-0 x-1 x-2 x-3 x-4 x-5 x-6 x-7)
+  (goals
+    (forall
+      ((cr sr random32) (spk cpk akey) (s ca c name) (x rndx) (y expt)
+        (z strd))
+      (implies
+        (and (p "client" z 5) (p "client" "cr" z cr)
+          (p "client" "sr" z sr) (p "client" "spk" z spk)
+          (p "client" "cpk" z cpk) (p "client" "s" z s)
+          (p "client" "c" z c) (p "client" "ca" z ca)
+          (p "client" "x" z x) (p "client" "y" z y) (non (invk spk))
+          (non (invk cpk)) (non (privk ca)) (ugen x) (uniq-at cr z 0))
+        (exists ((z-0 strd))
+          (and (p "server" z-0 5) (p "server" "cr" z-0 cr)
+            (p "server" "sr" z-0 sr) (p "server" "spk" z-0 spk)
+            (p "server" "cpk" z-0 cpk) (p "server" "s" z-0 s)
+            (p "server" "c" z-0 c) (p "server" "ca" z-0 ca)
+            (p "server" "y" z-0 y) (p "server" "x" z-0 x))))))
+  (operation encryption-test (added-strand client 3)
+    (enc (hash s-6 spk-6) (privk ca)) (7 1))
+  (strand-map 0 1 2 3 4 5 6 7)
+  (traces
+    ((send (cat cr (exp (gen) x)))
+      (recv
+        (cat (cat sr (exp (gen) y))
+          (enc (cat s spk (enc (hash s spk) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x y)) "s hs traffic" cr sr))
+              (cat cr (exp (gen) x)) (cat sr (exp (gen) y)) s spk
+              (enc (hash s spk) (privk ca)))
+            (hash (exp (gen) (mul x y)) "s hs traffic" cr sr))))
+      (send
+        (enc (cat c cpk (enc (hash c cpk) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x y)) "c hs traffic" cr sr))
+            (cat cr (exp (gen) x)) (cat sr (exp (gen) y))
+            (cat s spk (enc (hash s spk) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x y)) "s hs traffic" cr sr))
+              (cat cr (exp (gen) y)) (cat sr (exp (gen) x)) s spk
+              (enc (hash s spk) (privk ca))) c cpk
+            (enc (hash c cpk) (privk ca)))
+          (hash (exp (gen) (mul x y)) "c hs traffic" cr sr)))
+      (send
+        (enc request
+          (hash "c ap traffic" cr sr
+            (hash (exp (gen) (mul x y)) "derived"))))
+      (recv
+        (enc response
+          (hash "s ap traffic" cr sr
+            (hash (exp (gen) (mul x y)) "derived")))))
+    ((send (cat cr-0 (exp (gen) x-0)))
+      (recv
+        (cat (cat sr-0 (exp (gen) y-0))
+          (enc (cat s-0 spk-0 (enc (hash s-0 spk-0) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-0 y-0)) "s hs traffic" cr-0
+                  sr-0)) (cat cr-0 (exp (gen) x-0))
+              (cat sr-0 (exp (gen) y-0)) s-0 spk-0
+              (enc (hash s-0 spk-0) (privk ca)))
+            (hash (exp (gen) (mul x-0 y-0)) "s hs traffic" cr-0 sr-0))))
+      (send
+        (enc (cat s spk (enc (hash s spk) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x-0 y-0)) "c hs traffic" cr-0 sr-0))
+            (cat cr-0 (exp (gen) x-0)) (cat sr-0 (exp (gen) y-0))
+            (cat s-0 spk-0 (enc (hash s-0 spk-0) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-0 y-0)) "s hs traffic" cr-0
+                  sr-0)) (cat cr-0 (exp (gen) y-0))
+              (cat sr-0 (exp (gen) x-0)) s-0 spk-0
+              (enc (hash s-0 spk-0) (privk ca))) s spk
+            (enc (hash s spk) (privk ca)))
+          (hash (exp (gen) (mul x-0 y-0)) "c hs traffic" cr-0 sr-0))))
+    ((send (cat cr-1 (exp (gen) x-1)))
+      (recv
+        (cat (cat sr-1 (exp (gen) y-1))
+          (enc (cat s-1 spk-1 (enc (hash s-1 spk-1) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-1 y-1)) "s hs traffic" cr-1
+                  sr-1)) (cat cr-1 (exp (gen) x-1))
+              (cat sr-1 (exp (gen) y-1)) s-1 spk-1
+              (enc (hash s-1 spk-1) (privk ca)))
+            (hash (exp (gen) (mul x-1 y-1)) "s hs traffic" cr-1 sr-1))))
+      (send
+        (enc (cat s-0 spk-0 (enc (hash s-0 spk-0) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x-1 y-1)) "c hs traffic" cr-1 sr-1))
+            (cat cr-1 (exp (gen) x-1)) (cat sr-1 (exp (gen) y-1))
+            (cat s-1 spk-1 (enc (hash s-1 spk-1) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-1 y-1)) "s hs traffic" cr-1
+                  sr-1)) (cat cr-1 (exp (gen) y-1))
+              (cat sr-1 (exp (gen) x-1)) s-1 spk-1
+              (enc (hash s-1 spk-1) (privk ca))) s-0 spk-0
+            (enc (hash s-0 spk-0) (privk ca)))
+          (hash (exp (gen) (mul x-1 y-1)) "c hs traffic" cr-1 sr-1))))
+    ((send (cat cr-2 (exp (gen) x-2)))
+      (recv
+        (cat (cat sr-2 (exp (gen) y-2))
+          (enc (cat s-2 spk-2 (enc (hash s-2 spk-2) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-2 y-2)) "s hs traffic" cr-2
+                  sr-2)) (cat cr-2 (exp (gen) x-2))
+              (cat sr-2 (exp (gen) y-2)) s-2 spk-2
+              (enc (hash s-2 spk-2) (privk ca)))
+            (hash (exp (gen) (mul x-2 y-2)) "s hs traffic" cr-2 sr-2))))
+      (send
+        (enc (cat s-1 spk-1 (enc (hash s-1 spk-1) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x-2 y-2)) "c hs traffic" cr-2 sr-2))
+            (cat cr-2 (exp (gen) x-2)) (cat sr-2 (exp (gen) y-2))
+            (cat s-2 spk-2 (enc (hash s-2 spk-2) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-2 y-2)) "s hs traffic" cr-2
+                  sr-2)) (cat cr-2 (exp (gen) y-2))
+              (cat sr-2 (exp (gen) x-2)) s-2 spk-2
+              (enc (hash s-2 spk-2) (privk ca))) s-1 spk-1
+            (enc (hash s-1 spk-1) (privk ca)))
+          (hash (exp (gen) (mul x-2 y-2)) "c hs traffic" cr-2 sr-2))))
+    ((send (cat cr-3 (exp (gen) x-3)))
+      (recv
+        (cat (cat sr-3 (exp (gen) y-3))
+          (enc (cat s-3 spk-3 (enc (hash s-3 spk-3) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-3 y-3)) "s hs traffic" cr-3
+                  sr-3)) (cat cr-3 (exp (gen) x-3))
+              (cat sr-3 (exp (gen) y-3)) s-3 spk-3
+              (enc (hash s-3 spk-3) (privk ca)))
+            (hash (exp (gen) (mul x-3 y-3)) "s hs traffic" cr-3 sr-3))))
+      (send
+        (enc (cat s-2 spk-2 (enc (hash s-2 spk-2) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x-3 y-3)) "c hs traffic" cr-3 sr-3))
+            (cat cr-3 (exp (gen) x-3)) (cat sr-3 (exp (gen) y-3))
+            (cat s-3 spk-3 (enc (hash s-3 spk-3) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-3 y-3)) "s hs traffic" cr-3
+                  sr-3)) (cat cr-3 (exp (gen) y-3))
+              (cat sr-3 (exp (gen) x-3)) s-3 spk-3
+              (enc (hash s-3 spk-3) (privk ca))) s-2 spk-2
+            (enc (hash s-2 spk-2) (privk ca)))
+          (hash (exp (gen) (mul x-3 y-3)) "c hs traffic" cr-3 sr-3))))
+    ((send (cat cr-4 (exp (gen) x-4)))
+      (recv
+        (cat (cat sr-4 (exp (gen) y-4))
+          (enc (cat s-4 spk-4 (enc (hash s-4 spk-4) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-4 y-4)) "s hs traffic" cr-4
+                  sr-4)) (cat cr-4 (exp (gen) x-4))
+              (cat sr-4 (exp (gen) y-4)) s-4 spk-4
+              (enc (hash s-4 spk-4) (privk ca)))
+            (hash (exp (gen) (mul x-4 y-4)) "s hs traffic" cr-4 sr-4))))
+      (send
+        (enc (cat s-3 spk-3 (enc (hash s-3 spk-3) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x-4 y-4)) "c hs traffic" cr-4 sr-4))
+            (cat cr-4 (exp (gen) x-4)) (cat sr-4 (exp (gen) y-4))
+            (cat s-4 spk-4 (enc (hash s-4 spk-4) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-4 y-4)) "s hs traffic" cr-4
+                  sr-4)) (cat cr-4 (exp (gen) y-4))
+              (cat sr-4 (exp (gen) x-4)) s-4 spk-4
+              (enc (hash s-4 spk-4) (privk ca))) s-3 spk-3
+            (enc (hash s-3 spk-3) (privk ca)))
+          (hash (exp (gen) (mul x-4 y-4)) "c hs traffic" cr-4 sr-4))))
+    ((send (cat cr-5 (exp (gen) x-5)))
+      (recv
+        (cat (cat sr-5 (exp (gen) y-5))
+          (enc (cat s-5 spk-5 (enc (hash s-5 spk-5) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-5 y-5)) "s hs traffic" cr-5
+                  sr-5)) (cat cr-5 (exp (gen) x-5))
+              (cat sr-5 (exp (gen) y-5)) s-5 spk-5
+              (enc (hash s-5 spk-5) (privk ca)))
+            (hash (exp (gen) (mul x-5 y-5)) "s hs traffic" cr-5 sr-5))))
+      (send
+        (enc (cat s-4 spk-4 (enc (hash s-4 spk-4) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x-5 y-5)) "c hs traffic" cr-5 sr-5))
+            (cat cr-5 (exp (gen) x-5)) (cat sr-5 (exp (gen) y-5))
+            (cat s-5 spk-5 (enc (hash s-5 spk-5) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-5 y-5)) "s hs traffic" cr-5
+                  sr-5)) (cat cr-5 (exp (gen) y-5))
+              (cat sr-5 (exp (gen) x-5)) s-5 spk-5
+              (enc (hash s-5 spk-5) (privk ca))) s-4 spk-4
+            (enc (hash s-4 spk-4) (privk ca)))
+          (hash (exp (gen) (mul x-5 y-5)) "c hs traffic" cr-5 sr-5))))
+    ((send (cat cr-6 (exp (gen) x-6)))
+      (recv
+        (cat (cat sr-6 (exp (gen) y-6))
+          (enc (cat s-6 spk-6 (enc (hash s-6 spk-6) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-6 y-6)) "s hs traffic" cr-6
+                  sr-6)) (cat cr-6 (exp (gen) x-6))
+              (cat sr-6 (exp (gen) y-6)) s-6 spk-6
+              (enc (hash s-6 spk-6) (privk ca)))
+            (hash (exp (gen) (mul x-6 y-6)) "s hs traffic" cr-6 sr-6))))
+      (send
+        (enc (cat s-5 spk-5 (enc (hash s-5 spk-5) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x-6 y-6)) "c hs traffic" cr-6 sr-6))
+            (cat cr-6 (exp (gen) x-6)) (cat sr-6 (exp (gen) y-6))
+            (cat s-6 spk-6 (enc (hash s-6 spk-6) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-6 y-6)) "s hs traffic" cr-6
+                  sr-6)) (cat cr-6 (exp (gen) y-6))
+              (cat sr-6 (exp (gen) x-6)) s-6 spk-6
+              (enc (hash s-6 spk-6) (privk ca))) s-5 spk-5
+            (enc (hash s-5 spk-5) (privk ca)))
+          (hash (exp (gen) (mul x-6 y-6)) "c hs traffic" cr-6 sr-6))))
+    ((send (cat cr-7 (exp (gen) x-7)))
+      (recv
+        (cat (cat sr-7 (exp (gen) y-7))
+          (enc (cat s-7 spk-7 (enc (hash s-7 spk-7) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-7 y-7)) "s hs traffic" cr-7
+                  sr-7)) (cat cr-7 (exp (gen) x-7))
+              (cat sr-7 (exp (gen) y-7)) s-7 spk-7
+              (enc (hash s-7 spk-7) (privk ca)))
+            (hash (exp (gen) (mul x-7 y-7)) "s hs traffic" cr-7 sr-7))))
+      (send
+        (enc (cat s-6 spk-6 (enc (hash s-6 spk-6) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x-7 y-7)) "c hs traffic" cr-7 sr-7))
+            (cat cr-7 (exp (gen) x-7)) (cat sr-7 (exp (gen) y-7))
+            (cat s-7 spk-7 (enc (hash s-7 spk-7) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-7 y-7)) "s hs traffic" cr-7
+                  sr-7)) (cat cr-7 (exp (gen) y-7))
+              (cat sr-7 (exp (gen) x-7)) s-7 spk-7
+              (enc (hash s-7 spk-7) (privk ca))) s-6 spk-6
+            (enc (hash s-6 spk-6) (privk ca)))
+          (hash (exp (gen) (mul x-7 y-7)) "c hs traffic" cr-7 sr-7)))))
+  (label 15)
+  (parent 13)
+  (unrealized (8 1))
+  (maps
+    ((0)
+      ((cr cr) (sr sr) (spk spk) (cpk cpk) (s s) (ca ca) (c c) (x x)
+        (y y) (request request) (response response))))
+  (comment "2 in cohort - 2 not yet seen"))
+
+(defskeleton tls13-mtls
+  (vars
+    (cr sr cr-0 sr-0 cr-1 sr-1 cr-2 sr-2 cr-3 sr-3 cr-4 sr-4 cr-5 sr-5
+      cr-6 sr-6 cr-7 sr-7 random32) (request response text)
+    (spk cpk spk-0 spk-1 spk-2 spk-3 spk-4 spk-5 spk-6 akey)
+    (s ca c s-0 s-1 s-2 s-3 s-4 s-5 s-6 name) (x rndx) (y expt)
+    (x-0 rndx) (y-0 expt) (x-1 rndx) (y-1 expt) (x-2 rndx) (y-2 expt)
+    (x-3 rndx) (y-3 expt) (x-4 rndx) (y-4 expt) (x-5 rndx) (y-5 expt)
+    (x-6 rndx) (y-6 expt) (y-7 rndx) (x-7 expt))
+  (defstrand client 5 (cr cr) (sr sr) (request request)
+    (response response) (spk spk) (cpk cpk) (s s) (ca ca) (c c) (x x)
+    (y y))
+  (defstrand client 3 (cr cr-0) (sr sr-0) (spk spk-0) (cpk spk) (s s-0)
+    (ca ca) (c s) (x x-0) (y y-0))
+  (defstrand client 3 (cr cr-1) (sr sr-1) (spk spk-1) (cpk spk-0)
+    (s s-1) (ca ca) (c s-0) (x x-1) (y y-1))
+  (defstrand client 3 (cr cr-2) (sr sr-2) (spk spk-2) (cpk spk-1)
+    (s s-2) (ca ca) (c s-1) (x x-2) (y y-2))
+  (defstrand client 3 (cr cr-3) (sr sr-3) (spk spk-3) (cpk spk-2)
+    (s s-3) (ca ca) (c s-2) (x x-3) (y y-3))
+  (defstrand client 3 (cr cr-4) (sr sr-4) (spk spk-4) (cpk spk-3)
+    (s s-4) (ca ca) (c s-3) (x x-4) (y y-4))
+  (defstrand client 3 (cr cr-5) (sr sr-5) (spk spk-5) (cpk spk-4)
+    (s s-5) (ca ca) (c s-4) (x x-5) (y y-5))
+  (defstrand client 3 (cr cr-6) (sr sr-6) (spk (invk spk-6)) (cpk spk-5)
+    (s s-6) (ca ca) (c s-5) (x x-6) (y y-6))
+  (defstrand server 2 (cr cr-7) (sr sr-7) (spk spk-6) (s s-6) (ca ca)
+    (y y-7) (x x-7))
+  (precedes ((1 2) (0 1)) ((2 2) (1 1)) ((3 2) (2 1)) ((4 2) (3 1))
+    ((5 2) (4 1)) ((6 2) (5 1)) ((7 2) (6 1)) ((8 1) (7 1)))
+  (non-orig (invk spk) (invk cpk) (privk ca))
+  (uniq-orig cr)
+  (uniq-gen x x-0 x-1 x-2 x-3 x-4 x-5 x-6 y-7)
+  (absent (y-7 x-7))
+  (goals
+    (forall
+      ((cr sr random32) (spk cpk akey) (s ca c name) (x rndx) (y expt)
+        (z strd))
+      (implies
+        (and (p "client" z 5) (p "client" "cr" z cr)
+          (p "client" "sr" z sr) (p "client" "spk" z spk)
+          (p "client" "cpk" z cpk) (p "client" "s" z s)
+          (p "client" "c" z c) (p "client" "ca" z ca)
+          (p "client" "x" z x) (p "client" "y" z y) (non (invk spk))
+          (non (invk cpk)) (non (privk ca)) (ugen x) (uniq-at cr z 0))
+        (exists ((z-0 strd))
+          (and (p "server" z-0 5) (p "server" "cr" z-0 cr)
+            (p "server" "sr" z-0 sr) (p "server" "spk" z-0 spk)
+            (p "server" "cpk" z-0 cpk) (p "server" "s" z-0 s)
+            (p "server" "c" z-0 c) (p "server" "ca" z-0 ca)
+            (p "server" "y" z-0 y) (p "server" "x" z-0 x))))))
+  (operation encryption-test (added-strand server 2)
+    (enc (hash s-6 (invk spk-6)) (privk ca)) (7 1))
+  (strand-map 0 1 2 3 4 5 6 7)
+  (traces
+    ((send (cat cr (exp (gen) x)))
+      (recv
+        (cat (cat sr (exp (gen) y))
+          (enc (cat s spk (enc (hash s spk) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x y)) "s hs traffic" cr sr))
+              (cat cr (exp (gen) x)) (cat sr (exp (gen) y)) s spk
+              (enc (hash s spk) (privk ca)))
+            (hash (exp (gen) (mul x y)) "s hs traffic" cr sr))))
+      (send
+        (enc (cat c cpk (enc (hash c cpk) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x y)) "c hs traffic" cr sr))
+            (cat cr (exp (gen) x)) (cat sr (exp (gen) y))
+            (cat s spk (enc (hash s spk) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x y)) "s hs traffic" cr sr))
+              (cat cr (exp (gen) y)) (cat sr (exp (gen) x)) s spk
+              (enc (hash s spk) (privk ca))) c cpk
+            (enc (hash c cpk) (privk ca)))
+          (hash (exp (gen) (mul x y)) "c hs traffic" cr sr)))
+      (send
+        (enc request
+          (hash "c ap traffic" cr sr
+            (hash (exp (gen) (mul x y)) "derived"))))
+      (recv
+        (enc response
+          (hash "s ap traffic" cr sr
+            (hash (exp (gen) (mul x y)) "derived")))))
+    ((send (cat cr-0 (exp (gen) x-0)))
+      (recv
+        (cat (cat sr-0 (exp (gen) y-0))
+          (enc (cat s-0 spk-0 (enc (hash s-0 spk-0) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-0 y-0)) "s hs traffic" cr-0
+                  sr-0)) (cat cr-0 (exp (gen) x-0))
+              (cat sr-0 (exp (gen) y-0)) s-0 spk-0
+              (enc (hash s-0 spk-0) (privk ca)))
+            (hash (exp (gen) (mul x-0 y-0)) "s hs traffic" cr-0 sr-0))))
+      (send
+        (enc (cat s spk (enc (hash s spk) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x-0 y-0)) "c hs traffic" cr-0 sr-0))
+            (cat cr-0 (exp (gen) x-0)) (cat sr-0 (exp (gen) y-0))
+            (cat s-0 spk-0 (enc (hash s-0 spk-0) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-0 y-0)) "s hs traffic" cr-0
+                  sr-0)) (cat cr-0 (exp (gen) y-0))
+              (cat sr-0 (exp (gen) x-0)) s-0 spk-0
+              (enc (hash s-0 spk-0) (privk ca))) s spk
+            (enc (hash s spk) (privk ca)))
+          (hash (exp (gen) (mul x-0 y-0)) "c hs traffic" cr-0 sr-0))))
+    ((send (cat cr-1 (exp (gen) x-1)))
+      (recv
+        (cat (cat sr-1 (exp (gen) y-1))
+          (enc (cat s-1 spk-1 (enc (hash s-1 spk-1) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-1 y-1)) "s hs traffic" cr-1
+                  sr-1)) (cat cr-1 (exp (gen) x-1))
+              (cat sr-1 (exp (gen) y-1)) s-1 spk-1
+              (enc (hash s-1 spk-1) (privk ca)))
+            (hash (exp (gen) (mul x-1 y-1)) "s hs traffic" cr-1 sr-1))))
+      (send
+        (enc (cat s-0 spk-0 (enc (hash s-0 spk-0) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x-1 y-1)) "c hs traffic" cr-1 sr-1))
+            (cat cr-1 (exp (gen) x-1)) (cat sr-1 (exp (gen) y-1))
+            (cat s-1 spk-1 (enc (hash s-1 spk-1) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-1 y-1)) "s hs traffic" cr-1
+                  sr-1)) (cat cr-1 (exp (gen) y-1))
+              (cat sr-1 (exp (gen) x-1)) s-1 spk-1
+              (enc (hash s-1 spk-1) (privk ca))) s-0 spk-0
+            (enc (hash s-0 spk-0) (privk ca)))
+          (hash (exp (gen) (mul x-1 y-1)) "c hs traffic" cr-1 sr-1))))
+    ((send (cat cr-2 (exp (gen) x-2)))
+      (recv
+        (cat (cat sr-2 (exp (gen) y-2))
+          (enc (cat s-2 spk-2 (enc (hash s-2 spk-2) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-2 y-2)) "s hs traffic" cr-2
+                  sr-2)) (cat cr-2 (exp (gen) x-2))
+              (cat sr-2 (exp (gen) y-2)) s-2 spk-2
+              (enc (hash s-2 spk-2) (privk ca)))
+            (hash (exp (gen) (mul x-2 y-2)) "s hs traffic" cr-2 sr-2))))
+      (send
+        (enc (cat s-1 spk-1 (enc (hash s-1 spk-1) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x-2 y-2)) "c hs traffic" cr-2 sr-2))
+            (cat cr-2 (exp (gen) x-2)) (cat sr-2 (exp (gen) y-2))
+            (cat s-2 spk-2 (enc (hash s-2 spk-2) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-2 y-2)) "s hs traffic" cr-2
+                  sr-2)) (cat cr-2 (exp (gen) y-2))
+              (cat sr-2 (exp (gen) x-2)) s-2 spk-2
+              (enc (hash s-2 spk-2) (privk ca))) s-1 spk-1
+            (enc (hash s-1 spk-1) (privk ca)))
+          (hash (exp (gen) (mul x-2 y-2)) "c hs traffic" cr-2 sr-2))))
+    ((send (cat cr-3 (exp (gen) x-3)))
+      (recv
+        (cat (cat sr-3 (exp (gen) y-3))
+          (enc (cat s-3 spk-3 (enc (hash s-3 spk-3) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-3 y-3)) "s hs traffic" cr-3
+                  sr-3)) (cat cr-3 (exp (gen) x-3))
+              (cat sr-3 (exp (gen) y-3)) s-3 spk-3
+              (enc (hash s-3 spk-3) (privk ca)))
+            (hash (exp (gen) (mul x-3 y-3)) "s hs traffic" cr-3 sr-3))))
+      (send
+        (enc (cat s-2 spk-2 (enc (hash s-2 spk-2) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x-3 y-3)) "c hs traffic" cr-3 sr-3))
+            (cat cr-3 (exp (gen) x-3)) (cat sr-3 (exp (gen) y-3))
+            (cat s-3 spk-3 (enc (hash s-3 spk-3) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-3 y-3)) "s hs traffic" cr-3
+                  sr-3)) (cat cr-3 (exp (gen) y-3))
+              (cat sr-3 (exp (gen) x-3)) s-3 spk-3
+              (enc (hash s-3 spk-3) (privk ca))) s-2 spk-2
+            (enc (hash s-2 spk-2) (privk ca)))
+          (hash (exp (gen) (mul x-3 y-3)) "c hs traffic" cr-3 sr-3))))
+    ((send (cat cr-4 (exp (gen) x-4)))
+      (recv
+        (cat (cat sr-4 (exp (gen) y-4))
+          (enc (cat s-4 spk-4 (enc (hash s-4 spk-4) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-4 y-4)) "s hs traffic" cr-4
+                  sr-4)) (cat cr-4 (exp (gen) x-4))
+              (cat sr-4 (exp (gen) y-4)) s-4 spk-4
+              (enc (hash s-4 spk-4) (privk ca)))
+            (hash (exp (gen) (mul x-4 y-4)) "s hs traffic" cr-4 sr-4))))
+      (send
+        (enc (cat s-3 spk-3 (enc (hash s-3 spk-3) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x-4 y-4)) "c hs traffic" cr-4 sr-4))
+            (cat cr-4 (exp (gen) x-4)) (cat sr-4 (exp (gen) y-4))
+            (cat s-4 spk-4 (enc (hash s-4 spk-4) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-4 y-4)) "s hs traffic" cr-4
+                  sr-4)) (cat cr-4 (exp (gen) y-4))
+              (cat sr-4 (exp (gen) x-4)) s-4 spk-4
+              (enc (hash s-4 spk-4) (privk ca))) s-3 spk-3
+            (enc (hash s-3 spk-3) (privk ca)))
+          (hash (exp (gen) (mul x-4 y-4)) "c hs traffic" cr-4 sr-4))))
+    ((send (cat cr-5 (exp (gen) x-5)))
+      (recv
+        (cat (cat sr-5 (exp (gen) y-5))
+          (enc (cat s-5 spk-5 (enc (hash s-5 spk-5) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-5 y-5)) "s hs traffic" cr-5
+                  sr-5)) (cat cr-5 (exp (gen) x-5))
+              (cat sr-5 (exp (gen) y-5)) s-5 spk-5
+              (enc (hash s-5 spk-5) (privk ca)))
+            (hash (exp (gen) (mul x-5 y-5)) "s hs traffic" cr-5 sr-5))))
+      (send
+        (enc (cat s-4 spk-4 (enc (hash s-4 spk-4) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x-5 y-5)) "c hs traffic" cr-5 sr-5))
+            (cat cr-5 (exp (gen) x-5)) (cat sr-5 (exp (gen) y-5))
+            (cat s-5 spk-5 (enc (hash s-5 spk-5) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-5 y-5)) "s hs traffic" cr-5
+                  sr-5)) (cat cr-5 (exp (gen) y-5))
+              (cat sr-5 (exp (gen) x-5)) s-5 spk-5
+              (enc (hash s-5 spk-5) (privk ca))) s-4 spk-4
+            (enc (hash s-4 spk-4) (privk ca)))
+          (hash (exp (gen) (mul x-5 y-5)) "c hs traffic" cr-5 sr-5))))
+    ((send (cat cr-6 (exp (gen) x-6)))
+      (recv
+        (cat (cat sr-6 (exp (gen) y-6))
+          (enc
+            (cat s-6 (invk spk-6)
+              (enc (hash s-6 (invk spk-6)) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-6 y-6)) "s hs traffic" cr-6
+                  sr-6)) (cat cr-6 (exp (gen) x-6))
+              (cat sr-6 (exp (gen) y-6)) s-6 (invk spk-6)
+              (enc (hash s-6 (invk spk-6)) (privk ca)))
+            (hash (exp (gen) (mul x-6 y-6)) "s hs traffic" cr-6 sr-6))))
+      (send
+        (enc (cat s-5 spk-5 (enc (hash s-5 spk-5) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x-6 y-6)) "c hs traffic" cr-6 sr-6))
+            (cat cr-6 (exp (gen) x-6)) (cat sr-6 (exp (gen) y-6))
+            (cat s-6 (invk spk-6)
+              (enc (hash s-6 (invk spk-6)) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x-6 y-6)) "s hs traffic" cr-6
+                  sr-6)) (cat cr-6 (exp (gen) y-6))
+              (cat sr-6 (exp (gen) x-6)) s-6 (invk spk-6)
+              (enc (hash s-6 (invk spk-6)) (privk ca))) s-5 spk-5
+            (enc (hash s-5 spk-5) (privk ca)))
+          (hash (exp (gen) (mul x-6 y-6)) "c hs traffic" cr-6 sr-6))))
+    ((recv (cat cr-7 (exp (gen) x-7)))
+      (send
+        (cat (cat sr-7 (exp (gen) y-7))
+          (enc
+            (cat s-6 (invk spk-6)
+              (enc (hash s-6 (invk spk-6)) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul y-7 x-7)) "s hs traffic" cr-7
+                  sr-7)) (cat cr-7 (exp (gen) x-7))
+              (cat sr-7 (exp (gen) y-7)) s-6 (invk spk-6)
+              (enc (hash s-6 (invk spk-6)) (privk ca)))
+            (hash (exp (gen) (mul y-7 x-7)) "s hs traffic" cr-7
+              sr-7))))))
+  (label 16)
+  (parent 13)
+  (realized)
+  (shape)
+  (satisfies
+    (no (p "server" z-0 (idx 5)) (p "server" "x" z-0 x)
+      (p "server" "y" z-0 y) (p "server" "c" z-0 c)
+      (p "server" "s" z-0 s) (p "server" "cpk" z-0 cpk)
+      (p "server" "spk" z-0 spk) (p "server" "sr" z-0 sr)
+      (p "server" "cr" z-0 cr) (cr cr) (sr sr) (spk spk) (cpk cpk) (s s)
+      (ca ca) (c c) (x x) (y y) (z 0)))
+  (maps
+    ((0)
+      ((cr cr) (sr sr) (spk spk) (cpk cpk) (s s) (ca ca) (c c) (x x)
+        (y y) (request request) (response response))))
+  (origs (cr (0 0)))
+  (ugens (y-7 (8 1)) (x-6 (7 0)) (x-5 (6 0)) (x-4 (5 0)) (x-3 (4 0))
+    (x-2 (3 0)) (x-1 (2 0)) (x-0 (1 0)) (x (0 0))))

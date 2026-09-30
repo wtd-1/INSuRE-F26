@@ -1,0 +1,4 @@
+2026-09-30T19:47:18+00:00 prediction 0794119f2ad3f615ef18bb286a3f7bedcc68cb27d36537f39c517e5f73d0ee01 mtime 2026-09-30T19:02:20+00:00
+2026-09-30T19:47:18+00:00 inputs TLS1.3_macros.lisp faf59645b98a099f9fad2e610a5ea0917cbadbd82850456ce53e89c8a15d75ab tls13_baseline.scm 2c64ed8a03016400e36ca0d8ef123f7d0f2f92dbd72a5cea877ec8824fe6a30f
+2026-09-30T19:47:24+00:00 cpsa4 -b 12 -l 500 exit=1 seconds=5.632 stderr='Strand bound exceeded'
+2026-09-30T19:47:30+00:00 cpsa4 (defaults) exit=1 seconds=5.640 stderr='Strand bound exceeded'

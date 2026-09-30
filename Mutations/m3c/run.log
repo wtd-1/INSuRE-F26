@@ -1,0 +1,4 @@
+2026-09-30T19:56:26+00:00 prediction 0e08c255ed433ba9ceba4c8034956153eb80236244cfe7767bc10e729939f6ef mtime 2026-09-30T19:02:20+00:00
+2026-09-30T19:56:26+00:00 inputs TLS1.3_macros.lisp e9a610fb894f80c07f36badea661f0e19680591d64e2387d5087a26201e39109 tls13_baseline.scm 2c64ed8a03016400e36ca0d8ef123f7d0f2f92dbd72a5cea877ec8824fe6a30f
+2026-09-30T19:57:11+00:00 cpsa4 -b 12 -l 500 exit=1 seconds=44.786 stderr='Step limit exceeded'
+2026-09-30T20:02:00+00:00 cpsa4 (defaults) exit=1 seconds=287.045 stderr='Step limit exceeded'

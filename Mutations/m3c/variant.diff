@@ -1,0 +1,11 @@
+--- BASELINE-v2/TLS1.3_macros.lisp
++++ m3c/TLS1.3_macros.lisp
+@@ -99,7 +99,7 @@
+ (defmacro (ServerFinishedSel present deleted)
+     (FinishedSel present deleted))
+ (defmacro (ClientFinishedSel present deleted)
+-    (FinishedSel present deleted))
++    deleted)
+ 
+ ;; ====================================================================
+ 
