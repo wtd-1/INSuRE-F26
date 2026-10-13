@@ -62,6 +62,10 @@
     (^
      (ServerCertVerifyMesgs client_random server_random client_expt server_expt
 			    server serverpubkey ca)
+     (CertificateVerify
+      (ServerCertVerifyMesgs client_random server_random client_expt server_expt
+			     server serverpubkey ca)
+      serverprivkey)
      (Finish
       (ServerFinishedMesgs client_random server_random server_expt client_expt
 			   server serverpubkey serverprivkey ca)
@@ -75,7 +79,11 @@
 			       server_expt server serverpubkey serverprivkey ca)
     (^
      (ServerCertVerifyMesgs client_random server_random client_expt server_expt
-			    server serverpubkey ca)))
+			    server serverpubkey ca)
+     (CertificateVerify
+      (ServerCertVerifyMesgs client_random server_random client_expt server_expt
+			     server serverpubkey ca)
+      serverprivkey)))
 
 (defmacro (ClientFinishedMesgs_nocert client_random server_random client_expt
 				      server_expt server serverpubkey
@@ -95,7 +103,12 @@
     (^
      (ClientCertVerifyMesgs client_random server_random client_expt server_expt
 			    server serverpubkey serverprivkey client
-			    clientpubkey ca handshakesecret)))
+			    clientpubkey ca handshakesecret)
+     (CertificateVerify
+      (ClientCertVerifyMesgs client_random server_random client_expt server_expt
+			     server serverpubkey serverprivkey client
+			     clientpubkey ca handshakesecret)
+      clientprivkey)))
 				     
 
 ;; TLS macros: Server Authentication (TLS) and Mutual Authentication (mTLS)
@@ -116,6 +129,11 @@
      (d1 (ClientHello client_random client_expt))
      (d2 (cat (ServerHello server_random server_expt)
 	      (enc (Certificate server serverpubkey ca)
+		   (CertificateVerify
+		    (ServerCertVerifyMesgs client_random server_random
+					   client_expt server_expt server
+					   serverpubkey ca)
+		    serverprivkey)
 		   (Finish
 		    (ServerFinishedMesgs client_random server_random client_expt
 				       server_expt server serverpubkey
@@ -141,6 +159,11 @@
      (d1 (ClientHello client_random client_expt))
      (d2 (cat (ServerHello server_random server_expt)
 	      (enc (Certificate server serverpubkey ca)
+		   (CertificateVerify
+		    (ServerCertVerifyMesgs client_random server_random
+					   client_expt server_expt server
+					   serverpubkey ca)
+		    serverprivkey)
 		   (Finish
 		    (ServerFinishedMesgs client_random server_random client_expt
 				       server_expt server serverpubkey
@@ -150,6 +173,12 @@
 		   (ServerHandshakeKey client_random server_random
 				       handshakesecret))))
      (d1 (enc (Certificate client clientpubkey ca)
+	      (CertificateVerify
+	       (ClientCertVerifyMesgs client_random server_random client_expt
+				      server_expt server serverpubkey
+				      serverprivkey client clientpubkey ca
+				      handshakesecret)
+	       clientprivkey)
 	      (Finish
 	       (ClientFinishedMesgs client_random server_random client_expt
 				    server_expt server serverpubkey serverprivkey
