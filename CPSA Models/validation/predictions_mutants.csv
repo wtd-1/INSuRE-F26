@@ -1,0 +1,22 @@
+mutant,test,predicted,rationale
+m1,exp_lemmas,HOLDS,exponents are never transmitted; deleting a signature cannot expose them
+m1,dh_lemma_client,VIOLATED,without the server signature the client cannot tell the adversary from the server
+m1,dh_lemma_server,HOLDS,client signature still binds both DH shares
+m1,client_agreement,VIOLATED,as dh_lemma_client (mirror of m6 for the server key)
+m1,server_agreement,HOLDS,client CertificateVerify still covers the whole transcript
+m1,client_secrecy,VIOLATED,adversary completes the handshake as the server
+m1,server_secrecy,HOLDS,as server_agreement
+m6,exp_lemmas,HOLDS,as m1
+m6,dh_lemma_client,HOLDS,server signature intact
+m6,dh_lemma_server,VIOLATED,Mutations/m6: M2 M5 M6 violated
+m6,client_agreement,HOLDS,Mutations/m6: M1 holds
+m6,server_agreement,VIOLATED,Mutations/m6: M2 violated
+m6,client_secrecy,HOLDS,Mutations/m6: M3 M4 hold
+m6,server_secrecy,VIOLATED,Mutations/m6: M5 M6 violated
+m8,exp_lemmas,HOLDS,as m1
+m8,dh_lemma_client,VIOLATED,no signatures
+m8,dh_lemma_server,VIOLATED,no signatures
+m8,client_agreement,VIOLATED,Mutations/m8: all violated
+m8,server_agreement,VIOLATED,Mutations/m8: all violated
+m8,client_secrecy,VIOLATED,Mutations/m8: all violated
+m8,server_secrecy,VIOLATED,Mutations/m8: all violated

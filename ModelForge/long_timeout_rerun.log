@@ -1,0 +1,6 @@
+sonnet-5-5__zeroshot__m1__s0__initial rc=142 t=900.1s 
+long_sonnet-5-5__zeroshot__m1__s0__initial.txt#0: VIOLATED   finished=False skeletons=19 shapes=9 [[('client', '5'), ('server', '2')], [('cl
+sonnet-5-5__zeroshot__m1__s2__initial rc=142 t=900.1s 
+long_sonnet-5-5__zeroshot__m1__s2__initial.txt#0: VIOLATED   finished=False skeletons=19 shapes=9 [[('client', '5'), ('server', '2')], [('cl
+sonnet-5-5__zeroshot__m6__s1__initial rc=142 t=900.1s 
+long_sonnet-5-5__zeroshot__m6__s1__initial.txt#0: INCOMPLETE finished=False skeletons=582 shapes=1 [[('client', '5'), ('server', '5')]]

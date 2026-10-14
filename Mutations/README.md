@@ -233,6 +233,20 @@ all 16 goals of every variant that CPSA accepted, in-family and off-family.
 No goal differs between the tight and default runs. The remaining flags are
 explained in items 5-7.
 
+**Answer categories (added 2026-10-13).** The benchmark records what CPSA
+could establish, not only HOLDS or VIOLATED. Some cells deliberately have no
+CPSA answer, and a method under test is scored on whether it reports the right
+category. There are four:
+- **HOLDS**
+- **VIOLATED**
+- **UNDECIDED**: CPSA's search does not finish. M8 is UNDECIDED for CPSA
+  alone; it is resolved by decomposition in
+  `investigations/C_m8_forward_secrecy/` (HOLDS for m0/m5).
+- **INEXPRESSIBLE**: CPSA rejects the model (m7).
+
+A method that confidently reports a verdict where CPSA could not express the
+model is doing something CPSA cannot, and that has to be justified.
+
 **2. Answer key for scoring P2 and P3.** Use the in-family verdicts of m0-m4c
 (S1-S8) and of m5, m6, m8 (M1-M8), **except**:
 - **m7**: every cell is ERROR (item 6).
@@ -277,9 +291,13 @@ carries client authentication.** m6 shows the signature is necessary; the
 role of the certificate is untested. A one-line alternative that keeps `c`
 in the trace is to send the client's name and key without the CA signature.
 That is a different mutation (an unsigned certificate) and needs a decision
-before it is added.
+before it is added. **Decision (2026-10-13): m7 stays in the benchmark as
+INEXPRESSIBLE.** It is a known case that CPSA, as used here, cannot express,
+and a tool under test should not report a confident verdict for it.
 
-**7. M8 is undecidable within the fixed parameters.** Where no
+**7. M8 is undecidable within the fixed parameters** (resolved separately:
+see `investigations/C_m8_forward_secrecy/README.md`, which shows that the
+obstacle is client authentication, not forward secrecy). Where no
 counterexample exists, M8 reaches the step limit (500 or 2000) under both
 parameter sets. This happens in m0, m1, m2, m3, m3c, m3s, m4 and m5. It is
 flagged INCOMPLETE and must not be scored as HOLDS. The cause is analysed

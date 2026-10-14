@@ -1,0 +1,1017 @@
+(herald "ModelForge-style generated model" (bound 30)
+  (algebra diffie-hellman))
+
+(comment "CPSA 4.4.9")
+(comment
+  "All input read from sonnet-5-5__zeroshot__m8__s0__initial.scm")
+(comment "Strand count bounded at 30")
+
+(defprotocol mtls13 diffie-hellman
+  (defrole client
+    (vars (s c ca name) (cr sr text) (spk cpk akey)
+      (request response text) (x rndx) (y expt))
+    (trace (send (cat cr (exp (gen) x)))
+      (recv
+        (cat sr (exp (gen) y)
+          (enc (enc "cert" s spk (privk ca))
+            (hash
+              (hash "sfk"
+                (hash "sht" (hash "hs" (exp (gen) (mul x y))) cr sr)) cr
+              (exp (gen) x) sr (exp (gen) y)
+              (enc "cert" s spk (privk ca)))
+            (hash "sht" (hash "hs" (exp (gen) (mul x y))) cr sr))))
+      (send
+        (enc (enc "cert" c cpk (privk ca))
+          (hash
+            (hash "cfk"
+              (hash "cht" (hash "hs" (exp (gen) (mul x y))) cr sr))
+            (cat cr (exp (gen) x) sr (exp (gen) y)
+              (enc "cert" s spk (privk ca)))
+            (hash
+              (hash "sfk"
+                (hash "sht" (hash "hs" (exp (gen) (mul x y))) cr sr)) cr
+              (exp (gen) x) sr (exp (gen) y)
+              (enc "cert" s spk (privk ca)))
+            (enc "cert" c cpk (privk ca)))
+          (hash "cht" (hash "hs" (exp (gen) (mul x y))) cr sr)))
+      (send
+        (enc request
+          (hash "cat" cr sr
+            (hash "ms" (hash "hs" (exp (gen) (mul x y)))))))
+      (recv
+        (enc response
+          (hash "sat" cr sr
+            (hash "ms" (hash "hs" (exp (gen) (mul x y))))))))
+    (uniq-gen x))
+  (defrole server
+    (vars (s c ca name) (cr sr text) (spk cpk akey)
+      (request response text) (y rndx) (x expt))
+    (trace (recv (cat cr (exp (gen) x)))
+      (send
+        (cat sr (exp (gen) y)
+          (enc (enc "cert" s spk (privk ca))
+            (hash
+              (hash "sfk"
+                (hash "sht" (hash "hs" (exp (gen) (mul y x))) cr sr)) cr
+              (exp (gen) x) sr (exp (gen) y)
+              (enc "cert" s spk (privk ca)))
+            (hash "sht" (hash "hs" (exp (gen) (mul y x))) cr sr))))
+      (recv
+        (enc (enc "cert" c cpk (privk ca))
+          (hash
+            (hash "cfk"
+              (hash "cht" (hash "hs" (exp (gen) (mul y x))) cr sr))
+            (cat cr (exp (gen) x) sr (exp (gen) y)
+              (enc "cert" s spk (privk ca)))
+            (hash
+              (hash "sfk"
+                (hash "sht" (hash "hs" (exp (gen) (mul y x))) cr sr)) cr
+              (exp (gen) x) sr (exp (gen) y)
+              (enc "cert" s spk (privk ca)))
+            (enc "cert" c cpk (privk ca)))
+          (hash "cht" (hash "hs" (exp (gen) (mul y x))) cr sr)))
+      (recv
+        (enc request
+          (hash "cat" cr sr
+            (hash "ms" (hash "hs" (exp (gen) (mul y x)))))))
+      (send
+        (enc response
+          (hash "sat" cr sr
+            (hash "ms" (hash "hs" (exp (gen) (mul y x))))))))
+    (uniq-gen y)
+    (absent (y x)))
+  (defgenrule neqRl_indx
+    (forall ((x indx)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_strd
+    (forall ((x strd)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_mesg
+    (forall ((x mesg)) (implies (fact neq x x) (false)))))
+
+(defskeleton mtls13
+  (vars (cr sr request response text) (spk cpk akey) (s c ca name)
+    (x rndx) (y expt))
+  (defstrand client 5 (cr cr) (sr sr) (request request)
+    (response response) (spk spk) (cpk cpk) (s s) (c c) (ca ca) (x x)
+    (y y))
+  (non-orig (invk spk))
+  (uniq-orig cr)
+  (uniq-gen x)
+  (goals
+    (forall
+      ((cr sr text) (spk cpk akey) (s c ca name) (x rndx) (y expt)
+        (z strd))
+      (implies
+        (and (p "client" z 5) (p "client" "cr" z cr)
+          (p "client" "sr" z sr) (p "client" "spk" z spk)
+          (p "client" "s" z s) (p "client" "cpk" z cpk)
+          (p "client" "c" z c) (p "client" "ca" z ca)
+          (p "client" "x" z x) (p "client" "y" z y) (uniq-at cr z 0)
+          (ugen x) (non (invk spk)))
+        (exists ((z-0 strd))
+          (and (p "server" z-0 5) (p "server" "cr" z-0 cr)
+            (p "server" "sr" z-0 sr) (p "server" "spk" z-0 spk)
+            (p "server" "s" z-0 s) (p "server" "cpk" z-0 cpk)
+            (p "server" "c" z-0 c) (p "server" "ca" z-0 ca)
+            (p "server" "x" z-0 x) (p "server" "y" z-0 y))))))
+  (traces
+    ((send (cat cr (exp (gen) x)))
+      (recv
+        (cat sr (exp (gen) y)
+          (enc (enc "cert" s spk (privk ca))
+            (hash
+              (hash "sfk"
+                (hash "sht" (hash "hs" (exp (gen) (mul x y))) cr sr)) cr
+              (exp (gen) x) sr (exp (gen) y)
+              (enc "cert" s spk (privk ca)))
+            (hash "sht" (hash "hs" (exp (gen) (mul x y))) cr sr))))
+      (send
+        (enc (enc "cert" c cpk (privk ca))
+          (hash
+            (hash "cfk"
+              (hash "cht" (hash "hs" (exp (gen) (mul x y))) cr sr))
+            (cat cr (exp (gen) x) sr (exp (gen) y)
+              (enc "cert" s spk (privk ca)))
+            (hash
+              (hash "sfk"
+                (hash "sht" (hash "hs" (exp (gen) (mul x y))) cr sr)) cr
+              (exp (gen) x) sr (exp (gen) y)
+              (enc "cert" s spk (privk ca)))
+            (enc "cert" c cpk (privk ca)))
+          (hash "cht" (hash "hs" (exp (gen) (mul x y))) cr sr)))
+      (send
+        (enc request
+          (hash "cat" cr sr
+            (hash "ms" (hash "hs" (exp (gen) (mul x y)))))))
+      (recv
+        (enc response
+          (hash "sat" cr sr
+            (hash "ms" (hash "hs" (exp (gen) (mul x y)))))))))
+  (label 0)
+  (realized)
+  (shape)
+  (satisfies
+    (no (p "server" z-0 (idx 5)) (p "server" "y" z-0 y)
+      (p "server" "x" z-0 x) (p "server" "ca" z-0 ca)
+      (p "server" "c" z-0 c) (p "server" "cpk" z-0 cpk)
+      (p "server" "s" z-0 s) (p "server" "spk" z-0 spk)
+      (p "server" "sr" z-0 sr) (p "server" "cr" z-0 cr) (cr cr) (sr sr)
+      (spk spk) (cpk cpk) (s s) (c c) (ca ca) (x x) (y y) (z 0)))
+  (maps
+    ((0)
+      ((cr cr) (sr sr) (spk spk) (cpk cpk) (s s) (c c) (ca ca) (x x)
+        (y y) (request request) (response response))))
+  (origs (cr (0 0)))
+  (ugens (x (0 0))))
+
+(comment "Nothing left to do")
+
+(defprotocol mtls13 diffie-hellman
+  (defrole client
+    (vars (s c ca name) (cr sr text) (spk cpk akey)
+      (request response text) (x rndx) (y expt))
+    (trace (send (cat cr (exp (gen) x)))
+      (recv
+        (cat sr (exp (gen) y)
+          (enc (enc "cert" s spk (privk ca))
+            (hash
+              (hash "sfk"
+                (hash "sht" (hash "hs" (exp (gen) (mul x y))) cr sr)) cr
+              (exp (gen) x) sr (exp (gen) y)
+              (enc "cert" s spk (privk ca)))
+            (hash "sht" (hash "hs" (exp (gen) (mul x y))) cr sr))))
+      (send
+        (enc (enc "cert" c cpk (privk ca))
+          (hash
+            (hash "cfk"
+              (hash "cht" (hash "hs" (exp (gen) (mul x y))) cr sr))
+            (cat cr (exp (gen) x) sr (exp (gen) y)
+              (enc "cert" s spk (privk ca)))
+            (hash
+              (hash "sfk"
+                (hash "sht" (hash "hs" (exp (gen) (mul x y))) cr sr)) cr
+              (exp (gen) x) sr (exp (gen) y)
+              (enc "cert" s spk (privk ca)))
+            (enc "cert" c cpk (privk ca)))
+          (hash "cht" (hash "hs" (exp (gen) (mul x y))) cr sr)))
+      (send
+        (enc request
+          (hash "cat" cr sr
+            (hash "ms" (hash "hs" (exp (gen) (mul x y)))))))
+      (recv
+        (enc response
+          (hash "sat" cr sr
+            (hash "ms" (hash "hs" (exp (gen) (mul x y))))))))
+    (uniq-gen x))
+  (defrole server
+    (vars (s c ca name) (cr sr text) (spk cpk akey)
+      (request response text) (y rndx) (x expt))
+    (trace (recv (cat cr (exp (gen) x)))
+      (send
+        (cat sr (exp (gen) y)
+          (enc (enc "cert" s spk (privk ca))
+            (hash
+              (hash "sfk"
+                (hash "sht" (hash "hs" (exp (gen) (mul y x))) cr sr)) cr
+              (exp (gen) x) sr (exp (gen) y)
+              (enc "cert" s spk (privk ca)))
+            (hash "sht" (hash "hs" (exp (gen) (mul y x))) cr sr))))
+      (recv
+        (enc (enc "cert" c cpk (privk ca))
+          (hash
+            (hash "cfk"
+              (hash "cht" (hash "hs" (exp (gen) (mul y x))) cr sr))
+            (cat cr (exp (gen) x) sr (exp (gen) y)
+              (enc "cert" s spk (privk ca)))
+            (hash
+              (hash "sfk"
+                (hash "sht" (hash "hs" (exp (gen) (mul y x))) cr sr)) cr
+              (exp (gen) x) sr (exp (gen) y)
+              (enc "cert" s spk (privk ca)))
+            (enc "cert" c cpk (privk ca)))
+          (hash "cht" (hash "hs" (exp (gen) (mul y x))) cr sr)))
+      (recv
+        (enc request
+          (hash "cat" cr sr
+            (hash "ms" (hash "hs" (exp (gen) (mul y x)))))))
+      (send
+        (enc response
+          (hash "sat" cr sr
+            (hash "ms" (hash "hs" (exp (gen) (mul y x))))))))
+    (uniq-gen y)
+    (absent (y x)))
+  (defgenrule neqRl_indx
+    (forall ((x indx)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_strd
+    (forall ((x strd)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_mesg
+    (forall ((x mesg)) (implies (fact neq x x) (false)))))
+
+(defskeleton mtls13
+  (vars (cr sr request response text) (spk cpk akey) (s c ca name)
+    (x expt) (y rndx))
+  (defstrand server 5 (cr cr) (sr sr) (request request)
+    (response response) (spk spk) (cpk cpk) (s s) (c c) (ca ca) (y y)
+    (x x))
+  (non-orig (invk cpk))
+  (uniq-orig sr)
+  (uniq-gen y)
+  (absent (y x))
+  (goals
+    (forall
+      ((cr sr text) (spk cpk akey) (s c ca name) (x expt) (y rndx)
+        (z strd))
+      (implies
+        (and (p "server" z 5) (p "server" "cr" z cr)
+          (p "server" "sr" z sr) (p "server" "spk" z spk)
+          (p "server" "s" z s) (p "server" "cpk" z cpk)
+          (p "server" "c" z c) (p "server" "ca" z ca)
+          (p "server" "x" z x) (p "server" "y" z y) (uniq-at sr z 1)
+          (ugen y) (non (invk cpk)))
+        (exists ((z-0 strd))
+          (and (p "client" z-0 4) (p "client" "cr" z-0 cr)
+            (p "client" "sr" z-0 sr) (p "client" "spk" z-0 spk)
+            (p "client" "s" z-0 s) (p "client" "cpk" z-0 cpk)
+            (p "client" "c" z-0 c) (p "client" "ca" z-0 ca)
+            (p "client" "x" z-0 x) (p "client" "y" z-0 y))))))
+  (traces
+    ((recv (cat cr (exp (gen) x)))
+      (send
+        (cat sr (exp (gen) y)
+          (enc (enc "cert" s spk (privk ca))
+            (hash
+              (hash "sfk"
+                (hash "sht" (hash "hs" (exp (gen) (mul x y))) cr sr)) cr
+              (exp (gen) x) sr (exp (gen) y)
+              (enc "cert" s spk (privk ca)))
+            (hash "sht" (hash "hs" (exp (gen) (mul x y))) cr sr))))
+      (recv
+        (enc (enc "cert" c cpk (privk ca))
+          (hash
+            (hash "cfk"
+              (hash "cht" (hash "hs" (exp (gen) (mul x y))) cr sr))
+            (cat cr (exp (gen) x) sr (exp (gen) y)
+              (enc "cert" s spk (privk ca)))
+            (hash
+              (hash "sfk"
+                (hash "sht" (hash "hs" (exp (gen) (mul x y))) cr sr)) cr
+              (exp (gen) x) sr (exp (gen) y)
+              (enc "cert" s spk (privk ca)))
+            (enc "cert" c cpk (privk ca)))
+          (hash "cht" (hash "hs" (exp (gen) (mul x y))) cr sr)))
+      (recv
+        (enc request
+          (hash "cat" cr sr
+            (hash "ms" (hash "hs" (exp (gen) (mul x y)))))))
+      (send
+        (enc response
+          (hash "sat" cr sr
+            (hash "ms" (hash "hs" (exp (gen) (mul x y)))))))))
+  (label 1)
+  (realized)
+  (shape)
+  (satisfies
+    (no (p "client" z-0 (idx 4)) (p "client" "y" z-0 y)
+      (p "client" "x" z-0 x) (p "client" "ca" z-0 ca)
+      (p "client" "c" z-0 c) (p "client" "cpk" z-0 cpk)
+      (p "client" "s" z-0 s) (p "client" "spk" z-0 spk)
+      (p "client" "sr" z-0 sr) (p "client" "cr" z-0 cr) (cr cr) (sr sr)
+      (spk spk) (cpk cpk) (s s) (c c) (ca ca) (x x) (y y) (z 0)))
+  (maps
+    ((0)
+      ((cr cr) (sr sr) (spk spk) (cpk cpk) (s s) (c c) (ca ca) (x x)
+        (y y) (request request) (response response))))
+  (origs (sr (0 1)))
+  (ugens (y (0 1))))
+
+(comment "Nothing left to do")
+
+(defprotocol mtls13 diffie-hellman
+  (defrole client
+    (vars (s c ca name) (cr sr text) (spk cpk akey)
+      (request response text) (x rndx) (y expt))
+    (trace (send (cat cr (exp (gen) x)))
+      (recv
+        (cat sr (exp (gen) y)
+          (enc (enc "cert" s spk (privk ca))
+            (hash
+              (hash "sfk"
+                (hash "sht" (hash "hs" (exp (gen) (mul x y))) cr sr)) cr
+              (exp (gen) x) sr (exp (gen) y)
+              (enc "cert" s spk (privk ca)))
+            (hash "sht" (hash "hs" (exp (gen) (mul x y))) cr sr))))
+      (send
+        (enc (enc "cert" c cpk (privk ca))
+          (hash
+            (hash "cfk"
+              (hash "cht" (hash "hs" (exp (gen) (mul x y))) cr sr))
+            (cat cr (exp (gen) x) sr (exp (gen) y)
+              (enc "cert" s spk (privk ca)))
+            (hash
+              (hash "sfk"
+                (hash "sht" (hash "hs" (exp (gen) (mul x y))) cr sr)) cr
+              (exp (gen) x) sr (exp (gen) y)
+              (enc "cert" s spk (privk ca)))
+            (enc "cert" c cpk (privk ca)))
+          (hash "cht" (hash "hs" (exp (gen) (mul x y))) cr sr)))
+      (send
+        (enc request
+          (hash "cat" cr sr
+            (hash "ms" (hash "hs" (exp (gen) (mul x y)))))))
+      (recv
+        (enc response
+          (hash "sat" cr sr
+            (hash "ms" (hash "hs" (exp (gen) (mul x y))))))))
+    (uniq-gen x))
+  (defrole server
+    (vars (s c ca name) (cr sr text) (spk cpk akey)
+      (request response text) (y rndx) (x expt))
+    (trace (recv (cat cr (exp (gen) x)))
+      (send
+        (cat sr (exp (gen) y)
+          (enc (enc "cert" s spk (privk ca))
+            (hash
+              (hash "sfk"
+                (hash "sht" (hash "hs" (exp (gen) (mul y x))) cr sr)) cr
+              (exp (gen) x) sr (exp (gen) y)
+              (enc "cert" s spk (privk ca)))
+            (hash "sht" (hash "hs" (exp (gen) (mul y x))) cr sr))))
+      (recv
+        (enc (enc "cert" c cpk (privk ca))
+          (hash
+            (hash "cfk"
+              (hash "cht" (hash "hs" (exp (gen) (mul y x))) cr sr))
+            (cat cr (exp (gen) x) sr (exp (gen) y)
+              (enc "cert" s spk (privk ca)))
+            (hash
+              (hash "sfk"
+                (hash "sht" (hash "hs" (exp (gen) (mul y x))) cr sr)) cr
+              (exp (gen) x) sr (exp (gen) y)
+              (enc "cert" s spk (privk ca)))
+            (enc "cert" c cpk (privk ca)))
+          (hash "cht" (hash "hs" (exp (gen) (mul y x))) cr sr)))
+      (recv
+        (enc request
+          (hash "cat" cr sr
+            (hash "ms" (hash "hs" (exp (gen) (mul y x)))))))
+      (send
+        (enc response
+          (hash "sat" cr sr
+            (hash "ms" (hash "hs" (exp (gen) (mul y x))))))))
+    (uniq-gen y)
+    (absent (y x)))
+  (defgenrule neqRl_indx
+    (forall ((x indx)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_strd
+    (forall ((x strd)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_mesg
+    (forall ((x mesg)) (implies (fact neq x x) (false)))))
+
+(defskeleton mtls13
+  (vars (cr request sr response text) (spk cpk akey) (s c ca name)
+    (x rndx) (y expt))
+  (defstrand client 5 (cr cr) (sr sr) (request request)
+    (response response) (spk spk) (cpk cpk) (s s) (c c) (ca ca) (x x)
+    (y y))
+  (deflistener request)
+  (non-orig (invk spk))
+  (uniq-orig cr request)
+  (uniq-gen x)
+  (goals
+    (forall ((cr text) (request text) (spk akey) (x rndx) (z z-0 strd))
+      (implies
+        (and (p "client" z 5) (p "" z-0 2) (p "client" "cr" z cr)
+          (p "client" "x" z x) (p "client" "spk" z spk)
+          (p "client" "request" z request) (p "" "x" z-0 request)
+          (non (invk spk)) (ugen x) (uniq-at cr z 0)
+          (uniq-at request z 3)) (false))))
+  (traces
+    ((send (cat cr (exp (gen) x)))
+      (recv
+        (cat sr (exp (gen) y)
+          (enc (enc "cert" s spk (privk ca))
+            (hash
+              (hash "sfk"
+                (hash "sht" (hash "hs" (exp (gen) (mul x y))) cr sr)) cr
+              (exp (gen) x) sr (exp (gen) y)
+              (enc "cert" s spk (privk ca)))
+            (hash "sht" (hash "hs" (exp (gen) (mul x y))) cr sr))))
+      (send
+        (enc (enc "cert" c cpk (privk ca))
+          (hash
+            (hash "cfk"
+              (hash "cht" (hash "hs" (exp (gen) (mul x y))) cr sr))
+            (cat cr (exp (gen) x) sr (exp (gen) y)
+              (enc "cert" s spk (privk ca)))
+            (hash
+              (hash "sfk"
+                (hash "sht" (hash "hs" (exp (gen) (mul x y))) cr sr)) cr
+              (exp (gen) x) sr (exp (gen) y)
+              (enc "cert" s spk (privk ca)))
+            (enc "cert" c cpk (privk ca)))
+          (hash "cht" (hash "hs" (exp (gen) (mul x y))) cr sr)))
+      (send
+        (enc request
+          (hash "cat" cr sr
+            (hash "ms" (hash "hs" (exp (gen) (mul x y)))))))
+      (recv
+        (enc response
+          (hash "sat" cr sr
+            (hash "ms" (hash "hs" (exp (gen) (mul x y))))))))
+    ((recv request) (send request)))
+  (label 2)
+  (unrealized (1 0))
+  (preskeleton)
+  (maps)
+  (origs (request (0 3)) (cr (0 0)))
+  (ugens (x (0 0)))
+  (comment "Not a skeleton"))
+
+(defskeleton mtls13
+  (vars (cr request sr response text) (spk cpk akey) (s c ca name)
+    (x rndx) (y expt))
+  (defstrand client 5 (cr cr) (sr sr) (request request)
+    (response response) (spk spk) (cpk cpk) (s s) (c c) (ca ca) (x x)
+    (y y))
+  (deflistener request)
+  (precedes ((0 3) (1 0)))
+  (non-orig (invk spk))
+  (uniq-orig cr request)
+  (uniq-gen x)
+  (goals
+    (forall ((cr text) (request text) (spk akey) (x rndx) (z z-0 strd))
+      (implies
+        (and (p "client" z 5) (p "" z-0 2) (p "client" "cr" z cr)
+          (p "client" "x" z x) (p "client" "spk" z spk)
+          (p "client" "request" z request) (p "" "x" z-0 request)
+          (non (invk spk)) (ugen x) (uniq-at cr z 0)
+          (uniq-at request z 3)) (false))))
+  (traces
+    ((send (cat cr (exp (gen) x)))
+      (recv
+        (cat sr (exp (gen) y)
+          (enc (enc "cert" s spk (privk ca))
+            (hash
+              (hash "sfk"
+                (hash "sht" (hash "hs" (exp (gen) (mul x y))) cr sr)) cr
+              (exp (gen) x) sr (exp (gen) y)
+              (enc "cert" s spk (privk ca)))
+            (hash "sht" (hash "hs" (exp (gen) (mul x y))) cr sr))))
+      (send
+        (enc (enc "cert" c cpk (privk ca))
+          (hash
+            (hash "cfk"
+              (hash "cht" (hash "hs" (exp (gen) (mul x y))) cr sr))
+            (cat cr (exp (gen) x) sr (exp (gen) y)
+              (enc "cert" s spk (privk ca)))
+            (hash
+              (hash "sfk"
+                (hash "sht" (hash "hs" (exp (gen) (mul x y))) cr sr)) cr
+              (exp (gen) x) sr (exp (gen) y)
+              (enc "cert" s spk (privk ca)))
+            (enc "cert" c cpk (privk ca)))
+          (hash "cht" (hash "hs" (exp (gen) (mul x y))) cr sr)))
+      (send
+        (enc request
+          (hash "cat" cr sr
+            (hash "ms" (hash "hs" (exp (gen) (mul x y)))))))
+      (recv
+        (enc response
+          (hash "sat" cr sr
+            (hash "ms" (hash "hs" (exp (gen) (mul x y))))))))
+    ((recv request) (send request)))
+  (label 3)
+  (parent 2)
+  (realized)
+  (shape)
+  (satisfies
+    (no (fact false) (cr cr) (request request) (spk spk) (x x) (z 0)
+      (z-0 1)))
+  (maps
+    ((0 1)
+      ((cr cr) (request request) (spk spk) (x x) (s s) (c c) (ca ca)
+        (sr sr) (cpk cpk) (response response) (y y))))
+  (origs (request (0 3)) (cr (0 0)))
+  (ugens (x (0 0))))
+
+(comment "Nothing left to do")
+
+(defprotocol mtls13 diffie-hellman
+  (defrole client
+    (vars (s c ca name) (cr sr text) (spk cpk akey)
+      (request response text) (x rndx) (y expt))
+    (trace (send (cat cr (exp (gen) x)))
+      (recv
+        (cat sr (exp (gen) y)
+          (enc (enc "cert" s spk (privk ca))
+            (hash
+              (hash "sfk"
+                (hash "sht" (hash "hs" (exp (gen) (mul x y))) cr sr)) cr
+              (exp (gen) x) sr (exp (gen) y)
+              (enc "cert" s spk (privk ca)))
+            (hash "sht" (hash "hs" (exp (gen) (mul x y))) cr sr))))
+      (send
+        (enc (enc "cert" c cpk (privk ca))
+          (hash
+            (hash "cfk"
+              (hash "cht" (hash "hs" (exp (gen) (mul x y))) cr sr))
+            (cat cr (exp (gen) x) sr (exp (gen) y)
+              (enc "cert" s spk (privk ca)))
+            (hash
+              (hash "sfk"
+                (hash "sht" (hash "hs" (exp (gen) (mul x y))) cr sr)) cr
+              (exp (gen) x) sr (exp (gen) y)
+              (enc "cert" s spk (privk ca)))
+            (enc "cert" c cpk (privk ca)))
+          (hash "cht" (hash "hs" (exp (gen) (mul x y))) cr sr)))
+      (send
+        (enc request
+          (hash "cat" cr sr
+            (hash "ms" (hash "hs" (exp (gen) (mul x y)))))))
+      (recv
+        (enc response
+          (hash "sat" cr sr
+            (hash "ms" (hash "hs" (exp (gen) (mul x y))))))))
+    (uniq-gen x))
+  (defrole server
+    (vars (s c ca name) (cr sr text) (spk cpk akey)
+      (request response text) (y rndx) (x expt))
+    (trace (recv (cat cr (exp (gen) x)))
+      (send
+        (cat sr (exp (gen) y)
+          (enc (enc "cert" s spk (privk ca))
+            (hash
+              (hash "sfk"
+                (hash "sht" (hash "hs" (exp (gen) (mul y x))) cr sr)) cr
+              (exp (gen) x) sr (exp (gen) y)
+              (enc "cert" s spk (privk ca)))
+            (hash "sht" (hash "hs" (exp (gen) (mul y x))) cr sr))))
+      (recv
+        (enc (enc "cert" c cpk (privk ca))
+          (hash
+            (hash "cfk"
+              (hash "cht" (hash "hs" (exp (gen) (mul y x))) cr sr))
+            (cat cr (exp (gen) x) sr (exp (gen) y)
+              (enc "cert" s spk (privk ca)))
+            (hash
+              (hash "sfk"
+                (hash "sht" (hash "hs" (exp (gen) (mul y x))) cr sr)) cr
+              (exp (gen) x) sr (exp (gen) y)
+              (enc "cert" s spk (privk ca)))
+            (enc "cert" c cpk (privk ca)))
+          (hash "cht" (hash "hs" (exp (gen) (mul y x))) cr sr)))
+      (recv
+        (enc request
+          (hash "cat" cr sr
+            (hash "ms" (hash "hs" (exp (gen) (mul y x)))))))
+      (send
+        (enc response
+          (hash "sat" cr sr
+            (hash "ms" (hash "hs" (exp (gen) (mul y x))))))))
+    (uniq-gen y)
+    (absent (y x)))
+  (defgenrule neqRl_indx
+    (forall ((x indx)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_strd
+    (forall ((x strd)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_mesg
+    (forall ((x mesg)) (implies (fact neq x x) (false)))))
+
+(defskeleton mtls13
+  (vars (sr response cr request text) (cpk spk akey) (s c ca name)
+    (y rndx) (x expt))
+  (defstrand server 5 (cr cr) (sr sr) (request request)
+    (response response) (spk spk) (cpk cpk) (s s) (c c) (ca ca) (y y)
+    (x x))
+  (deflistener response)
+  (non-orig (invk cpk))
+  (uniq-orig sr response)
+  (uniq-gen y)
+  (absent (y x))
+  (goals
+    (forall ((sr text) (response text) (cpk akey) (y rndx) (z z-0 strd))
+      (implies
+        (and (p "server" z 5) (p "" z-0 2) (p "server" "sr" z sr)
+          (p "server" "y" z y) (p "server" "cpk" z cpk)
+          (p "server" "response" z response) (p "" "x" z-0 response)
+          (non (invk cpk)) (ugen y) (uniq-at sr z 1)
+          (uniq-at response z 4)) (false))))
+  (traces
+    ((recv (cat cr (exp (gen) x)))
+      (send
+        (cat sr (exp (gen) y)
+          (enc (enc "cert" s spk (privk ca))
+            (hash
+              (hash "sfk"
+                (hash "sht" (hash "hs" (exp (gen) (mul y x))) cr sr)) cr
+              (exp (gen) x) sr (exp (gen) y)
+              (enc "cert" s spk (privk ca)))
+            (hash "sht" (hash "hs" (exp (gen) (mul y x))) cr sr))))
+      (recv
+        (enc (enc "cert" c cpk (privk ca))
+          (hash
+            (hash "cfk"
+              (hash "cht" (hash "hs" (exp (gen) (mul y x))) cr sr))
+            (cat cr (exp (gen) x) sr (exp (gen) y)
+              (enc "cert" s spk (privk ca)))
+            (hash
+              (hash "sfk"
+                (hash "sht" (hash "hs" (exp (gen) (mul y x))) cr sr)) cr
+              (exp (gen) x) sr (exp (gen) y)
+              (enc "cert" s spk (privk ca)))
+            (enc "cert" c cpk (privk ca)))
+          (hash "cht" (hash "hs" (exp (gen) (mul y x))) cr sr)))
+      (recv
+        (enc request
+          (hash "cat" cr sr
+            (hash "ms" (hash "hs" (exp (gen) (mul y x)))))))
+      (send
+        (enc response
+          (hash "sat" cr sr
+            (hash "ms" (hash "hs" (exp (gen) (mul y x))))))))
+    ((recv response) (send response)))
+  (label 4)
+  (unrealized (1 0))
+  (preskeleton)
+  (maps)
+  (origs (response (0 4)) (sr (0 1)))
+  (ugens (y (0 1)))
+  (comment "Not a skeleton"))
+
+(defskeleton mtls13
+  (vars (sr response cr request text) (cpk spk akey) (s c ca name)
+    (y rndx) (x expt))
+  (defstrand server 5 (cr cr) (sr sr) (request request)
+    (response response) (spk spk) (cpk cpk) (s s) (c c) (ca ca) (y y)
+    (x x))
+  (deflistener response)
+  (precedes ((0 4) (1 0)))
+  (non-orig (invk cpk))
+  (uniq-orig sr response)
+  (uniq-gen y)
+  (absent (y x))
+  (goals
+    (forall ((sr text) (response text) (cpk akey) (y rndx) (z z-0 strd))
+      (implies
+        (and (p "server" z 5) (p "" z-0 2) (p "server" "sr" z sr)
+          (p "server" "y" z y) (p "server" "cpk" z cpk)
+          (p "server" "response" z response) (p "" "x" z-0 response)
+          (non (invk cpk)) (ugen y) (uniq-at sr z 1)
+          (uniq-at response z 4)) (false))))
+  (traces
+    ((recv (cat cr (exp (gen) x)))
+      (send
+        (cat sr (exp (gen) y)
+          (enc (enc "cert" s spk (privk ca))
+            (hash
+              (hash "sfk"
+                (hash "sht" (hash "hs" (exp (gen) (mul y x))) cr sr)) cr
+              (exp (gen) x) sr (exp (gen) y)
+              (enc "cert" s spk (privk ca)))
+            (hash "sht" (hash "hs" (exp (gen) (mul y x))) cr sr))))
+      (recv
+        (enc (enc "cert" c cpk (privk ca))
+          (hash
+            (hash "cfk"
+              (hash "cht" (hash "hs" (exp (gen) (mul y x))) cr sr))
+            (cat cr (exp (gen) x) sr (exp (gen) y)
+              (enc "cert" s spk (privk ca)))
+            (hash
+              (hash "sfk"
+                (hash "sht" (hash "hs" (exp (gen) (mul y x))) cr sr)) cr
+              (exp (gen) x) sr (exp (gen) y)
+              (enc "cert" s spk (privk ca)))
+            (enc "cert" c cpk (privk ca)))
+          (hash "cht" (hash "hs" (exp (gen) (mul y x))) cr sr)))
+      (recv
+        (enc request
+          (hash "cat" cr sr
+            (hash "ms" (hash "hs" (exp (gen) (mul y x)))))))
+      (send
+        (enc response
+          (hash "sat" cr sr
+            (hash "ms" (hash "hs" (exp (gen) (mul y x))))))))
+    ((recv response) (send response)))
+  (label 5)
+  (parent 4)
+  (realized)
+  (shape)
+  (satisfies
+    (no (fact false) (sr sr) (response response) (cpk cpk) (y y) (z 0)
+      (z-0 1)))
+  (maps
+    ((0 1)
+      ((sr sr) (response response) (cpk cpk) (y y) (s s) (c c) (ca ca)
+        (cr cr) (spk spk) (request request) (x x))))
+  (origs (response (0 4)) (sr (0 1)))
+  (ugens (y (0 1))))
+
+(comment "Nothing left to do")
+
+(defprotocol mtls13 diffie-hellman
+  (defrole client
+    (vars (s c ca name) (cr sr text) (spk cpk akey)
+      (request response text) (x rndx) (y expt))
+    (trace (send (cat cr (exp (gen) x)))
+      (recv
+        (cat sr (exp (gen) y)
+          (enc (enc "cert" s spk (privk ca))
+            (hash
+              (hash "sfk"
+                (hash "sht" (hash "hs" (exp (gen) (mul x y))) cr sr)) cr
+              (exp (gen) x) sr (exp (gen) y)
+              (enc "cert" s spk (privk ca)))
+            (hash "sht" (hash "hs" (exp (gen) (mul x y))) cr sr))))
+      (send
+        (enc (enc "cert" c cpk (privk ca))
+          (hash
+            (hash "cfk"
+              (hash "cht" (hash "hs" (exp (gen) (mul x y))) cr sr))
+            (cat cr (exp (gen) x) sr (exp (gen) y)
+              (enc "cert" s spk (privk ca)))
+            (hash
+              (hash "sfk"
+                (hash "sht" (hash "hs" (exp (gen) (mul x y))) cr sr)) cr
+              (exp (gen) x) sr (exp (gen) y)
+              (enc "cert" s spk (privk ca)))
+            (enc "cert" c cpk (privk ca)))
+          (hash "cht" (hash "hs" (exp (gen) (mul x y))) cr sr)))
+      (send
+        (enc request
+          (hash "cat" cr sr
+            (hash "ms" (hash "hs" (exp (gen) (mul x y)))))))
+      (recv
+        (enc response
+          (hash "sat" cr sr
+            (hash "ms" (hash "hs" (exp (gen) (mul x y))))))))
+    (uniq-gen x))
+  (defrole server
+    (vars (s c ca name) (cr sr text) (spk cpk akey)
+      (request response text) (y rndx) (x expt))
+    (trace (recv (cat cr (exp (gen) x)))
+      (send
+        (cat sr (exp (gen) y)
+          (enc (enc "cert" s spk (privk ca))
+            (hash
+              (hash "sfk"
+                (hash "sht" (hash "hs" (exp (gen) (mul y x))) cr sr)) cr
+              (exp (gen) x) sr (exp (gen) y)
+              (enc "cert" s spk (privk ca)))
+            (hash "sht" (hash "hs" (exp (gen) (mul y x))) cr sr))))
+      (recv
+        (enc (enc "cert" c cpk (privk ca))
+          (hash
+            (hash "cfk"
+              (hash "cht" (hash "hs" (exp (gen) (mul y x))) cr sr))
+            (cat cr (exp (gen) x) sr (exp (gen) y)
+              (enc "cert" s spk (privk ca)))
+            (hash
+              (hash "sfk"
+                (hash "sht" (hash "hs" (exp (gen) (mul y x))) cr sr)) cr
+              (exp (gen) x) sr (exp (gen) y)
+              (enc "cert" s spk (privk ca)))
+            (enc "cert" c cpk (privk ca)))
+          (hash "cht" (hash "hs" (exp (gen) (mul y x))) cr sr)))
+      (recv
+        (enc request
+          (hash "cat" cr sr
+            (hash "ms" (hash "hs" (exp (gen) (mul y x)))))))
+      (send
+        (enc response
+          (hash "sat" cr sr
+            (hash "ms" (hash "hs" (exp (gen) (mul y x))))))))
+    (uniq-gen y)
+    (absent (y x)))
+  (defgenrule neqRl_indx
+    (forall ((x indx)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_strd
+    (forall ((x strd)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_mesg
+    (forall ((x mesg)) (implies (fact neq x x) (false)))))
+
+(defskeleton mtls13
+  (vars (cr sr request response text) (spk cpk akey) (s c ca name)
+    (x rndx) (y expt))
+  (defstrand client 5 (cr cr) (sr sr) (request request)
+    (response response) (spk spk) (cpk cpk) (s s) (c c) (ca ca) (x x)
+    (y y))
+  (non-orig (invk spk) (invk cpk))
+  (uniq-gen x)
+  (traces
+    ((send (cat cr (exp (gen) x)))
+      (recv
+        (cat sr (exp (gen) y)
+          (enc (enc "cert" s spk (privk ca))
+            (hash
+              (hash "sfk"
+                (hash "sht" (hash "hs" (exp (gen) (mul x y))) cr sr)) cr
+              (exp (gen) x) sr (exp (gen) y)
+              (enc "cert" s spk (privk ca)))
+            (hash "sht" (hash "hs" (exp (gen) (mul x y))) cr sr))))
+      (send
+        (enc (enc "cert" c cpk (privk ca))
+          (hash
+            (hash "cfk"
+              (hash "cht" (hash "hs" (exp (gen) (mul x y))) cr sr))
+            (cat cr (exp (gen) x) sr (exp (gen) y)
+              (enc "cert" s spk (privk ca)))
+            (hash
+              (hash "sfk"
+                (hash "sht" (hash "hs" (exp (gen) (mul x y))) cr sr)) cr
+              (exp (gen) x) sr (exp (gen) y)
+              (enc "cert" s spk (privk ca)))
+            (enc "cert" c cpk (privk ca)))
+          (hash "cht" (hash "hs" (exp (gen) (mul x y))) cr sr)))
+      (send
+        (enc request
+          (hash "cat" cr sr
+            (hash "ms" (hash "hs" (exp (gen) (mul x y)))))))
+      (recv
+        (enc response
+          (hash "sat" cr sr
+            (hash "ms" (hash "hs" (exp (gen) (mul x y)))))))))
+  (label 6)
+  (realized)
+  (shape)
+  (maps
+    ((0)
+      ((spk spk) (cpk cpk) (s s) (c c) (ca ca) (cr cr) (sr sr)
+        (request request) (response response) (x x) (y y))))
+  (origs)
+  (ugens (x (0 0))))
+
+(comment "Nothing left to do")
+
+(defprotocol mtls13 diffie-hellman
+  (defrole client
+    (vars (s c ca name) (cr sr text) (spk cpk akey)
+      (request response text) (x rndx) (y expt))
+    (trace (send (cat cr (exp (gen) x)))
+      (recv
+        (cat sr (exp (gen) y)
+          (enc (enc "cert" s spk (privk ca))
+            (hash
+              (hash "sfk"
+                (hash "sht" (hash "hs" (exp (gen) (mul x y))) cr sr)) cr
+              (exp (gen) x) sr (exp (gen) y)
+              (enc "cert" s spk (privk ca)))
+            (hash "sht" (hash "hs" (exp (gen) (mul x y))) cr sr))))
+      (send
+        (enc (enc "cert" c cpk (privk ca))
+          (hash
+            (hash "cfk"
+              (hash "cht" (hash "hs" (exp (gen) (mul x y))) cr sr))
+            (cat cr (exp (gen) x) sr (exp (gen) y)
+              (enc "cert" s spk (privk ca)))
+            (hash
+              (hash "sfk"
+                (hash "sht" (hash "hs" (exp (gen) (mul x y))) cr sr)) cr
+              (exp (gen) x) sr (exp (gen) y)
+              (enc "cert" s spk (privk ca)))
+            (enc "cert" c cpk (privk ca)))
+          (hash "cht" (hash "hs" (exp (gen) (mul x y))) cr sr)))
+      (send
+        (enc request
+          (hash "cat" cr sr
+            (hash "ms" (hash "hs" (exp (gen) (mul x y)))))))
+      (recv
+        (enc response
+          (hash "sat" cr sr
+            (hash "ms" (hash "hs" (exp (gen) (mul x y))))))))
+    (uniq-gen x))
+  (defrole server
+    (vars (s c ca name) (cr sr text) (spk cpk akey)
+      (request response text) (y rndx) (x expt))
+    (trace (recv (cat cr (exp (gen) x)))
+      (send
+        (cat sr (exp (gen) y)
+          (enc (enc "cert" s spk (privk ca))
+            (hash
+              (hash "sfk"
+                (hash "sht" (hash "hs" (exp (gen) (mul y x))) cr sr)) cr
+              (exp (gen) x) sr (exp (gen) y)
+              (enc "cert" s spk (privk ca)))
+            (hash "sht" (hash "hs" (exp (gen) (mul y x))) cr sr))))
+      (recv
+        (enc (enc "cert" c cpk (privk ca))
+          (hash
+            (hash "cfk"
+              (hash "cht" (hash "hs" (exp (gen) (mul y x))) cr sr))
+            (cat cr (exp (gen) x) sr (exp (gen) y)
+              (enc "cert" s spk (privk ca)))
+            (hash
+              (hash "sfk"
+                (hash "sht" (hash "hs" (exp (gen) (mul y x))) cr sr)) cr
+              (exp (gen) x) sr (exp (gen) y)
+              (enc "cert" s spk (privk ca)))
+            (enc "cert" c cpk (privk ca)))
+          (hash "cht" (hash "hs" (exp (gen) (mul y x))) cr sr)))
+      (recv
+        (enc request
+          (hash "cat" cr sr
+            (hash "ms" (hash "hs" (exp (gen) (mul y x)))))))
+      (send
+        (enc response
+          (hash "sat" cr sr
+            (hash "ms" (hash "hs" (exp (gen) (mul y x))))))))
+    (uniq-gen y)
+    (absent (y x)))
+  (defgenrule neqRl_indx
+    (forall ((x indx)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_strd
+    (forall ((x strd)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_mesg
+    (forall ((x mesg)) (implies (fact neq x x) (false)))))
+
+(defskeleton mtls13
+  (vars (cr sr request response text) (spk cpk akey) (s c ca name)
+    (y rndx) (x expt))
+  (defstrand server 5 (cr cr) (sr sr) (request request)
+    (response response) (spk spk) (cpk cpk) (s s) (c c) (ca ca) (y y)
+    (x x))
+  (non-orig (invk spk) (invk cpk))
+  (uniq-gen y)
+  (absent (y x))
+  (traces
+    ((recv (cat cr (exp (gen) x)))
+      (send
+        (cat sr (exp (gen) y)
+          (enc (enc "cert" s spk (privk ca))
+            (hash
+              (hash "sfk"
+                (hash "sht" (hash "hs" (exp (gen) (mul y x))) cr sr)) cr
+              (exp (gen) x) sr (exp (gen) y)
+              (enc "cert" s spk (privk ca)))
+            (hash "sht" (hash "hs" (exp (gen) (mul y x))) cr sr))))
+      (recv
+        (enc (enc "cert" c cpk (privk ca))
+          (hash
+            (hash "cfk"
+              (hash "cht" (hash "hs" (exp (gen) (mul y x))) cr sr))
+            (cat cr (exp (gen) x) sr (exp (gen) y)
+              (enc "cert" s spk (privk ca)))
+            (hash
+              (hash "sfk"
+                (hash "sht" (hash "hs" (exp (gen) (mul y x))) cr sr)) cr
+              (exp (gen) x) sr (exp (gen) y)
+              (enc "cert" s spk (privk ca)))
+            (enc "cert" c cpk (privk ca)))
+          (hash "cht" (hash "hs" (exp (gen) (mul y x))) cr sr)))
+      (recv
+        (enc request
+          (hash "cat" cr sr
+            (hash "ms" (hash "hs" (exp (gen) (mul y x)))))))
+      (send
+        (enc response
+          (hash "sat" cr sr
+            (hash "ms" (hash "hs" (exp (gen) (mul y x)))))))))
+  (label 7)
+  (realized)
+  (shape)
+  (maps
+    ((0)
+      ((spk spk) (cpk cpk) (s s) (c c) (ca ca) (cr cr) (sr sr)
+        (request request) (response response) (y y) (x x))))
+  (origs)
+  (ugens (y (0 1))))
+
+(comment "Nothing left to do")

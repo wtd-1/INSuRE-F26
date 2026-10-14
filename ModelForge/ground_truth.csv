@@ -1,0 +1,5 @@
+variant,client_agreement,server_agreement,client_request_secrecy,server_response_secrecy,client_executable,server_executable,seconds
+m0,HOLDS,HOLDS,HOLDS,HOLDS,True,True,2.57
+m1,VIOLATED,HOLDS,VIOLATED,HOLDS,True,True,0.66
+m6,HOLDS,VIOLATED,HOLDS,VIOLATED,True,True,2.2
+m8,VIOLATED,VIOLATED,VIOLATED,VIOLATED,True,True,0.03

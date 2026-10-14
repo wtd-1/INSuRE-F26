@@ -1,0 +1,56 @@
+```scheme
+(defmacro (ch cr x) (cat cr (exp (gen) x)))
+(defmacro (sh sr y) (cat sr (exp (gen) y)))
+(defmacro (cert n k ca) (enc "cert" n k (invk ca)))
+
+(defmacro (hsec z) (hash "hs" z))
+(defmacro (msec z) (hash "ms" (hsec z)))
+(defmacro (chk z cr sr) (hash "chk" (hsec z) cr sr))
+(defmacro (shk z cr sr) (hash "shk" (hsec z) cr sr))
+(defmacro (cak z cr sr) (hash "cak" cr sr (msec z)))
+(defmacro (sak z cr sr) (hash "sak" cr sr (msec z)))
+(defmacro (fin k tr) (hash (hash "fin" k) tr))
+
+(defmacro (t1 cr x sr y s spk ca)
+  (cat (ch cr x) (sh sr y) (cert s spk ca)))
+(defmacro (sfin z cr x sr y s spk ca)
+  (fin (shk z cr sr) (t1 cr x sr y s spk ca)))
+(defmacro (t2 z cr x sr y s spk c cpk ca)
+  (cat (t1 cr x sr y s spk ca)
+       (sfin z cr x sr y s spk ca)
+       (cert c cpk ca)))
+(defmacro (cfin z cr x sr y s spk c cpk ca)
+  (fin (chk z cr sr) (t2 z cr x sr y s spk c cpk ca)))
+
+(defprotocol mtls13 diffie-hellman
+  (defrole client
+    (vars (s c ca name) (cr sr text) (spk cpk akey)
+          (request response text) (x rndx) (y expt))
+    (trace
+      (send (ch cr x))
+      (recv (cat (sh sr y)
+                 (enc (cert s spk ca)
+                      (sfin (exp (exp (gen) y) x) cr x sr y s spk ca)
+                      (shk (exp (exp (gen) y) x) cr sr))))
+      (send (enc (cert c cpk ca)
+                 (cfin (exp (exp (gen) y) x) cr x sr y s spk c cpk ca)
+                 (chk (exp (exp (gen) y) x) cr sr)))
+      (send (enc request (cak (exp (exp (gen) y) x) cr sr)))
+      (recv (enc response (sak (exp (exp (gen) y) x) cr sr))))
+    (uniq-gen x))
+  (defrole server
+    (vars (s c ca name) (cr sr text) (spk cpk akey)
+          (request response text) (y rndx) (x expt))
+    (trace
+      (recv (ch cr x))
+      (send (cat (sh sr y)
+                 (enc (cert s spk ca)
+                      (sfin (exp (exp (gen) x) y) cr x sr y s spk ca)
+                      (shk (exp (exp (gen) x) y) cr sr))))
+      (recv (enc (cert c cpk ca)
+                 (cfin (exp (exp (gen) x) y) cr x sr y s spk c cpk ca)
+                 (chk (exp (exp (gen) x) y) cr sr)))
+      (recv (enc request (cak (exp (exp (gen) x) y) cr sr)))
+      (send (enc response (sak (exp (exp (gen) x) y) cr sr))))
+    (uniq-gen y)))
+```

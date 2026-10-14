@@ -1,0 +1,26 @@
+id,model,condition,variant,sample,stage,accepted_by_cpsa,cpsa_error,seconds,client_agreement,server_agreement,client_request_secrecy,server_response_secrecy,client_executable,server_executable,goals_matching_truth,exact_match,decided_goals
+sonnet-5-5__zeroshot__m0__s0,claude-sonnet-5-5,zeroshot,m0,0,initial,True,,0.4,HOLDS,HOLDS,HOLDS,HOLDS,True,True,4,True,4
+sonnet-5-5__zeroshot__m0__s1,claude-sonnet-5-5,zeroshot,m0,1,initial,True,,0.44,HOLDS,HOLDS,HOLDS,HOLDS,True,True,4,True,4
+sonnet-5-5__zeroshot__m0__s2,claude-sonnet-5-5,zeroshot,m0,2,initial,True,,0.44,HOLDS,HOLDS,HOLDS,HOLDS,True,True,4,True,4
+sonnet-5-5__zeroshot__m1__s0,claude-sonnet-5-5,zeroshot,m1,0,initial,True,TIMEOUT 180s,180.01,VIOLATED,-,-,-,False,False,1,False,1
+sonnet-5-5__zeroshot__m1__s1,claude-sonnet-5-5,zeroshot,m1,1,initial,True,,0.16,VIOLATED,HOLDS,VIOLATED,HOLDS,True,True,4,True,4
+sonnet-5-5__zeroshot__m1__s2,claude-sonnet-5-5,zeroshot,m1,2,initial,True,TIMEOUT 180s,180.01,VIOLATED,-,-,-,False,False,1,False,1
+sonnet-5-5__zeroshot__m6__s0,claude-sonnet-5-5,zeroshot,m6,0,initial,True,,0.18,HOLDS,VIOLATED,HOLDS,VIOLATED,True,True,4,True,4
+sonnet-5-5__zeroshot__m6__s1,claude-sonnet-5-5,zeroshot,m6,1,initial,True,TIMEOUT 180s,180.01,INCOMPLETE,-,-,-,False,False,0,False,0
+sonnet-5-5__zeroshot__m6__s2,claude-sonnet-5-5,zeroshot,m6,2,initial,True,,0.18,HOLDS,VIOLATED,HOLDS,VIOLATED,True,True,4,True,4
+sonnet-5-5__zeroshot__m8__s0,claude-sonnet-5-5,zeroshot,m8,0,initial,True,,0.02,VIOLATED,VIOLATED,VIOLATED,VIOLATED,True,True,4,True,4
+sonnet-5-5__zeroshot__m8__s1,claude-sonnet-5-5,zeroshot,m8,1,initial,False,sonnet-5-5__zeroshot__m8__s1__initial.scm:33:35: Expecting ca to be an akey,0.02,-,-,-,-,False,False,0,False,0
+sonnet-5-5__zeroshot__m8__s1,claude-sonnet-5-5,zeroshot,m8,1,repaired,True,,0.04,VIOLATED,VIOLATED,VIOLATED,VIOLATED,True,True,4,True,4
+sonnet-5-5__zeroshot__m8__s2,claude-sonnet-5-5,zeroshot,m8,2,initial,True,,0.02,VIOLATED,VIOLATED,VIOLATED,VIOLATED,True,True,4,True,4
+sonnet-5-5__examples__m0__s0,claude-sonnet-5-5,examples,m0,0,initial,True,,0.43,HOLDS,HOLDS,HOLDS,HOLDS,True,True,4,True,4
+sonnet-5-5__examples__m0__s1,claude-sonnet-5-5,examples,m0,1,initial,True,,0.42,HOLDS,HOLDS,HOLDS,HOLDS,True,True,4,True,4
+sonnet-5-5__examples__m0__s2,claude-sonnet-5-5,examples,m0,2,initial,True,,0.34,HOLDS,HOLDS,HOLDS,HOLDS,True,True,4,True,4
+sonnet-5-5__examples__m1__s0,claude-sonnet-5-5,examples,m1,0,initial,True,,0.17,VIOLATED,HOLDS,VIOLATED,HOLDS,True,True,4,True,4
+sonnet-5-5__examples__m1__s1,claude-sonnet-5-5,examples,m1,1,initial,True,,0.16,VIOLATED,HOLDS,VIOLATED,HOLDS,True,True,4,True,4
+sonnet-5-5__examples__m1__s2,claude-sonnet-5-5,examples,m1,2,initial,True,,0.17,VIOLATED,HOLDS,VIOLATED,HOLDS,True,True,4,True,4
+sonnet-5-5__examples__m6__s0,claude-sonnet-5-5,examples,m6,0,initial,True,,0.2,HOLDS,VIOLATED,HOLDS,VIOLATED,True,True,4,True,4
+sonnet-5-5__examples__m6__s1,claude-sonnet-5-5,examples,m6,1,initial,True,,0.19,HOLDS,VIOLATED,HOLDS,VIOLATED,True,True,4,True,4
+sonnet-5-5__examples__m6__s2,claude-sonnet-5-5,examples,m6,2,initial,True,,0.2,HOLDS,VIOLATED,HOLDS,VIOLATED,True,True,4,True,4
+sonnet-5-5__examples__m8__s0,claude-sonnet-5-5,examples,m8,0,initial,True,,0.02,VIOLATED,VIOLATED,VIOLATED,VIOLATED,True,True,4,True,4
+sonnet-5-5__examples__m8__s1,claude-sonnet-5-5,examples,m8,1,initial,True,,0.04,VIOLATED,VIOLATED,VIOLATED,VIOLATED,True,True,4,True,4
+sonnet-5-5__examples__m8__s2,claude-sonnet-5-5,examples,m8,2,initial,True,,0.02,VIOLATED,VIOLATED,VIOLATED,VIOLATED,True,True,4,True,4

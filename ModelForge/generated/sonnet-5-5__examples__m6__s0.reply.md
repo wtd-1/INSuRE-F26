@@ -1,0 +1,66 @@
+```scheme
+(defmacro (dh a b) (exp (exp (gen) a) b))
+
+(defmacro (chello cr x) (cat "ch" cr (exp (gen) x)))
+(defmacro (shello sr y) (cat "sh" sr (exp (gen) y)))
+(defmacro (cert n k ca)
+  (cat "cert" n k (enc (cat "cert" n k) (privk ca))))
+
+(defmacro (hsec k) (hash "hs" k))
+(defmacro (msec k) (hash "ms" (hsec k)))
+(defmacro (chk k cr sr) (hash "chk" (hsec k) cr sr))
+(defmacro (shk k cr sr) (hash "shk" (hsec k) cr sr))
+(defmacro (cak k cr sr) (hash "cak" cr sr (msec k)))
+(defmacro (sak k cr sr) (hash "sak" cr sr (msec k)))
+(defmacro (fk key) (hash "fk" key))
+
+(defmacro (tr1 cr sr x y s spk ca)
+  (cat (chello cr x) (shello sr y) (cert s spk ca)))
+(defmacro (scv cr sr x y s spk ca)
+  (enc (hash "scv" (tr1 cr sr x y s spk ca)) (invk spk)))
+(defmacro (sfin k cr sr x y s spk ca)
+  (hash "sfin" (fk (shk k cr sr))
+        (tr1 cr sr x y s spk ca)
+        (scv cr sr x y s spk ca)))
+(defmacro (tr3 k cr sr x y s spk ca c cpk)
+  (cat (tr1 cr sr x y s spk ca)
+       (scv cr sr x y s spk ca)
+       (sfin k cr sr x y s spk ca)
+       (cert c cpk ca)))
+(defmacro (cfin k cr sr x y s spk ca c cpk)
+  (hash "cfin" (fk (chk k cr sr))
+        (tr3 k cr sr x y s spk ca c cpk)))
+
+(defmacro (msg2 k cr sr x y s spk ca)
+  (cat (shello sr y)
+       (enc (cert s spk ca)
+            (scv cr sr x y s spk ca)
+            (sfin k cr sr x y s spk ca)
+            (shk k cr sr))))
+(defmacro (msg3 k cr sr x y s spk ca c cpk)
+  (enc (cert c cpk ca)
+       (cfin k cr sr x y s spk ca c cpk)
+       (chk k cr sr)))
+
+(defprotocol mtls13 diffie-hellman
+  (defrole client
+    (vars (s c ca name) (cr sr text) (spk cpk akey)
+          (request response text) (x rndx) (y expt))
+    (trace
+     (send (chello cr x))
+     (recv (msg2 (dh y x) cr sr x y s spk ca))
+     (send (msg3 (dh y x) cr sr x y s spk ca c cpk))
+     (send (enc request (cak (dh y x) cr sr)))
+     (recv (enc response (sak (dh y x) cr sr))))
+    (uniq-gen x))
+  (defrole server
+    (vars (s c ca name) (cr sr text) (spk cpk akey)
+          (request response text) (y rndx) (x expt))
+    (trace
+     (recv (chello cr x))
+     (send (msg2 (dh x y) cr sr x y s spk ca))
+     (recv (msg3 (dh x y) cr sr x y s spk ca c cpk))
+     (recv (enc request (cak (dh x y) cr sr)))
+     (send (enc response (sak (dh x y) cr sr))))
+    (uniq-gen y)))
+```

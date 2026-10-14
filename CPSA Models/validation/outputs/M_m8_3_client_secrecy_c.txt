@@ -1,0 +1,257 @@
+(herald "Verification of TLS 1.3 rules to assist in mTLS verification"
+  (try-old-strands))
+
+(comment "CPSA 4.4.9")
+(comment "All input read from M_m8_3_client_secrecy_c.scm")
+(comment "Strand count bounded at 30")
+(comment "Old strands tried first")
+
+(defprotocol mtls13 basic
+  (defrole client
+    (vars (s c ca name) (cr sr random32) (x rndx) (y expt)
+      (spk cpk akey) (request response text))
+    (trace (send (cat cr (exp (gen) x)))
+      (recv
+        (cat (cat sr (exp (gen) y))
+          (enc (cat s spk (enc (hash s spk) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x y)) "s hs traffic" cr sr))
+              (cat cr (exp (gen) x)) (cat sr (exp (gen) y)) s spk
+              (enc (hash s spk) (privk ca)))
+            (hash (exp (gen) (mul x y)) "s hs traffic" cr sr))))
+      (send
+        (enc (cat c cpk (enc (hash c cpk) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x y)) "c hs traffic" cr sr))
+            (cat cr (exp (gen) x)) (cat sr (exp (gen) y))
+            (cat s spk (enc (hash s spk) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x y)) "s hs traffic" cr sr))
+              (cat cr (exp (gen) x)) (cat sr (exp (gen) y)) s spk
+              (enc (hash s spk) (privk ca))) c cpk
+            (enc (hash c cpk) (privk ca)))
+          (hash (exp (gen) (mul x y)) "c hs traffic" cr sr)))
+      (send
+        (enc request
+          (hash "c ap traffic" cr sr
+            (hash (exp (gen) (mul x y)) "derived"))))
+      (recv
+        (enc response
+          (hash "s ap traffic" cr sr
+            (hash (exp (gen) (mul x y)) "derived")))))
+    (uniq-gen x))
+  (defrole server
+    (vars (s c ca name) (cr sr random32) (y rndx) (x expt)
+      (spk cpk akey) (request response text))
+    (trace (recv (cat cr (exp (gen) x)))
+      (send
+        (cat (cat sr (exp (gen) y))
+          (enc (cat s spk (enc (hash s spk) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul y x)) "s hs traffic" cr sr))
+              (cat cr (exp (gen) x)) (cat sr (exp (gen) y)) s spk
+              (enc (hash s spk) (privk ca)))
+            (hash (exp (gen) (mul y x)) "s hs traffic" cr sr))))
+      (recv
+        (enc (cat c cpk (enc (hash c cpk) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul y x)) "c hs traffic" cr sr))
+            (cat cr (exp (gen) x)) (cat sr (exp (gen) y))
+            (cat s spk (enc (hash s spk) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul y x)) "s hs traffic" cr sr))
+              (cat cr (exp (gen) x)) (cat sr (exp (gen) y)) s spk
+              (enc (hash s spk) (privk ca))) c cpk
+            (enc (hash c cpk) (privk ca)))
+          (hash (exp (gen) (mul y x)) "c hs traffic" cr sr)))
+      (recv
+        (enc request
+          (hash "c ap traffic" cr sr
+            (hash (exp (gen) (mul y x)) "derived"))))
+      (send
+        (enc response
+          (hash "s ap traffic" cr sr
+            (hash (exp (gen) (mul y x)) "derived")))))
+    (uniq-gen y)
+    (absent (y x)))
+  (defrule clients-servers-distinct
+    (forall ((z0 z1 strd) (c name))
+      (implies
+        (and (p "client" "s" z1 c) (p "client" "c" z0 c))
+        (false))))
+  (defrule client-exponent-unavailable
+    (forall ((x rndx) (z z-0 strd))
+      (implies
+        (and (p "" z-0 (idx 2)) (p "client" z (idx 1)) (p "" "x" z-0 x)
+          (p "client" "x" z x) (ugen x))
+        (false))))
+  (defrule server-exponent-unavailable
+    (forall ((y rndx) (z z-0 strd))
+      (implies
+        (and (p "" z-0 (idx 2)) (p "server" z (idx 2)) (p "" "x" z-0 y)
+          (p "server" "y" z y) (ugen y))
+        (false))))
+  (defgenrule neqRl_indx
+    (forall ((x indx)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_strd
+    (forall ((x strd)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_mesg
+    (forall ((x mesg)) (implies (fact neq x x) (false))))
+  (lang (random32 atom)))
+
+(defskeleton mtls13
+  (vars (cr sr random32) (request response text) (spk cpk akey)
+    (s ca c name) (x rndx) (y expt))
+  (defstrand client 5 (cr cr) (sr sr) (request request)
+    (response response) (spk spk) (cpk cpk) (s s) (c c) (ca ca) (x x)
+    (y y))
+  (deflistener
+    (hash "c ap traffic" cr sr (hash (exp (gen) (mul x y)) "derived")))
+  (non-orig (invk spk))
+  (uniq-orig cr)
+  (uniq-gen x)
+  (goals
+    (forall
+      ((cr sr random32) (spk akey) (s ca name) (x rndx) (y expt)
+        (z z-0 strd))
+      (implies
+        (and (p "client" z 5) (p "" z-0 2) (p "client" "cr" z cr)
+          (p "client" "sr" z sr) (p "client" "spk" z spk)
+          (p "client" "s" z s) (p "client" "ca" z ca)
+          (p "client" "x" z x) (p "client" "y" z y)
+          (p "" "x" z-0
+            (hash "c ap traffic" cr sr
+              (hash (exp (gen) (mul x y)) "derived"))) (non (invk spk))
+          (uniq-at cr z 0) (ugen x)) (false))))
+  (traces
+    ((send (cat cr (exp (gen) x)))
+      (recv
+        (cat (cat sr (exp (gen) y))
+          (enc (cat s spk (enc (hash s spk) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x y)) "s hs traffic" cr sr))
+              (cat cr (exp (gen) x)) (cat sr (exp (gen) y)) s spk
+              (enc (hash s spk) (privk ca)))
+            (hash (exp (gen) (mul x y)) "s hs traffic" cr sr))))
+      (send
+        (enc (cat c cpk (enc (hash c cpk) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x y)) "c hs traffic" cr sr))
+            (cat cr (exp (gen) x)) (cat sr (exp (gen) y))
+            (cat s spk (enc (hash s spk) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x y)) "s hs traffic" cr sr))
+              (cat cr (exp (gen) x)) (cat sr (exp (gen) y)) s spk
+              (enc (hash s spk) (privk ca))) c cpk
+            (enc (hash c cpk) (privk ca)))
+          (hash (exp (gen) (mul x y)) "c hs traffic" cr sr)))
+      (send
+        (enc request
+          (hash "c ap traffic" cr sr
+            (hash (exp (gen) (mul x y)) "derived"))))
+      (recv
+        (enc response
+          (hash "s ap traffic" cr sr
+            (hash (exp (gen) (mul x y)) "derived")))))
+    ((recv
+       (hash "c ap traffic" cr sr
+         (hash (exp (gen) (mul x y)) "derived")))
+      (send
+        (hash "c ap traffic" cr sr
+          (hash (exp (gen) (mul x y)) "derived")))))
+  (label 0)
+  (unrealized (1 0))
+  (preskeleton)
+  (maps)
+  (origs (cr (0 0)))
+  (ugens (x (0 0)))
+  (comment "Not a skeleton"))
+
+(defskeleton mtls13
+  (vars (cr sr random32) (request response text) (spk cpk akey)
+    (s ca c name) (x rndx) (y expt))
+  (defstrand client 5 (cr cr) (sr sr) (request request)
+    (response response) (spk spk) (cpk cpk) (s s) (c c) (ca ca) (x x)
+    (y y))
+  (deflistener
+    (hash "c ap traffic" cr sr (hash (exp (gen) (mul x y)) "derived")))
+  (precedes ((0 0) (1 0)))
+  (non-orig (invk spk))
+  (uniq-orig cr)
+  (uniq-gen x)
+  (goals
+    (forall
+      ((cr sr random32) (spk akey) (s ca name) (x rndx) (y expt)
+        (z z-0 strd))
+      (implies
+        (and (p "client" z 5) (p "" z-0 2) (p "client" "cr" z cr)
+          (p "client" "sr" z sr) (p "client" "spk" z spk)
+          (p "client" "s" z s) (p "client" "ca" z ca)
+          (p "client" "x" z x) (p "client" "y" z y)
+          (p "" "x" z-0
+            (hash "c ap traffic" cr sr
+              (hash (exp (gen) (mul x y)) "derived"))) (non (invk spk))
+          (uniq-at cr z 0) (ugen x)) (false))))
+  (traces
+    ((send (cat cr (exp (gen) x)))
+      (recv
+        (cat (cat sr (exp (gen) y))
+          (enc (cat s spk (enc (hash s spk) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x y)) "s hs traffic" cr sr))
+              (cat cr (exp (gen) x)) (cat sr (exp (gen) y)) s spk
+              (enc (hash s spk) (privk ca)))
+            (hash (exp (gen) (mul x y)) "s hs traffic" cr sr))))
+      (send
+        (enc (cat c cpk (enc (hash c cpk) (privk ca)))
+          (hash
+            (hash "finished"
+              (hash (exp (gen) (mul x y)) "c hs traffic" cr sr))
+            (cat cr (exp (gen) x)) (cat sr (exp (gen) y))
+            (cat s spk (enc (hash s spk) (privk ca)))
+            (hash
+              (hash "finished"
+                (hash (exp (gen) (mul x y)) "s hs traffic" cr sr))
+              (cat cr (exp (gen) x)) (cat sr (exp (gen) y)) s spk
+              (enc (hash s spk) (privk ca))) c cpk
+            (enc (hash c cpk) (privk ca)))
+          (hash (exp (gen) (mul x y)) "c hs traffic" cr sr)))
+      (send
+        (enc request
+          (hash "c ap traffic" cr sr
+            (hash (exp (gen) (mul x y)) "derived"))))
+      (recv
+        (enc response
+          (hash "s ap traffic" cr sr
+            (hash (exp (gen) (mul x y)) "derived")))))
+    ((recv
+       (hash "c ap traffic" cr sr
+         (hash (exp (gen) (mul x y)) "derived")))
+      (send
+        (hash "c ap traffic" cr sr
+          (hash (exp (gen) (mul x y)) "derived")))))
+  (label 1)
+  (parent 0)
+  (realized)
+  (shape)
+  (satisfies
+    (no (fact false) (cr cr) (sr sr) (spk spk) (s s) (ca ca) (x x) (y y)
+      (z 0) (z-0 1)))
+  (maps
+    ((0 1)
+      ((cr cr) (sr sr) (spk spk) (s s) (ca ca) (x x) (y y) (c c)
+        (cpk cpk) (request request) (response response))))
+  (origs (cr (0 0)))
+  (ugens (x (0 0))))
+
+(comment "Nothing left to do")

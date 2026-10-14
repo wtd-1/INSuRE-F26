@@ -1,0 +1,51 @@
+(defmacro (ch) (cat cr (exp (gen) x)))
+(defmacro (sh) (cat sr (exp (gen) y)))
+(defmacro (scert) (cat s spk (enc (cat s spk) (privk ca))))
+(defmacro (ccert) (cat c cpk (enc (cat c cpk) (privk ca))))
+
+(defmacro (dhs) (exp (gen) (mul x y)))
+(defmacro (hs) (hash (cat "hs" (dhs))))
+(defmacro (chts) (hash (cat "chts" (hs) cr sr)))
+(defmacro (shts) (hash (cat "shts" (hs) cr sr)))
+(defmacro (ms) (hash (cat "ms" (hs))))
+(defmacro (cats) (hash (cat "cats" cr sr (ms))))
+(defmacro (sats) (hash (cat "sats" cr sr (ms))))
+(defmacro (cfk) (hash (cat "cfin" (chts))))
+(defmacro (sfk) (hash (cat "sfin" (shts))))
+
+(defmacro (t1) (cat (ch) (sh) (scert)))
+(defmacro (scv) (enc (hash (t1)) (invk spk)))
+(defmacro (t2) (cat (t1) (scv)))
+(defmacro (sfin) (hash (cat (sfk) (t2))))
+(defmacro (t3) (cat (t2) (sfin) (ccert)))
+(defmacro (ccv) (enc (hash (t3)) (invk cpk)))
+(defmacro (t4) (cat (t3) (ccv)))
+(defmacro (cfin) (hash (cat (cfk) (t4))))
+
+(defmacro (msg1) (ch))
+(defmacro (msg2) (cat (sh) (enc (scert) (scv) (sfin) (shts))))
+(defmacro (msg3) (enc (ccert) (ccv) (cfin) (chts)))
+(defmacro (msg4) (enc request (cats)))
+(defmacro (msg5) (enc response (sats)))
+
+(defprotocol mtls13 diffie-hellman
+  (defrole client
+    (vars (s c ca name) (cr sr text) (spk cpk akey)
+          (request response text) (x rndx) (y expt))
+    (trace
+     (send (msg1))
+     (recv (msg2))
+     (send (msg3))
+     (send (msg4))
+     (recv (msg5)))
+    (uniq-gen x))
+  (defrole server
+    (vars (s c ca name) (cr sr text) (spk cpk akey)
+          (request response text) (y rndx) (x expt))
+    (trace
+     (recv (msg1))
+     (send (msg2))
+     (recv (msg3))
+     (recv (msg4))
+     (send (msg5)))
+    (uniq-gen y)))

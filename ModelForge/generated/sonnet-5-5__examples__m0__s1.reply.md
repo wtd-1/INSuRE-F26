@@ -1,0 +1,68 @@
+```scheme
+(defmacro (dh x y) (exp (exp (gen) y) x))
+(defmacro (hs x y) (hash "hs" (dh x y)))
+(defmacro (cht cr sr x y) (hash "cht" (hs x y) cr sr))
+(defmacro (sht cr sr x y) (hash "sht" (hs x y) cr sr))
+(defmacro (ms x y) (hash "ms" (hs x y)))
+(defmacro (cap cr sr x y) (hash "cap" cr sr (ms x y)))
+(defmacro (sap cr sr x y) (hash "sap" cr sr (ms x y)))
+
+(defmacro (ch cr x) (cat cr (exp (gen) x)))
+(defmacro (sh sr y) (cat sr (exp (gen) y)))
+(defmacro (cert n k ca) (cat n k (enc (cat n k) (privk ca))))
+
+(defmacro (t1 cr sr x y s spk ca)
+  (cat (ch cr x) (sh sr y) (cert s spk ca)))
+(defmacro (scv cr sr x y s spk ca)
+  (enc (hash (t1 cr sr x y s spk ca)) (invk spk)))
+(defmacro (t1s cr sr x y s spk ca)
+  (cat (t1 cr sr x y s spk ca) (scv cr sr x y s spk ca)))
+(defmacro (sfin cr sr x y s spk ca)
+  (hash (hash "fk" (sht cr sr x y)) (t1s cr sr x y s spk ca)))
+(defmacro (t2 cr sr x y s spk ca)
+  (cat (t1s cr sr x y s spk ca) (sfin cr sr x y s spk ca)))
+
+(defmacro (t3 cr sr x y s spk ca c cpk)
+  (cat (t2 cr sr x y s spk ca) (cert c cpk ca)))
+(defmacro (ccv cr sr x y s spk ca c cpk)
+  (enc (hash (t3 cr sr x y s spk ca c cpk)) (invk cpk)))
+(defmacro (cfin cr sr x y s spk ca c cpk)
+  (hash (hash "fk" (cht cr sr x y))
+        (cat (t3 cr sr x y s spk ca c cpk)
+             (ccv cr sr x y s spk ca c cpk))))
+
+(defmacro (flight2 cr sr x y s spk ca)
+  (cat (sh sr y)
+       (enc (cert s spk ca)
+            (scv cr sr x y s spk ca)
+            (sfin cr sr x y s spk ca)
+            (sht cr sr x y))))
+
+(defmacro (flight3 cr sr x y s spk ca c cpk)
+  (enc (cert c cpk ca)
+       (ccv cr sr x y s spk ca c cpk)
+       (cfin cr sr x y s spk ca c cpk)
+       (cht cr sr x y)))
+
+(defprotocol mtls13 diffie-hellman
+  (defrole client
+    (vars (s c ca name) (cr sr text) (spk cpk akey)
+          (request response text) (x rndx) (y expt))
+    (trace
+     (send (ch cr x))
+     (recv (flight2 cr sr x y s spk ca))
+     (send (flight3 cr sr x y s spk ca c cpk))
+     (send (enc request (cap cr sr x y)))
+     (recv (enc response (sap cr sr x y))))
+    (uniq-gen x))
+  (defrole server
+    (vars (s c ca name) (cr sr text) (spk cpk akey)
+          (request response text) (y rndx) (x expt))
+    (trace
+     (recv (ch cr x))
+     (send (flight2 cr sr x y s spk ca))
+     (recv (flight3 cr sr x y s spk ca c cpk))
+     (recv (enc request (cap cr sr x y)))
+     (send (enc response (sap cr sr x y))))
+    (uniq-gen y)))
+```

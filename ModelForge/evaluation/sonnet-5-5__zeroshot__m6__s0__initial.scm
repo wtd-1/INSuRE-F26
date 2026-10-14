@@ -1,0 +1,72 @@
+(herald "ModelForge-style generated model" (bound 30) (algebra diffie-hellman))
+
+(defmacro (ch cr x) (cat "ch" cr (exp (gen) x)))
+(defmacro (sh sr y) (cat "sh" sr (exp (gen) y)))
+(defmacro (cert n k ca) (enc "cert" n k (invk (pubk ca))))
+(defmacro (hsec x y) (hash "hs" (exp (exp (gen) y) x)))
+(defmacro (msec x y) (hash "ms" (hsec x y)))
+(defmacro (ctk x y cr sr) (hash "cht" (hsec x y) cr sr))
+(defmacro (stk x y cr sr) (hash "sht" (hsec x y) cr sr))
+(defmacro (cak x y cr sr) (hash "cap" cr sr (msec x y)))
+(defmacro (sak x y cr sr) (hash "sap" cr sr (msec x y)))
+(defmacro (fk tk) (hash "fin" tk))
+(defmacro (tA cr sr x y s spk ca)
+  (cat (ch cr x) (sh sr y) (cert s spk ca)))
+(defmacro (scv cr sr x y s spk ca)
+  (enc "scv" (hash (tA cr sr x y s spk ca)) (invk spk)))
+(defmacro (tB cr sr x y s spk ca)
+  (cat (tA cr sr x y s spk ca) (scv cr sr x y s spk ca)))
+(defmacro (sfin cr sr x y s spk ca)
+  (hash (fk (stk x y cr sr)) (tB cr sr x y s spk ca)))
+(defmacro (tC cr sr x y s spk ca)
+  (cat (tB cr sr x y s spk ca) (sfin cr sr x y s spk ca)))
+(defmacro (tD cr sr x y s spk ca c cpk)
+  (cat (tC cr sr x y s spk ca) (cert c cpk ca)))
+(defmacro (cfin cr sr x y s spk ca c cpk)
+  (hash (fk (ctk x y cr sr)) (tD cr sr x y s spk ca c cpk)))
+(defmacro (msg2 cr sr x y s spk ca)
+  (cat (sh sr y)
+       (enc (cert s spk ca)
+            (scv cr sr x y s spk ca)
+            (sfin cr sr x y s spk ca)
+            (stk x y cr sr))))
+(defmacro (msg3 cr sr x y s spk ca c cpk)
+  (enc (cert c cpk ca)
+       (cfin cr sr x y s spk ca c cpk)
+       (ctk x y cr sr)))
+
+(defprotocol mtls13 diffie-hellman
+  (defrole client
+    (vars (s c ca name) (cr sr text) (spk cpk akey)
+          (request response text) (x rndx) (y expt))
+    (trace
+      (send (ch cr x))
+      (recv (msg2 cr sr x y s spk ca))
+      (send (msg3 cr sr x y s spk ca c cpk))
+      (send (enc request (cak x y cr sr)))
+      (recv (enc response (sak x y cr sr))))
+    (uniq-gen x)
+    (uniq-orig cr request))
+  (defrole server
+    (vars (s c ca name) (cr sr text) (spk cpk akey)
+          (request response text) (y rndx) (x expt))
+    (trace
+      (recv (ch cr x))
+      (send (msg2 cr sr x y s spk ca))
+      (recv (msg3 cr sr x y s spk ca c cpk))
+      (recv (enc request (cak x y cr sr)))
+      (send (enc response (sak x y cr sr))))
+    (uniq-gen y)
+    (uniq-orig sr)))
+
+(defgoal mtls13 (forall ((cr sr text) (spk cpk akey) (s c ca name) (x rndx) (y expt) (z strd)) (implies (and (p "client" z 5) (p "client" "cr" z cr) (p "client" "sr" z sr) (p "client" "spk" z spk) (p "client" "s" z s) (p "client" "cpk" z cpk) (p "client" "c" z c) (p "client" "ca" z ca) (p "client" "x" z x) (p "client" "y" z y) (uniq-at cr z 0) (ugen x) (non (invk spk))) (exists ((z-0 strd)) (and (p "server" z-0 5) (p "server" "cr" z-0 cr) (p "server" "sr" z-0 sr) (p "server" "spk" z-0 spk) (p "server" "s" z-0 s) (p "server" "cpk" z-0 cpk) (p "server" "c" z-0 c) (p "server" "ca" z-0 ca) (p "server" "x" z-0 x) (p "server" "y" z-0 y))))))
+
+(defgoal mtls13 (forall ((cr sr text) (spk cpk akey) (s c ca name) (x expt) (y rndx) (z strd)) (implies (and (p "server" z 5) (p "server" "cr" z cr) (p "server" "sr" z sr) (p "server" "spk" z spk) (p "server" "s" z s) (p "server" "cpk" z cpk) (p "server" "c" z c) (p "server" "ca" z ca) (p "server" "x" z x) (p "server" "y" z y) (uniq-at sr z 1) (ugen y) (non (invk cpk))) (exists ((z-0 strd)) (and (p "client" z-0 4) (p "client" "cr" z-0 cr) (p "client" "sr" z-0 sr) (p "client" "spk" z-0 spk) (p "client" "s" z-0 s) (p "client" "cpk" z-0 cpk) (p "client" "c" z-0 c) (p "client" "ca" z-0 ca) (p "client" "x" z-0 x) (p "client" "y" z-0 y))))))
+
+(defgoal mtls13 (forall ((cr text) (request text) (spk akey) (x rndx) (z z-0 strd)) (implies (and (p "client" z 5) (p "" z-0 2) (p "client" "cr" z cr) (p "client" "x" z x) (p "client" "spk" z spk) (p "client" "request" z request) (p "" "x" z-0 request) (non (invk spk)) (ugen x) (uniq-at cr z 0) (uniq-at request z 3)) (false))))
+
+(defgoal mtls13 (forall ((sr text) (response text) (cpk akey) (y rndx) (z z-0 strd)) (implies (and (p "server" z 5) (p "" z-0 2) (p "server" "sr" z sr) (p "server" "y" z y) (p "server" "cpk" z cpk) (p "server" "response" z response) (p "" "x" z-0 response) (non (invk cpk)) (ugen y) (uniq-at sr z 1) (uniq-at response z 4)) (false))))
+
+(defskeleton mtls13 (vars (spk cpk akey)) (defstrand client 5 (spk spk) (cpk cpk)) (non-orig (invk spk) (invk cpk)))
+
+(defskeleton mtls13 (vars (spk cpk akey)) (defstrand server 5 (spk spk) (cpk cpk)) (non-orig (invk spk) (invk cpk)))
