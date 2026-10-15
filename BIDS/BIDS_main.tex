@@ -323,6 +323,366 @@ As of late, the field of protocol analysis and verification has advanced and man
 Section~\ref{sec:mot} lays to bare the clear broader implications of our work. Recent attention on the analysis and verification of cryptographic protocols, in tandem with great interest in the utility of AI therein, compels us to our ultimate goal of seeing to fruition a new direction of research in the study of such protocols. Particularly, our novel use of goal-directed answer set programming presents a potentially fruitful use of the language in a new domain as well as an intrgiuing study into alternative forms of AI beyond the use of LLMs. 
 
 
+\section{Midterm Progress}
+\label{sec:midterm}
+This section records everything we have done on this project since the proposal, and its focus is the first prong: the analysis and formal verification of a cryptographic protocol with CPSA. That prong is now complete. We give the work in the order in which it happened:
+\begin{itemize}
+    \item the protocol and the model we started from;
+    \item the first round of mutations written by each team member;
+    \item the systematic mutation study that grew out of it;
+    \item the lemma-based mutual-authentication models supplied by our mentor and our independent validation of them;
+    \item our resolution of the one goal that CPSA could not decide on its own, perfect forward secrecy in the mutually authenticated protocol;
+    \item the mentor's final model, which carries the Tamarin goals;
+    \item our exploration of ModelForge, the machine learning assistance promised in Section~\ref{sec:aiprotocol};
+    \item the benchmark that all of the above produces for the second and third prongs.
+\end{itemize}
+Unless otherwise noted, every analysis was run with CPSA 4.4.9.
+
+\subsection{The Protocol Under Study: TLS 1.3}
+\label{subsec:tls13}
+We chose Transport Layer Security (TLS) 1.3 \cite{rfc8446} as the protocol for this project. TLS is the protocol that secures the vast majority of traffic on the Internet, and it is one of the two protocols the problem description names as underlying agentic AI systems such as the Model Context Protocol. TLS 1.3 comes in two modes:
+\begin{itemize}
+    \item \textit{server-only authentication}, in which only the server proves its identity (the ordinary web case);
+    \item \textit{mutual authentication}, or \textit{mTLS}, in which the client proves its identity as well.
+\end{itemize}
+
+At the level of abstraction used throughout this work, a handshake proceeds as follows.
+\begin{enumerate}
+    \item The client sends a \textit{ClientHello} containing a fresh random value $cr$ and a Diffie-Hellman key share $g^{x}$, where $x$ is a fresh secret exponent.
+    \item The server answers with a \textit{ServerHello} containing its own random value $sr$ and key share $g^{y}$. Both parties can now compute the shared secret $g^{xy}$, from which every later key is derived by hashing. Under a key derived from $g^{xy}$, the server then sends:
+    \begin{itemize}
+        \item its \textit{Certificate}, a binding of its name to its public key signed by a certification authority (CA);
+        \item a \textit{CertificateVerify}, its signature over the transcript of everything sent so far;
+        \item a \textit{Finished} message, a message authentication code over the transcript.
+    \end{itemize}
+    \item In mTLS, the client returns its own Certificate, CertificateVerify and Finished in the same way.
+    \item Application data, which we call a \textit{request} and a \textit{response}, then travels under application traffic keys, also derived from $g^{xy}$.
+\end{enumerate}
+
+Our model makes the usual simplifications of a symbolic analysis:
+\begin{itemize}
+    \item only Diffie-Hellman key exchange is modeled (no pre-shared keys, resumption, 0-RTT or HelloRetryRequest);
+    \item version and cipher suite negotiation is not modeled, so downgrade attacks are out of scope;
+    \item a hash is a perfect one-way function, so transcript collisions are out of scope;
+    \item the key schedule derives keys from the randoms and the shared secret rather than from the full transcript.
+\end{itemize}
+
+Our starting point was a CPSA model supplied by our mentor, \texttt{tls13\_final.scm}, together with a file of macros that build the TLS messages. Following Cremers et al. \cite{cremers2017tls13}, the model states its security properties as goals of three kinds:
+\begin{itemize}
+    \item \textit{Injective agreement}: whenever one party completes a run, there is a unique run of the other party that agrees with it on every value of the handshake.
+    \item \textit{Key secrecy}: the adversary never learns the application traffic keys.
+    \item \textit{Perfect forward secrecy} (PFS): data protected by a session's keys stays secret even if a party's long-term signing key is stolen \textit{after} the session has finished.
+\end{itemize}
+
+In CPSA, a secrecy goal is checked with a \textit{listener}, a strand that receives the secret from the network. The goal holds if no execution of the protocol can deliver the secret to the listener. Assumptions are expressed through two statements:
+\begin{itemize}
+    \item a \textit{non-originating} value (\texttt{non}) is one that never travels on the network, such as an uncompromised private key;
+    \item a \textit{uniquely generated} value (\texttt{ugen}) is one created fresh by exactly one party, such as a Diffie-Hellman exponent.
+\end{itemize}
+
+With eight goals for each mode, we refer to the server-only goals as S1-S8 and to the mutual-authentication goals as M1-M8. They are listed in Table~\ref{tab:goals}. The server-only model documents that four of its goals (S2, S5, S6 and S8) fail by design. This is to be expected, as a server that never authenticates its client can conclude nothing about who it is talking to.
+
+\begin{table}[h!]
+\centering
+\small
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Goal} & \textbf{Property} \\
+\hline
+S1 / M1 & Client-to-server injective agreement \\
+S2 / M2 & Server-to-client injective agreement \\
+S3 / M3 & Client view: secrecy of the client application key \\
+S4 / M4 & Client view: secrecy of the server application key \\
+S5 / M5 & Server view: secrecy of the server application key \\
+S6 / M6 & Server view: secrecy of the client application key \\
+S7 / M7 & Forward secrecy, client view (server key leaked after the session) \\
+S8 / M8 & Forward secrecy, server view (S8: server key, M8: client key leaked after the session) \\
+\hline
+\end{tabular}
+\caption{The sixteen goals of the TLS 1.3 model.}
+\label{tab:goals}
+\end{table}
+
+\subsection{Mutation Analysis as a Source of Ground Truth}
+\label{subsec:mutation}
+The second and third prongs are comparisons. To judge whether s(CASP) can reach the same conclusions as CPSA, or whether a learned automaton exhibits the same vulnerabilities as the protocol, we need questions whose answers we already know. Mutation analysis provides exactly this. We deliberately introduce a small fault into the protocol, predict its effect on every goal, and confirm the prediction with CPSA. Each confirmed mutation becomes a piece of ground truth.
+
+\subsubsection{The First Round of Mutations}
+In late September, each team member wrote mutations of the mentor's model:
+\begin{itemize}
+    \item \textbf{Andrew Bourinski}: deleting the server's CertificateVerify (m1), and removing the client's key share from the transcript the server signs (m2).
+    \item \textbf{Aendri Singh}: deleting the Finished messages (m3), and removing the freshness of the Diffie-Hellman exponents (m4).
+    \item \textbf{Pooya Zolfagharkhani}: extending the model to mutual authentication (m5), and deleting the client's signature (m6).
+\end{itemize}
+This first round taught us a great deal about CPSA, but it also showed that the results could not be compared with one another. Each mutation had been applied to its own separately edited copy of the model. One copy included a macro file that did not exist, one mutation edited a macro that the model never used, and another also deleted assumptions from the goals, which changes the question being asked rather than the protocol. We therefore rebuilt the study around a stricter method.
+
+\subsubsection{Method}
+The method rests on four rules.
+\begin{enumerate}
+    \item \textbf{Fixes and mutations are never mixed.} All corrections to the model go into a single \textit{baseline}. The baseline is frozen, with a manifest of cryptographic hashes, before any mutation is run.
+    \item \textbf{Every mutation changes exactly one line.} A deleted message appears both on the wire and inside every transcript that a later signature or MAC covers, so a literal deletion touches many places. We therefore refactored the model so that every mutation point is a named macro whose baseline body is the original term. A script verifies that this refactoring changes nothing: CPSA's macro expansion of the refactored model is identical to that of the original. A mutation then redefines exactly one macro. A deletion is written as an empty term, which CPSA splices out of every message and transcript in which it occurred.
+    \item \textbf{Predictions come first.} For every variant, we wrote down the predicted verdict for all sixteen goals, with a rationale, and sealed the predictions with a SHA-256 hash before the variant was run. A disagreement between prediction and result is reported as a finding; the prediction is never edited.
+    \item \textbf{Parameters are fixed.} Every variant is run twice: once with a strand bound of 12 and a step limit of 500, and once with CPSA's defaults (a strand bound of 12 and a step limit of 2000). A goal on which the two runs disagree is flagged rather than averaged.
+\end{enumerate}
+
+A goal is recorded as:
+\begin{itemize}
+    \item \textit{HOLDS} if the search finished and every shape satisfies it;
+    \item \textit{VIOLATED} if some shape contradicts it (a shape is a realized execution, so this is conclusive even if the search was later cut off);
+    \item \textit{INCOMPLETE} if no counterexample was found but the search did not finish.
+\end{itemize}
+
+\subsubsection{Corrections to the Model}
+Building the baseline required eight corrections, listed in Table~\ref{tab:fixes}. We classify each as a \textit{transcription error} (the model did not say what its authors evidently meant) or a \textit{modelling decision} (a choice about what is modeled, which could move a verdict and is therefore stated and justified).
+
+Two corrections deserve explanation.
+\begin{itemize}
+    \item \textbf{F4} is a defect in the macro file itself: the macro that builds the transcript covered by the client's signature passed the two Diffie-Hellman exponents to an inner macro in the wrong order. Only the mutual-authentication path uses this macro, so the server-only results were unaffected. We reported the defect to our mentor, who has since corrected his copy.
+    \item \textbf{F5} resolves the reason the early mutual-authentication runs never finished. Client and server certificates were the same term, so CPSA could explain a server certificate as having come from a client that presented it as its own, and then explain that client's certificate the same way, without end. A client certificate is now signed over a \texttt{"client"} tag. This models a real property: an X.509 certificate carries an extended key usage, and a server must not accept a certificate for client authentication unless it allows that use \cite{rfc5280}.
+\end{itemize}
+
+\begin{table}[h!]
+\centering
+\small
+\begin{tabular}{|l|l|p{11cm}|}
+\hline
+\textbf{Id} & \textbf{Kind} & \textbf{Correction} \\
+\hline
+F1 & Transcription & An \texttt{include} named a macro file that did not exist. \\
+F2 & Transcription & The mTLS server passed its key arguments in the opposite order to the client. \\
+F3 & Decision & The PFS protocols named the private key inconsistently, so the key disclosed was the client's \textit{public} key. Both now follow the convention of the server-only PFS protocol. \\
+F4 & Transcription & The client-signature transcript passed the two Diffie-Hellman exponents in the wrong order. \\
+F5 & Decision & Client certificates are tagged \texttt{"client"} (X.509 client-authentication key usage). \\
+F6 & Decision & M2 required the client to have received the server's final message, which no protocol can guarantee to the server. It now requires the client's request. \\
+F7 & Decision & In the mTLS forward-secrecy protocol, the client loads its signing key from storage, as the server already did. \\
+F8 & Transcription & M8 allowed the client's key to leak \textit{during} the handshake; it now leaks after the session. \\
+\hline
+\end{tabular}
+\caption{Corrections made in the baseline, BASELINE-v2.}
+\label{tab:fixes}
+\end{table}
+
+F7 and F8 were found by a separate investigation of a result that looked too good. On the first baseline, M8 held even in a variant in which the adversary could already read the session keys. Profiling CPSA's search showed that no client strand ever appeared in it. The client's first use of its signing key counted as \textit{generating} that key, which contradicted the uniqueness of the key-generation role, so no client could ever coexist with the key-disclosure machinery. The goal held vacuously. With F7 the client loads its key from storage, as real clients do. With that fixed, a second defect surfaced: M8 let the key leak before the server had checked the client's signature, which F8 corrects. After both fixes, M8 fails in the variant where it must fail, and that is the evidence that the fixes are right.
+
+\subsubsection{Results}
+We tested twelve variants of the frozen baseline: two unmodified controls (m0 for the server-only family and m5 for the mutual-authentication family, which are the same file) and ten mutations. Tables~\ref{tab:resultsS} and~\ref{tab:resultsM} give the verdicts. The two parameter sets agree on every goal, and every completed verdict agrees with its sealed prediction.
+
+\begin{table}[h!]
+\centering
+\small
+\begin{tabular}{|l|p{6.2cm}|c|c|c|c|c|c|c|c|}
+\hline
+\textbf{Id} & \textbf{Mutation} & S1 & S2 & S3 & S4 & S5 & S6 & S7 & S8 \\
+\hline
+m0 & none (control) & H & V & H & H & V & V & H & V \\
+m1 & delete server CertificateVerify & V & V & V & V & V & V & V & V \\
+m2 & remove ClientHello from the server's signed transcript & H & V & H & H & V & V & H & V \\
+m3 & delete both Finished messages & H & V & H & H & V & V & H & V \\
+m3c & delete the client Finished & H & V & H & H & V & V & H & V \\
+m3s & delete the server Finished & H & V & H & H & V & V & H & V \\
+m4 & server exponent not fresh & V & V & V & V & V & V & V & V \\
+m4c & client exponent not fresh & H & V & H & H & V & V & H & V \\
+\hline
+\end{tabular}
+\caption{Server-only family (H holds, V violated). S2, S5, S6 and S8 fail by design in every variant.}
+\label{tab:resultsS}
+\end{table}
+
+\begin{table}[h!]
+\centering
+\small
+\begin{tabular}{|l|p{6.2cm}|c|c|c|c|c|c|c|c|}
+\hline
+\textbf{Id} & \textbf{Mutation} & M1 & M2 & M3 & M4 & M5 & M6 & M7 & M8 \\
+\hline
+m5 & none (control) & H & H & H & H & H & H & H & ? \\
+m6 & delete client CertificateVerify & H & V & H & H & V & V & H & V \\
+m7 & delete client Certificate & \multicolumn{8}{c|}{rejected by CPSA} \\
+m8 & delete both CertificateVerify messages & V & V & V & V & V & V & V & V \\
+\hline
+\end{tabular}
+\caption{Mutual-authentication family (? = search did not finish).}
+\label{tab:resultsM}
+\end{table}
+
+Several lessons follow from these tables.
+\begin{itemize}
+    \item \textbf{The server's signature carries every goal of the server-only protocol.} Deleting the server's CertificateVerify (m1), or letting the server reuse its Diffie-Hellman exponent (m4), breaks every client-view goal.
+    \item \textbf{Five mutations change no verdict at all}: m2, m3, m3c, m3s and m4c. In the vocabulary of mutation testing these are \textit{equivalent mutants}, because in this model the server's signature over both key shares already supports every goal. They remain valuable as negative controls. A tool that reports an attack on them is wrong within this model. (In real TLS 1.3 the transcript also protects the negotiation of versions and cipher suites, which is not modeled.)
+    \item \textbf{Client authentication rests on the client's signature.} Deleting it (m6) leaves the client's view intact but breaks every server-view goal, because a client certificate alone can be replayed. Deleting both signatures (m8) breaks everything.
+    \item \textbf{One mutation cannot be expressed.} Deleting the client's Certificate (m7) removes the only message containing the client's name. CPSA then drops the name from the protocol and rejects the goals that mention it.
+    \item \textbf{One goal could not be decided.} In the unmodified mTLS model, M8 reaches the step limit under both parameter sets without a counterexample. We return to both of these cases below.
+\end{itemize}
+
+\subsection{The Mentor's Lemma-Based mTLS Models and Their Validation}
+\label{subsec:lemmas}
+After we sent these results to our mentor, he supplied three new models of the mutual-authentication protocol, built around an idea worth explaining. CPSA spends much of its effort on questions it can never answer positively, for instance how the adversary might obtain an honest party's Diffie-Hellman secret. A \textit{lemma} answers such a question once and for all. It is first proven as a goal, and then restated as a \textit{rule} that CPSA uses to prune every later search.
+
+\begin{itemize}
+    \item \texttt{mtls0.scm} proves that honest clients and servers never leak their Diffie-Hellman exponents.
+    \item \texttt{mtls1.scm} adopts those lemmas as rules. It then proves that the shared secret $g^{xy}$ is never leaked when an honest party talks to a \textit{legitimate} counterpart, meaning one that follows the protocol and whose signing key is uncompromised.
+    \item \texttt{mtls2.scm} adopts all four lemmas as rules. It then gives two starting scenarios, one from each side. Each yields a single shape in which client and server agree on every value, which demonstrates mutual authentication.
+\end{itemize}
+Our mentor also observed that the certification authority's key need not be assumed uncompromised; only the counterpart's signing key matters.
+
+Because a rule that is not actually true can silently hide an attack, we validated these models independently before building on them. Every test model was the mentor's protocol, unchanged, with only rules removed or goals added. The 78 checks all produced the expected result, the slowest in about one second.
+\begin{itemize}
+    \item \textbf{Reproduction.} All three models give exactly the results described.
+    \item \textbf{Soundness of the rules.} Each rule is applied to shorter strands than its lemma was proven for. For example, the client-exponent rule is used after the client's first event, but was proven only for clients that had completed four events. We re-proved every lemma at the length at which its rule is used, and all hold.
+    \item \textbf{Mutual authentication as goals.} We restated the mentor's result as goals rather than as an inspected shape: full agreement on all nine handshake values from each side, together with \textit{injectivity}, meaning that the matching run of the other party is unique. All hold, and none needs the certification authority's key to be uncompromised.
+    \item \textbf{Which key matters.} A server that assumes only the client's key is uncompromised authenticates the client. A server that assumes only its \textit{own} key does not. Legitimacy is therefore a property of the counterpart's key, as our mentor stated.
+    \item \textbf{Negative controls.} Removing the counterpart-key assumption makes every positive result fail, so none of the proofs is vacuous.
+    \item \textbf{Cross-check against our ground truth.} We applied mutations m1, m6 and m8 to the mentor's model and re-proved each lemma on each mutant before reusing it there. All thirty predictions, sealed in advance, were confirmed. The mentor's model and our baseline therefore agree on every mutual-authentication mutant they share.
+\end{itemize}
+
+Two findings went back to our mentor.
+\begin{itemize}
+    \item On our version of CPSA, the rules do not change the analysis at all: with them and without them, the skeleton counts are identical. With the old macro file, the analysis never finishes whether or not the rules are present, and with the corrected file it finishes either way. The speedup came from the F4 correction, and we have asked which CPSA version he uses.
+    \item The session-key secrecy goals need a larger strand bound (30 instead of the default 12) to finish, which they then do in under a second.
+\end{itemize}
+
+\subsection{Resolving Forward Secrecy}
+\label{subsec:pfs}
+Goal M8 asks the following. An honest server completes a session, and the client's signing key is disclosed only afterwards; can the adversary read the server's response? On the unmodified model, CPSA never finished. We set out to find out why, and to give M8 an answer.
+
+\paragraph{Diagnosis.} Profiling the search showed that the obstacle is not forward secrecy itself.
+\begin{itemize}
+    \item Following the mentor's technique, we proved eleven lemmas under M8's own assumptions: that the Diffie-Hellman value $g^{xy}$, both handshake keys, the master secret and both application keys of the session are unavailable to the adversary. All hold in about 1.5 seconds, and all fail on m6, so they discriminate.
+    \item With all of them as rules, M8 still did not finish. The search grows while CPSA explains how the server came to receive the client's handshake message. Certificates travel only inside encrypted handshake messages, so every explanation of a certificate introduces another honest session, whose messages must themselves be explained.
+\end{itemize}
+None of the following made M8 finish: publishing certificates at key generation, separating client keys from server keys (an X.509 key-usage restriction), protecting the server's key, adding further lemmas, or changing CPSA's search order.
+
+\paragraph{A pitfall.} Our fix F7 made each role begin with a key \textit{load}, and a client's load looks exactly like a server's. CPSA decides which role a strand belongs to by matching its sequence of events against the roles. A rule stated about the first event of a client therefore also matches every server. One of our early rules pruned \textit{every} execution as a result, so M8 appeared to hold even in m6, which we know to be broken. Rules in this protocol must therefore refer to at least the second event, where the roles first differ. The episode is a reminder of why we run a negative control for every positive result.
+
+\paragraph{Decomposition.} Forward secrecy, like most proofs of it, rests on two properties:
+\begin{enumerate}
+    \item \textit{Authentication before compromise}: when the server receives the client's message, it is talking to a genuine client, and the client's key has not yet leaked.
+    \item \textit{Secrecy given an authenticated session} (M8$'$): if client and server agree on every value and the client's key leaks afterwards, the response stays secret.
+\end{enumerate}
+Table~\ref{tab:m8} gives the evidence for each.
+
+\begin{table}[h!]
+\centering
+\small
+\begin{tabular}{|p{6.8cm}|p{3.8cm}|p{3.8cm}|}
+\hline
+\textbf{Property} & \textbf{Unmodified (m5)} & \textbf{m6} \\
+\hline
+M8$'$, checked by CPSA & No attack (0.1 s) & No attack \\
+Authentication before compromise, in the PFS protocol & Did not finish & Attack found \\
+The same property as M2, in the mTLS protocol & Holds & Violated \\
+\hline
+\end{tabular}
+\caption{The two halves of M8.}
+\label{tab:m8}
+\end{table}
+
+Two controls show that the result for M8$'$ is meaningful:
+\begin{itemize}
+    \item without the adversary's listener the scenario does occur, so ``no attack'' is not an empty statement;
+    \item a listener placed on something that genuinely leaks, the disclosed key, is found.
+\end{itemize}
+
+The first property transfers from M2 by a short argument. Take any execution in which the client's key leaks after the session and cut it off before the leak. In what remains, the key has never been sent, so this is an execution of the mTLS protocol in which the key is uncompromised, and M2 applies.
+
+We conclude that \textbf{M8 holds for the unmodified protocol, by decomposition, and is violated for m6}. The transfer argument is made on paper rather than checked by CPSA, and we have asked our mentor to review it.
+
+\subsection{The Mentor's Final Model with the Tamarin Goals}
+\label{subsec:mtlsfinal}
+Our mentor has since supplied \texttt{mtls\_final.scm}, which states the security goals of the Tamarin analysis of TLS 1.3 \cite{cremers2017tls13, meier2013tamarin} for the mutually authenticated protocol. It contains:
+\begin{itemize}
+    \item the lemma-based mTLS protocol of Section~\ref{subsec:lemmas}, with goals for injective agreement from each side and for the secrecy of both application keys from each side;
+    \item a forward-secrecy protocol with key storage, key generation and key disclosure, with two forward-secrecy goals. In both goals it is the \textit{server's} key that is disclosed after the handshake. Our mentor notes that disclosing the client's key instead would give the same results.
+\end{itemize}
+
+The file runs in about four seconds, and we checked it in the same way as the earlier models.
+\begin{itemize}
+    \item \textbf{The six mutual-authentication goals hold, non-vacuously}: both roles appear in their analyses, and the results agree with our own validation.
+    \item \textbf{The client-view forward-secrecy goal holds only vacuously.} Its analysis never adds a server, although a client cannot finish without verifying a server's signature. The cause is the pitfall described above. In this protocol both roles begin with a key load, and the rule \texttt{clients-servers-distinct}, which says that no name acts both as a client and as the server of some client, mentions the client's first event. It therefore matches every server as well, and so it forbids a client from talking to any server that appears in the execution. We confirmed this in three ways:
+    \begin{itemize}
+        \item an ordinary, honest session has no shapes at all under the file's rules;
+        \item it has shapes once that rule is removed;
+        \item with the server's signature deleted (m1), the goal still ``holds'', which cannot be right.
+    \end{itemize}
+    Restating the rule so that it refers to the client's second event restores honest sessions, and m1 is then violated as it should be. The unmodified goal, however, then reaches our five-minute limit without a counterexample, much as M8 did.
+    \item \textbf{The server-view forward-secrecy goal is violated.} The counterexample is not a failure of forward secrecy: the adversary obtains the \textit{client's} key before the session and impersonates the client. The goal places no constraint on the client's key, so the attack is legitimate for the goal as written. The goal needs the assumption that the client's key is uncompromised until the session ends; its comment, carried over from the server-only model, says that it cannot be satisfied.
+\end{itemize}
+
+These are questions for our mentor rather than conclusions, and we have reported them together with our resolution of M8. They also suggest that disclosing the client's key instead of the server's would not, in fact, give the same results. That is the case of M8, which CPSA could not decide in a single run.
+
+\subsection{Machine Learning Assistance: Exploring ModelForge}
+\label{subsec:modelforge}
+The research plan promised to explore machine learning tools such as ModelForge in support of the first prong. ModelForge \cite{10.1007/978-3-031-87496-3_10}, of which our mentor is a co-author, translates a natural-language protocol specification into a CPSA protocol definition using a fine-tuned LLM, and a domain expert reviews the result. An earlier paper by the same group used Code Llama and reported a qualitative example \cite{duclos2024rfc2cpsa}. A 2026 thesis from Mississippi State University\footnote{\url{https://scholarsjunction.msstate.edu/td/6890}} evaluated fifteen LLMs on 104 protocols and found that 71--97\% of outputs were syntactically valid, and that curated reference examples help. We could not obtain the tool, its model or its benchmark, and we have asked our mentor for access.
+
+In the meantime we reproduced the approach, and asked a stricter question than syntactic validity: are the \textit{verdicts} right?
+\begin{itemize}
+    \item \textbf{Specification.} We wrote a plain-English specification of mTLS 1.3 in the terms of RFC~8446, without CPSA vocabulary, in four versions matching our mutants: unmodified (m0), and without the server's, the client's, or both signatures (m1, m6, m8).
+    \item \textbf{Interface.} A short contract fixes the names of the roles and variables, so that our goals can be attached automatically to whatever the model produces. It plays the part of ModelForge's structured output.
+    \item \textbf{Translator.} Claude Sonnet 5.5 saw only the prompt, never our models or answers, and translated each version three times under each of two conditions:
+    \begin{itemize}
+        \item zero-shot;
+        \item with two stock CPSA examples, neither of them TLS: the Station-to-Station protocol \cite{diffie1992sts} and a plain Diffie-Hellman exchange.
+    \end{itemize}
+    A model that CPSA rejected was given one chance to repair itself from CPSA's error message, mirroring ModelForge's post-processor.
+    \item \textbf{Scoring.} Each generated model was checked against the same four goals evaluated on the mentor's validated model: authentication in each direction and the secrecy of the request and of the response. It also had to pass an \textit{executability} check, that each role can actually run to completion, because a model in which a role can never finish satisfies every goal vacuously.
+\end{itemize}
+
+\begin{table}[h!]
+\centering
+\small
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{Condition} & \textbf{Accepted by CPSA} & \textbf{Correct on all four goals} \\
+\hline
+Zero-shot & 12/12 (one after repair) & 9/12 \\
+With two reference examples & 12/12 & 12/12 \\
+\hline
+\end{tabular}
+\caption{ModelForge-style translation of mTLS 1.3, scored against our ground truth.}
+\label{tab:modelforge}
+\end{table}
+
+Table~\ref{tab:modelforge} gives the results. With two reference examples, every generated model reached the correct verdict on every goal for every variant, in agreement with the thesis finding that reference examples help.
+
+All three zero-shot failures had one cause. They are exactly the three models, of twenty-four, that wrote security assumptions (``my signing key is uncompromised'') into the definitions of the roles themselves. Such a model passes every syntactic check, yet CPSA could not analyze any of them within fifteen minutes.
+
+This is the kind of error that motivates our concern with hallucination in Section~\ref{sec:mot}. It is plausible and well formed, and it is wrong in a way that only someone who understands the model will notice. It is why ModelForge's authors insist on expert review, and it suggests that ModelForge should be evaluated on the correctness of verdicts and not only on syntax. We were unable to compare several models, as the thesis did, because the command-line tool available to us truncated the output of the smaller model.
+
+\subsection{A Benchmark with Four Kinds of Answer}
+\label{subsec:benchmark}
+The product of the first prong is a benchmark: a set of protocol variants whose behavior under each goal is known. The two unanswered cases of our mutation study turned out to be among its most useful members, because a benchmark that records only ``holds'' and ``violated'' cannot reward a tool for knowing the limits of what can be concluded. Every cell of the benchmark therefore records one of four answers:
+\begin{itemize}
+    \item \textit{HOLDS};
+    \item \textit{VIOLATED};
+    \item \textit{UNDECIDED}: CPSA's search does not finish, as with M8 on its own, whose resolved answer from Section~\ref{subsec:pfs} is recorded alongside;
+    \item \textit{INEXPRESSIBLE}: CPSA rejects the model, as with m7.
+\end{itemize}
+The methods of the second and third prongs will be scored on whether they report the right kind of answer. A method that claims a verdict on m7, or claims an attack on one of the five equivalent mutants, must be able to justify it.
+
+\subsection{Status and Next Steps}
+\label{subsec:status}
+The first prong is complete. Its products are:
+\begin{itemize}
+    \item a frozen, corrected and documented model of TLS 1.3 in both modes;
+    \item a benchmark of twelve variants and sixteen goals with sealed predictions;
+    \item an independent validation of our mentor's lemma-based models;
+    \item a resolution of forward secrecy in the mutually authenticated protocol;
+    \item an evaluation of ModelForge-style translation against verified ground truth.
+\end{itemize}
+
+Four questions remain open with our mentor:
+\begin{itemize}
+    \item whether the client tag on certificates is acceptable;
+    \item whether the argument that completes the resolution of M8 is sound;
+    \item the behavior of the forward-secrecy goals in \texttt{mtls\_final.scm};
+    \item access to ModelForge.
+\end{itemize}
+
+For the second prong, CPSA can already export its analyses as Prolog terms. We will use these to encode the protocol's roles for s(CASP), write the adversary's capabilities as answer set rules, and pose each goal as a query, so that a model found by s(CASP) is an attack and its justification tree explains it. We will validate the encoding first on a protocol with a well-known attack, and then score it against the benchmark, beginning with the variants that discriminate and ending with the equivalent mutants, on which it must find nothing.
+
+For the third prong, we will implement a small TLS 1.3 server, with one switch for each mutation, as the black box for the $L^{*}$ algorithm. We will learn a state machine for each variant, and then ask of each learned machine the same questions the benchmark asks of CPSA. Of particular interest are the equivalent mutants. CPSA's goals cannot tell them apart from the unmodified protocol, yet a server that no longer checks a Finished message may well behave differently as a state machine. This is precisely the kind of gap between formal verification and observed behavior that the third prong was proposed to find.
+
+
 \section{Investigator Bios}
 \textbf{William T. Doan} is a Ph.D. in Computer Science student researching problems in data compression, compact data structures, and computational biology. Currently, one of his interests is in algorithmic techniques for differential privacy, in information theory, and algorithmic bound proving. William has considerable experience in AWS, software development, and agentic workflow orchestration through his internship. His coursework, and performance therein, demonstrates a strong proficiency in Computer Architecture, Database Systems (in which he has a paper publication forthcoming on using databases in deep learning), Computer Algorithms, Artificial Intelligence, Multicore Programming, Optimization, and Parallel Computing. Complementary to his rigorous academic portfolio is his research profile, wherein he is twice published in the conferences of the American Institute of Aeronautics and Astronautics for formal methods and certification, in IEEE’s Transactions on Multimedia for computer vision, in the Conference on Language Modeling for his deepfake research, in the Symposium on String Processing and Information Retrieval Conference for representing data compression as folding problems, and a forthcoming journal publication in optimizing DNA reconstruction. William has substantial experience leading research teams on the cutting-edge of research. Thus, he is highly interested in serving as the team leader for this project.\\
 
