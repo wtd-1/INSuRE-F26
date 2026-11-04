@@ -1,0 +1,13 @@
+[?2004h% Query
+?- responder_assumptions.
+% ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+%                         Answer 1 (0.000 sec)                          
+% ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+% Model
+{ responder_assumptions,                  protected_key(responder_view,alice),
+  fresh_nonce(responder_view,nb),         uniq_orig(responder_view,nb),
+  non_orig(responder_view,privk(alice))
+}
+% No bindings
+true
+

@@ -1,0 +1,14 @@
+[?2004h% Query
+?- initiator_assumptions.
+% ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+%                         Answer 1 (0.000 sec)                          
+% ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+% Model
+{ initiator_assumptions,                  protected_key(initiator_view,alice),
+  fresh_nonce(initiator_view,na),         protected_key(initiator_view,bob),
+  non_orig(initiator_view,privk(alice)),  uniq_orig(initiator_view,na),
+  non_orig(initiator_view,privk(bob))
+}
+% No bindings
+true
+

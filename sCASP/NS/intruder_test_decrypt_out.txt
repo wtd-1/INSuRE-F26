@@ -1,0 +1,16 @@
+[?2004h% Query
+?- knows(mallory, secret, [step, step]).
+% ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+%                         Answer 1 (0.000 sec)                          
+% ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+% Model
+{ intruder_initial(mallory,privk(mallory)),
+  intruder_initial(mallory,enc(msg(secret,alice),pubk(mallory))),
+  knows(mallory,secret,[step,step]),
+  knows(mallory,privk(mallory),[]),
+  knows(mallory,enc(msg(secret,alice),pubk(mallory)),[]),
+  knows(mallory,msg(secret,alice),[step])
+}
+% No bindings
+true
+

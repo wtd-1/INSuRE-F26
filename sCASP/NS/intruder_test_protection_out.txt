@@ -1,0 +1,43 @@
+[?2004h% Query
+?- not knows(mallory, secret, [step, step]).
+% ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+%                         Answer 1 (0.000 sec)                          
+% ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+% Model
+{ not intruder_initial(mallory,privk(alice)),
+  not intruder_initial(mallory,enc(enc(secret,pubk(A)),pubk(B))),
+  not intruder_initial(mallory,enc(msg(C,secret),pubk(D))),
+  not intruder_initial(mallory,enc(msg(secret,E | {E ∉ [alice]}),pubk(F))),
+  not intruder_initial(mallory,enc(msg(secret,alice),pubk(G | {G ∉ [alice]}))),
+  intruder_initial(mallory,enc(msg(secret,alice),pubk(alice))),
+  not intruder_initial(mallory,msg(H,enc(secret,pubk(A)))),
+  not intruder_initial(mallory,msg(I,msg(secret,E | {E ∉ [alice]}))),
+  not intruder_initial(mallory,msg(J,msg(secret,alice))),
+  not intruder_initial(mallory,msg(K,msg(C,secret))),
+  not intruder_initial(mallory,msg(enc(secret,pubk(A)),L)),
+  not intruder_initial(mallory,msg(msg(C,secret),M)),
+  not intruder_initial(mallory,msg(msg(secret,E | {E ∉ [alice]}),N)),
+  not intruder_initial(mallory,msg(msg(secret,alice),O)),
+  not knows(mallory,secret,[step,step]),
+  not knows(mallory,privk(alice),[]),
+  not knows(mallory,enc(secret,pubk(A)),[step]),
+  not knows(mallory,enc(enc(secret,pubk(A)),pubk(B)),[]),
+  not knows(mallory,enc(msg(C,secret),pubk(D)),[]),
+  not knows(mallory,enc(msg(secret,E | {E ∉ [alice]}),pubk(F)),[]),
+  not knows(mallory,enc(msg(secret,alice),pubk(G | {G ∉ [alice]})),[]),
+  knows(mallory,enc(msg(secret,alice),pubk(alice)),[]),
+  not knows(mallory,msg(H,enc(secret,pubk(A))),[]),
+  not knows(mallory,msg(I,msg(secret,E | {E ∉ [alice]})),[]),
+  not knows(mallory,msg(J,msg(secret,alice)),[]),
+  not knows(mallory,msg(C,secret),[step]),
+  not knows(mallory,msg(K,msg(C,secret)),[]),
+  not knows(mallory,msg(secret,E | {E ∉ [alice]}),[step]),
+  not knows(mallory,msg(secret,alice),[step]),
+  not knows(mallory,msg(enc(secret,pubk(A)),L),[]),
+  not knows(mallory,msg(msg(C,secret),M),[]),
+  not knows(mallory,msg(msg(secret,E | {E ∉ [alice]}),N),[]),
+  not knows(mallory,msg(msg(secret,alice),O),[])
+}
+% No bindings
+true
+
