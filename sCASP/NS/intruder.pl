@@ -2,7 +2,8 @@
 % Dolev-Yao Intruder Model
 % Needham-Schroeder Public-Key Protocol
 %
-% Bounded knowledge deduction
+% Intruder: Mallory
+% Bounded deduction model
 % ============================================================
 
 % ------------------------------------------------------------
@@ -28,6 +29,11 @@ intruder_initial(mallory, privk(mallory)).
 knows(I, X, []) :-
     intruder_initial(I, X).
 
+% Intercepted network messages become known to the intruder.
+
+knows(I, Message, []) :-
+    intercepted(I, Message).
+    
 % ------------------------------------------------------------
 % 3. Public-key decryption
 % ------------------------------------------------------------
@@ -47,14 +53,30 @@ knows(I, Y, [step|D]) :-
     knows(I, msg(X, Y), D).
 
 % ------------------------------------------------------------
-% 5. Interception
+% 5. Pair construction
+% ------------------------------------------------------------
+
+knows(I, msg(X, Y), [step|D]) :-
+    knows(I, X, D),
+    knows(I, Y, D).
+
+% ------------------------------------------------------------
+% 6. Public-key encryption construction
+% ------------------------------------------------------------
+
+knows(I, enc(M, pubk(P)), [step|D]) :-
+    knows(I, M, D),
+    intruder_initial(I, pubk(P)).
+
+% ------------------------------------------------------------
+% 7. Interception
 % ------------------------------------------------------------
 
 intercept(I, Message, Depth) :-
     knows(I, Message, Depth).
 
 % ------------------------------------------------------------
-% 6. Replay
+% 8. Replay
 % ------------------------------------------------------------
 
 replay(I, Message, Depth) :-
