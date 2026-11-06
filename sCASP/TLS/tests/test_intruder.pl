@@ -47,6 +47,18 @@ network_message(
 ).
 
 % --------------------------------------------------
+% Diffie-Hellman public shares observed by Mallory
+% --------------------------------------------------
+
+network_message(
+    exp(gen, alice_x)
+).
+
+network_message(
+    exp(gen, bob_y)
+).
+
+% --------------------------------------------------
 % Additional initial knowledge
 % --------------------------------------------------
 
@@ -127,6 +139,22 @@ test_signature_protection :-
     not intruder_knows(hash(unknown_signed_data)).
 
 % --------------------------------------------------
+% Test 10: Mallory observes public DH shares
+% --------------------------------------------------
+
+test_dh_public_share_observation :-
+    intruder_knows(exp(gen, alice_x)),
+    intruder_knows(exp(gen, bob_y)).
+
+% --------------------------------------------------
+% Test 11: Mallory cannot derive the DH shared secret
+% --------------------------------------------------
+
+test_dh_shared_secret_protection :-
+    not intruder_knows(dh_secret(alice_x, bob_y)),
+    not intruder_knows(alice_x),
+    not intruder_knows(bob_y).
+% --------------------------------------------------
 % Run all tests
 % --------------------------------------------------
 
@@ -139,6 +167,8 @@ test_intruder :-
     test_public_key_decryption,
     test_public_key_protection,
     test_signature_verification,
-    test_signature_protection.
-
+    test_signature_protection,
+    test_dh_public_share_observation,
+    test_dh_shared_secret_protection.
+    
 ?- test_intruder.

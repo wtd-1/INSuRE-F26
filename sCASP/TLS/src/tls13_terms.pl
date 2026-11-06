@@ -12,10 +12,19 @@
 dh_public(Exponent, exp(gen, Exponent)).
 
 % Shared DH secret.
-% Both client and server use the same canonical representation.
-dh_shared(ClientExponent, ServerExponent,
-          dh_shared(ClientExponent, ServerExponent)).
+%
+% This is an opaque symbolic term representing the
+% result of the honest parties' Diffie-Hellman exchange.
+%
+% Both parties derive the same term from their respective
+% private exponents and the peer's public share.
+%
+% The intruder model has no rule for constructing this
+% term from observed public DH shares.
 
+dh_shared(ClientExponent, ServerExponent,
+          dh_secret(ClientExponent, ServerExponent)).
+          
 % --------------------------------------------------
 % TLS 1.3 key schedule
 % --------------------------------------------------
