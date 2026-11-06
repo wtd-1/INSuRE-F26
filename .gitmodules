@@ -1,0 +1,3 @@
+[submodule "pylstar-aalpy-tls"]
+	path = pylstar-aalpy-tls
+	url = ./pylstar-aalpy-tls/
