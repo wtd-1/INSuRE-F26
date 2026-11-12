@@ -33,7 +33,20 @@ knows(I, X, []) :-
 
 knows(I, Message, []) :-
     intercepted(I, Message).
-    
+
+% ------------------------------------------------------------
+% 2a. Monotonicity
+% ------------------------------------------------------------
+
+% The depth list is an upper bound on derivation steps:
+% anything known within D steps is still known within
+% [step|D] steps. Without this rule knowledge at different
+% depths could never be combined (e.g. a key from the
+% initial knowledge with a term derived in one step).
+
+knows(I, X, [step|D]) :-
+    knows(I, X, D).
+
 % ------------------------------------------------------------
 % 3. Public-key decryption
 % ------------------------------------------------------------

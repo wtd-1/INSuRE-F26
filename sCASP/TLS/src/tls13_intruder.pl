@@ -2,25 +2,39 @@
 % TLS 1.3 Dolev-Yao Intruder Model
 % ==================================================
 %
-% Bounded initial implementation.
+% Term conventions (shared with tls13_terms.pl and the
+% CPSA reference, where `enc` covers every kind of
+% encryption and the key decides who can decrypt):
+%
+%   enc(P, pubk(A))   public-key encryption to A
+%   enc(H, privk(A))  A's signature over H
+%   enc(P, K)         symmetric encryption under any
+%                     other key K (e.g. a traffic key)
+%   cat/2, cat/3, transcript/2, transcript/3 and
+%   server_flight/3 are plain concatenations.
 %
 % Mallory can:
-%   1. Know public information and her own private key.
+%   1. Know public information, the key-schedule labels
+%      and her own private key.
 %   2. Observe network messages.
-%   3. Decompose directly observed concatenated messages.
-%   4. Decrypt symmetric ciphertexts when she knows the key.
-%   5. Decrypt public-key ciphertexts when she knows
-%      the recipient's private key.
-%   6. Recover a signed hash when she knows the
-%      corresponding signer's public key.
+%   3. Decompose concatenations, recursively.
+%   4. Decrypt enc(P, K) whenever she knows the inverse
+%      of K (K itself for symmetric keys, privk(A) for
+%      pubk(A), pubk(A) for privk(A)). The decryption key
+%      may itself be learned from other messages.
+%   5. Build hashes of terms she knows, so she can rerun
+%      the key schedule once she has the inputs.
+%   6. Compute a DH secret when she knows one exponent
+%      and the other party's public share.
 %
 % Mallory cannot:
 %   1. Invert hashes.
 %   2. Derive unknown private keys.
-%   3. Automatically derive DH shared secrets.
+%   3. Derive a DH secret from the two public shares.
 %
-% This is a bounded model. It does not implement
-% unrestricted recursive Dolev-Yao closure.
+% Query knows/2 with a bound term. With an unbound term
+% the hash-construction rules can generate infinitely
+% many answers.
 
 % --------------------------------------------------
 % 1. Initial intruder knowledge
@@ -40,88 +54,132 @@ initial_knowledge(mallory, client).
 initial_knowledge(mallory, server).
 initial_knowledge(mallory, ca).
 
-% --------------------------------------------------
-% 2. Network observation
-% --------------------------------------------------
+% Key-schedule labels are public constants
+% (quoted strings in the CPSA macros).
+initial_knowledge(mallory, derived).
+initial_knowledge(mallory, client_hs_traffic).
+initial_knowledge(mallory, server_hs_traffic).
+initial_knowledge(mallory, client_ap_traffic).
+initial_knowledge(mallory, server_ap_traffic).
+initial_knowledge(mallory, finished).
 
-knows(mallory, Message) :-
-    network_message(Message).
-
 % --------------------------------------------------
-% 3. Initial knowledge
+% 2. Initial knowledge and network observation
 % --------------------------------------------------
 
 knows(mallory, Term) :-
     initial_knowledge(mallory, Term).
 
-% --------------------------------------------------
-% 4. Concatenated message decomposition
-% --------------------------------------------------
-
-knows(mallory, Part1) :-
-    network_message(cat(Part1, _)).
-
-knows(mallory, Part2) :-
-    network_message(cat(_, Part2)).
+knows(mallory, Term) :-
+    network_message(Message),
+    extract(Message, Term).
 
 % --------------------------------------------------
-% 5. Symmetric decryption
+% 3. Message analysis
 % --------------------------------------------------
 
-knows(mallory, Plaintext) :-
-    network_message(senc(Plaintext, Key)),
-    initial_knowledge(mallory, Key).
+% extract(Message, Part): Mallory can read Part out of
+% Message, given what she already knows.
+
+extract(Message, Message).
+
+extract(cat(A, _), Part) :- extract(A, Part).
+extract(cat(_, B), Part) :- extract(B, Part).
+
+extract(cat(A, _, _), Part) :- extract(A, Part).
+extract(cat(_, B, _), Part) :- extract(B, Part).
+extract(cat(_, _, C), Part) :- extract(C, Part).
+
+extract(transcript(A, _), Part) :- extract(A, Part).
+extract(transcript(_, B), Part) :- extract(B, Part).
+
+extract(transcript(A, _, _), Part) :- extract(A, Part).
+extract(transcript(_, B, _), Part) :- extract(B, Part).
+extract(transcript(_, _, C), Part) :- extract(C, Part).
+
+extract(server_flight(A, _, _), Part) :- extract(A, Part).
+extract(server_flight(_, B, _), Part) :- extract(B, Part).
+extract(server_flight(_, _, C), Part) :- extract(C, Part).
+
+% Decryption needs the inverse of the encryption key.
+extract(enc(Plaintext, Key), Part) :-
+    inverse_key(Key, DecryptionKey),
+    knows(mallory, DecryptionKey),
+    extract(Plaintext, Part).
 
 % --------------------------------------------------
-% 6. Public-key decryption
+% 4. Key inverses
 % --------------------------------------------------
 
-% Decryption requires the recipient's private key.
+asymmetric_key(pubk(_)).
+asymmetric_key(privk(_)).
 
-knows(mallory, Plaintext) :-
-    network_message(enc(Plaintext, pubk(Agent))),
-    initial_knowledge(mallory, privk(Agent)).
-
-% --------------------------------------------------
-% 7. Symbolic signature verification
-% --------------------------------------------------
-
-% A symbolic signature is represented as:
-% enc(Hash, privk(Agent)).
-%
-% Mallory can recover the signed hash when she knows
-% the corresponding public key.
-
-knows(mallory, Hash) :-
-    network_message(enc(Hash, privk(Agent))),
-    initial_knowledge(mallory, pubk(Agent)).
+inverse_key(pubk(A), privk(A)).
+inverse_key(privk(A), pubk(A)).
+inverse_key(Key, Key) :-
+    not asymmetric_key(Key).
 
 % --------------------------------------------------
-% 8. Intruder knowledge query
+% 5. Construction: hashing (one-way)
+% --------------------------------------------------
+
+% Arities used by tls13_terms.pl.
+
+knows(mallory, hash(A)) :-
+    knows(mallory, A).
+
+knows(mallory, hash(A, B)) :-
+    knows(mallory, A),
+    knows(mallory, B).
+
+knows(mallory, hash(A, B, C, D)) :-
+    knows(mallory, A),
+    knows(mallory, B),
+    knows(mallory, C),
+    knows(mallory, D).
+
+% --------------------------------------------------
+% 6. Construction: Diffie-Hellman
+% --------------------------------------------------
+
+% dh_secret(X, Y) is g^(XY). Mallory needs one exponent
+% plus the other side's public share g^Y or g^X.
+
+knows(mallory, dh_secret(X, Y)) :-
+    knows(mallory, X),
+    knows(mallory, exp(gen, Y)).
+
+knows(mallory, dh_secret(X, Y)) :-
+    knows(mallory, Y),
+    knows(mallory, exp(gen, X)).
+
+% --------------------------------------------------
+% 7. Intruder knowledge query
 % --------------------------------------------------
 
 intruder_knows(Term) :-
     knows(mallory, Term).
 
 % --------------------------------------------------
-% 9. Decryption capability queries
+% 8. Decryption capability queries
 % --------------------------------------------------
 
 intruder_can_decrypt_symmetric(Ciphertext, Plaintext) :-
     network_message(Ciphertext),
-    Ciphertext = senc(Plaintext, Key),
-    initial_knowledge(mallory, Key).
+    Ciphertext = enc(Plaintext, Key),
+    not asymmetric_key(Key),
+    knows(mallory, Key).
 
 intruder_can_decrypt_public_key(Ciphertext, Plaintext) :-
     network_message(Ciphertext),
     Ciphertext = enc(Plaintext, pubk(Agent)),
-    initial_knowledge(mallory, privk(Agent)).
+    knows(mallory, privk(Agent)).
 
 % --------------------------------------------------
-% 10. Signature verification capability query
+% 9. Signature verification capability query
 % --------------------------------------------------
 
 intruder_can_verify_signature(Signature, Hash) :-
     network_message(Signature),
     Signature = enc(Hash, privk(Agent)),
-    initial_knowledge(mallory, pubk(Agent)).
+    knows(mallory, pubk(Agent)).

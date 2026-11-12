@@ -13,12 +13,12 @@ network_message(
 
 % Test 3: Symmetric ciphertext with known key
 network_message(
-    senc(secret_message, mallory_session_key)
+    enc(secret_message, mallory_session_key)
 ).
 
 % Test 4: Symmetric ciphertext with unknown key
 network_message(
-    senc(protected_secret, unknown_session_key)
+    enc(protected_secret, unknown_session_key)
 ).
 
 % Test 5: Hash whose preimage is unknown
@@ -58,11 +58,42 @@ network_message(
     exp(gen, bob_y)
 ).
 
+% Test 12: Three-part concatenation (certificate shape)
+network_message(
+    cat(cert_party, cert_key, cert_signature)
+).
+
+% Test 13: A key learned from one message opens another
+network_message(
+    enc(inner_key, mallory_session_key)
+).
+
+network_message(
+    enc(nested_secret, inner_key)
+).
+
+% Test 14: Traffic protected by a key derived from a DH
+% exchange whose client exponent has leaked
+network_message(
+    cat(leak_cr, exp(gen, leaked_x))
+).
+
+network_message(
+    cat(leak_sr, exp(gen, leak_y))
+).
+
+network_message(
+    enc(dh_protected_secret,
+        hash(dh_secret(leaked_x, leak_y),
+             client_hs_traffic, leak_cr, leak_sr))
+).
+
 % --------------------------------------------------
 % Additional initial knowledge
 % --------------------------------------------------
 
 initial_knowledge(mallory, mallory_session_key).
+initial_knowledge(mallory, leaked_x).
 
 % --------------------------------------------------
 % Test 1: Public knowledge
@@ -85,6 +116,10 @@ test_message_decomposition :-
 % --------------------------------------------------
 
 test_symmetric_decryption :-
+    intruder_can_decrypt_symmetric(
+        enc(secret_message, mallory_session_key),
+        secret_message
+    ),
     intruder_knows(secret_message).
 
 % --------------------------------------------------
@@ -154,6 +189,33 @@ test_dh_shared_secret_protection :-
     not intruder_knows(dh_secret(alice_x, bob_y)),
     not intruder_knows(alice_x),
     not intruder_knows(bob_y).
+
+% --------------------------------------------------
+% Test 12: Three-part concatenation decomposition
+% --------------------------------------------------
+
+test_triple_decomposition :-
+    intruder_knows(cert_party),
+    intruder_knows(cert_key),
+    intruder_knows(cert_signature).
+
+% --------------------------------------------------
+% Test 13: Decryption with a derived key
+% --------------------------------------------------
+
+test_derived_key_decryption :-
+    intruder_knows(inner_key),
+    intruder_knows(nested_secret).
+
+% --------------------------------------------------
+% Test 14: Leaked DH exponent exposes traffic
+% --------------------------------------------------
+
+test_dh_compromise :-
+    intruder_knows(dh_secret(leaked_x, leak_y)),
+    intruder_knows(dh_protected_secret),
+    not intruder_knows(leak_y).
+
 % --------------------------------------------------
 % Run all tests
 % --------------------------------------------------
@@ -169,6 +231,9 @@ test_intruder :-
     test_signature_verification,
     test_signature_protection,
     test_dh_public_share_observation,
-    test_dh_shared_secret_protection.
+    test_dh_shared_secret_protection,
+    test_triple_decomposition,
+    test_derived_key_decryption,
+    test_dh_compromise.
     
 ?- test_intruder.

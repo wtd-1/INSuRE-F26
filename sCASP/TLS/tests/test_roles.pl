@@ -32,10 +32,12 @@ test_honest_exchange :-
 test_distinct_traffic_keys :-
     tls13_session_keys(
         cr, sr, client_x, server_y,
-        keys(_, _, CAK, SAK)),
+        keys(CHK, SHK, CAK, SAK)),
 
     CAK = hash(client_ap_traffic, cr, sr, _),
-    SAK = hash(server_ap_traffic, cr, sr, _).
+    SAK = hash(server_ap_traffic, cr, sr, _),
+    CAK \= SAK,
+    CHK \= SHK.
 
 % Run all role tests.
 test_roles :-

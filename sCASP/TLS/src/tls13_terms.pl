@@ -100,8 +100,9 @@ server_cert_verify_transcript(
 
 % Server CertificateVerify
 server_certificate_verify(
-    Transcript, ServerPrivateKey,
-    enc(hash(Transcript), ServerPrivateKey)).
+    Transcript, ServerPrivateKey, CertificateVerify) :-
+    certificate_verify(Transcript, ServerPrivateKey,
+                       CertificateVerify).
 
 % --------------------------------------------------
 % Server Finished
@@ -128,7 +129,8 @@ server_finished_transcript(
 % hash(hash(finished, HandshakeKey), Transcript)
 
 finish_message(Transcript, HandshakeKey,
-               hash(hash(finished, HandshakeKey), Transcript)).
+               hash(FinishedKey, Transcript)) :-
+    finished_key(HandshakeKey, FinishedKey).
 
 server_finished(
     Transcript, ServerHandshakeKey, Finished) :-
