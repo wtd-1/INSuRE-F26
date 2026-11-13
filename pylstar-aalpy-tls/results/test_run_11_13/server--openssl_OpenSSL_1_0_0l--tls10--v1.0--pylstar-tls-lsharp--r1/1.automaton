@@ -1,0 +1,57 @@
+NoRenegotiation TLS12CH_WITH_00_RandBytes TLS12CertificateRequest TLS12Certificate_valid TLS12ClientHelloDH TLS12ClientHelloRSA TLS12ClientKeyExchange TLS12EmptyCertificate TLSApplicationData TLSApplicationDataEmpty TLSCertificateVerify TLSChangeCipherSpec TLSCloseNotify TLSFinished
+0, 3, NoRenegotiation, FatalAlert(handshake_failure)
+0, 1, TLS12CH_WITH_00_RandBytes, TLSServerHello+TLSCertificate+TLSServerHelloDone
+0, 3, TLS12CertificateRequest, FatalAlert(unexpected_message)
+0, 3, TLS12Certificate_valid, FatalAlert(unexpected_message)
+0, 1, TLS12ClientHelloDH, TLSServerHello+TLSCertificate+TLSServerKeyExchange+TLSServerHelloDone
+0, 1, TLS12ClientHelloRSA, TLSServerHello+TLSCertificate+TLSServerHelloDone
+0, 3, TLS12ClientKeyExchange, FatalAlert(unexpected_message)
+0, 3, TLS12EmptyCertificate, FatalAlert(unexpected_message)
+0, 3, TLSApplicationData, FatalAlert(unexpected_message)
+0, 0, TLSApplicationDataEmpty, No RSP
+0, 3, TLSCertificateVerify, FatalAlert(unexpected_message)
+0, 3, TLSChangeCipherSpec, FatalAlert(unexpected_message)
+0, 3, TLSCloseNotify, EOF
+0, 3, TLSFinished, FatalAlert(unexpected_message)
+1, 3, NoRenegotiation, FatalAlert(handshake_failure)
+1, 3, TLS12CH_WITH_00_RandBytes, FatalAlert(handshake_failure)
+1, 3, TLS12CertificateRequest, FatalAlert(unexpected_message)
+1, 3, TLS12Certificate_valid, FatalAlert(unexpected_message)
+1, 3, TLS12ClientHelloDH, FatalAlert(handshake_failure)
+1, 3, TLS12ClientHelloRSA, FatalAlert(handshake_failure)
+1, 0, TLS12ClientKeyExchange, No RSP
+1, 3, TLS12EmptyCertificate, FatalAlert(unexpected_message)
+1, 3, TLSApplicationData, FatalAlert(unexpected_message)
+1, 1, TLSApplicationDataEmpty, No RSP
+1, 3, TLSCertificateVerify, FatalAlert(unexpected_message)
+1, 2, TLSChangeCipherSpec, No RSP
+1, 3, TLSCloseNotify, EOF
+1, 3, TLSFinished, FatalAlert(unexpected_message)
+2, 3, NoRenegotiation, FatalAlert(decryption_failed)
+2, 3, TLS12CH_WITH_00_RandBytes, FatalAlert(decryption_failed)
+2, 3, TLS12CertificateRequest, FatalAlert(decryption_failed)
+2, 3, TLS12Certificate_valid, FatalAlert(decryption_failed)
+2, 3, TLS12ClientHelloDH, FatalAlert(decryption_failed)
+2, 3, TLS12ClientHelloRSA, FatalAlert(decryption_failed)
+2, 3, TLS12ClientKeyExchange, FatalAlert(decryption_failed)
+2, 3, TLS12EmptyCertificate, FatalAlert(decryption_failed)
+2, 3, TLSApplicationData, FatalAlert(decryption_failed)
+2, 3, TLSApplicationDataEmpty, FatalAlert(decryption_failed)
+2, 3, TLSCertificateVerify, FatalAlert(decryption_failed)
+2, 3, TLSChangeCipherSpec, FatalAlert(decryption_failed)
+2, 3, TLSCloseNotify, FatalAlert(decryption_failed)
+2, 3, TLSFinished, FatalAlert(decryption_failed)
+3, 3, NoRenegotiation, EOF
+3, 3, TLS12CH_WITH_00_RandBytes, EOF
+3, 3, TLS12CertificateRequest, EOF
+3, 3, TLS12Certificate_valid, EOF
+3, 3, TLS12ClientHelloDH, EOF
+3, 3, TLS12ClientHelloRSA, EOF
+3, 3, TLS12ClientKeyExchange, EOF
+3, 3, TLS12EmptyCertificate, EOF
+3, 3, TLSApplicationData, EOF
+3, 3, TLSApplicationDataEmpty, EOF
+3, 3, TLSCertificateVerify, EOF
+3, 3, TLSChangeCipherSpec, EOF
+3, 3, TLSCloseNotify, EOF
+3, 3, TLSFinished, EOF

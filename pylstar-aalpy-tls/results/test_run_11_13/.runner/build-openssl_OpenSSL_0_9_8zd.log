@@ -1,0 +1,22 @@
+docker build --build-arg COMMIT=$(basename containers/openssl/OpenSSL_0_9_8zd) -t tls-test-bed/openssl:$(basename containers/openssl/OpenSSL_0_9_8zd) stacks/openssl-git--0_9_8
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 1.19kB 0.1s done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/debian:buster
+#2 ERROR: error getting credentials - err: exit status 1, out: ``
+------
+ > [internal] load metadata for docker.io/library/debian:buster:
+------
+Dockerfile:16
+--------------------
+  14 |     
+  15 |     
+  16 | >>> FROM debian:buster
+  17 |     # Debian buster is EOL; its packages now live on archive.debian.org.
+  18 |     RUN echo "deb http://archive.debian.org/debian buster main" > /etc/apt/sources.list && echo "deb http://archive.debian.org/debian-security buster/updates main" >> /etc/apt/sources.list
+--------------------
+ERROR: failed to build: failed to solve: error getting credentials - err: exit status 1, out: ``
+make: *** [Makefile:72: containers/openssl/OpenSSL_0_9_8zd.docker] Error 1

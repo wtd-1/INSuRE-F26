@@ -1,0 +1,19 @@
+campaign	test_run_11_13
+kind	client
+image	tls-test-bed/openssl:OpenSSL_1_0_1j
+tls_version	1.0
+scenario	freak
+extra_args	
+eq_method	RW:10000:0.1
+inferer	pylstar-tls
+repeat	1
+jobs	6
+start_epoch	1794599679.486187791
+end_epoch	1794599706.235981248
+wall_seconds	26.7
+exit_code	0
+status	ok
+loadavg_start	2.09 2.21 2.43
+loadavg_end	2.19 2.22 2.43
+host	aendri
+command	INFERER_IMAGE=tls-test-bed/pylstar-tls ./infer-client.sh tls-test-bed/openssl:OpenSSL_1_0_1j 1.0 freak -E RW:10000:0.1

@@ -1,0 +1,5 @@
+5 classes
+3 distinguishing sequences:
+  TLS13ClientHello, TLS13Certificate_valid, TLSCertificateVerify, TLSInvalidCertificateVerify
+  TLS13ClientHello, TLS13Certificate_untrusted
+  TLS13ClientHello, TLS13Certificate_valid, TLSFinished

@@ -1,0 +1,67 @@
+name,kind,stack,tls_version,scenario,inferer,states,working,security_results
+client--curl-wolfssl_v4.6.0-stable--tls13--v1.3--pylstar-tls-lsharp--r1,client,curl-wolfssl_v4.6.0-stable,1.3,tls13,pylstar-tls-lsharp,13,True,Possible authentication bypass
+client--curl-wolfssl_v5.1.0-stable--tls13--v1.3--pylstar-tls-lsharp--r1,client,curl-wolfssl_v5.1.0-stable,1.3,tls13,pylstar-tls-lsharp,13,True,Possible authentication bypass
+client--curl-wolfssl_v5.1.1-stable--tls13--v1.3--pylstar-tls--r1,client,curl-wolfssl_v5.1.1-stable,1.3,tls13,pylstar-tls,13,True,Possible authentication bypass
+client--curl-wolfssl_v5.1.1-stable--tls13--v1.3--pylstar-tls-lsharp--r1,client,curl-wolfssl_v5.1.1-stable,1.3,tls13,pylstar-tls-lsharp,13,True,Possible authentication bypass
+client--fizz_v2021.02.01.00--tls13--v1.3--pylstar-tls--r1,client,fizz_v2021.02.01.00,1.3,tls13,pylstar-tls,10,True,"Pre-['SH', 'SH_rand00'] loops found"
+client--fizz_v2021.02.01.00--tls13--v1.3--pylstar-tls-lsharp--r1,client,fizz_v2021.02.01.00,1.3,tls13,pylstar-tls-lsharp,10,True,"Pre-['SH', 'SH_rand00'] loops found"
+client--fizz_v2021.06.14.00--tls13--v1.3--pylstar-tls--r1,client,fizz_v2021.06.14.00,1.3,tls13,pylstar-tls,10,True,"Pre-['SH', 'SH_rand00'] loops found"
+client--fizz_v2021.06.14.00--tls13--v1.3--pylstar-tls-lsharp--r1,client,fizz_v2021.06.14.00,1.3,tls13,pylstar-tls-lsharp,10,True,"Pre-['SH', 'SH_rand00'] loops found"
+client--openssl_OpenSSL_0_9_8zc--freak--v1.0--pylstar-tls--r1,client,openssl_OpenSSL_0_9_8zc,1.0,freak,pylstar-tls,4,False,
+client--openssl_OpenSSL_0_9_8zc--freak--v1.0--pylstar-tls-lsharp--r1,client,openssl_OpenSSL_0_9_8zc,1.0,freak,pylstar-tls-lsharp,4,False,
+client--openssl_OpenSSL_1_0_0o--freak--v1.0--pylstar-tls--r1,client,openssl_OpenSSL_1_0_0o,1.0,freak,pylstar-tls,4,False,
+client--openssl_OpenSSL_1_0_0o--freak--v1.0--pylstar-tls-lsharp--r1,client,openssl_OpenSSL_1_0_0o,1.0,freak,pylstar-tls-lsharp,4,False,
+client--openssl_OpenSSL_1_0_0p--freak--v1.0--pylstar-tls--r1,client,openssl_OpenSSL_1_0_0p,1.0,freak,pylstar-tls,4,False,
+client--openssl_OpenSSL_1_0_0p--freak--v1.0--pylstar-tls-lsharp--r1,client,openssl_OpenSSL_1_0_0p,1.0,freak,pylstar-tls-lsharp,4,False,
+client--openssl_OpenSSL_1_0_1j--freak--v1.0--pylstar-tls--r1,client,openssl_OpenSSL_1_0_1j,1.0,freak,pylstar-tls,4,False,
+client--openssl_OpenSSL_1_0_1j--freak--v1.0--pylstar-tls-lsharp--r1,client,openssl_OpenSSL_1_0_1j,1.0,freak,pylstar-tls-lsharp,4,False,
+client--openssl_OpenSSL_1_0_1k--freak--v1.0--pylstar-tls--r1,client,openssl_OpenSSL_1_0_1k,1.0,freak,pylstar-tls,4,False,
+client--openssl_OpenSSL_1_0_1k--freak--v1.0--pylstar-tls-lsharp--r1,client,openssl_OpenSSL_1_0_1k,1.0,freak,pylstar-tls-lsharp,4,False,
+client--wolfssl_v4.4.0-stable--tls13--v1.3--pylstar-tls--r1,client,wolfssl_v4.4.0-stable,1.3,tls13,pylstar-tls,13,True,"Pre-['SH', 'SH_rand00'] loops found; Possible authentication bypass"
+client--wolfssl_v4.4.0-stable--tls13--v1.3--pylstar-tls-lsharp--r1,client,wolfssl_v4.4.0-stable,1.3,tls13,pylstar-tls-lsharp,12,True,"Pre-['SH', 'SH_rand00'] loops found; Possible authentication bypass"
+client--wolfssl_v4.5.0-stable--tls13--v1.3--pylstar-tls--r1,client,wolfssl_v4.5.0-stable,1.3,tls13,pylstar-tls,1,False,
+client--wolfssl_v4.5.0-stable--tls13--v1.3--pylstar-tls-lsharp--r1,client,wolfssl_v4.5.0-stable,1.3,tls13,pylstar-tls-lsharp,1,False,
+client--wolfssl_v4.6.0-stable--tls13--v1.3--pylstar-tls--r1,client,wolfssl_v4.6.0-stable,1.3,tls13,pylstar-tls,1,False,
+client--wolfssl_v4.6.0-stable--tls13--v1.3--pylstar-tls-lsharp--r1,client,wolfssl_v4.6.0-stable,1.3,tls13,pylstar-tls-lsharp,1,False,
+client--wolfssl_v5.1.0-stable--tls13--v1.3--pylstar-tls--r1,client,wolfssl_v5.1.0-stable,1.3,tls13,pylstar-tls,1,False,
+client--wolfssl_v5.1.0-stable--tls13--v1.3--pylstar-tls-lsharp--r1,client,wolfssl_v5.1.0-stable,1.3,tls13,pylstar-tls-lsharp,1,False,
+client--wolfssl_v5.2.0-stable--tls13--v1.3--pylstar-tls--r1,client,wolfssl_v5.2.0-stable,1.3,tls13,pylstar-tls,1,False,
+client--wolfssl_v5.2.0-stable--tls13--v1.3--pylstar-tls-lsharp--r1,client,wolfssl_v5.2.0-stable,1.3,tls13,pylstar-tls-lsharp,1,False,
+server--erlang_OTP-20.0--bb-oracle--v1.0--pylstar-tls--r1,server,erlang_OTP-20.0,1.0,bb-oracle,pylstar-tls,5,True,Possible BB oracle
+server--erlang_OTP-20.0--bb-oracle--v1.0--pylstar-tls-lsharp--r1,server,erlang_OTP-20.0,1.0,bb-oracle,pylstar-tls-lsharp,5,True,Possible BB oracle
+server--erlang_OTP-24.2.1--tls10--v1.0--pylstar-tls--r1,server,erlang_OTP-24.2.1,1.0,tls10,pylstar-tls,7,True,Pre-['CCS'] loops found
+server--erlang_OTP-24.2.1--tls10--v1.0--pylstar-tls-lsharp--r1,server,erlang_OTP-24.2.1,1.0,tls10,pylstar-tls-lsharp,7,True,Pre-['CCS'] loops found
+server--erlang_OTP-24.2.1--tls12--v1.2--pylstar-tls--r1,server,erlang_OTP-24.2.1,1.2,tls12,pylstar-tls,7,True,Pre-['CCS'] loops found
+server--erlang_OTP-24.2.1--tls12--v1.2--pylstar-tls-lsharp--r1,server,erlang_OTP-24.2.1,1.2,tls12,pylstar-tls-lsharp,7,True,Pre-['CCS'] loops found
+server--erlang_OTP-24.2.1--tls13--v1.3--pylstar-tls--r1,server,erlang_OTP-24.2.1,1.3,tls13,pylstar-tls,8,True,"Pre-['CH', 'CH_rand00'] loops found"
+server--erlang_OTP-24.2.1--tls13--v1.3--pylstar-tls-lsharp--r1,server,erlang_OTP-24.2.1,1.3,tls13,pylstar-tls-lsharp,9,True,"Pre-['CH', 'CH_rand00'] loops found"
+server--matrixssl_3.7.2--bb-oracle--v1.0--pylstar-tls--r1,server,matrixssl_3.7.2,1.0,bb-oracle,pylstar-tls,5,True,Possible BB oracle
+server--matrixssl_3.7.2--bb-oracle--v1.0--pylstar-tls-lsharp--r1,server,matrixssl_3.7.2,1.0,bb-oracle,pylstar-tls-lsharp,5,True,Possible BB oracle
+server--nss_NSS_3_78_RTM--tls12--v1.2--pylstar-tls--r1,server,nss_NSS_3_78_RTM,1.2,tls12,pylstar-tls,6,True,Pre-['CCS'] loops found
+server--nss_NSS_3_78_RTM--tls12--v1.2--pylstar-tls-lsharp--r1,server,nss_NSS_3_78_RTM,1.2,tls12,pylstar-tls-lsharp,6,True,Pre-['CCS'] loops found
+server--openssl_OpenSSL_0_9_8za--tls10--v1.0--pylstar-tls--r1,server,openssl_OpenSSL_0_9_8za,1.0,tls10,pylstar-tls,8,True,Pre-['CCS'] loops found
+server--openssl_OpenSSL_0_9_8za--tls10--v1.0--pylstar-tls-lsharp--r1,server,openssl_OpenSSL_0_9_8za,1.0,tls10,pylstar-tls-lsharp,8,True,Pre-['CCS'] loops found
+server--openssl_OpenSSL_0_9_8zb--tls10--v1.0--pylstar-tls--r1,server,openssl_OpenSSL_0_9_8zb,1.0,tls10,pylstar-tls,8,True,Pre-['CCS'] loops found
+server--openssl_OpenSSL_0_9_8zb--tls10--v1.0--pylstar-tls-lsharp--r1,server,openssl_OpenSSL_0_9_8zb,1.0,tls10,pylstar-tls-lsharp,8,True,Pre-['CCS'] loops found
+server--openssl_OpenSSL_1_0_0l--tls10--v1.0--pylstar-tls--r1,server,openssl_OpenSSL_1_0_0l,1.0,tls10,pylstar-tls,9,True,Pre-['CCS'] loops found
+server--openssl_OpenSSL_1_0_0l--tls10--v1.0--pylstar-tls-lsharp--r1,server,openssl_OpenSSL_1_0_0l,1.0,tls10,pylstar-tls-lsharp,9,True,Pre-['CCS'] loops found
+server--openssl_OpenSSL_1_0_0m--tls10--v1.0--pylstar-tls--r1,server,openssl_OpenSSL_1_0_0m,1.0,tls10,pylstar-tls,8,True,Pre-['CCS'] loops found
+server--openssl_OpenSSL_1_0_0m--tls10--v1.0--pylstar-tls-lsharp--r1,server,openssl_OpenSSL_1_0_0m,1.0,tls10,pylstar-tls-lsharp,8,True,Pre-['CCS'] loops found
+server--openssl_OpenSSL_1_0_1h--tls12--v1.2--pylstar-tls--r1,server,openssl_OpenSSL_1_0_1h,1.2,tls12,pylstar-tls,8,True,Pre-['CCS'] loops found
+server--openssl_OpenSSL_1_0_1h--tls12--v1.2--pylstar-tls-lsharp--r1,server,openssl_OpenSSL_1_0_1h,1.2,tls12,pylstar-tls-lsharp,8,True,Pre-['CCS'] loops found
+server--openssl_OpenSSL_1_0_1i--tls12--v1.2--pylstar-tls--r1,server,openssl_OpenSSL_1_0_1i,1.2,tls12,pylstar-tls,8,True,Pre-['CCS'] loops found
+server--openssl_OpenSSL_1_0_1i--tls12--v1.2--pylstar-tls-lsharp--r1,server,openssl_OpenSSL_1_0_1i,1.2,tls12,pylstar-tls-lsharp,8,True,Pre-['CCS'] loops found
+server--openssl_OpenSSL_1_0_2u--tls12--v1.2--pylstar-tls--r1,server,openssl_OpenSSL_1_0_2u,1.2,tls12,pylstar-tls,6,True,Pre-['CCS'] loops found
+server--openssl_OpenSSL_1_0_2u--tls12--v1.2--pylstar-tls-lsharp--r1,server,openssl_OpenSSL_1_0_2u,1.2,tls12,pylstar-tls-lsharp,6,True,Pre-['CCS'] loops found
+server--wolfssl_v3.12.2-stable--bb-oracle--v1.0--pylstar-tls--r1,server,wolfssl_v3.12.2-stable,1.0,bb-oracle,pylstar-tls,5,True,Possible BB oracle
+server--wolfssl_v3.12.2-stable--bb-oracle--v1.0--pylstar-tls-lsharp--r1,server,wolfssl_v3.12.2-stable,1.0,bb-oracle,pylstar-tls-lsharp,4,True,Possible BB oracle
+server--wolfssl_v4.4.0-stable--tls12--v1.2--pylstar-tls--r1,server,wolfssl_v4.4.0-stable,1.2,tls12,pylstar-tls,27,True,Pre-['CCS'] loops found
+server--wolfssl_v4.4.0-stable--tls12--v1.2--pylstar-tls-lsharp--r1,server,wolfssl_v4.4.0-stable,1.2,tls12,pylstar-tls-lsharp,11,True,Pre-['CCS'] loops found
+server--wolfssl_v4.5.0-stable--tls12--v1.2--pylstar-tls--r1,server,wolfssl_v4.5.0-stable,1.2,tls12,pylstar-tls,26,True,Pre-['CCS'] loops found
+server--wolfssl_v4.5.0-stable--tls12--v1.2--pylstar-tls-lsharp--r1,server,wolfssl_v4.5.0-stable,1.2,tls12,pylstar-tls-lsharp,7,True,Pre-['CCS'] loops found
+server--wolfssl_v5.2.0-stable--tls12--v1.2--pylstar-tls--r1,server,wolfssl_v5.2.0-stable,1.2,tls12,pylstar-tls,16,True,Pre-['CCS'] loops found
+server--wolfssl_v5.2.0-stable--tls12--v1.2--pylstar-tls-lsharp--r1,server,wolfssl_v5.2.0-stable,1.2,tls12,pylstar-tls-lsharp,7,True,Pre-['CCS'] loops found
+srv-auth--wolfssl_v4.4.0-stable--tls13--v1.3--pylstar-tls--r1,srv-auth,wolfssl_v4.4.0-stable,1.3,tls13,pylstar-tls,7,True,Possible authentication bypass
+srv-auth--wolfssl_v4.4.0-stable--tls13--v1.3--pylstar-tls-lsharp--r1,srv-auth,wolfssl_v4.4.0-stable,1.3,tls13,pylstar-tls-lsharp,6,True,Possible authentication bypass
+srv-auth--wolfssl_v5.1.0-stable--tls13--v1.3--pylstar-tls--r1,srv-auth,wolfssl_v5.1.0-stable,1.3,tls13,pylstar-tls,7,True,Possible authentication bypass
+srv-auth--wolfssl_v5.1.0-stable--tls13--v1.3--pylstar-tls-lsharp--r1,srv-auth,wolfssl_v5.1.0-stable,1.3,tls13,pylstar-tls-lsharp,6,True,Possible authentication bypass

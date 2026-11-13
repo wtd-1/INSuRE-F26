@@ -1,0 +1,56 @@
+NoRenegotiation TLS13Certificate_valid TLS13ClientHello TLS13EmptyCertificate TLSApplicationData TLSApplicationDataEmpty TLSCertificateVerify TLSChangeCipherSpec TLSCloseNotify TLSFinished TLSInvalidCertificateVerify
+0, 0, NoRenegotiation, No RSP
+0, 1, TLS13Certificate_valid, No RSP
+0, 2, TLS13ClientHello, TLS13ServerHello+TLSChangeCipherSpec+TLSEncryptedExtensions+TLS13Certificate+TLSCertificateVerify+TLSFinished
+0, 1, TLS13EmptyCertificate, No RSP
+0, 0, TLSApplicationData, No RSP
+0, 0, TLSApplicationDataEmpty, No RSP
+0, 1, TLSCertificateVerify, No RSP
+0, 0, TLSChangeCipherSpec, No RSP
+0, 0, TLSCloseNotify, No RSP
+0, 1, TLSFinished, No RSP
+0, 1, TLSInvalidCertificateVerify, No RSP
+1, 1, NoRenegotiation, No RSP
+1, 1, TLS13Certificate_valid, No RSP
+1, 2, TLS13ClientHello, TLS13ServerHello+TLSChangeCipherSpec+UnknownPacket+UnknownPacket+UnknownPacket+UnknownPacket
+1, 1, TLS13EmptyCertificate, No RSP
+1, 1, TLSApplicationData, No RSP
+1, 1, TLSApplicationDataEmpty, No RSP
+1, 1, TLSCertificateVerify, No RSP
+1, 1, TLSChangeCipherSpec, No RSP
+1, 1, TLSCloseNotify, No RSP
+1, 1, TLSFinished, No RSP
+1, 1, TLSInvalidCertificateVerify, No RSP
+2, 2, NoRenegotiation, No RSP
+2, 4, TLS13Certificate_valid, UnknownPacket
+2, 4, TLS13ClientHello, UnknownPacket
+2, 4, TLS13EmptyCertificate, UnknownPacket
+2, 2, TLSApplicationData, No RSP
+2, 2, TLSApplicationDataEmpty, No RSP
+2, 4, TLSCertificateVerify, UnknownPacket
+2, 4, TLSChangeCipherSpec, UnknownPacket
+2, 4, TLSCloseNotify, EOF
+2, 3, TLSFinished, No RSP
+2, 4, TLSInvalidCertificateVerify, UnknownPacket
+3, 3, NoRenegotiation, No RSP
+3, 4, TLS13Certificate_valid, FatalAlert(unexpected_message)
+3, 4, TLS13ClientHello, FatalAlert(bad_record_mac)
+3, 4, TLS13EmptyCertificate, FatalAlert(unexpected_message)
+3, 3, TLSApplicationData, TLSApplicationData+TLSApplicationData
+3, 3, TLSApplicationDataEmpty, No RSP
+3, 4, TLSCertificateVerify, FatalAlert(unexpected_message)
+3, 4, TLSChangeCipherSpec, FatalAlert(unexpected_message)
+3, 4, TLSCloseNotify, Warning(close_notify)
+3, 4, TLSFinished, FatalAlert(unexpected_message)
+3, 4, TLSInvalidCertificateVerify, FatalAlert(unexpected_message)
+4, 4, NoRenegotiation, EOF
+4, 4, TLS13Certificate_valid, EOF
+4, 4, TLS13ClientHello, EOF
+4, 4, TLS13EmptyCertificate, EOF
+4, 4, TLSApplicationData, EOF
+4, 4, TLSApplicationDataEmpty, EOF
+4, 4, TLSCertificateVerify, EOF
+4, 4, TLSChangeCipherSpec, EOF
+4, 4, TLSCloseNotify, EOF
+4, 4, TLSFinished, EOF
+4, 4, TLSInvalidCertificateVerify, EOF

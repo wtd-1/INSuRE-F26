@@ -1,0 +1,10 @@
+input_letters ['TLS13ClientHello', 'TLSChangeCipherSpec', 'TLS13EmptyCertificate', 'TLSInvalidCertificateVerify', 'TLSFinished', 'TLSApplicationData', 'TLSApplicationDataEmpty', 'TLSCloseNotify', 'NoRenegotiation', 'TLSCertificateVerify', 'TLS13Certificate_valid']
+eqtests: RandomWalk(10000, 0.1)
+timeout: 1.0
+
+time spent in lstar.learn(): 134.49602961540222
+n_states: 7
+n_queries=1772
+n_submitted_queries=1591
+n_letters=13493
+n_submitted_letters=13026

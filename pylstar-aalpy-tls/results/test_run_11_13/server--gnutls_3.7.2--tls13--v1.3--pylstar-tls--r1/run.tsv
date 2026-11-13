@@ -1,0 +1,19 @@
+campaign	test_run_11_13
+kind	server
+image	tls-test-bed/gnutls:3.7.2
+tls_version	1.3
+scenario	tls13
+extra_args	
+eq_method	RW:10000:0.1
+inferer	pylstar-tls
+repeat	1
+jobs	6
+start_epoch	1794597175.344080559
+end_epoch	1794597217.173620824
+wall_seconds	41.8
+exit_code	0
+status	ok
+loadavg_start	2.86 3.62 5.28
+loadavg_end	2.89 3.54 5.18
+host	aendri
+command	INFERER_IMAGE=tls-test-bed/pylstar-tls ./infer-server.sh tls-test-bed/gnutls:3.7.2 1.3 tls13 -E RW:10000:0.1

@@ -1,0 +1,54 @@
+f1f1a97ae91232e64d97dec2efd1ea493c00600e9d34f277c90d96e05e4260c1
+make: Entering directory '/mnt/c/Users/zestyxace/Documents/GitHub/INSuRE-F26/pylstar-aalpy-tls/crypto'
+make: Leaving directory '/mnt/c/Users/zestyxace/Documents/GitHub/INSuRE-F26/pylstar-aalpy-tls/crypto'
+/root/src/scapy/scapy/layers/tls/crypto/cipher_block.py:156: CryptographyDeprecationWarning: IDEA has been deprecated
+  pc_cls = algorithms.IDEA
+/root/src/scapy/scapy/layers/tls/crypto/cipher_block.py:162: CryptographyDeprecationWarning: SEED has been deprecated
+  pc_cls = algorithms.SEED
+/root/src/scapy/scapy/layers/ipsec.py:471: CryptographyDeprecationWarning: Blowfish has been deprecated
+  cipher=algorithms.Blowfish,
+/root/src/scapy/scapy/layers/ipsec.py:485: CryptographyDeprecationWarning: CAST5 has been deprecated
+  cipher=algorithms.CAST5,
+input_letters ['TLS13ServerHello', 'TLS13SH_WITH_00_RandBytes', 'TLSChangeCipherSpec', 'TLS13EncryptedExtensions', 'TLS13CertificateRequest', 'TLS13Certificate_valid', 'TLS13Certificate_invalid', 'TLS13Certificate_untrusted', 'TLS13EmptyCertificate', 'TLS13CertificateVerify', 'TLS13InvalidCertificateVerify', 'TLSFinished', 'TLSApplicationData', 'TLSApplicationDataEmpty', 'TLSCloseNotify', 'NoRenegotiation']
+eqtests: RandomWalk(10000, 0.1)
+timeout: 1.0
+32040: [ERROR] ObservationTable:__execute_query: Incompatible path found, expected '{'UnknownPacket'}' found '{'TLS13EndOfEarlyData+UnknownPacket'}'
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/pylstar/KnowledgeBase.py", line 113, in _resolve_word
+    return self.knowledge_tree.get_output_word(word)
+  File "/usr/local/lib/python3.10/site-packages/pylstar/KnowledgeTree.py", line 181, in get_output_word
+    raise Exception("No path found")
+Exception: No path found
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/pylstar/ObservationTable.py", line 866, in __execute_query
+    self.knowledge_base.resolve_query(query)
+  File "/usr/local/lib/python3.10/site-packages/pylstar/KnowledgeBase.py", line 103, in resolve_query
+    query.output_word = self._resolve_word(query.input_word)
+  File "/usr/local/lib/python3.10/site-packages/pylstar/KnowledgeBase.py", line 123, in _resolve_word
+    self.knowledge_tree.add_word(input_word = word, output_word = output)
+  File "/usr/local/lib/python3.10/site-packages/pylstar/KnowledgeTree.py", line 222, in add_word
+    self.__add_letters(input_word.letters, output_word.letters)
+  File "/usr/local/lib/python3.10/site-packages/pylstar/KnowledgeTree.py", line 307, in __add_letters
+    return retained_root.traverse(input_letters, output_letters)
+  File "/usr/local/lib/python3.10/site-packages/pylstar/KnowledgeTree.py", line 94, in traverse
+    raise Exception("Incompatible path found, expected '{}' found '{}'".format(child.output_letter.symbols, current_output_letter.symbols))
+Exception: Incompatible path found, expected '{'UnknownPacket'}' found '{'TLS13EndOfEarlyData+UnknownPacket'}'
+Traceback (most recent call last):
+  File "/root/pylstar-tls/src/infer_client.py", line 289, in <module>
+    main()
+  File "/root/pylstar-tls/src/infer_client.py", line 269, in main
+    state_machine = lstar.learn()
+  File "/usr/local/lib/python3.10/site-packages/pylstar/LSTAR.py", line 281, in learn
+    hypothesis = self.build_hypothesis(i_round)
+  File "/usr/local/lib/python3.10/site-packages/pylstar/LSTAR.py", line 344, in build_hypothesis
+    self.observation_table.close_table()
+  File "/usr/local/lib/python3.10/site-packages/pylstar/ObservationTable.py", line 624, in close_table
+    self.__add_word_in_S(word_in_sa)
+  File "/usr/local/lib/python3.10/site-packages/pylstar/ObservationTable.py", line 803, in __add_word_in_S
+    self.__add_word_in_SA(new_word)
+  File "/usr/local/lib/python3.10/site-packages/pylstar/ObservationTable.py", line 843, in __add_word_in_SA
+    raise Exception("Query '{}' could not be queries".format(output_query))
+Exception: Query 'OutputQuery(I = [Letter('TLS13ServerHello'), Letter('TLS13Certificate_invalid'), Letter('TLS13EmptyCertificate')], O = None)' could not be queries

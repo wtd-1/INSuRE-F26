@@ -1,0 +1,4 @@
+4 classes
+2 distinguishing sequences:
+  TLS12ClientHelloDH, TLSChangeCipherSpec
+  TLS12ClientHelloDH, TLS12ClientKeyExchange, TLSChangeCipherSpec, TLS12Certificate_valid

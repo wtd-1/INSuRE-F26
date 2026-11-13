@@ -1,0 +1,19 @@
+campaign	test_run_11_13
+kind	server
+image	tls-test-bed/wolfssl:v3.12.2-stable
+tls_version	1.0
+scenario	bb-oracle
+extra_args	
+eq_method	RW:10000:0.1
+inferer	pylstar-tls
+repeat	1
+jobs	6
+start_epoch	1794600300.866839684
+end_epoch	1794600375.277513596
+wall_seconds	74.4
+exit_code	0
+status	ok
+loadavg_start	11.35 6.96 4.36
+loadavg_end	6.74 6.52 4.40
+host	aendri
+command	INFERER_IMAGE=tls-test-bed/pylstar-tls ./infer-server.sh tls-test-bed/wolfssl:v3.12.2-stable 1.0 bb-oracle -E RW:10000:0.1

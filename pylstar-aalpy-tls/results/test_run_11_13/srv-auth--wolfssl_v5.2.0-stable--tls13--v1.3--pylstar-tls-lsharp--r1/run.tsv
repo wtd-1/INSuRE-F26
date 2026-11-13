@@ -1,0 +1,19 @@
+campaign	test_run_11_13
+kind	srv-auth
+image	tls-test-bed/wolfssl:v5.2.0-stable
+tls_version	1.3
+scenario	tls13
+extra_args	
+eq_method	RW:10000:0.1
+inferer	pylstar-tls-lsharp
+repeat	1
+jobs	6
+start_epoch	1794601620.758765855
+end_epoch	1794601666.515379732
+wall_seconds	45.8
+exit_code	0
+status	ok
+loadavg_start	4.67 4.11 4.19
+loadavg_end	4.15 4.09 4.17
+host	aendri
+command	INFERER_IMAGE=tls-test-bed/pylstar-tls-lsharp ./infer-srv-auth.sh tls-test-bed/wolfssl:v5.2.0-stable 1.3 tls13 -E RW:10000:0.1

@@ -1,0 +1,225 @@
+NoRenegotiation TLS12CH_WITH_00_RandBytes TLS12CertificateRequest TLS12Certificate_valid TLS12ClientHelloDH TLS12ClientHelloRSA TLS12ClientKeyExchange TLS12EmptyCertificate TLSApplicationData TLSApplicationDataEmpty TLSCertificateVerify TLSChangeCipherSpec TLSCloseNotify TLSFinished
+0, 0, NoRenegotiation, No RSP
+0, 1, TLS12CH_WITH_00_RandBytes, TLSServerHello+TLSCertificate+TLSServerKeyExchange+TLSServerHelloDone
+0, 15, TLS12CertificateRequest, Warning(close_notify)
+0, 15, TLS12Certificate_valid, Warning(close_notify)
+0, 1, TLS12ClientHelloDH, TLSServerHello+TLSCertificate+TLSServerKeyExchange+TLSServerHelloDone
+0, 1, TLS12ClientHelloRSA, TLSServerHello+TLSCertificate+TLSServerHelloDone
+0, 15, TLS12ClientKeyExchange, Warning(close_notify)
+0, 15, TLS12EmptyCertificate, Warning(close_notify)
+0, 15, TLSApplicationData, FatalAlert(unexpected_message)
+0, 15, TLSApplicationDataEmpty, Warning(close_notify)
+0, 15, TLSCertificateVerify, Warning(close_notify)
+0, 15, TLSChangeCipherSpec, Warning(close_notify)
+0, 15, TLSCloseNotify, Warning(close_notify)
+0, 15, TLSFinished, Warning(close_notify)
+1, 15, NoRenegotiation, Warning(close_notify)
+1, 15, TLS12CH_WITH_00_RandBytes, Warning(close_notify)
+1, 15, TLS12CertificateRequest, Warning(close_notify)
+1, 15, TLS12Certificate_valid, FatalAlert(unknown_ca)
+1, 15, TLS12ClientHelloDH, Warning(close_notify)
+1, 15, TLS12ClientHelloRSA, Warning(close_notify)
+1, 2, TLS12ClientKeyExchange, No RSP
+1, 3, TLS12EmptyCertificate, No RSP
+1, 15, TLSApplicationData, FatalAlert(unexpected_message)
+1, 15, TLSApplicationDataEmpty, Warning(close_notify)
+1, 15, TLSCertificateVerify, Warning(close_notify)
+1, 15, TLSChangeCipherSpec, Warning(close_notify)
+1, 15, TLSCloseNotify, Warning(close_notify)
+1, 15, TLSFinished, Warning(close_notify)
+2, 15, NoRenegotiation, Warning(close_notify)
+2, 15, TLS12CH_WITH_00_RandBytes, Warning(close_notify)
+2, 15, TLS12CertificateRequest, Warning(close_notify)
+2, 15, TLS12Certificate_valid, FatalAlert(unknown_ca)
+2, 15, TLS12ClientHelloDH, Warning(close_notify)
+2, 15, TLS12ClientHelloRSA, Warning(close_notify)
+2, 15, TLS12ClientKeyExchange, Warning(close_notify)
+2, 4, TLS12EmptyCertificate, No RSP
+2, 15, TLSApplicationData, FatalAlert(unexpected_message)
+2, 15, TLSApplicationDataEmpty, Warning(close_notify)
+2, 15, TLSCertificateVerify, Warning(close_notify)
+2, 5, TLSChangeCipherSpec, No RSP
+2, 15, TLSCloseNotify, Warning(close_notify)
+2, 15, TLSFinished, Warning(close_notify)
+3, 15, NoRenegotiation, Warning(close_notify)
+3, 15, TLS12CH_WITH_00_RandBytes, Warning(close_notify)
+3, 15, TLS12CertificateRequest, Warning(close_notify)
+3, 15, TLS12Certificate_valid, Warning(close_notify)
+3, 15, TLS12ClientHelloDH, Warning(close_notify)
+3, 15, TLS12ClientHelloRSA, Warning(close_notify)
+3, 4, TLS12ClientKeyExchange, No RSP
+3, 15, TLS12EmptyCertificate, Warning(close_notify)
+3, 15, TLSApplicationData, FatalAlert(unexpected_message)
+3, 15, TLSApplicationDataEmpty, Warning(close_notify)
+3, 6, TLSCertificateVerify, No RSP
+3, 15, TLSChangeCipherSpec, Warning(close_notify)
+3, 15, TLSCloseNotify, Warning(close_notify)
+3, 15, TLSFinished, Warning(close_notify)
+4, 15, NoRenegotiation, Warning(close_notify)
+4, 15, TLS12CH_WITH_00_RandBytes, Warning(close_notify)
+4, 15, TLS12CertificateRequest, Warning(close_notify)
+4, 15, TLS12Certificate_valid, Warning(close_notify)
+4, 15, TLS12ClientHelloDH, Warning(close_notify)
+4, 15, TLS12ClientHelloRSA, Warning(close_notify)
+4, 15, TLS12ClientKeyExchange, Warning(close_notify)
+4, 15, TLS12EmptyCertificate, Warning(close_notify)
+4, 15, TLSApplicationData, FatalAlert(unexpected_message)
+4, 15, TLSApplicationDataEmpty, Warning(close_notify)
+4, 7, TLSCertificateVerify, No RSP
+4, 8, TLSChangeCipherSpec, No RSP
+4, 15, TLSCloseNotify, Warning(close_notify)
+4, 15, TLSFinished, Warning(close_notify)
+5, 5, NoRenegotiation, No RSP
+5, 15, TLS12CH_WITH_00_RandBytes, Warning(close_notify)
+5, 15, TLS12CertificateRequest, Warning(close_notify)
+5, 15, TLS12Certificate_valid, FatalAlert(unknown_ca)
+5, 15, TLS12ClientHelloDH, Warning(close_notify)
+5, 15, TLS12ClientHelloRSA, Warning(close_notify)
+5, 15, TLS12ClientKeyExchange, Warning(close_notify)
+5, 9, TLS12EmptyCertificate, No RSP
+5, 15, TLSApplicationData, FatalAlert(unexpected_message)
+5, 15, TLSApplicationDataEmpty, FatalAlert(unexpected_message)
+5, 15, TLSCertificateVerify, Warning(close_notify)
+5, 15, TLSChangeCipherSpec, Warning(close_notify)
+5, 15, TLSCloseNotify, Warning(close_notify)
+5, 10, TLSFinished, TLSChangeCipherSpec+TLSFinished
+6, 15, NoRenegotiation, Warning(close_notify)
+6, 15, TLS12CH_WITH_00_RandBytes, Warning(close_notify)
+6, 15, TLS12CertificateRequest, Warning(close_notify)
+6, 15, TLS12Certificate_valid, Warning(close_notify)
+6, 15, TLS12ClientHelloDH, Warning(close_notify)
+6, 15, TLS12ClientHelloRSA, Warning(close_notify)
+6, 7, TLS12ClientKeyExchange, No RSP
+6, 15, TLS12EmptyCertificate, Warning(close_notify)
+6, 15, TLSApplicationData, FatalAlert(unexpected_message)
+6, 15, TLSApplicationDataEmpty, Warning(close_notify)
+6, 15, TLSCertificateVerify, Warning(close_notify)
+6, 15, TLSChangeCipherSpec, Warning(close_notify)
+6, 15, TLSCloseNotify, Warning(close_notify)
+6, 15, TLSFinished, Warning(close_notify)
+7, 15, NoRenegotiation, Warning(close_notify)
+7, 15, TLS12CH_WITH_00_RandBytes, Warning(close_notify)
+7, 15, TLS12CertificateRequest, Warning(close_notify)
+7, 15, TLS12Certificate_valid, Warning(close_notify)
+7, 15, TLS12ClientHelloDH, Warning(close_notify)
+7, 15, TLS12ClientHelloRSA, Warning(close_notify)
+7, 15, TLS12ClientKeyExchange, Warning(close_notify)
+7, 15, TLS12EmptyCertificate, Warning(close_notify)
+7, 15, TLSApplicationData, FatalAlert(unexpected_message)
+7, 15, TLSApplicationDataEmpty, Warning(close_notify)
+7, 15, TLSCertificateVerify, Warning(close_notify)
+7, 11, TLSChangeCipherSpec, No RSP
+7, 15, TLSCloseNotify, Warning(close_notify)
+7, 15, TLSFinished, Warning(close_notify)
+8, 8, NoRenegotiation, No RSP
+8, 15, TLS12CH_WITH_00_RandBytes, Warning(close_notify)
+8, 15, TLS12CertificateRequest, Warning(close_notify)
+8, 15, TLS12Certificate_valid, Warning(close_notify)
+8, 15, TLS12ClientHelloDH, Warning(close_notify)
+8, 15, TLS12ClientHelloRSA, Warning(close_notify)
+8, 15, TLS12ClientKeyExchange, Warning(close_notify)
+8, 15, TLS12EmptyCertificate, Warning(close_notify)
+8, 15, TLSApplicationData, FatalAlert(unexpected_message)
+8, 15, TLSApplicationDataEmpty, FatalAlert(unexpected_message)
+8, 12, TLSCertificateVerify, No RSP
+8, 15, TLSChangeCipherSpec, Warning(close_notify)
+8, 15, TLSCloseNotify, Warning(close_notify)
+8, 13, TLSFinished, TLSChangeCipherSpec+TLSFinished
+9, 9, NoRenegotiation, No RSP
+9, 15, TLS12CH_WITH_00_RandBytes, Warning(close_notify)
+9, 15, TLS12CertificateRequest, Warning(close_notify)
+9, 15, TLS12Certificate_valid, Warning(close_notify)
+9, 15, TLS12ClientHelloDH, Warning(close_notify)
+9, 15, TLS12ClientHelloRSA, Warning(close_notify)
+9, 15, TLS12ClientKeyExchange, Warning(close_notify)
+9, 15, TLS12EmptyCertificate, Warning(close_notify)
+9, 15, TLSApplicationData, FatalAlert(unexpected_message)
+9, 15, TLSApplicationDataEmpty, FatalAlert(unexpected_message)
+9, 12, TLSCertificateVerify, No RSP
+9, 15, TLSChangeCipherSpec, Warning(close_notify)
+9, 15, TLSCloseNotify, Warning(close_notify)
+9, 15, TLSFinished, Warning(close_notify)
+10, 10, NoRenegotiation, No RSP
+10, 15, TLS12CH_WITH_00_RandBytes, Warning(close_notify)
+10, 15, TLS12CertificateRequest, Warning(close_notify)
+10, 15, TLS12Certificate_valid, FatalAlert(unexpected_message)
+10, 15, TLS12ClientHelloDH, Warning(close_notify)
+10, 15, TLS12ClientHelloRSA, Warning(close_notify)
+10, 15, TLS12ClientKeyExchange, Warning(close_notify)
+10, 15, TLS12EmptyCertificate, FatalAlert(unexpected_message)
+10, 15, TLSApplicationData, TLSApplicationData+Warning(close_notify)
+10, 10, TLSApplicationDataEmpty, No RSP
+10, 15, TLSCertificateVerify, Warning(close_notify)
+10, 15, TLSChangeCipherSpec, Warning(close_notify)
+10, 15, TLSCloseNotify, Warning(close_notify)
+10, 15, TLSFinished, Warning(close_notify)
+11, 11, NoRenegotiation, No RSP
+11, 15, TLS12CH_WITH_00_RandBytes, Warning(close_notify)
+11, 15, TLS12CertificateRequest, Warning(close_notify)
+11, 15, TLS12Certificate_valid, Warning(close_notify)
+11, 15, TLS12ClientHelloDH, Warning(close_notify)
+11, 15, TLS12ClientHelloRSA, Warning(close_notify)
+11, 15, TLS12ClientKeyExchange, Warning(close_notify)
+11, 15, TLS12EmptyCertificate, Warning(close_notify)
+11, 15, TLSApplicationData, FatalAlert(unexpected_message)
+11, 15, TLSApplicationDataEmpty, FatalAlert(unexpected_message)
+11, 15, TLSCertificateVerify, Warning(close_notify)
+11, 15, TLSChangeCipherSpec, Warning(close_notify)
+11, 15, TLSCloseNotify, Warning(close_notify)
+11, 14, TLSFinished, TLSChangeCipherSpec+TLSFinished
+12, 12, NoRenegotiation, No RSP
+12, 15, TLS12CH_WITH_00_RandBytes, Warning(close_notify)
+12, 15, TLS12CertificateRequest, Warning(close_notify)
+12, 15, TLS12Certificate_valid, Warning(close_notify)
+12, 15, TLS12ClientHelloDH, Warning(close_notify)
+12, 15, TLS12ClientHelloRSA, Warning(close_notify)
+12, 15, TLS12ClientKeyExchange, Warning(close_notify)
+12, 15, TLS12EmptyCertificate, Warning(close_notify)
+12, 15, TLSApplicationData, FatalAlert(unexpected_message)
+12, 15, TLSApplicationDataEmpty, FatalAlert(unexpected_message)
+12, 15, TLSCertificateVerify, Warning(close_notify)
+12, 15, TLSChangeCipherSpec, Warning(close_notify)
+12, 15, TLSCloseNotify, Warning(close_notify)
+12, 15, TLSFinished, Warning(close_notify)
+13, 13, NoRenegotiation, No RSP
+13, 15, TLS12CH_WITH_00_RandBytes, Warning(close_notify)
+13, 15, TLS12CertificateRequest, Warning(close_notify)
+13, 15, TLS12Certificate_valid, Warning(close_notify)
+13, 15, TLS12ClientHelloDH, Warning(close_notify)
+13, 15, TLS12ClientHelloRSA, Warning(close_notify)
+13, 15, TLS12ClientKeyExchange, Warning(close_notify)
+13, 15, TLS12EmptyCertificate, Warning(close_notify)
+13, 15, TLSApplicationData, TLSApplicationData+Warning(close_notify)
+13, 13, TLSApplicationDataEmpty, No RSP
+13, 15, TLSCertificateVerify, FatalAlert(unexpected_message)
+13, 15, TLSChangeCipherSpec, Warning(close_notify)
+13, 15, TLSCloseNotify, Warning(close_notify)
+13, 15, TLSFinished, Warning(close_notify)
+14, 14, NoRenegotiation, No RSP
+14, 15, TLS12CH_WITH_00_RandBytes, Warning(close_notify)
+14, 15, TLS12CertificateRequest, Warning(close_notify)
+14, 15, TLS12Certificate_valid, Warning(close_notify)
+14, 15, TLS12ClientHelloDH, Warning(close_notify)
+14, 15, TLS12ClientHelloRSA, Warning(close_notify)
+14, 15, TLS12ClientKeyExchange, Warning(close_notify)
+14, 15, TLS12EmptyCertificate, Warning(close_notify)
+14, 15, TLSApplicationData, TLSApplicationData+Warning(close_notify)
+14, 14, TLSApplicationDataEmpty, No RSP
+14, 15, TLSCertificateVerify, Warning(close_notify)
+14, 15, TLSChangeCipherSpec, Warning(close_notify)
+14, 15, TLSCloseNotify, Warning(close_notify)
+14, 15, TLSFinished, Warning(close_notify)
+15, 15, NoRenegotiation, EOF
+15, 15, TLS12CH_WITH_00_RandBytes, EOF
+15, 15, TLS12CertificateRequest, EOF
+15, 15, TLS12Certificate_valid, EOF
+15, 15, TLS12ClientHelloDH, EOF
+15, 15, TLS12ClientHelloRSA, EOF
+15, 15, TLS12ClientKeyExchange, EOF
+15, 15, TLS12EmptyCertificate, EOF
+15, 15, TLSApplicationData, EOF
+15, 15, TLSApplicationDataEmpty, EOF
+15, 15, TLSCertificateVerify, EOF
+15, 15, TLSChangeCipherSpec, EOF
+15, 15, TLSCloseNotify, EOF
+15, 15, TLSFinished, EOF

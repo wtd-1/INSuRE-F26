@@ -1,0 +1,675 @@
+docker build --build-arg COMMIT=$(basename containers/wolfssl/v3.12.2-stable) -t tls-test-bed/wolfssl:$(basename containers/wolfssl/v3.12.2-stable) stacks/wolfssl-git
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 964B 0.1s done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/debian:buster
+#2 DONE 0.9s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B 0.1s done
+#3 DONE 0.1s
+
+#4 [ 1/15] FROM docker.io/library/debian:buster@sha256:58ce6f1271ae1c8a2006ff7d3e54e9874d839f573d8009c20154ad0f2fb0a225
+#4 resolve docker.io/library/debian:buster@sha256:58ce6f1271ae1c8a2006ff7d3e54e9874d839f573d8009c20154ad0f2fb0a225 0.1s done
+#4 DONE 0.1s
+
+#5 [ 3/15] RUN apt-get update && apt-get install -y --no-install-recommends git perl gcc make libc6-dev ca-certificates ncat && apt-get clean
+#5 CACHED
+
+#6 [ 5/15] RUN git clone https://github.com/wolfSSL/wolfssl.git
+#6 CACHED
+
+#7 [ 2/15] RUN echo "deb http://archive.debian.org/debian buster main" > /etc/apt/sources.list && echo "deb http://archive.debian.org/debian-security buster/updates main" >> /etc/apt/sources.list
+#7 CACHED
+
+#8 [ 4/15] RUN apt-get update && apt-get install -y --no-install-recommends dh-autoreconf && apt-get clean
+#8 CACHED
+
+#9 [ 6/15] WORKDIR /wolfssl
+#9 CACHED
+
+#10 [internal] load build context
+#10 transferring context: 68B 0.1s done
+#10 DONE 0.1s
+
+#11 [ 7/15] RUN git checkout -b current v3.12.2-stable
+#11 9.587 Switched to a new branch 'current'
+#11 DONE 9.7s
+
+#12 [ 8/15] RUN ./autogen.sh
+#12 1.116 autoreconf: Entering directory `.'
+#12 1.123 autoreconf: configure.ac: not using Gettext
+#12 2.124 autoreconf: running: aclocal --force -I m4
+#12 5.324 autoreconf: configure.ac: tracing
+#12 6.322 autoreconf: configure.ac: creating directory build-aux
+#12 6.328 autoreconf: running: libtoolize --copy --force
+#12 6.601 libtoolize: putting auxiliary files in AC_CONFIG_AUX_DIR, 'build-aux'.
+#12 6.601 libtoolize: copying file 'build-aux/ltmain.sh'
+#12 6.676 libtoolize: putting macros in AC_CONFIG_MACRO_DIRS, 'm4'.
+#12 6.676 libtoolize: copying file 'm4/libtool.m4'
+#12 6.827 libtoolize: copying file 'm4/ltoptions.m4'
+#12 6.933 libtoolize: copying file 'm4/ltsugar.m4'
+#12 7.061 libtoolize: copying file 'm4/ltversion.m4'
+#12 7.168 libtoolize: copying file 'm4/lt~obsolete.m4'
+#12 11.35 autoreconf: running: /usr/bin/autoconf --force
+#12 12.59 autoreconf: running: /usr/bin/autoheader --force
+#12 14.28 autoreconf: running: automake --add-missing --copy --force-missing
+#12 16.94 configure.ac:58: installing 'build-aux/compile'
+#12 16.97 configure.ac:17: installing 'build-aux/config.guess'
+#12 16.98 configure.ac:17: installing 'build-aux/config.sub'
+#12 16.99 configure.ac:20: installing 'build-aux/install-sh'
+#12 17.01 configure.ac:20: installing 'build-aux/missing'
+#12 17.73 Makefile.am: installing 'build-aux/depcomp'
+#12 18.17 parallel-tests: installing 'build-aux/test-driver'
+#12 18.36 autoreconf: Leaving directory `.'
+#12 DONE 18.5s
+
+#13 [ 9/15] RUN ./configure --enable-tlsv10 --enable-sni --enable-tls13 C_EXTRA_FLAGS="-DWOLFSSL_STATIC_RSA"
+#13 0.971 configure: WARNING: unrecognized options: --enable-tlsv10
+#13 1.166 checking build system type... x86_64-pc-linux-gnu
+#13 1.586 checking host system type... x86_64-pc-linux-gnu
+#13 1.586 checking for a BSD-compatible install... /usr/bin/install -c
+#13 1.618 checking whether build environment is sane... yes
+#13 1.655 checking for a thread-safe mkdir -p... /bin/mkdir -p
+#13 1.664 checking for gawk... no
+#13 1.664 checking for mawk... mawk
+#13 1.665 checking whether make sets $(MAKE)... yes
+#13 1.716 checking whether make supports nested variables... yes
+#13 1.761 checking whether UID '0' is supported by ustar format... yes
+#13 1.761 checking whether GID '0' is supported by ustar format... yes
+#13 1.761 checking how to create a ustar tar archive... gnutar
+#13 1.901 checking how to print strings... printf
+#13 1.920 checking whether make supports the include directive... yes (GNU style)
+#13 1.958 checking for gcc... gcc
+#13 2.047 checking whether the C compiler works... yes
+#13 2.298 checking for C compiler default output file name... a.out
+#13 2.302 checking for suffix of executables... 
+#13 2.505 checking whether we are cross compiling... no
+#13 2.969 checking for suffix of object files... o
+#13 3.324 checking whether we are using the GNU C compiler... yes
+#13 3.423 checking whether gcc accepts -g... yes
+#13 3.579 checking for gcc option to accept ISO C89... none needed
+#13 3.736 checking whether gcc understands -c and -o together... yes
+#13 3.802 checking dependency style of gcc... gcc3
+#13 3.930 checking for a sed that does not truncate output... /bin/sed
+#13 3.954 checking for grep that handles long lines and -e... /bin/grep
+#13 3.968 checking for egrep... /bin/grep -E
+#13 3.974 checking for fgrep... /bin/grep -F
+#13 3.989 checking for ld used by gcc... /usr/bin/ld
+#13 4.004 checking if the linker (/usr/bin/ld) is GNU ld... yes
+#13 4.035 checking for BSD- or MS-compatible name lister (nm)... /usr/bin/nm -B
+#13 4.042 checking the name lister (/usr/bin/nm -B) interface... BSD nm
+#13 4.121 checking whether ln -s works... yes
+#13 4.122 checking the maximum length of command line arguments... 1572864
+#13 4.163 checking how to convert x86_64-pc-linux-gnu file names to x86_64-pc-linux-gnu format... func_convert_file_noop
+#13 4.165 checking how to convert x86_64-pc-linux-gnu file names to toolchain format... func_convert_file_noop
+#13 4.167 checking for /usr/bin/ld option to reload object files... -r
+#13 4.171 checking for objdump... objdump
+#13 4.177 checking how to recognize dependent libraries... pass_all
+#13 4.180 checking for dlltool... no
+#13 4.181 checking how to associate runtime and link libraries... printf %s\n
+#13 4.182 checking for ar... ar
+#13 4.189 checking for archiver @FILE support... @
+#13 4.334 checking for strip... strip
+#13 4.334 checking for ranlib... ranlib
+#13 4.342 checking command to parse /usr/bin/nm -B output from gcc object... ok
+#13 4.997 checking for sysroot... no
+#13 4.999 checking for a working dd... /bin/dd
+#13 5.026 checking how to truncate binary pipes... /bin/dd bs=4096 count=1
+#13 5.574 checking for mt... no
+#13 5.587 checking if : is a manifest tool... no
+#13 5.611 checking how to run the C preprocessor... gcc -E
+#13 5.738 checking for ANSI C header files... yes
+#13 6.048 checking for sys/types.h... yes
+#13 6.132 checking for sys/stat.h... yes
+#13 6.292 checking for stdlib.h... yes
+#13 6.503 checking for string.h... yes
+#13 6.571 checking for memory.h... yes
+#13 6.672 checking for strings.h... yes
+#13 6.760 checking for inttypes.h... yes
+#13 6.938 checking for stdint.h... yes
+#13 7.047 checking for unistd.h... yes
+#13 7.129 checking for dlfcn.h... yes
+#13 7.225 checking for objdir... .libs
+#13 7.436 checking if gcc supports -fno-rtti -fno-exceptions... no
+#13 7.555 checking for gcc option to produce PIC... -fPIC -DPIC
+#13 7.557 checking if gcc PIC flag -fPIC -DPIC works... yes
+#13 7.616 checking if gcc static flag -static works... yes
+#13 7.968 checking if gcc supports -c -o file.o... yes
+#13 8.058 checking if gcc supports -c -o file.o... (cached) yes
+#13 8.059 checking whether the gcc linker (/usr/bin/ld -m elf_x86_64) supports shared libraries... yes
+#13 8.101 checking whether -lc should be explicitly linked in... no
+#13 8.288 checking dynamic linker characteristics... GNU/Linux ld.so
+#13 8.447 checking how to hardcode library paths into programs... immediate
+#13 8.449 checking whether stripping libraries is possible... yes
+#13 8.464 checking if libtool supports shared libraries... yes
+#13 8.466 checking whether to build shared libraries... yes
+#13 8.468 checking whether to build static libraries... no
+#13 8.480 checking for g++... no
+#13 8.485 checking for c++... no
+#13 8.488 checking for gpp... no
+#13 8.490 checking for aCC... no
+#13 8.499 checking for CC... no
+#13 8.503 checking for cxx... no
+#13 8.505 checking for cc++... no
+#13 8.507 checking for cl.exe... no
+#13 8.512 checking for FCC... no
+#13 8.521 checking for KCC... no
+#13 8.524 checking for RCC... no
+#13 8.527 checking for xlC_r... no
+#13 8.540 checking for xlC... no
+#13 8.629 checking whether we are using the GNU C++ compiler... no
+#13 8.669 checking whether g++ accepts -g... no
+#13 8.781 checking dependency style of g++... none
+#13 9.162 checking whether the -Werror option is usable... yes
+#13 9.229 checking for simple visibility declarations... yes
+#13 9.283 checking whether make supports nested variables... (cached) yes
+#13 9.286 checking size of long long... 8
+#13 9.416 checking size of long... 8
+#13 9.528 checking for __uint128_t... yes
+#13 9.665 checking for gethostbyname... yes
+#13 9.750 checking for getaddrinfo... yes
+#13 9.824 checking for gettimeofday... yes
+#13 9.916 checking for gmtime_r... yes
+#13 9.998 checking for inet_ntoa... yes
+#13 10.07 checking for memset... yes
+#13 10.17 checking for socket... yes
+#13 10.27 checking arpa/inet.h usability... yes
+#13 10.37 checking arpa/inet.h presence... yes
+#13 10.41 checking for arpa/inet.h... yes
+#13 10.42 checking fcntl.h usability... yes
+#13 10.48 checking fcntl.h presence... yes
+#13 10.51 checking for fcntl.h... yes
+#13 10.51 checking limits.h usability... yes
+#13 10.62 checking limits.h presence... yes
+#13 10.65 checking for limits.h... yes
+#13 10.66 checking netdb.h usability... yes
+#13 10.71 checking netdb.h presence... yes
+#13 10.74 checking for netdb.h... yes
+#13 10.74 checking netinet/in.h usability... yes
+#13 10.81 checking netinet/in.h presence... yes
+#13 10.84 checking for netinet/in.h... yes
+#13 10.85 checking stddef.h usability... yes
+#13 10.93 checking stddef.h presence... yes
+#13 10.97 checking for stddef.h... yes
+#13 10.98 checking sys/ioctl.h usability... yes
+#13 11.05 checking sys/ioctl.h presence... yes
+#13 11.07 checking for sys/ioctl.h... yes
+#13 11.08 checking sys/socket.h usability... yes
+#13 11.15 checking sys/socket.h presence... yes
+#13 11.33 checking for sys/socket.h... yes
+#13 11.33 checking sys/time.h usability... yes
+#13 11.49 checking sys/time.h presence... yes
+#13 11.52 checking for sys/time.h... yes
+#13 11.52 checking errno.h usability... yes
+#13 11.58 checking errno.h presence... yes
+#13 11.61 checking for errno.h... yes
+#13 11.62 checking for socket in -lnetwork... no
+#13 11.79 checking whether byte ordering is bigendian... no
+#13 11.99 checking for gcc... (cached) gcc
+#13 12.06 checking whether we are using the GNU C compiler... (cached) yes
+#13 12.06 checking whether gcc accepts -g... (cached) yes
+#13 12.06 checking for gcc option to accept ISO C89... (cached) none needed
+#13 12.06 checking whether gcc understands -c and -o together... (cached) yes
+#13 12.06 checking dependency style of gcc... (cached) gcc3
+#13 12.06 checking whether gcc and cc understand -c and -o together... yes
+#13 12.24 checking whether we are using the GNU C++ compiler... (cached) no
+#13 12.24 checking whether g++ accepts -g... (cached) no
+#13 12.25 checking dependency style of g++... (cached) none
+#13 12.25 checking for size_t... yes
+#13 12.32 checking for uint8_t... yes
+#13 12.36 checking dependency style of gcc... gcc3
+#13 12.41 checking for cos in -lm... yes
+#13 12.46 checking for thread local storage (TLS) class... __thread
+#13 12.50 checking for debug... no
+#13 12.50 ./configure: line 15816: AX_COVERAGE: command not found
+#13 12.50 checking for the pthreads library -lpthreads... no
+#13 12.55 checking whether pthreads work without any flags... no
+#13 12.63 checking whether pthreads work with -Kthread... no
+#13 12.65 checking whether pthreads work with -kthread... no
+#13 12.68 checking for the pthreads library -llthread... no
+#13 12.74 checking whether pthreads work with -pthread... yes
+#13 12.80 checking for joinable pthread attribute... PTHREAD_CREATE_JOINABLE
+#13 12.86 checking if more special flags are required for pthreads... no
+#13 12.86 checking for PTHREAD_PRIO_INHERIT... yes
+#13 12.95 checking for fast RSA... no
+#13 12.96 checking for library containing gethostbyname... none required
+#13 13.01 checking for library containing socket... none required
+#13 13.07 checking for vcs system... git
+#13 13.07 checking for vcs checkout... yes
+#13 13.07 checking whether the linker accepts -Werror... yes
+#13 13.13 checking whether the linker accepts -z relro -z now... yes
+#13 13.19 checking whether the linker accepts -pie... yes
+#13 13.24 checking whether C compiler accepts ... yes
+#13 13.29 checking whether C compiler accepts -Werror... yes
+#13 13.33 checking whether C compiler accepts -Wno-pragmas... yes
+#13 13.37 checking whether C compiler accepts -Wall... yes
+#13 13.41 checking whether C compiler accepts -Wno-strict-aliasing... yes
+#13 13.48 checking whether C compiler accepts -Wextra... yes
+#13 13.57 checking whether C compiler accepts -Wunknown-pragmas... yes
+#13 13.67 checking whether C compiler accepts -Wthis-test-should-fail... no
+#13 13.74 checking whether C compiler accepts --param=ssp-buffer-size=1... yes
+#13 13.81 checking whether C compiler accepts -Waddress... yes
+#13 13.93 checking whether C compiler accepts -Warray-bounds... yes
+#13 14.05 checking whether C compiler accepts -Wbad-function-cast... yes
+#13 14.17 checking whether C compiler accepts -Wchar-subscripts... yes
+#13 14.26 checking whether C compiler accepts -Wcomment... yes
+#13 14.41 checking whether C compiler accepts -Wfloat-equal... yes
+#13 14.58 checking whether C compiler accepts -Wformat-security... yes
+#13 14.66 checking whether C compiler accepts -Wformat=2... yes
+#13 14.90 checking whether C compiler accepts -Wmaybe-uninitialized... yes
+#13 15.07 checking whether C compiler accepts -Wmissing-field-initializers... yes
+#13 15.33 checking whether C compiler accepts -Wmissing-noreturn... yes
+#13 15.58 checking whether C compiler accepts -Wmissing-prototypes... yes
+#13 15.83 checking whether C compiler accepts -Wnested-externs... yes
+#13 16.04 checking whether C compiler accepts -Wnormalized=id... yes
+#13 16.47 checking whether C compiler accepts -Woverride-init... yes
+#13 16.70 checking whether C compiler accepts -Wpointer-arith... yes
+#13 17.11 checking whether C compiler accepts -Wpointer-sign... yes
+#13 17.39 checking whether C compiler accepts -Wredundant-decls... yes
+#13 17.63 checking whether C compiler accepts -Wshadow... yes
+#13 17.88 checking whether C compiler accepts -Wshorten-64-to-32... no
+#13 18.02 checking whether C compiler accepts -Wsign-compare... yes
+#13 18.25 checking whether C compiler accepts -Wstrict-overflow=1... yes
+#13 18.43 checking whether C compiler accepts -Wstrict-prototypes... no
+#13 18.59 checking whether C compiler accepts -Wswitch-enum... yes
+#13 18.81 checking whether C compiler accepts -Wundef... yes
+#13 18.93 checking whether C compiler accepts -Wunused... yes
+#13 19.04 checking whether C compiler accepts -Wunused-result... yes
+#13 19.31 checking whether C compiler accepts -Wunused-variable... yes
+#13 19.60 checking whether C compiler accepts -Wwrite-strings... yes
+#13 20.02 checking whether C compiler accepts -fwrapv... yes
+#13 20.34 creating wolfssl-config - generic 3.12.2 for -lwolfssl
+#13 20.37 checking the number of available CPUs... 12 
+#13 20.53 configure: adding automake macro support
+#13 20.53 configure: creating aminclude.am
+#13 20.81 configure: added jobserver support to make for 13 jobs
+#13 21.14 checking that generated files are newer than configure... done
+#13 21.17 configure: creating ./config.status
+#13 25.76 config.status: creating stamp-h
+#13 25.82 config.status: creating Makefile
+#13 26.00 config.status: creating wolfssl/version.h
+#13 26.14 config.status: creating wolfssl/options.h
+#13 26.26 config.status: creating support/wolfssl.pc
+#13 26.36 config.status: creating rpm/spec
+#13 26.49 config.status: creating config.h
+#13 26.69 config.status: executing depfiles commands
+#13 33.05 config.status: executing libtool commands
+#13 33.24 configure: WARNING: unrecognized options: --enable-tlsv10
+#13 33.24 ---
+#13 33.24 Running make clean...
+#13 36.07 ---
+#13 36.08 Generating user options header...
+#13 36.30 not outputting (N)DEBUG to wolfssl/options.h
+#13 36.30 option w/o begin -D is -pthread, not saving to wolfssl/options.h
+#13 37.72 option w/o begin -D is -Wall, not saving to wolfssl/options.h
+#13 37.73 option w/o begin -D is -Wno-unused, not saving to wolfssl/options.h
+#13 37.75 option w/o begin -D is -O2, not saving to wolfssl/options.h
+#13 37.76 option w/o begin -D is -fomit-frame-pointer, not saving to wolfssl/options.h
+#13 37.80 
+#13 37.82 
+#13 37.86 ---
+#13 37.86 Configuration summary for wolfssl version 3.12.2
+#13 37.86 
+#13 37.86    * Installation prefix:        /usr/local
+#13 37.86    * System type:                pc-linux-gnu
+#13 37.86    * Host CPU:                   x86_64
+#13 37.86    * C Compiler:                 gcc
+#13 37.86    * C Flags:                     -Werror -Wno-pragmas -Wall -Wno-strict-aliasing -Wextra -Wunknown-pragmas --param=ssp-buffer-size=1 -Waddress -Warray-bounds -Wbad-function-cast -Wchar-subscripts -Wcomment -Wfloat-equal -Wformat-security -Wformat=2 -Wmaybe-uninitialized -Wmissing-field-initializers -Wmissing-noreturn -Wmissing-prototypes -Wnested-externs -Wnormalized=id -Woverride-init -Wpointer-arith -Wpointer-sign -Wredundant-decls -Wshadow -Wsign-compare -Wstrict-overflow=1 -Wswitch-enum -Wundef -Wunused -Wunused-result -Wunused-variable -Wwrite-strings -fwrapv -DWOLFSSL_STATIC_RSA
+#13 37.86    * C++ Compiler:               g++
+#13 37.86    * C++ Flags:                  
+#13 37.86    * CPP Flags:                   -fvisibility=hidden
+#13 37.86    * CCAS Flags:                 
+#13 37.86    * LIB Flags:                   -pie -z relro -z now -Werror 
+#13 37.86    * Debug enabled:              no
+#13 37.86    * Coverage enabled:           
+#13 37.86    * Warnings as failure:        yes
+#13 37.86    * make -j:                    13
+#13 37.86    * VCS checkout:               yes
+#13 37.86 
+#13 37.86    Features 
+#13 37.86    * Single threaded:            no
+#13 37.86    * Filesystem:                 yes
+#13 37.86    * OpenSSH Build:              no
+#13 37.86    * OpenSSL Extra API:          no
+#13 37.86    * OpenSSL Coexist:            no
+#13 37.86    * Old Names:                  yes
+#13 37.86    * Max Strength Build:         no
+#13 37.86    * Distro Build:               no
+#13 37.86    * fastmath:                   yes
+#13 37.86    * sniffer:                    no
+#13 37.86    * snifftest:                  no
+#13 37.86    * ARC4:                       no
+#13 37.86    * AES:                        yes
+#13 37.86    * AES-NI:                     no
+#13 37.86    * AES-GCM:                    yes
+#13 37.86    * AES-CCM:                    no
+#13 37.86    * AES-CTR:                    no
+#13 37.86    * DES3:                       no
+#13 37.86    * IDEA:                       no
+#13 37.86    * Camellia:                   no
+#13 37.86    * NULL Cipher:                no
+#13 37.86    * MD5:                        yes
+#13 37.86    * RIPEMD:                     no
+#13 37.86    * SHA:                        yes
+#13 37.86    * SHA-224:                    yes
+#13 37.86    * SHA-512:                    yes
+#13 37.86    * SHA3:                       yes
+#13 37.86    * BLAKE2:                     no
+#13 37.86    * CMAC:                       no
+#13 37.86    * keygen:                     no
+#13 37.86    * certgen:                    no
+#13 37.86    * certreq:                    no
+#13 37.86    * certext:                    no
+#13 37.86    * HC-128:                     no
+#13 37.86    * RABBIT:                     no
+#13 37.86    * CHACHA:                     yes
+#13 37.86    * Hash DRBG:                  yes
+#13 37.86    * PWDBASED:                   no
+#13 37.86    * scrypt:                     no
+#13 37.86    * wolfCrypt Only:             no
+#13 37.86    * HKDF:                       yes
+#13 37.86    * X9.63 KDF:                  no
+#13 37.86    * MD4:                        no
+#13 37.86    * PSK:                        no
+#13 37.86    * Poly1305:                   yes
+#13 37.86    * LEANPSK:                    no
+#13 37.86    * LEANTLS:                    no
+#13 37.86    * RSA:                        yes
+#13 37.86    * RSA-PSS:                    yes
+#13 37.86    * DSA:                        no
+#13 37.86    * DH:                         yes
+#13 37.86    * ECC:                        yes
+#13 37.86    * CURVE25519:                 no
+#13 37.86    * ED25519:                    no
+#13 37.86    * FPECC:                      no
+#13 37.86    * ECC_ENCRYPT:                no
+#13 37.86    * ASN:                        yes
+#13 37.86    * Anonymous cipher:           no
+#13 37.86    * CODING:                     yes
+#13 37.86    * MEMORY:                     yes
+#13 37.86    * I/O POOL:                   no
+#13 37.86    * LIGHTY:                     no
+#13 37.86    * HAPROXY:                    no
+#13 37.86    * STUNNEL:                    no
+#13 37.86    * NGINX:                      no
+#13 37.86    * ERROR_STRINGS:              yes
+#13 37.86    * DTLS:                       no
+#13 37.86    * SCTP:                       no
+#13 37.86    * Multicast:                  no
+#13 37.86    * Old TLS Versions:           yes
+#13 37.86    * SSL version 3.0:            no
+#13 37.86    * TLS v1.3:                   yes
+#13 37.86    * TLS v1.3 Draft 18:          no
+#13 37.86    * Post-handshake Auth:        no
+#13 37.86    * Early Data:                 no
+#13 37.86    * Send State in HRR Cookie:   no
+#13 37.86    * OCSP:                       no
+#13 37.86    * OCSP Stapling:              no
+#13 37.86    * OCSP Stapling v2:           no
+#13 37.86    * CRL:                        no
+#13 37.86    * CRL-MONITOR:                no
+#13 37.86    * Persistent session cache:   no
+#13 37.86    * Persistent cert    cache:   no
+#13 37.86    * Atomic User Record Layer:   no
+#13 37.86    * Public Key Callbacks:       no
+#13 37.86    * NTRU:                       no
+#13 37.86    * QSH:                        no
+#13 37.86    * Whitewood netRandom:        no
+#13 37.86    * Server Name Indication:     yes
+#13 37.86    * ALPN:                       no
+#13 37.86    * Maximum Fragment Length:    no
+#13 37.86    * Truncated HMAC:             no
+#13 37.86    * Supported Elliptic Curves:  yes
+#13 37.86    * Session Ticket:             no
+#13 37.86    * Extended Master Secret:     yes
+#13 37.86    * Renegotiation Indication:   no
+#13 37.86    * Secure Renegotiation:       no
+#13 37.86    * All TLS Extensions:         no
+#13 37.86    * PKCS#7                      no
+#13 37.86    * wolfSSH                     no
+#13 37.86    * wolfSCEP                    no
+#13 37.86    * Secure Remote Password      no
+#13 37.86    * Small Stack:                no
+#13 37.86    * valgrind unit tests:        no
+#13 37.86    * LIBZ:                       no
+#13 37.86    * Examples:                   yes
+#13 37.86    * User Crypto:                no
+#13 37.86    * Fast RSA:                   no
+#13 37.86    * Single Precision:           no
+#13 37.86    * Async Crypto:               no
+#13 37.86    * Cavium:                     no
+#13 37.86    * ARM ASM:                    no
+#13 37.86    * AES Key Wrap:               no
+#13 37.86    * Write duplicate:            no
+#13 37.86    * Intel Quick Assist:         no
+#13 37.86    * Xilinx Hardware Acc.:       no
+#13 37.86 
+#13 37.86 ---
+#13 DONE 38.6s
+
+#14 [10/15] RUN sed -i 's/-Werror /-DUSE_ANY_ADDR=1 /' Makefile
+#14 DONE 1.5s
+
+#15 [11/15] RUN make
+#15 1.954 make -j13  all-am
+#15 2.091 make[1]: Entering directory '/wolfssl'
+#15 2.387   CC       examples/client/tests_unit_test-client.o
+#15 4.019   CC       wolfcrypt/benchmark/benchmark.o
+#15 4.019   CC       wolfcrypt/src/src_libwolfssl_la-hmac.lo
+#15 4.023   CC       wolfcrypt/src/src_libwolfssl_la-hash.lo
+#15 4.024   CC       wolfcrypt/src/src_libwolfssl_la-cpuid.lo
+#15 4.035   CC       wolfcrypt/src/src_libwolfssl_la-random.lo
+#15 4.043   CC       wolfcrypt/src/src_libwolfssl_la-sha256.lo
+#15 4.074   CC       wolfcrypt/src/src_libwolfssl_la-aes.lo
+#15 4.076   CC       wolfcrypt/src/src_libwolfssl_la-rsa.lo
+#15 4.076   CC       wolfcrypt/src/src_libwolfssl_la-sha512.lo
+#15 4.078   CC       wolfcrypt/src/src_libwolfssl_la-sha.lo
+#15 4.080   CC       wolfcrypt/src/src_libwolfssl_la-logging.lo
+#15 4.093   CC       wolfcrypt/src/src_libwolfssl_la-sha3.lo
+#15 5.731   CC       wolfcrypt/src/src_libwolfssl_la-wc_encrypt.lo
+#15 5.778   CC       wolfcrypt/src/src_libwolfssl_la-wc_port.lo
+#15 8.961   CC       wolfcrypt/src/src_libwolfssl_la-error.lo
+#15 9.165   CC       wolfcrypt/src/src_libwolfssl_la-signature.lo
+#15 9.261   CC       wolfcrypt/src/src_libwolfssl_la-wolfmath.lo
+#15 9.291 In file included from wolfcrypt/src/wc_port.c:28:
+#15 9.291 wolfcrypt/src/wc_port.c: In function 'wc_ReadDirFirst':
+#15 9.293 ./wolfssl/wolfcrypt/types.h:310:32: warning: 'strncat' specified bound 1 equals source length [-Wstringop-overflow=]
+#15 9.293       #define XSTRNCAT(s1,s2,n) strncat((s1),(s2),(n))
+#15 9.293                                 ^~~~~~~~~~~~~~~~~~~~~~
+#15 9.293 wolfcrypt/src/wc_port.c:244:9: note: in expansion of macro 'XSTRNCAT'
+#15 9.293          XSTRNCAT(ctx->name, "/", 1);
+#15 9.293          ^~~~~~~~
+#15 9.294 wolfcrypt/src/wc_port.c: In function 'wc_ReadDirNext':
+#15 9.294 ./wolfssl/wolfcrypt/types.h:310:32: warning: 'strncat' specified bound 1 equals source length [-Wstringop-overflow=]
+#15 9.294       #define XSTRNCAT(s1,s2,n) strncat((s1),(s2),(n))
+#15 9.294                                 ^~~~~~~~~~~~~~~~~~~~~~
+#15 9.294 wolfcrypt/src/wc_port.c:291:9: note: in expansion of macro 'XSTRNCAT'
+#15 9.294          XSTRNCAT(ctx->name, "/", 1);
+#15 9.294          ^~~~~~~~
+#15 9.340 wolfcrypt/src/wc_port.c: In function 'wc_ReadDirFirst':
+#15 9.340 ./wolfssl/wolfcrypt/types.h:310:32: warning: 'strncat' output may be truncated copying 128 bytes from a string of length 255 [-Wstringop-truncation]
+#15 9.340       #define XSTRNCAT(s1,s2,n) strncat((s1),(s2),(n))
+#15 9.340                                 ^~~~~~~~~~~~~~~~~~~~~~
+#15 9.340 wolfcrypt/src/wc_port.c:245:9: note: in expansion of macro 'XSTRNCAT'
+#15 9.340          XSTRNCAT(ctx->name, ctx->entry->d_name, MAX_FILENAME_SZ/2);
+#15 9.340          ^~~~~~~~
+#15 9.354 wolfcrypt/src/wc_port.c: In function 'wc_ReadDirNext':
+#15 9.354 ./wolfssl/wolfcrypt/types.h:310:32: warning: 'strncat' output may be truncated copying 128 bytes from a string of length 255 [-Wstringop-truncation]
+#15 9.354       #define XSTRNCAT(s1,s2,n) strncat((s1),(s2),(n))
+#15 9.354                                 ^~~~~~~~~~~~~~~~~~~~~~
+#15 9.354 wolfcrypt/src/wc_port.c:292:9: note: in expansion of macro 'XSTRNCAT'
+#15 9.354          XSTRNCAT(ctx->name, ctx->entry->d_name, MAX_FILENAME_SZ/2);
+#15 9.354          ^~~~~~~~
+#15 9.678   CC       wolfcrypt/src/src_libwolfssl_la-memory.lo
+#15 9.698   CC       wolfcrypt/src/src_libwolfssl_la-dh.lo
+#15 10.19   CC       wolfcrypt/src/src_libwolfssl_la-asn.lo
+#15 10.61   CC       wolfcrypt/src/src_libwolfssl_la-coding.lo
+#15 10.92   CC       wolfcrypt/src/src_libwolfssl_la-poly1305.lo
+#15 11.77   CC       wolfcrypt/src/src_libwolfssl_la-md5.lo
+#15 11.78   CC       wolfcrypt/src/src_libwolfssl_la-chacha.lo
+#15 12.17   CC       wolfcrypt/src/src_libwolfssl_la-chacha20_poly1305.lo
+#15 12.36   CC       wolfcrypt/src/src_libwolfssl_la-tfm.lo
+#15 12.40   CC       wolfcrypt/src/src_libwolfssl_la-ecc.lo
+#15 12.71   CC       src/libwolfssl_la-internal.lo
+#15 12.97   CC       src/libwolfssl_la-wolfio.lo
+#15 13.86   CC       src/libwolfssl_la-keys.lo
+#15 14.50   CC       src/libwolfssl_la-tls.lo
+#15 14.52   CC       src/libwolfssl_la-tls13.lo
+#15 14.56   CC       src/libwolfssl_la-ssl.lo
+#15 14.62   CC       wolfcrypt/test/test.o
+#15 19.31   CC       examples/client/client.o
+#15 22.01   CC       examples/echoclient/echoclient.o
+#15 26.65   CC       examples/echoserver/echoserver.o
+#15 30.80 In file included from ./wolfssl/internal.h:28,
+#15 30.80                  from src/ssl.c:35:
+#15 30.80 src/ssl.c: In function 'wolfSSL_get_ciphers':
+#15 30.80 ./wolfssl/wolfcrypt/types.h:304:32: warning: 'strncpy' output truncated before terminating nul copying as many bytes from a string as its length [-Wstringop-truncation]
+#15 30.80       #define XSTRNCPY(s1,s2,n) strncpy((s1),(s2),(n))
+#15 30.80                                 ^~~~~~~~~~~~~~~~~~~~~~
+#15 30.80 src/ssl.c:690:13: note: in expansion of macro 'XSTRNCPY'
+#15 30.80              XSTRNCPY(buf, ciphers[i], XSTRLEN(ciphers[i]));
+#15 30.80              ^~~~~~~~
+#15 30.87 ./wolfssl/wolfcrypt/types.h:303:32: note: length computed here
+#15 30.87       #define XSTRLEN(s1)       strlen((s1))
+#15 30.87                                 ^~~~~~~~~~~~
+#15 30.87 src/ssl.c:685:22: note: in expansion of macro 'XSTRLEN'
+#15 30.87          step = (int)(XSTRLEN(ciphers[i]) + 1);  /* delimiter */
+#15 30.87                       ^~~~~~~
+#15 34.26   CC       examples/server/server.o
+#15 34.30 examples/echoserver/echoserver.c: In function 'echoserver_test':
+#15 34.30 examples/echoserver/echoserver.c:383:46: warning: argument to 'sizeof' in 'strncpy' call is the same expression as the source; did you mean to use the size of the destination? [-Wsizeof-pointer-memaccess]
+#15 34.30                  strncpy(command, type, sizeof(type));
+#15 34.30                                               ^
+#15 34.30 examples/echoserver/echoserver.c:386:57: warning: argument to 'sizeof' in 'strncpy' call is the same expression as the source; did you mean to use the size of the destination? [-Wsizeof-pointer-memaccess]
+#15 34.30                  strncpy(&command[echoSz], header, sizeof(header));
+#15 34.30                                                          ^
+#15 34.30 examples/echoserver/echoserver.c:388:55: warning: argument to 'sizeof' in 'strncpy' call is the same expression as the source; did you mean to use the size of the destination? [-Wsizeof-pointer-memaccess]
+#15 34.30                  strncpy(&command[echoSz], body, sizeof(body));
+#15 34.30                                                        ^
+#15 34.30 examples/echoserver/echoserver.c:390:57: warning: argument to 'sizeof' in 'strncpy' call is the same expression as the source; did you mean to use the size of the destination? [-Wsizeof-pointer-memaccess]
+#15 34.30                  strncpy(&command[echoSz], footer, sizeof(footer));
+#15 34.30                                                          ^
+#15 34.71   CC       wolfcrypt/test/testsuite_testsuite_test-test.o
+#15 35.07   CC       examples/client/testsuite_testsuite_test-client.o
+#15 35.08   CC       examples/echoclient/testsuite_testsuite_test-echoclient.o
+#15 35.15   CC       examples/echoserver/testsuite_testsuite_test-echoserver.o
+#15 35.43   CC       examples/server/testsuite_testsuite_test-server.o
+#15 35.59 examples/echoserver/echoserver.c: In function 'echoserver_test':
+#15 35.59 examples/echoserver/echoserver.c:383:46: warning: argument to 'sizeof' in 'strncpy' call is the same expression as the source; did you mean to use the size of the destination? [-Wsizeof-pointer-memaccess]
+#15 35.59                  strncpy(command, type, sizeof(type));
+#15 35.59                                               ^
+#15 35.59 examples/echoserver/echoserver.c:386:57: warning: argument to 'sizeof' in 'strncpy' call is the same expression as the source; did you mean to use the size of the destination? [-Wsizeof-pointer-memaccess]
+#15 35.59                  strncpy(&command[echoSz], header, sizeof(header));
+#15 35.59                                                          ^
+#15 35.60 examples/echoserver/echoserver.c:388:55: warning: argument to 'sizeof' in 'strncpy' call is the same expression as the source; did you mean to use the size of the destination? [-Wsizeof-pointer-memaccess]
+#15 35.60                  strncpy(&command[echoSz], body, sizeof(body));
+#15 35.60                                                        ^
+#15 35.60 examples/echoserver/echoserver.c:390:57: warning: argument to 'sizeof' in 'strncpy' call is the same expression as the source; did you mean to use the size of the destination? [-Wsizeof-pointer-memaccess]
+#15 35.60                  strncpy(&command[echoSz], footer, sizeof(footer));
+#15 35.60                                                          ^
+#15 36.84   CC       tests/unit_test-unit.o
+#15 36.84   CC       testsuite/testsuite_test-testsuite.o
+#15 38.83   CC       tests/unit_test-api.o
+#15 39.11   CC       tests/unit_test-suites.o
+#15 39.44   CC       tests/unit_test-hash.o
+#15 39.52   CC       examples/server/tests_unit_test-server.o
+#15 39.57   CC       tests/unit_test-srp.o
+#15 44.65   CCLD     src/libwolfssl.la
+#15 46.54   CCLD     wolfcrypt/benchmark/benchmark
+#15 46.54   CCLD     examples/server/server
+#15 46.56   CCLD     examples/echoserver/echoserver
+#15 46.56   CCLD     testsuite/testsuite.test
+#15 46.56   CCLD     wolfcrypt/test/testwolfcrypt
+#15 46.56   CCLD     tests/unit.test
+#15 46.56   CCLD     examples/client/client
+#15 46.56   CCLD     examples/echoclient/echoclient
+#15 47.98 make[1]: Leaving directory '/wolfssl'
+#15 DONE 48.1s
+
+#16 [12/15] RUN make install
+#16 3.168 make -j13  install-am
+#16 3.398 make[1]: Entering directory '/wolfssl'
+#16 5.320 make[2]: warning: -j13 forced in submake: resetting jobserver mode.
+#16 5.320 make[2]: Entering directory '/wolfssl'
+#16 5.393 /bin/bash /wolfssl/build-aux/install-sh -d /usr/local/bin
+#16 5.394  /bin/mkdir -p '/usr/local/share/doc/wolfssl'
+#16 5.395  /bin/mkdir -p '/usr/local/share/doc/wolfssl/example'
+#16 5.494 /usr/bin/install -c wolfssl-config /usr/local/bin
+#16 5.497  /bin/mkdir -p '/usr/local/lib/pkgconfig'
+#16 5.498  /usr/bin/install -c -m 644 certs/taoCert.txt doc/README.txt '/usr/local/share/doc/wolfssl'
+#16 5.509  /bin/mkdir -p '/usr/local/include'
+#16 5.543  /bin/mkdir -p '/usr/local/lib'
+#16 5.545  /usr/bin/install -c -m 644 examples/client/client.c examples/echoclient/echoclient.c examples/echoserver/echoserver.c examples/server/server.c examples/sctp/sctp-server.c examples/sctp/sctp-server-dtls.c examples/sctp/sctp-client.c examples/sctp/sctp-client-dtls.c '/usr/local/share/doc/wolfssl/example'
+#16 5.564  /bin/bash ./libtool   --mode=install /usr/bin/install -c   src/libwolfssl.la '/usr/local/lib'
+#16 5.599  /usr/bin/install -c -m 644 support/wolfssl.pc '/usr/local/lib/pkgconfig'
+#16 5.652  /bin/mkdir -p '/usr/local/include/cyassl/ctaocrypt'
+#16 5.699 libtool: install: /usr/bin/install -c src/.libs/libwolfssl.so.14.0.0 /usr/local/lib/libwolfssl.so.14.0.0
+#16 5.709  /usr/bin/install -c -m 644  cyassl/ctaocrypt/aes.h cyassl/ctaocrypt/arc4.h cyassl/ctaocrypt/asn.h cyassl/ctaocrypt/asn_public.h cyassl/ctaocrypt/poly1305.h cyassl/ctaocrypt/camellia.h cyassl/ctaocrypt/coding.h cyassl/ctaocrypt/compress.h cyassl/ctaocrypt/des3.h cyassl/ctaocrypt/dh.h cyassl/ctaocrypt/dsa.h cyassl/ctaocrypt/ecc.h cyassl/ctaocrypt/error-crypt.h cyassl/ctaocrypt/fips_test.h cyassl/ctaocrypt/hc128.h cyassl/ctaocrypt/hmac.h cyassl/ctaocrypt/integer.h cyassl/ctaocrypt/md2.h cyassl/ctaocrypt/md4.h cyassl/ctaocrypt/md5.h cyassl/ctaocrypt/misc.h cyassl/ctaocrypt/pkcs7.h cyassl/ctaocrypt/wc_port.h cyassl/ctaocrypt/pwdbased.h cyassl/ctaocrypt/rabbit.h cyassl/ctaocrypt/chacha.h cyassl/ctaocrypt/random.h cyassl/ctaocrypt/ripemd.h cyassl/ctaocrypt/rsa.h cyassl/ctaocrypt/settings.h cyassl/ctaocrypt/settings_comp.h cyassl/ctaocrypt/sha256.h cyassl/ctaocrypt/sha512.h cyassl/ctaocrypt/sha.h cyassl/ctaocrypt/blake2.h cyassl/ctaocrypt/blake2-int.h cyassl/ctaocrypt/blake2-impl.h cyassl/ctaocrypt/tfm.h cyassl/ctaocrypt/types.h cyassl/ctaocrypt/visibility.h '/usr/local/include/cyassl/ctaocrypt'
+#16 5.773 libtool: install: (cd /usr/local/lib && { ln -s -f libwolfssl.so.14.0.0 libwolfssl.so.14 || { rm -f libwolfssl.so.14 && ln -s libwolfssl.so.14.0.0 libwolfssl.so.14; }; })
+#16 5.952 libtool: install: (cd /usr/local/lib && { ln -s -f libwolfssl.so.14.0.0 libwolfssl.so || { rm -f libwolfssl.so && ln -s libwolfssl.so.14.0.0 libwolfssl.so; }; })
+#16 5.990 libtool: install: /usr/bin/install -c src/.libs/libwolfssl.lai /usr/local/lib/libwolfssl.la
+#16 6.288 libtool: finish: PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/sbin" ldconfig -n /usr/local/lib
+#16 6.407  /bin/mkdir -p '/usr/local/include/wolfssl/wolfcrypt'
+#16 6.440  /usr/bin/install -c -m 644  wolfssl/wolfcrypt/aes.h wolfssl/wolfcrypt/arc4.h wolfssl/wolfcrypt/asn.h wolfssl/wolfcrypt/asn_public.h wolfssl/wolfcrypt/poly1305.h wolfssl/wolfcrypt/camellia.h wolfssl/wolfcrypt/cmac.h wolfssl/wolfcrypt/coding.h wolfssl/wolfcrypt/compress.h wolfssl/wolfcrypt/des3.h wolfssl/wolfcrypt/dh.h wolfssl/wolfcrypt/dsa.h wolfssl/wolfcrypt/ecc.h wolfssl/wolfcrypt/curve25519.h wolfssl/wolfcrypt/ed25519.h wolfssl/wolfcrypt/fe_operations.h wolfssl/wolfcrypt/ge_operations.h wolfssl/wolfcrypt/error-crypt.h wolfssl/wolfcrypt/fips_test.h wolfssl/wolfcrypt/hash.h wolfssl/wolfcrypt/hc128.h wolfssl/wolfcrypt/hmac.h wolfssl/wolfcrypt/integer.h wolfssl/wolfcrypt/md2.h wolfssl/wolfcrypt/md4.h wolfssl/wolfcrypt/md5.h wolfssl/wolfcrypt/misc.h wolfssl/wolfcrypt/pkcs7.h wolfssl/wolfcrypt/wc_encrypt.h wolfssl/wolfcrypt/wc_port.h wolfssl/wolfcrypt/pwdbased.h wolfssl/wolfcrypt/rabbit.h wolfssl/wolfcrypt/chacha.h wolfssl/wolfcrypt/chacha20_poly1305.h wolfssl/wolfcrypt/random.h wolfssl/wolfcrypt/ripemd.h wolfssl/wolfcrypt/rsa.h wolfssl/wolfcrypt/settings.h wolfssl/wolfcrypt/sha256.h wolfssl/wolfcrypt/sha512.h '/usr/local/include/wolfssl/wolfcrypt'
+#16 6.567 ----------------------------------------------------------------------
+#16 6.567 Libraries have been installed in:
+#16 6.568    /usr/local/lib
+#16 6.568 
+#16 6.568 If you ever happen to want to link against installed libraries
+#16 6.568 in a given directory, LIBDIR, you must either use libtool, and
+#16 6.568 specify the full pathname of the library, or use the '-LLIBDIR'
+#16 6.569 flag during linking and do at least one of the following:
+#16 6.569    - add LIBDIR to the 'LD_LIBRARY_PATH' environment variable
+#16 6.569      during execution
+#16 6.569    - add LIBDIR to the 'LD_RUN_PATH' environment variable
+#16 6.570      during linking
+#16 6.571    - use the '-Wl,-rpath -Wl,LIBDIR' linker flag
+#16 6.588    - have your system administrator add LIBDIR to '/etc/ld.so.conf'
+#16 6.588 
+#16 6.588 See any operating system documentation about shared libraries for
+#16 6.588 more information, such as the ld(1) and ld.so(8) manual pages.
+#16 6.588 ----------------------------------------------------------------------
+#16 6.722  /bin/mkdir -p '/usr/local/include/cyassl/openssl'
+#16 6.726  /usr/bin/install -c -m 644  cyassl/openssl/asn1.h cyassl/openssl/bio.h cyassl/openssl/bn.h cyassl/openssl/conf.h cyassl/openssl/crypto.h cyassl/openssl/des.h cyassl/openssl/dh.h cyassl/openssl/dsa.h cyassl/openssl/ecdsa.h cyassl/openssl/ecdh.h cyassl/openssl/ec.h cyassl/openssl/ec25519.h cyassl/openssl/ed25519.h cyassl/openssl/engine.h cyassl/openssl/err.h cyassl/openssl/evp.h cyassl/openssl/hmac.h cyassl/openssl/lhash.h cyassl/openssl/md4.h cyassl/openssl/md5.h cyassl/openssl/ripemd.h cyassl/openssl/ocsp.h cyassl/openssl/opensslconf.h cyassl/openssl/opensslv.h cyassl/openssl/ossl_typ.h cyassl/openssl/pem.h cyassl/openssl/pkcs12.h cyassl/openssl/rand.h cyassl/openssl/rsa.h cyassl/openssl/sha.h cyassl/openssl/ssl23.h cyassl/openssl/ssl.h cyassl/openssl/stack.h cyassl/openssl/ui.h cyassl/openssl/x509.h cyassl/openssl/x509v3.h '/usr/local/include/cyassl/openssl'
+#16 7.118  /bin/mkdir -p '/usr/local/include/wolfssl'
+#16 7.120  /usr/bin/install -c -m 644  wolfssl/error-ssl.h wolfssl/ssl.h wolfssl/sniffer_error.h wolfssl/sniffer.h wolfssl/callbacks.h wolfssl/certs_test.h wolfssl/test.h wolfssl/version.h wolfssl/ocsp.h wolfssl/crl.h wolfssl/wolfio.h wolfssl/options.h '/usr/local/include/wolfssl'
+#16 7.212  /bin/mkdir -p '/usr/local/include/cyassl/ctaocrypt'
+#16 7.217  /usr/bin/install -c -m 644  cyassl/ctaocrypt/logging.h cyassl/ctaocrypt/memory.h cyassl/ctaocrypt/mpi_class.h cyassl/ctaocrypt/mpi_superclass.h '/usr/local/include/cyassl/ctaocrypt'
+#16 7.236  /bin/mkdir -p '/usr/local/include/cyassl'
+#16 7.239  /usr/bin/install -c -m 644  cyassl/error-ssl.h cyassl/ssl.h cyassl/sniffer_error.h cyassl/sniffer.h cyassl/callbacks.h cyassl/certs_test.h cyassl/test.h cyassl/version.h cyassl/ocsp.h cyassl/crl.h cyassl/options.h '/usr/local/include/cyassl'
+#16 7.268  /bin/mkdir -p '/usr/local/include/wolfssl/openssl'
+#16 7.273  /usr/bin/install -c -m 644  wolfssl/openssl/asn1.h wolfssl/openssl/aes.h wolfssl/openssl/bio.h wolfssl/openssl/bn.h wolfssl/openssl/conf.h wolfssl/openssl/crypto.h wolfssl/openssl/des.h wolfssl/openssl/dh.h wolfssl/openssl/dsa.h wolfssl/openssl/ecdsa.h wolfssl/openssl/ecdh.h wolfssl/openssl/ec.h wolfssl/openssl/ec25519.h wolfssl/openssl/ed25519.h wolfssl/openssl/engine.h wolfssl/openssl/err.h wolfssl/openssl/evp.h wolfssl/openssl/hmac.h wolfssl/openssl/lhash.h wolfssl/openssl/md4.h wolfssl/openssl/md5.h wolfssl/openssl/ripemd.h wolfssl/openssl/ocsp.h wolfssl/openssl/opensslconf.h wolfssl/openssl/opensslv.h wolfssl/openssl/ossl_typ.h wolfssl/openssl/pem.h wolfssl/openssl/pkcs12.h wolfssl/openssl/rand.h wolfssl/openssl/rsa.h wolfssl/openssl/sha.h wolfssl/openssl/ssl23.h wolfssl/openssl/ssl.h wolfssl/openssl/stack.h wolfssl/openssl/ui.h wolfssl/openssl/x509.h wolfssl/openssl/x509v3.h '/usr/local/include/wolfssl/openssl'
+#16 7.438  /bin/mkdir -p '/usr/local/include/wolfssl/wolfcrypt'
+#16 7.443  /usr/bin/install -c -m 644  wolfssl/wolfcrypt/sha.h wolfssl/wolfcrypt/signature.h wolfssl/wolfcrypt/blake2.h wolfssl/wolfcrypt/blake2-int.h wolfssl/wolfcrypt/blake2-impl.h wolfssl/wolfcrypt/tfm.h wolfssl/wolfcrypt/srp.h wolfssl/wolfcrypt/idea.h wolfssl/wolfcrypt/types.h wolfssl/wolfcrypt/visibility.h wolfssl/wolfcrypt/logging.h wolfssl/wolfcrypt/memory.h wolfssl/wolfcrypt/mpi_class.h wolfssl/wolfcrypt/mpi_superclass.h wolfssl/wolfcrypt/mem_track.h wolfssl/wolfcrypt/wolfevent.h wolfssl/wolfcrypt/pkcs12.h wolfssl/wolfcrypt/wolfmath.h wolfssl/wolfcrypt/sha3.h wolfssl/wolfcrypt/cpuid.h '/usr/local/include/wolfssl/wolfcrypt'
+#16 7.514 make[2]: Leaving directory '/wolfssl'
+#16 7.530 make[1]: Leaving directory '/wolfssl'
+#16 DONE 7.8s
+
+#17 [13/15] RUN ldconfig
+#17 DONE 2.4s
+
+#18 [14/15] COPY run_server.sh /run_server.sh
+#18 DONE 0.4s
+
+#19 [15/15] COPY run_client.sh /run_client.sh
+#19 DONE 0.4s
+
+#20 exporting to image
+#20 exporting layers
+#20 exporting layers 11.3s done
+#20 exporting manifest sha256:df1aa658fe44a429bddc2913eb6695c7f989dbc7ea802cae5c97543dce58d34d 0.1s done
+#20 exporting config sha256:a1507adfa43225fd096fe753022ca211c2bd13b0ffbff00a0664f7a67429b8fa 0.1s done
+#20 exporting attestation manifest sha256:ed431bc09381119aa59b1ac1b5768199dc80b3d5aea31906c512df22814ef80b 0.1s done
+#20 exporting manifest list sha256:2be8d185f6cbb683c322f2f8c9939ecbf462d6074b0bedeb9198ee5003afed0f
+#20 exporting manifest list sha256:2be8d185f6cbb683c322f2f8c9939ecbf462d6074b0bedeb9198ee5003afed0f 0.1s done
+#20 naming to docker.io/tls-test-bed/wolfssl:v3.12.2-stable
+#20 naming to docker.io/tls-test-bed/wolfssl:v3.12.2-stable 0.0s done
+#20 unpacking to docker.io/tls-test-bed/wolfssl:v3.12.2-stable
+#20 unpacking to docker.io/tls-test-bed/wolfssl:v3.12.2-stable 4.5s done
+#20 DONE 16.5s
+mkdir -p $(dirname containers/wolfssl/v3.12.2-stable.docker)
+docker image ls -q tls-test-bed/wolfssl:$(basename containers/wolfssl/v3.12.2-stable) > containers/wolfssl/v3.12.2-stable.docker

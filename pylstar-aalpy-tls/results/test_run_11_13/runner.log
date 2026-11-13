@@ -1,0 +1,246 @@
+2026-11-13T12:37:18 CAMPAIGN test_run_11_13 runs=110 images=40 jobs=6 eq=RW:10000:0.1 inferers=pylstar-tls,pylstar-tls-lsharp repeat=1
+2026-11-13T12:37:18 START client--curl-openssl_OpenSSL_1_1_1k--tls13--v1.3--pylstar-tls-lsharp--r1
+2026-11-13T12:37:18 START client--curl-openssl_OpenSSL_1_1_1k--tls13--v1.3--pylstar-tls--r1
+2026-11-13T12:37:18 BUILD tls-test-bed/curl-wolfssl:v4.4.0-stable
+2026-11-13T12:37:18 BUILD tls-test-bed/curl-openssl:openssl-3.0.2
+2026-11-13T12:37:20 END   client--curl-wolfssl_v4.4.0-stable--tls13--v1.3--pylstar-tls--r1 status=build-failed
+2026-11-13T12:37:20 END   client--curl-openssl_openssl-3.0.2--tls13--v1.3--pylstar-tls-lsharp--r1 status=build-failed
+2026-11-13T12:37:20 BUILD tls-test-bed/curl-wolfssl:v4.4.0-stable
+2026-11-13T12:37:20 BUILD tls-test-bed/curl-openssl:openssl-3.0.2
+2026-11-13T12:37:20 BUILD tls-test-bed/curl-wolfssl:v4.6.0-stable
+2026-11-13T12:37:22 END   client--curl-openssl_openssl-3.0.2--tls13--v1.3--pylstar-tls--r1 status=build-failed
+2026-11-13T12:37:22 END   client--curl-wolfssl_v4.4.0-stable--tls13--v1.3--pylstar-tls-lsharp--r1 status=build-failed
+2026-11-13T12:37:22 END   client--curl-wolfssl_v4.6.0-stable--tls13--v1.3--pylstar-tls--r1 status=build-failed
+2026-11-13T12:37:22 BUILD tls-test-bed/curl-wolfssl:v5.1.0-stable
+2026-11-13T12:37:22 BUILD tls-test-bed/curl-wolfssl:v4.6.0-stable
+2026-11-13T12:37:22 BUILD tls-test-bed/curl-wolfssl:v5.1.1-stable
+2026-11-13T12:38:22 END   client--curl-openssl_OpenSSL_1_1_1k--tls13--v1.3--pylstar-tls-lsharp--r1 status=ok wall=64s
+2026-11-13T12:43:40 END   client--curl-openssl_OpenSSL_1_1_1k--tls13--v1.3--pylstar-tls--r1 status=failed wall=382s
+2026-11-13T12:43:40 START server--erlang_OTP-20.0--bb-oracle--v1.0--pylstar-tls--r1
+2026-11-13T12:45:11 END   server--erlang_OTP-20.0--bb-oracle--v1.0--pylstar-tls--r1 status=ok wall=91s
+2026-11-13T12:45:11 START server--erlang_OTP-20.0--bb-oracle--v1.0--pylstar-tls-lsharp--r1
+2026-11-13T12:46:07 END   server--erlang_OTP-20.0--bb-oracle--v1.0--pylstar-tls-lsharp--r1 status=ok wall=55s
+2026-11-13T12:46:07 START server--erlang_OTP-24.2.1--tls12--v1.2--pylstar-tls--r1
+2026-11-13T12:46:46 START client--curl-wolfssl_v5.1.1-stable--tls13--v1.3--pylstar-tls--r1
+2026-11-13T12:46:47 START client--curl-wolfssl_v5.1.1-stable--tls13--v1.3--pylstar-tls-lsharp--r1
+2026-11-13T12:46:53 START client--curl-wolfssl_v5.1.0-stable--tls13--v1.3--pylstar-tls--r1
+2026-11-13T12:46:53 START client--curl-wolfssl_v5.1.0-stable--tls13--v1.3--pylstar-tls-lsharp--r1
+2026-11-13T12:46:54 START client--curl-wolfssl_v4.6.0-stable--tls13--v1.3--pylstar-tls-lsharp--r1
+2026-11-13T12:47:29 END   client--curl-wolfssl_v5.1.0-stable--tls13--v1.3--pylstar-tls--r1 status=failed wall=36s
+2026-11-13T12:47:29 START server--erlang_OTP-24.2.1--tls12--v1.2--pylstar-tls-lsharp--r1
+2026-11-13T12:48:27 END   client--curl-wolfssl_v5.1.0-stable--tls13--v1.3--pylstar-tls-lsharp--r1 status=ok wall=93s
+2026-11-13T12:48:27 START server--erlang_OTP-24.2.1--tls10--v1.0--pylstar-tls--r1
+2026-11-13T12:48:28 END   client--curl-wolfssl_v5.1.1-stable--tls13--v1.3--pylstar-tls-lsharp--r1 status=ok wall=101s
+2026-11-13T12:48:28 START server--erlang_OTP-24.2.1--tls10--v1.0--pylstar-tls-lsharp--r1
+2026-11-13T12:48:47 END   client--curl-wolfssl_v4.6.0-stable--tls13--v1.3--pylstar-tls-lsharp--r1 status=ok wall=113s
+2026-11-13T12:48:47 START server--erlang_OTP-24.2.1--tls13--v1.3--pylstar-tls--r1
+2026-11-13T12:50:00 END   server--erlang_OTP-24.2.1--tls12--v1.2--pylstar-tls-lsharp--r1 status=ok wall=151s
+2026-11-13T12:50:00 START server--erlang_OTP-24.2.1--tls13--v1.3--pylstar-tls-lsharp--r1
+2026-11-13T12:51:08 END   server--erlang_OTP-24.2.1--tls10--v1.0--pylstar-tls-lsharp--r1 status=ok wall=160s
+2026-11-13T12:51:08 BUILD tls-test-bed/fizz:v2021.02.01.00
+2026-11-13T12:51:14 END   server--erlang_OTP-24.2.1--tls12--v1.2--pylstar-tls--r1 status=ok wall=307s
+2026-11-13T12:53:11 END   server--erlang_OTP-24.2.1--tls10--v1.0--pylstar-tls--r1 status=ok wall=284s
+2026-11-13T12:53:11 START client--fizz_v2021.06.14.00--tls13--v1.3--pylstar-tls--r1
+2026-11-13T12:55:39 END   client--curl-wolfssl_v5.1.1-stable--tls13--v1.3--pylstar-tls--r1 status=ok wall=533s
+2026-11-13T12:55:39 START client--fizz_v2021.06.14.00--tls13--v1.3--pylstar-tls-lsharp--r1
+2026-11-13T12:57:11 END   client--fizz_v2021.06.14.00--tls13--v1.3--pylstar-tls-lsharp--r1 status=ok wall=91s
+2026-11-13T12:57:11 BUILD tls-test-bed/gnutls:3.7.2
+2026-11-13T13:04:08 END   client--fizz_v2021.06.14.00--tls13--v1.3--pylstar-tls--r1 status=ok wall=657s
+2026-11-13T13:12:55 START server--gnutls_3.7.2--tls13--v1.3--pylstar-tls--r1
+2026-11-13T13:12:55 START server--gnutls_3.7.2--tls13--v1.3--pylstar-tls-lsharp--r1
+2026-11-13T13:13:23 END   server--gnutls_3.7.2--tls13--v1.3--pylstar-tls-lsharp--r1 status=ok wall=28s
+2026-11-13T13:13:24 START server--matrixssl_3.7.2--bb-oracle--v1.0--pylstar-tls--r1
+2026-11-13T13:13:37 END   server--gnutls_3.7.2--tls13--v1.3--pylstar-tls--r1 status=ok wall=42s
+2026-11-13T13:13:37 START server--matrixssl_3.7.2--bb-oracle--v1.0--pylstar-tls-lsharp--r1
+2026-11-13T13:14:04 END   server--matrixssl_3.7.2--bb-oracle--v1.0--pylstar-tls-lsharp--r1 status=ok wall=27s
+2026-11-13T13:14:04 START server--nss_NSS_3_15_5_RTM--tls12--v1.2--pylstar-tls--r1
+2026-11-13T13:14:13 END   server--matrixssl_3.7.2--bb-oracle--v1.0--pylstar-tls--r1 status=ok wall=50s
+2026-11-13T13:14:14 START server--nss_NSS_3_15_5_RTM--tls12--v1.2--pylstar-tls-lsharp--r1
+2026-11-13T13:22:36 START client--fizz_v2021.02.01.00--tls13--v1.3--pylstar-tls--r1
+2026-11-13T13:22:36 START client--fizz_v2021.02.01.00--tls13--v1.3--pylstar-tls-lsharp--r1
+2026-11-13T13:24:32 END   client--fizz_v2021.02.01.00--tls13--v1.3--pylstar-tls-lsharp--r1 status=ok wall=116s
+2026-11-13T13:24:32 BUILD tls-test-bed/nss:NSS_3_39_RTM
+2026-11-13T13:30:16 END   client--fizz_v2021.02.01.00--tls13--v1.3--pylstar-tls--r1 status=ok wall=461s
+2026-11-13T13:32:47 START server--nss_NSS_3_39_RTM--tls13--v1.3--pylstar-tls--r1
+2026-11-13T13:32:47 START server--nss_NSS_3_39_RTM--tls13--v1.3--pylstar-tls-lsharp--r1
+2026-11-13T13:33:22 END   server--nss_NSS_3_39_RTM--tls13--v1.3--pylstar-tls-lsharp--r1 status=ok wall=35s
+2026-11-13T13:33:22 START server--nss_NSS_3_78_RTM--tls12--v1.2--pylstar-tls--r1
+2026-11-13T13:33:34 END   server--nss_NSS_3_39_RTM--tls13--v1.3--pylstar-tls--r1 status=ok wall=48s
+2026-11-13T13:33:35 START server--nss_NSS_3_78_RTM--tls12--v1.2--pylstar-tls-lsharp--r1
+2026-11-13T13:34:34 END   server--nss_NSS_3_78_RTM--tls12--v1.2--pylstar-tls-lsharp--r1 status=ok wall=59s
+2026-11-13T13:34:34 START server--nss_NSS_3_78_RTM--tls13--v1.3--pylstar-tls--r1
+2026-11-13T13:35:07 END   server--nss_NSS_3_78_RTM--tls13--v1.3--pylstar-tls--r1 status=ok wall=32s
+2026-11-13T13:35:07 START server--nss_NSS_3_78_RTM--tls13--v1.3--pylstar-tls-lsharp--r1
+2026-11-13T13:35:16 END   server--nss_NSS_3_78_RTM--tls12--v1.2--pylstar-tls--r1 status=ok wall=113s
+2026-11-13T13:35:16 BUILD tls-test-bed/openssl:OpenSSL_0_9_8za
+2026-11-13T13:35:27 END   server--nss_NSS_3_78_RTM--tls13--v1.3--pylstar-tls-lsharp--r1 status=ok wall=20s
+2026-11-13T13:36:20 START server--openssl_OpenSSL_0_9_8za--tls10--v1.0--pylstar-tls--r1
+2026-11-13T13:36:20 START server--openssl_OpenSSL_0_9_8za--tls10--v1.0--pylstar-tls-lsharp--r1
+2026-11-13T13:37:57 END   server--openssl_OpenSSL_0_9_8za--tls10--v1.0--pylstar-tls-lsharp--r1 status=ok wall=97s
+2026-11-13T13:37:57 BUILD tls-test-bed/openssl:OpenSSL_0_9_8zb
+2026-11-13T13:39:00 START server--openssl_OpenSSL_0_9_8zb--tls10--v1.0--pylstar-tls--r1
+2026-11-13T13:40:48 END   server--nss_NSS_3_15_5_RTM--tls12--v1.2--pylstar-tls-lsharp--r1 status=failed wall=1595s
+2026-11-13T13:40:49 START server--openssl_OpenSSL_0_9_8zb--tls10--v1.0--pylstar-tls-lsharp--r1
+2026-11-13T13:40:57 END   server--nss_NSS_3_15_5_RTM--tls12--v1.2--pylstar-tls--r1 status=failed wall=1613s
+2026-11-13T13:40:57 BUILD tls-test-bed/openssl:OpenSSL_0_9_8zc
+2026-11-13T13:41:57 START client--openssl_OpenSSL_0_9_8zc--freak--v1.0--pylstar-tls--r1
+2026-11-13T13:42:21 END   client--openssl_OpenSSL_0_9_8zc--freak--v1.0--pylstar-tls--r1 status=ok wall=23s
+2026-11-13T13:42:21 START client--openssl_OpenSSL_0_9_8zc--freak--v1.0--pylstar-tls-lsharp--r1
+2026-11-13T13:42:22 END   server--openssl_OpenSSL_0_9_8zb--tls10--v1.0--pylstar-tls-lsharp--r1 status=ok wall=93s
+2026-11-13T13:42:22 BUILD tls-test-bed/openssl:OpenSSL_0_9_8zd
+2026-11-13T13:42:25 END   client--openssl_OpenSSL_0_9_8zd--freak--v1.0--pylstar-tls--r1 status=build-failed
+2026-11-13T13:42:25 BUILD tls-test-bed/openssl:OpenSSL_0_9_8zd
+2026-11-13T13:42:27 END   client--openssl_OpenSSL_0_9_8zd--freak--v1.0--pylstar-tls-lsharp--r1 status=build-failed
+2026-11-13T13:42:27 BUILD tls-test-bed/openssl:OpenSSL_1_0_0l
+2026-11-13T13:42:29 END   server--openssl_OpenSSL_0_9_8za--tls10--v1.0--pylstar-tls--r1 status=ok wall=369s
+2026-11-13T13:42:44 END   client--openssl_OpenSSL_0_9_8zc--freak--v1.0--pylstar-tls-lsharp--r1 status=ok wall=23s
+2026-11-13T13:42:44 BUILD tls-test-bed/openssl:OpenSSL_1_0_0m
+2026-11-13T13:44:12 START server--openssl_OpenSSL_1_0_0l--tls10--v1.0--pylstar-tls--r1
+2026-11-13T13:44:12 START server--openssl_OpenSSL_1_0_0l--tls10--v1.0--pylstar-tls-lsharp--r1
+2026-11-13T13:44:31 START server--openssl_OpenSSL_1_0_0m--tls10--v1.0--pylstar-tls--r1
+2026-11-13T13:45:13 END   server--openssl_OpenSSL_0_9_8zb--tls10--v1.0--pylstar-tls--r1 status=ok wall=373s
+2026-11-13T13:45:13 START server--openssl_OpenSSL_1_0_0m--tls10--v1.0--pylstar-tls-lsharp--r1
+2026-11-13T13:45:53 END   server--openssl_OpenSSL_1_0_0l--tls10--v1.0--pylstar-tls-lsharp--r1 status=ok wall=101s
+2026-11-13T13:45:53 BUILD tls-test-bed/openssl:OpenSSL_1_0_0o
+2026-11-13T13:46:52 END   server--openssl_OpenSSL_1_0_0m--tls10--v1.0--pylstar-tls-lsharp--r1 status=ok wall=99s
+2026-11-13T13:47:21 START client--openssl_OpenSSL_1_0_0o--freak--v1.0--pylstar-tls--r1
+2026-11-13T13:47:21 START client--openssl_OpenSSL_1_0_0o--freak--v1.0--pylstar-tls-lsharp--r1
+2026-11-13T13:47:52 END   client--openssl_OpenSSL_1_0_0o--freak--v1.0--pylstar-tls--r1 status=ok wall=31s
+2026-11-13T13:47:52 BUILD tls-test-bed/openssl:OpenSSL_1_0_0p
+2026-11-13T13:47:52 END   client--openssl_OpenSSL_1_0_0o--freak--v1.0--pylstar-tls-lsharp--r1 status=ok wall=31s
+2026-11-13T13:49:18 START client--openssl_OpenSSL_1_0_0p--freak--v1.0--pylstar-tls--r1
+2026-11-13T13:49:18 START client--openssl_OpenSSL_1_0_0p--freak--v1.0--pylstar-tls-lsharp--r1
+2026-11-13T13:49:51 END   client--openssl_OpenSSL_1_0_0p--freak--v1.0--pylstar-tls-lsharp--r1 status=ok wall=33s
+2026-11-13T13:49:52 BUILD tls-test-bed/openssl:OpenSSL_1_0_1h
+2026-11-13T13:49:55 END   client--openssl_OpenSSL_1_0_0p--freak--v1.0--pylstar-tls--r1 status=ok wall=37s
+2026-11-13T13:50:48 END   server--openssl_OpenSSL_1_0_0m--tls10--v1.0--pylstar-tls--r1 status=ok wall=377s
+2026-11-13T13:50:48 BUILD tls-test-bed/openssl:OpenSSL_1_0_1i
+2026-11-13T13:50:55 END   server--openssl_OpenSSL_1_0_0l--tls10--v1.0--pylstar-tls--r1 status=ok wall=403s
+2026-11-13T13:51:33 START server--openssl_OpenSSL_1_0_1h--tls12--v1.2--pylstar-tls--r1
+2026-11-13T13:51:33 START server--openssl_OpenSSL_1_0_1h--tls12--v1.2--pylstar-tls-lsharp--r1
+2026-11-13T13:52:20 START server--openssl_OpenSSL_1_0_1i--tls12--v1.2--pylstar-tls--r1
+2026-11-13T13:52:20 START server--openssl_OpenSSL_1_0_1i--tls12--v1.2--pylstar-tls-lsharp--r1
+2026-11-13T13:53:12 END   server--openssl_OpenSSL_1_0_1h--tls12--v1.2--pylstar-tls-lsharp--r1 status=ok wall=99s
+2026-11-13T13:53:12 BUILD tls-test-bed/openssl:OpenSSL_1_0_1j
+2026-11-13T13:53:58 END   server--openssl_OpenSSL_1_0_1i--tls12--v1.2--pylstar-tls-lsharp--r1 status=ok wall=98s
+2026-11-13T13:54:39 START client--openssl_OpenSSL_1_0_1j--freak--v1.0--pylstar-tls--r1
+2026-11-13T13:54:39 START client--openssl_OpenSSL_1_0_1j--freak--v1.0--pylstar-tls-lsharp--r1
+2026-11-13T13:55:04 END   client--openssl_OpenSSL_1_0_1j--freak--v1.0--pylstar-tls-lsharp--r1 status=ok wall=25s
+2026-11-13T13:55:04 BUILD tls-test-bed/openssl:OpenSSL_1_0_1k
+2026-11-13T13:55:06 END   client--openssl_OpenSSL_1_0_1j--freak--v1.0--pylstar-tls--r1 status=ok wall=27s
+2026-11-13T13:56:25 START client--openssl_OpenSSL_1_0_1k--freak--v1.0--pylstar-tls--r1
+2026-11-13T13:56:25 START client--openssl_OpenSSL_1_0_1k--freak--v1.0--pylstar-tls-lsharp--r1
+2026-11-13T13:56:47 END   client--openssl_OpenSSL_1_0_1k--freak--v1.0--pylstar-tls-lsharp--r1 status=ok wall=22s
+2026-11-13T13:56:47 START server--openssl_OpenSSL_1_0_2u--tls12--v1.2--pylstar-tls--r1
+2026-11-13T13:56:54 END   client--openssl_OpenSSL_1_0_1k--freak--v1.0--pylstar-tls--r1 status=ok wall=29s
+2026-11-13T13:56:54 START server--openssl_OpenSSL_1_0_2u--tls12--v1.2--pylstar-tls-lsharp--r1
+2026-11-13T13:57:45 END   server--openssl_OpenSSL_1_0_1h--tls12--v1.2--pylstar-tls--r1 status=ok wall=372s
+2026-11-13T13:57:45 START client--openssl_OpenSSL_1_1_1k--tls13--v1.3--pylstar-tls--r1
+2026-11-13T13:57:53 END   server--openssl_OpenSSL_1_0_2u--tls12--v1.2--pylstar-tls-lsharp--r1 status=ok wall=59s
+2026-11-13T13:57:53 START client--openssl_OpenSSL_1_1_1k--tls13--v1.3--pylstar-tls-lsharp--r1
+2026-11-13T13:58:37 END   server--openssl_OpenSSL_1_0_1i--tls12--v1.2--pylstar-tls--r1 status=ok wall=376s
+2026-11-13T13:58:37 START server--openssl_OpenSSL_1_1_1k--tls12--v1.2--pylstar-tls--r1
+2026-11-13T13:58:58 END   server--openssl_OpenSSL_1_0_2u--tls12--v1.2--pylstar-tls--r1 status=ok wall=131s
+2026-11-13T13:58:58 START server--openssl_OpenSSL_1_1_1k--tls12--v1.2--pylstar-tls-lsharp--r1
+2026-11-13T13:59:11 END   client--openssl_OpenSSL_1_1_1k--tls13--v1.3--pylstar-tls-lsharp--r1 status=ok wall=78s
+2026-11-13T13:59:11 START server--openssl_OpenSSL_1_1_1k--tls13--v1.3--pylstar-tls--r1
+2026-11-13T13:59:50 END   server--openssl_OpenSSL_1_1_1k--tls13--v1.3--pylstar-tls--r1 status=ok wall=38s
+2026-11-13T13:59:50 START server--openssl_OpenSSL_1_1_1k--tls13--v1.3--pylstar-tls-lsharp--r1
+2026-11-13T13:59:55 END   server--openssl_OpenSSL_1_1_1k--tls12--v1.2--pylstar-tls-lsharp--r1 status=ok wall=57s
+2026-11-13T13:59:55 START client--openssl_openssl-3.0.2--tls13--v1.3--pylstar-tls--r1
+2026-11-13T14:00:12 END   server--openssl_OpenSSL_1_1_1k--tls13--v1.3--pylstar-tls-lsharp--r1 status=ok wall=22s
+2026-11-13T14:00:12 START client--openssl_openssl-3.0.2--tls13--v1.3--pylstar-tls-lsharp--r1
+2026-11-13T14:01:21 END   server--openssl_OpenSSL_1_1_1k--tls12--v1.2--pylstar-tls--r1 status=ok wall=165s
+2026-11-13T14:01:22 START server--openssl_openssl-3.0.2--tls13--v1.3--pylstar-tls--r1
+2026-11-13T14:01:44 END   client--openssl_openssl-3.0.2--tls13--v1.3--pylstar-tls-lsharp--r1 status=ok wall=92s
+2026-11-13T14:01:45 START server--openssl_openssl-3.0.2--tls13--v1.3--pylstar-tls-lsharp--r1
+2026-11-13T14:02:28 END   server--openssl_openssl-3.0.2--tls13--v1.3--pylstar-tls--r1 status=ok wall=67s
+2026-11-13T14:02:29 BUILD tls-test-bed/wolfssl:v3.12.2-stable
+2026-11-13T14:02:34 END   server--openssl_openssl-3.0.2--tls13--v1.3--pylstar-tls-lsharp--r1 status=ok wall=49s
+2026-11-13T14:02:44 END   client--openssl_OpenSSL_1_1_1k--tls13--v1.3--pylstar-tls--r1 status=ok wall=299s
+2026-11-13T14:02:45 BUILD tls-test-bed/wolfssl:v3.13.0-stable
+2026-11-13T14:04:28 END   client--openssl_openssl-3.0.2--tls13--v1.3--pylstar-tls--r1 status=failed wall=272s
+2026-11-13T14:05:00 START server--wolfssl_v3.12.2-stable--bb-oracle--v1.0--pylstar-tls--r1
+2026-11-13T14:05:01 START server--wolfssl_v3.12.2-stable--bb-oracle--v1.0--pylstar-tls-lsharp--r1
+2026-11-13T14:05:16 START server--wolfssl_v3.13.0-stable--bb-oracle--v1.0--pylstar-tls--r1
+2026-11-13T14:05:16 START server--wolfssl_v3.13.0-stable--bb-oracle--v1.0--pylstar-tls-lsharp--r1
+2026-11-13T14:05:46 END   server--wolfssl_v3.12.2-stable--bb-oracle--v1.0--pylstar-tls-lsharp--r1 status=ok wall=44s
+2026-11-13T14:05:46 BUILD tls-test-bed/wolfssl:v4.0.0-stable
+2026-11-13T14:06:15 END   server--wolfssl_v3.12.2-stable--bb-oracle--v1.0--pylstar-tls--r1 status=ok wall=74s
+2026-11-13T14:06:31 END   server--wolfssl_v3.13.0-stable--bb-oracle--v1.0--pylstar-tls-lsharp--r1 status=ok wall=75s
+2026-11-13T14:06:32 BUILD tls-test-bed/wolfssl:v4.4.0-stable
+2026-11-13T14:06:53 START server--wolfssl_v4.0.0-stable--tls13--v1.3--pylstar-tls--r1
+2026-11-13T14:06:54 START server--wolfssl_v4.0.0-stable--tls13--v1.3--pylstar-tls-lsharp--r1
+2026-11-13T14:07:08 END   server--wolfssl_v3.13.0-stable--bb-oracle--v1.0--pylstar-tls--r1 status=ok wall=112s
+2026-11-13T14:07:53 START client--wolfssl_v4.4.0-stable--tls13--v1.3--pylstar-tls--r1
+2026-11-13T14:07:54 START client--wolfssl_v4.4.0-stable--tls13--v1.3--pylstar-tls-lsharp--r1
+2026-11-13T14:08:06 END   server--wolfssl_v4.0.0-stable--tls13--v1.3--pylstar-tls-lsharp--r1 status=ok wall=72s
+2026-11-13T14:08:06 START srv-auth--wolfssl_v4.4.0-stable--tls13--v1.3--pylstar-tls--r1
+2026-11-13T14:09:29 END   server--wolfssl_v4.0.0-stable--tls13--v1.3--pylstar-tls--r1 status=ok wall=156s
+2026-11-13T14:09:29 START srv-auth--wolfssl_v4.4.0-stable--tls13--v1.3--pylstar-tls-lsharp--r1
+2026-11-13T14:10:36 END   srv-auth--wolfssl_v4.4.0-stable--tls13--v1.3--pylstar-tls-lsharp--r1 status=ok wall=66s
+2026-11-13T14:10:36 START server--wolfssl_v4.4.0-stable--tls12--v1.2--pylstar-tls--r1
+2026-11-13T14:10:38 END   client--wolfssl_v4.4.0-stable--tls13--v1.3--pylstar-tls-lsharp--r1 status=ok wall=164s
+2026-11-13T14:10:38 START server--wolfssl_v4.4.0-stable--tls12--v1.2--pylstar-tls-lsharp--r1
+2026-11-13T14:11:53 END   srv-auth--wolfssl_v4.4.0-stable--tls13--v1.3--pylstar-tls--r1 status=ok wall=226s
+2026-11-13T14:11:53 START server--wolfssl_v4.4.0-stable--tls13--v1.3--pylstar-tls--r1
+2026-11-13T14:14:17 END   server--wolfssl_v4.4.0-stable--tls13--v1.3--pylstar-tls--r1 status=ok wall=144s
+2026-11-13T14:14:17 START server--wolfssl_v4.4.0-stable--tls13--v1.3--pylstar-tls-lsharp--r1
+2026-11-13T14:14:38 END   server--wolfssl_v4.4.0-stable--tls12--v1.2--pylstar-tls-lsharp--r1 status=ok wall=240s
+2026-11-13T14:14:38 BUILD tls-test-bed/wolfssl:v4.5.0-stable
+2026-11-13T14:15:19 END   server--wolfssl_v4.4.0-stable--tls13--v1.3--pylstar-tls-lsharp--r1 status=ok wall=62s
+2026-11-13T14:15:54 START client--wolfssl_v4.5.0-stable--tls13--v1.3--pylstar-tls--r1
+2026-11-13T14:15:54 START client--wolfssl_v4.5.0-stable--tls13--v1.3--pylstar-tls-lsharp--r1
+2026-11-13T14:16:06 END   client--wolfssl_v4.5.0-stable--tls13--v1.3--pylstar-tls--r1 status=ok wall=12s
+2026-11-13T14:16:06 START server--wolfssl_v4.5.0-stable--tls12--v1.2--pylstar-tls--r1
+2026-11-13T14:16:09 END   client--wolfssl_v4.5.0-stable--tls13--v1.3--pylstar-tls-lsharp--r1 status=ok wall=14s
+2026-11-13T14:16:09 START server--wolfssl_v4.5.0-stable--tls12--v1.2--pylstar-tls-lsharp--r1
+2026-11-13T14:18:20 END   server--wolfssl_v4.5.0-stable--tls12--v1.2--pylstar-tls-lsharp--r1 status=ok wall=131s
+2026-11-13T14:18:21 START client--wolfssl_v4.6.0-stable--tls13--v1.3--pylstar-tls--r1
+2026-11-13T14:18:34 END   client--wolfssl_v4.6.0-stable--tls13--v1.3--pylstar-tls--r1 status=ok wall=13s
+2026-11-13T14:18:34 START client--wolfssl_v4.6.0-stable--tls13--v1.3--pylstar-tls-lsharp--r1
+2026-11-13T14:18:46 END   client--wolfssl_v4.6.0-stable--tls13--v1.3--pylstar-tls-lsharp--r1 status=ok wall=12s
+2026-11-13T14:18:47 START server--wolfssl_v4.6.0-stable--tls13--v1.3--pylstar-tls--r1
+2026-11-13T14:19:03 END   client--wolfssl_v4.4.0-stable--tls13--v1.3--pylstar-tls--r1 status=ok wall=669s
+2026-11-13T14:19:03 START server--wolfssl_v4.6.0-stable--tls13--v1.3--pylstar-tls-lsharp--r1
+2026-11-13T14:20:00 END   server--wolfssl_v4.6.0-stable--tls13--v1.3--pylstar-tls-lsharp--r1 status=ok wall=57s
+2026-11-13T14:20:01 BUILD tls-test-bed/wolfssl:v4.8.1-stable
+2026-11-13T14:21:27 START server--wolfssl_v4.8.1-stable--tls13--v1.3--pylstar-tls--r1
+2026-11-13T14:21:32 END   server--wolfssl_v4.6.0-stable--tls13--v1.3--pylstar-tls--r1 status=ok wall=165s
+2026-11-13T14:21:33 START server--wolfssl_v4.8.1-stable--tls13--v1.3--pylstar-tls-lsharp--r1
+2026-11-13T14:22:21 END   server--wolfssl_v4.8.1-stable--tls13--v1.3--pylstar-tls-lsharp--r1 status=ok wall=48s
+2026-11-13T14:22:21 START client--wolfssl_v5.1.0-stable--tls13--v1.3--pylstar-tls--r1
+2026-11-13T14:22:29 END   client--wolfssl_v5.1.0-stable--tls13--v1.3--pylstar-tls--r1 status=ok wall=7s
+2026-11-13T14:22:29 START client--wolfssl_v5.1.0-stable--tls13--v1.3--pylstar-tls-lsharp--r1
+2026-11-13T14:22:37 END   client--wolfssl_v5.1.0-stable--tls13--v1.3--pylstar-tls-lsharp--r1 status=ok wall=8s
+2026-11-13T14:22:38 START srv-auth--wolfssl_v5.1.0-stable--tls13--v1.3--pylstar-tls--r1
+2026-11-13T14:23:31 END   server--wolfssl_v4.8.1-stable--tls13--v1.3--pylstar-tls--r1 status=ok wall=124s
+2026-11-13T14:23:31 START srv-auth--wolfssl_v5.1.0-stable--tls13--v1.3--pylstar-tls-lsharp--r1
+2026-11-13T14:24:25 END   srv-auth--wolfssl_v5.1.0-stable--tls13--v1.3--pylstar-tls-lsharp--r1 status=ok wall=54s
+2026-11-13T14:24:25 START server--wolfssl_v5.1.1-stable--tls13--v1.3--pylstar-tls--r1
+2026-11-13T14:24:58 END   server--wolfssl_v4.4.0-stable--tls12--v1.2--pylstar-tls--r1 status=ok wall=862s
+2026-11-13T14:24:58 START server--wolfssl_v5.1.1-stable--tls13--v1.3--pylstar-tls-lsharp--r1
+2026-11-13T14:26:07 END   server--wolfssl_v5.1.1-stable--tls13--v1.3--pylstar-tls-lsharp--r1 status=ok wall=69s
+2026-11-13T14:26:08 BUILD tls-test-bed/wolfssl:v5.2.0-stable
+2026-11-13T14:26:11 END   srv-auth--wolfssl_v5.1.0-stable--tls13--v1.3--pylstar-tls--r1 status=ok wall=213s
+2026-11-13T14:26:21 END   server--wolfssl_v4.5.0-stable--tls12--v1.2--pylstar-tls--r1 status=ok wall=615s
+2026-11-13T14:26:46 END   server--wolfssl_v5.1.1-stable--tls13--v1.3--pylstar-tls--r1 status=ok wall=141s
+2026-11-13T14:27:00 START client--wolfssl_v5.2.0-stable--tls13--v1.3--pylstar-tls--r1
+2026-11-13T14:27:00 START client--wolfssl_v5.2.0-stable--tls13--v1.3--pylstar-tls-lsharp--r1
+2026-11-13T14:27:00 START srv-auth--wolfssl_v5.2.0-stable--tls13--v1.3--pylstar-tls--r1
+2026-11-13T14:27:00 START srv-auth--wolfssl_v5.2.0-stable--tls13--v1.3--pylstar-tls-lsharp--r1
+2026-11-13T14:27:08 END   client--wolfssl_v5.2.0-stable--tls13--v1.3--pylstar-tls--r1 status=ok wall=9s
+2026-11-13T14:27:09 START server--wolfssl_v5.2.0-stable--tls12--v1.2--pylstar-tls--r1
+2026-11-13T14:27:12 END   client--wolfssl_v5.2.0-stable--tls13--v1.3--pylstar-tls-lsharp--r1 status=ok wall=12s
+2026-11-13T14:27:12 START server--wolfssl_v5.2.0-stable--tls12--v1.2--pylstar-tls-lsharp--r1
+2026-11-13T14:27:46 END   srv-auth--wolfssl_v5.2.0-stable--tls13--v1.3--pylstar-tls-lsharp--r1 status=ok wall=46s
+2026-11-13T14:27:46 START server--wolfssl_v5.2.0-stable--tls13--v1.3--pylstar-tls--r1
+2026-11-13T14:28:37 END   server--wolfssl_v5.2.0-stable--tls12--v1.2--pylstar-tls-lsharp--r1 status=ok wall=85s
+2026-11-13T14:28:38 START server--wolfssl_v5.2.0-stable--tls13--v1.3--pylstar-tls-lsharp--r1
+2026-11-13T14:29:09 END   server--wolfssl_v5.2.0-stable--tls13--v1.3--pylstar-tls--r1 status=ok wall=83s
+2026-11-13T14:29:17 END   server--wolfssl_v5.2.0-stable--tls13--v1.3--pylstar-tls-lsharp--r1 status=ok wall=39s
+2026-11-13T14:29:21 END   srv-auth--wolfssl_v5.2.0-stable--tls13--v1.3--pylstar-tls--r1 status=ok wall=141s
+2026-11-13T14:32:33 END   server--wolfssl_v5.2.0-stable--tls12--v1.2--pylstar-tls--r1 status=ok wall=325s
+2026-11-13T14:39:12 END   server--erlang_OTP-24.2.1--tls13--v1.3--pylstar-tls-lsharp--r1 status=ok wall=6552s
+2026-11-13T15:12:23 END   server--erlang_OTP-24.2.1--tls13--v1.3--pylstar-tls--r1 status=ok wall=8616s
+2026-11-13T15:12:23 CAMPAIGN test_run_11_13 finished

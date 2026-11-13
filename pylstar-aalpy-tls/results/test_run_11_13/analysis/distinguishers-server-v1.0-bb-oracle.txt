@@ -1,0 +1,4 @@
+5 classes
+2 distinguishing sequences:
+  TLS12ClientHelloRSA, TLS12CKE_ok, TLSChangeCipherSpec, TLS12ClientHelloRSA
+  TLS12ClientHelloRSA, TLS12CKE_padding_inf_8

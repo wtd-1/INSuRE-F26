@@ -1,0 +1,6 @@
+class,states,model_hash,n_stacks,stacks,inferers,security_results
+1,5,a7c215c960368a3f4719cc03602e8413,1,erlang_OTP-20.0,pylstar-tls pylstar-tls-lsharp,Possible BB oracle
+2,5,2ca732bed7afa0d92d916d991a061dde,1,matrixssl_3.7.2,pylstar-tls pylstar-tls-lsharp,Possible BB oracle
+3,5,3f36101250e8d871510fc6fc1151bcf1,1,wolfssl_v3.12.2-stable,pylstar-tls,Possible BB oracle
+4,4,84f206ab683435da6358dc68d69ce9f2,1,wolfssl_v3.12.2-stable,pylstar-tls-lsharp,Possible BB oracle
+5,5,e36c67c4b3b528c683c13fcd71548167,1,wolfssl_v3.13.0-stable,pylstar-tls pylstar-tls-lsharp,

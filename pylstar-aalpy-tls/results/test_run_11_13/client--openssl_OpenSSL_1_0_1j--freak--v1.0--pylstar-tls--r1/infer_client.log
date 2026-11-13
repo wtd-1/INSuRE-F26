@@ -1,0 +1,10 @@
+input_letters ['TLS12ServerHello_RSA_EXPORT', 'TLS12Certificate_valid', 'TLS12ServerKeyExchange', 'TLS12ServerHelloDone', 'TLSChangeCipherSpec', 'TLSFinished', 'TLSApplicationData']
+eqtests: RandomWalk(10000, 0.1)
+timeout: 1.0
+
+time spent in lstar.learn(): 21.876335859298706
+n_states: 4
+n_queries=1176
+n_submitted_queries=983
+n_letters=10634
+n_submitted_letters=10155

@@ -1,0 +1,7 @@
+# Failed or timed-out runs, with --timeout 3 added. Rerun with:
+#   ./run-experiments.sh --campaign <name>-retry analysis/failed.tsv
+client	curl-openssl:OpenSSL_1_1_1k	1.3	tls13	--timeout 3	# failed: client--curl-openssl_OpenSSL_1_1_1k--tls13--v1.3--pylstar-tls--r1
+client	curl-wolfssl:v5.1.0-stable	1.3	tls13	--timeout 3	# failed: client--curl-wolfssl_v5.1.0-stable--tls13--v1.3--pylstar-tls--r1
+client	openssl:openssl-3.0.2	1.3	tls13	--timeout 3	# failed: client--openssl_openssl-3.0.2--tls13--v1.3--pylstar-tls--r1
+server	nss:NSS_3_15_5_RTM	1.2	tls12	--timeout 3	# failed: server--nss_NSS_3_15_5_RTM--tls12--v1.2--pylstar-tls--r1
+server	nss:NSS_3_15_5_RTM	1.2	tls12	--timeout 3	# failed: server--nss_NSS_3_15_5_RTM--tls12--v1.2--pylstar-tls-lsharp--r1

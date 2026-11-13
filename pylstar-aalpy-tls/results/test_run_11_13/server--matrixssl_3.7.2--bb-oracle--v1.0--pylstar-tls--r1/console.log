@@ -1,0 +1,36 @@
+5c49e3e083b8ba30db72e5e7b027777e45092195435d60030452d56c2413de3d
+/root/src/scapy/scapy/layers/tls/crypto/cipher_block.py:156: CryptographyDeprecationWarning: IDEA has been deprecated
+  pc_cls = algorithms.IDEA
+/root/src/scapy/scapy/layers/tls/crypto/cipher_block.py:162: CryptographyDeprecationWarning: SEED has been deprecated
+  pc_cls = algorithms.SEED
+/root/src/scapy/scapy/layers/ipsec.py:471: CryptographyDeprecationWarning: Blowfish has been deprecated
+  cipher=algorithms.Blowfish,
+/root/src/scapy/scapy/layers/ipsec.py:485: CryptographyDeprecationWarning: CAST5 has been deprecated
+  cipher=algorithms.CAST5,
+input_letters ['TLS12ClientHelloRSA', 'TLS12CKE_ok', 'TLS12CKE_wrong_tls_version', 'TLS12CKE_0002_modified', 'TLS12CKE_padding_inf_8', 'TLS12CKE_key_null', 'TLS12CKE_longer_pms', 'TLS12CKE_shorten_pms', 'TLSChangeCipherSpec', 'TLSHardCodedFinished', 'TLSCloseNotify', 'NoRenegotiation']
+eqtests: RandomWalk(10000, 0.1)
+timeout: 1.0
+40501: [INFO] StoreHypotheses:find_counterexample: Storing hyptohesis #0 in /results/0.automaton
+40501: [INFO] StoreHypotheses:write_stats:   time spent so far: 38.64819025993347
+40501: [INFO] StoreHypotheses:write_stats:   n_states: 5
+40501: [INFO] StoreHypotheses:write_stats:   n_queries=780
+40501: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=732
+40501: [INFO] StoreHypotheses:write_stats:   n_letters=2592
+40501: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=2460
+40521: [INFO] HappyPathFirst:find_counterexample: Starting the HappyPath Algorithm to search for a counter-example
+40522: [INFO] RandomWalkMethod:find_counterexample: Starting the RandomWalk Algorithm to search for a counter-example
+46862: [INFO] StoreHypotheses:write_stats: Inference converged
+46862: [INFO] StoreHypotheses:write_stats:   time spent so far: 45.009357213974
+46862: [INFO] StoreHypotheses:write_stats:   n_states: 5
+46862: [INFO] StoreHypotheses:write_stats:   n_queries=1727
+46862: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=1541
+46862: [INFO] StoreHypotheses:write_stats:   n_letters=12592
+46862: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=12140
+
+time spent in lstar.learn(): 45.018646478652954
+n_states: 5
+n_queries=1727
+n_submitted_queries=1541
+n_letters=12592
+n_submitted_letters=12140
+Results are in /mnt/c/Users/zestyxace/Documents/GitHub/INSuRE-F26/pylstar-aalpy-tls/results/test_run_11_13/server--matrixssl_3.7.2--bb-oracle--v1.0--pylstar-tls--r1

@@ -1,0 +1,19 @@
+campaign	test_run_11_13
+kind	server
+image	tls-test-bed/wolfssl:v5.2.0-stable
+tls_version	1.3
+scenario	tls13
+extra_args	
+eq_method	RW:10000:0.1
+inferer	pylstar-tls-lsharp
+repeat	1
+jobs	6
+start_epoch	1794601718.177787489
+end_epoch	1794601757.509000819
+wall_seconds	39.3
+exit_code	0
+status	ok
+loadavg_start	3.16 3.82 4.08
+loadavg_end	3.22 3.74 4.04
+host	aendri
+command	INFERER_IMAGE=tls-test-bed/pylstar-tls-lsharp ./infer-server.sh tls-test-bed/wolfssl:v5.2.0-stable 1.3 tls13 -E RW:10000:0.1

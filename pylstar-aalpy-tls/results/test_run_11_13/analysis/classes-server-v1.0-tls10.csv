@@ -1,0 +1,5 @@
+class,states,model_hash,n_stacks,stacks,inferers,security_results
+1,7,dbdc6449e36b44df7c2ace63ef87ac0b,1,erlang_OTP-24.2.1,pylstar-tls pylstar-tls-lsharp,Pre-['CCS'] loops found
+2,8,0de3139d9cbbf77ad619f7afbd434b81,2,openssl_OpenSSL_0_9_8za openssl_OpenSSL_1_0_0m,pylstar-tls pylstar-tls-lsharp,Pre-['CCS'] loops found
+3,8,afee6452f2a7daac3afa03e5b12e14aa,1,openssl_OpenSSL_0_9_8zb,pylstar-tls pylstar-tls-lsharp,Pre-['CCS'] loops found
+4,9,9a8dec50b64d56bb422f379ecc6dc125,1,openssl_OpenSSL_1_0_0l,pylstar-tls pylstar-tls-lsharp,Pre-['CCS'] loops found

@@ -1,0 +1,21 @@
+make: getcwd: No such file or directory
+docker build --build-arg COMMIT=$(basename containers/openssl/openssl-3.0.2) -t tls-test-bed/openssl:$(basename containers/openssl/openssl-3.0.2) stacks/openssl-git--1_1--3_0
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 1.14kB 0.0s done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/debian:buster
+#2 ERROR: error getting credentials - err: exit status 1, out: ``
+------
+ > [internal] load metadata for docker.io/library/debian:buster:
+------
+Dockerfile:1
+--------------------
+   1 | >>> FROM debian:buster AS builder
+   2 |     # Debian buster is EOL; its packages now live on archive.debian.org.
+   3 |     RUN echo "deb http://archive.debian.org/debian buster main" > /etc/apt/sources.list && echo "deb http://archive.debian.org/debian-security buster/updates main" >> /etc/apt/sources.list
+--------------------
+ERROR: failed to build: failed to solve: error getting credentials - err: exit status 1, out: ``
+make: *** [Makefile:62: containers/openssl/openssl-3.0.2.docker] Error 1

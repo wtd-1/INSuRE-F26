@@ -1,0 +1,38 @@
+1edd892175b4b1e9f29353871f5592c27841c88d45a850cee984d3cfc29db845
+make: Entering directory '/mnt/c/Users/zestyxace/Documents/GitHub/INSuRE-F26/pylstar-aalpy-tls/crypto'
+make: Leaving directory '/mnt/c/Users/zestyxace/Documents/GitHub/INSuRE-F26/pylstar-aalpy-tls/crypto'
+/root/src/scapy/scapy/layers/tls/crypto/cipher_block.py:156: CryptographyDeprecationWarning: IDEA has been deprecated
+  pc_cls = algorithms.IDEA
+/root/src/scapy/scapy/layers/tls/crypto/cipher_block.py:162: CryptographyDeprecationWarning: SEED has been deprecated
+  pc_cls = algorithms.SEED
+/root/src/scapy/scapy/layers/ipsec.py:471: CryptographyDeprecationWarning: Blowfish has been deprecated
+  cipher=algorithms.Blowfish,
+/root/src/scapy/scapy/layers/ipsec.py:485: CryptographyDeprecationWarning: CAST5 has been deprecated
+  cipher=algorithms.CAST5,
+input_letters ['TLS13ServerHello', 'TLS13SH_WITH_00_RandBytes', 'TLSChangeCipherSpec', 'TLS13EncryptedExtensions', 'TLS13CertificateRequest', 'TLS13Certificate_valid', 'TLS13Certificate_invalid', 'TLS13Certificate_untrusted', 'TLS13EmptyCertificate', 'TLS13CertificateVerify', 'TLS13InvalidCertificateVerify', 'TLSFinished', 'TLSApplicationData', 'TLSApplicationDataEmpty', 'TLSCloseNotify', 'NoRenegotiation']
+eqtests: RandomWalk(10000, 0.1)
+timeout: 1.0
+639841: [INFO] StoreHypotheses:find_counterexample: Storing hyptohesis #0 in /results/0.automaton
+639841: [INFO] StoreHypotheses:write_stats:   time spent so far: 636.1379787921906
+639841: [INFO] StoreHypotheses:write_stats:   n_states: 13
+639841: [INFO] StoreHypotheses:write_stats:   n_queries=3536
+639841: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=3344
+639841: [INFO] StoreHypotheses:write_stats:   n_letters=16928
+639841: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=16144
+639874: [INFO] HappyPathFirst:find_counterexample: Starting the HappyPath Algorithm to search for a counter-example
+644636: [INFO] RandomWalkMethod:find_counterexample: Starting the RandomWalk Algorithm to search for a counter-example
+662479: [INFO] StoreHypotheses:write_stats: Inference converged
+662480: [INFO] StoreHypotheses:write_stats:   time spent so far: 658.7766633033752
+662486: [INFO] StoreHypotheses:write_stats:   n_states: 13
+662486: [INFO] StoreHypotheses:write_stats:   n_queries=4438
+662486: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=4143
+662486: [INFO] StoreHypotheses:write_stats:   n_letters=27016
+662487: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=26000
+
+time spent in lstar.learn(): 658.9406867027283
+n_states: 13
+n_queries=4438
+n_submitted_queries=4143
+n_letters=27016
+n_submitted_letters=26000
+Results are in /mnt/c/Users/zestyxace/Documents/GitHub/INSuRE-F26/pylstar-aalpy-tls/results/test_run_11_13/client--wolfssl_v4.4.0-stable--tls13--v1.3--pylstar-tls--r1

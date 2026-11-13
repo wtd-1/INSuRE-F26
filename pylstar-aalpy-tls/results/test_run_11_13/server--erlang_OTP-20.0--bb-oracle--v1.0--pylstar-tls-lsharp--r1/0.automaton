@@ -1,0 +1,13 @@
+NoRenegotiation TLS12CKE_0002_modified TLS12CKE_key_null TLS12CKE_longer_pms TLS12CKE_ok TLS12CKE_padding_inf_8 TLS12CKE_shorten_pms TLS12CKE_wrong_tls_version TLS12ClientHelloRSA TLSChangeCipherSpec TLSCloseNotify TLSHardCodedFinished
+0, 0, NoRenegotiation, No RSP
+0, 0, TLS12CKE_0002_modified, EOF
+0, 0, TLS12CKE_key_null, EOF
+0, 0, TLS12CKE_longer_pms, EOF
+0, 0, TLS12CKE_ok, EOF
+0, 0, TLS12CKE_padding_inf_8, EOF
+0, 0, TLS12CKE_shorten_pms, EOF
+0, 0, TLS12CKE_wrong_tls_version, EOF
+0, 0, TLS12ClientHelloRSA, TLSServerHello+TLSCertificate+TLSServerHelloDone
+0, 0, TLSChangeCipherSpec, EOF
+0, 0, TLSCloseNotify, EOF
+0, 0, TLSHardCodedFinished, EOF

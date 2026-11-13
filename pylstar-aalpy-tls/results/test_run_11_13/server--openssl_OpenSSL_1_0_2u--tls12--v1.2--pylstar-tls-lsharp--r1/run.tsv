@@ -1,0 +1,19 @@
+campaign	test_run_11_13
+kind	server
+image	tls-test-bed/openssl:OpenSSL_1_0_2u
+tls_version	1.2
+scenario	tls12
+extra_args	
+eq_method	RW:10000:0.1
+inferer	pylstar-tls-lsharp
+repeat	1
+jobs	6
+start_epoch	1794599814.205358070
+end_epoch	1794599873.085292508
+wall_seconds	58.9
+exit_code	0
+status	ok
+loadavg_start	1.94 2.05 2.34
+loadavg_end	1.53 1.89 2.26
+host	aendri
+command	INFERER_IMAGE=tls-test-bed/pylstar-tls-lsharp ./infer-server.sh tls-test-bed/openssl:OpenSSL_1_0_2u 1.2 tls12 -E RW:10000:0.1

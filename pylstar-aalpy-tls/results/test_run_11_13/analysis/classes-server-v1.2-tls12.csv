@@ -1,0 +1,13 @@
+class,states,model_hash,n_stacks,stacks,inferers,security_results
+1,7,baa41f55d37420c49edb3c34a84447d9,1,erlang_OTP-24.2.1,pylstar-tls pylstar-tls-lsharp,Pre-['CCS'] loops found
+2,6,8d536e8a7847803396fbffd7be32453e,1,nss_NSS_3_78_RTM,pylstar-tls pylstar-tls-lsharp,Pre-['CCS'] loops found
+3,8,1153208af1dc228b334e0ef019b3ba5f,1,openssl_OpenSSL_1_0_1h,pylstar-tls pylstar-tls-lsharp,Pre-['CCS'] loops found
+4,8,9246a385c7f15fdf138fa6227b4b8773,1,openssl_OpenSSL_1_0_1i,pylstar-tls pylstar-tls-lsharp,Pre-['CCS'] loops found
+5,6,34e9e06aa3932264d89bf5724057443f,1,openssl_OpenSSL_1_0_2u,pylstar-tls pylstar-tls-lsharp,Pre-['CCS'] loops found
+6,6,ae200922c4f4874c6c3775c0162eb30c,1,openssl_OpenSSL_1_1_1k,pylstar-tls pylstar-tls-lsharp,
+7,27,eab095bbfa3b6901cec9fb3f7db75892,1,wolfssl_v4.4.0-stable,pylstar-tls,Pre-['CCS'] loops found
+8,11,a53315ce49549bb2922e67b0e328de16,1,wolfssl_v4.4.0-stable,pylstar-tls-lsharp,Pre-['CCS'] loops found
+9,26,693031a0f0b33fc314067ee68346e23a,1,wolfssl_v4.5.0-stable,pylstar-tls,Pre-['CCS'] loops found
+10,7,29bcfbd18905ca80f720998afbbb0b30,1,wolfssl_v4.5.0-stable,pylstar-tls-lsharp,Pre-['CCS'] loops found
+11,16,e99ee5e5be81dd281bde47fd5e746fdc,1,wolfssl_v5.2.0-stable,pylstar-tls,Pre-['CCS'] loops found
+12,7,373b400492f37a4669e266579bf17701,1,wolfssl_v5.2.0-stable,pylstar-tls-lsharp,Pre-['CCS'] loops found

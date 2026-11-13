@@ -1,0 +1,2485 @@
+docker build --build-arg COMMIT=$(basename containers/wolfssl/v5.1.1-stable) -t tls-test-bed/wolfssl:$(basename containers/wolfssl/v5.1.1-stable) stacks/wolfssl-git
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 964B 0.0s done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/debian:buster
+#2 DONE 0.5s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 0.0s
+#3 transferring context: 2B 0.0s done
+#3 DONE 0.1s
+
+#4 [ 1/15] FROM docker.io/library/debian:buster@sha256:58ce6f1271ae1c8a2006ff7d3e54e9874d839f573d8009c20154ad0f2fb0a225
+#4 resolve docker.io/library/debian:buster@sha256:58ce6f1271ae1c8a2006ff7d3e54e9874d839f573d8009c20154ad0f2fb0a225 0.1s done
+#4 DONE 0.1s
+
+#5 [ 2/15] RUN echo "deb http://archive.debian.org/debian buster main" > /etc/apt/sources.list && echo "deb http://archive.debian.org/debian-security buster/updates main" >> /etc/apt/sources.list
+#5 CACHED
+
+#6 [ 3/15] RUN apt-get update && apt-get install -y --no-install-recommends git perl gcc make libc6-dev ca-certificates ncat && apt-get clean
+#6 ...
+
+#7 [internal] load build context
+#7 transferring context: 3.92kB 0.0s done
+#7 DONE 0.1s
+
+#6 [ 3/15] RUN apt-get update && apt-get install -y --no-install-recommends git perl gcc make libc6-dev ca-certificates ncat && apt-get clean
+#6 0.721 Get:1 http://archive.debian.org/debian buster InRelease [122 kB]
+#6 0.753 Get:2 http://archive.debian.org/debian-security buster/updates InRelease [34.8 kB]
+#6 0.854 Get:3 http://archive.debian.org/debian buster/main amd64 Packages [7909 kB]
+#6 1.229 Get:4 http://archive.debian.org/debian-security buster/updates/main amd64 Packages [610 kB]
+#6 2.179 Fetched 8676 kB in 1s (5797 kB/s)
+#6 2.179 Reading package lists...
+#6 2.590 Reading package lists...
+#6 3.089 Building dependency tree...
+#6 3.199 Reading state information...
+#6 3.299 The following additional packages will be installed:
+#6 3.299   binutils binutils-common binutils-x86-64-linux-gnu cpp cpp-8 gcc-8 git-man
+#6 3.299   libasan5 libatomic1 libbinutils libc-dev-bin libc6 libcc1-0 libcurl3-gnutls
+#6 3.299   liberror-perl libexpat1 libgcc-8-dev libgdbm-compat4 libgdbm6 libgomp1
+#6 3.299   libgssapi-krb5-2 libisl19 libitm1 libk5crypto3 libkeyutils1 libkrb5-3
+#6 3.299   libkrb5support0 libldap-2.4-2 libldap-common liblsan0 liblua5.3-0 libmpc3
+#6 3.299   libmpfr6 libmpx2 libnghttp2-14 libpcap0.8 libpcre2-8-0 libperl5.28 libpsl5
+#6 3.299   libquadmath0 librtmp1 libsasl2-2 libsasl2-modules-db libssh2-1 libssl1.1
+#6 3.300   libtsan0 libubsan1 linux-libc-dev openssl perl-modules-5.28
+#6 3.301 Suggested packages:
+#6 3.301   binutils-doc cpp-doc gcc-8-locales gcc-multilib manpages-dev autoconf
+#6 3.301   automake libtool flex bison gdb gcc-doc gcc-8-multilib gcc-8-doc libgcc1-dbg
+#6 3.301   libgomp1-dbg libitm1-dbg libatomic1-dbg libasan5-dbg liblsan0-dbg
+#6 3.301   libtsan0-dbg libubsan1-dbg libmpx2-dbg libquadmath0-dbg gettext-base
+#6 3.301   git-daemon-run | git-daemon-sysvinit git-doc git-el git-email git-gui gitk
+#6 3.301   gitweb git-cvs git-mediawiki git-svn glibc-doc libc-l10n locales gdbm-l10n
+#6 3.301   krb5-doc krb5-user sensible-utils make-doc perl-doc
+#6 3.301   libterm-readline-gnu-perl | libterm-readline-perl-perl libb-debug-perl
+#6 3.301   liblocale-codes-perl
+#6 3.301 Recommended packages:
+#6 3.301   patch less ssh-client manpages manpages-dev krb5-locales publicsuffix
+#6 3.301   libsasl2-modules netbase
+#6 3.464 The following NEW packages will be installed:
+#6 3.464   binutils binutils-common binutils-x86-64-linux-gnu ca-certificates cpp cpp-8
+#6 3.464   gcc gcc-8 git git-man libasan5 libatomic1 libbinutils libc-dev-bin libc6-dev
+#6 3.464   libcc1-0 libcurl3-gnutls liberror-perl libexpat1 libgcc-8-dev
+#6 3.465   libgdbm-compat4 libgdbm6 libgomp1 libgssapi-krb5-2 libisl19 libitm1
+#6 3.465   libk5crypto3 libkeyutils1 libkrb5-3 libkrb5support0 libldap-2.4-2
+#6 3.465   libldap-common liblsan0 liblua5.3-0 libmpc3 libmpfr6 libmpx2 libnghttp2-14
+#6 3.467   libpcap0.8 libpcre2-8-0 libperl5.28 libpsl5 libquadmath0 librtmp1 libsasl2-2
+#6 3.467   libsasl2-modules-db libssh2-1 libssl1.1 libtsan0 libubsan1 linux-libc-dev
+#6 3.467   make ncat openssl perl perl-modules-5.28
+#6 3.467 The following packages will be upgraded:
+#6 3.468   libc6
+#6 3.508 1 upgraded, 56 newly installed, 0 to remove and 1 not upgraded.
+#6 3.508 Need to get 55.4 MB of archives.
+#6 3.508 After this operation, 230 MB of additional disk space will be used.
+#6 3.508 Get:1 http://archive.debian.org/debian buster/main amd64 perl-modules-5.28 all 5.28.1-6+deb10u1 [2873 kB]
+#6 3.700 Get:2 http://archive.debian.org/debian-security buster/updates/main amd64 libc6 amd64 2.28-10+deb10u4 [2869 kB]
+#6 3.846 Get:3 http://archive.debian.org/debian buster/main amd64 libgdbm6 amd64 1.18.1-4 [64.7 kB]
+#6 3.851 Get:4 http://archive.debian.org/debian buster/main amd64 libgdbm-compat4 amd64 1.18.1-4 [44.1 kB]
+#6 3.853 Get:5 http://archive.debian.org/debian buster/main amd64 libperl5.28 amd64 5.28.1-6+deb10u1 [3894 kB]
+#6 4.385 Get:6 http://archive.debian.org/debian buster/main amd64 perl amd64 5.28.1-6+deb10u1 [204 kB]
+#6 4.409 Get:7 http://archive.debian.org/debian-security buster/updates/main amd64 libssl1.1 amd64 1.1.1n-0+deb10u6 [1552 kB]
+#6 4.622 Get:8 http://archive.debian.org/debian buster/main amd64 libkeyutils1 amd64 1.6-6 [15.0 kB]
+#6 4.624 Get:9 http://archive.debian.org/debian-security buster/updates/main amd64 libkrb5support0 amd64 1.17-3+deb10u6 [66.1 kB]
+#6 4.635 Get:10 http://archive.debian.org/debian-security buster/updates/main amd64 libk5crypto3 amd64 1.17-3+deb10u6 [122 kB]
+#6 4.646 Get:11 http://archive.debian.org/debian-security buster/updates/main amd64 libkrb5-3 amd64 1.17-3+deb10u6 [369 kB]
+#6 4.698 Get:12 http://archive.debian.org/debian-security buster/updates/main amd64 libgssapi-krb5-2 amd64 1.17-3+deb10u6 [159 kB]
+#6 4.721 Get:13 http://archive.debian.org/debian buster/main amd64 binutils-common amd64 2.31.1-16 [2073 kB]
+#6 5.009 Get:14 http://archive.debian.org/debian buster/main amd64 libbinutils amd64 2.31.1-16 [478 kB]
+#6 5.078 Get:15 http://archive.debian.org/debian buster/main amd64 binutils-x86-64-linux-gnu amd64 2.31.1-16 [1823 kB]
+#6 5.312 Get:16 http://archive.debian.org/debian buster/main amd64 binutils amd64 2.31.1-16 [56.8 kB]
+#6 5.316 Get:17 http://archive.debian.org/debian-security buster/updates/main amd64 openssl amd64 1.1.1n-0+deb10u6 [855 kB]
+#6 5.397 Get:18 http://archive.debian.org/debian buster/main amd64 ca-certificates all 20200601~deb10u2 [166 kB]
+#6 5.420 Get:19 http://archive.debian.org/debian buster/main amd64 libisl19 amd64 0.20-2 [587 kB]
+#6 5.455 Get:20 http://archive.debian.org/debian buster/main amd64 libmpfr6 amd64 4.0.2-1 [775 kB]
+#6 5.563 Get:21 http://archive.debian.org/debian buster/main amd64 libmpc3 amd64 1.1.0-1 [41.3 kB]
+#6 5.566 Get:22 http://archive.debian.org/debian buster/main amd64 cpp-8 amd64 8.3.0-6 [8914 kB]
+#6 6.853 Get:23 http://archive.debian.org/debian buster/main amd64 cpp amd64 4:8.3.0-1 [19.4 kB]
+#6 6.856 Get:24 http://archive.debian.org/debian buster/main amd64 libcc1-0 amd64 8.3.0-6 [46.6 kB]
+#6 6.861 Get:25 http://archive.debian.org/debian buster/main amd64 libgomp1 amd64 8.3.0-6 [75.8 kB]
+#6 6.869 Get:26 http://archive.debian.org/debian buster/main amd64 libitm1 amd64 8.3.0-6 [27.7 kB]
+#6 6.873 Get:27 http://archive.debian.org/debian buster/main amd64 libatomic1 amd64 8.3.0-6 [9032 B]
+#6 6.874 Get:28 http://archive.debian.org/debian buster/main amd64 libasan5 amd64 8.3.0-6 [362 kB]
+#6 6.907 Get:29 http://archive.debian.org/debian buster/main amd64 liblsan0 amd64 8.3.0-6 [131 kB]
+#6 6.913 Get:30 http://archive.debian.org/debian buster/main amd64 libtsan0 amd64 8.3.0-6 [283 kB]
+#6 6.944 Get:31 http://archive.debian.org/debian buster/main amd64 libubsan1 amd64 8.3.0-6 [120 kB]
+#6 6.957 Get:32 http://archive.debian.org/debian buster/main amd64 libmpx2 amd64 8.3.0-6 [11.4 kB]
+#6 6.959 Get:33 http://archive.debian.org/debian buster/main amd64 libquadmath0 amd64 8.3.0-6 [133 kB]
+#6 6.976 Get:34 http://archive.debian.org/debian buster/main amd64 libgcc-8-dev amd64 8.3.0-6 [2298 kB]
+#6 7.291 Get:35 http://archive.debian.org/debian buster/main amd64 gcc-8 amd64 8.3.0-6 [9452 kB]
+#6 8.566 Get:36 http://archive.debian.org/debian buster/main amd64 gcc amd64 4:8.3.0-1 [5196 B]
+#6 8.566 Get:37 http://archive.debian.org/debian buster/main amd64 libsasl2-modules-db amd64 2.1.27+dfsg-1+deb10u2 [69.2 kB]
+#6 8.575 Get:38 http://archive.debian.org/debian buster/main amd64 libsasl2-2 amd64 2.1.27+dfsg-1+deb10u2 [106 kB]
+#6 8.587 Get:39 http://archive.debian.org/debian buster/main amd64 libldap-common all 2.4.47+dfsg-3+deb10u7 [90.1 kB]
+#6 8.598 Get:40 http://archive.debian.org/debian buster/main amd64 libldap-2.4-2 amd64 2.4.47+dfsg-3+deb10u7 [224 kB]
+#6 8.621 Get:41 http://archive.debian.org/debian-security buster/updates/main amd64 libnghttp2-14 amd64 1.36.0-2+deb10u3 [86.1 kB]
+#6 8.626 Get:42 http://archive.debian.org/debian buster/main amd64 libpsl5 amd64 0.20.2-2 [53.7 kB]
+#6 8.630 Get:43 http://archive.debian.org/debian buster/main amd64 librtmp1 amd64 2.4+20151223.gitfa8646d.1-2 [60.5 kB]
+#6 8.632 Get:44 http://archive.debian.org/debian-security buster/updates/main amd64 libssh2-1 amd64 1.8.0-2.1+deb10u1 [141 kB]
+#6 8.640 Get:45 http://archive.debian.org/debian-security buster/updates/main amd64 libcurl3-gnutls amd64 7.64.0-4+deb10u9 [333 kB]
+#6 8.687 Get:46 http://archive.debian.org/debian-security buster/updates/main amd64 libexpat1 amd64 2.2.6-2+deb10u7 [108 kB]
+#6 8.701 Get:47 http://archive.debian.org/debian-security buster/updates/main amd64 libpcre2-8-0 amd64 10.32-5+deb10u1 [213 kB]
+#6 8.724 Get:48 http://archive.debian.org/debian buster/main amd64 liberror-perl all 0.17027-2 [30.9 kB]
+#6 8.726 Get:49 http://archive.debian.org/debian-security buster/updates/main amd64 git-man all 1:2.20.1-2+deb10u9 [1624 kB]
+#6 8.798 Get:50 http://archive.debian.org/debian-security buster/updates/main amd64 git amd64 1:2.20.1-2+deb10u9 [5667 kB]
+#6 9.104 Get:51 http://archive.debian.org/debian-security buster/updates/main amd64 libc-dev-bin amd64 2.28-10+deb10u4 [276 kB]
+#6 9.112 Get:52 http://archive.debian.org/debian-security buster/updates/main amd64 linux-libc-dev amd64 4.19.316-1 [1625 kB]
+#6 9.162 Get:53 http://archive.debian.org/debian-security buster/updates/main amd64 libc6-dev amd64 2.28-10+deb10u4 [2694 kB]
+#6 9.255 Get:54 http://archive.debian.org/debian-security buster/updates/main amd64 liblua5.3-0 amd64 5.3.3-1.1+deb10u1 [120 kB]
+#6 9.261 Get:55 http://archive.debian.org/debian buster/main amd64 libpcap0.8 amd64 1.8.1-6+deb10u1 [140 kB]
+#6 9.266 Get:56 http://archive.debian.org/debian buster/main amd64 make amd64 4.2.1-1.2 [341 kB]
+#6 9.277 Get:57 http://archive.debian.org/debian buster/main amd64 ncat amd64 7.70+dfsg1-6+deb10u2 [372 kB]
+#6 9.434 debconf: delaying package configuration, since apt-utils is not installed
+#6 9.448 Fetched 55.4 MB in 6s (9532 kB/s)
+#6 9.475 Selecting previously unselected package perl-modules-5.28.
+#6 9.475 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 6650 files and directories currently installed.)
+#6 9.499 Preparing to unpack .../perl-modules-5.28_5.28.1-6+deb10u1_all.deb ...
+#6 9.506 Unpacking perl-modules-5.28 (5.28.1-6+deb10u1) ...
+#6 9.918 Preparing to unpack .../libc6_2.28-10+deb10u4_amd64.deb ...
+#6 10.04 debconf: unable to initialize frontend: Dialog
+#6 10.04 debconf: (TERM is not set, so the dialog frontend is not usable.)
+#6 10.04 debconf: falling back to frontend: Readline
+#6 10.13 Unpacking libc6:amd64 (2.28-10+deb10u4) over (2.28-10+deb10u3) ...
+#6 12.32 Setting up libc6:amd64 (2.28-10+deb10u4) ...
+#6 12.40 debconf: unable to initialize frontend: Dialog
+#6 12.40 debconf: (TERM is not set, so the dialog frontend is not usable.)
+#6 12.40 debconf: falling back to frontend: Readline
+#6 13.49 Selecting previously unselected package libgdbm6:amd64.
+#6 13.49 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 8021 files and directories currently installed.)
+#6 13.49 Preparing to unpack .../00-libgdbm6_1.18.1-4_amd64.deb ...
+#6 13.50 Unpacking libgdbm6:amd64 (1.18.1-4) ...
+#6 13.54 Selecting previously unselected package libgdbm-compat4:amd64.
+#6 13.54 Preparing to unpack .../01-libgdbm-compat4_1.18.1-4_amd64.deb ...
+#6 13.54 Unpacking libgdbm-compat4:amd64 (1.18.1-4) ...
+#6 13.58 Selecting previously unselected package libperl5.28:amd64.
+#6 13.58 Preparing to unpack .../02-libperl5.28_5.28.1-6+deb10u1_amd64.deb ...
+#6 13.59 Unpacking libperl5.28:amd64 (5.28.1-6+deb10u1) ...
+#6 14.01 Selecting previously unselected package perl.
+#6 14.01 Preparing to unpack .../03-perl_5.28.1-6+deb10u1_amd64.deb ...
+#6 14.02 Unpacking perl (5.28.1-6+deb10u1) ...
+#6 14.08 Selecting previously unselected package libssl1.1:amd64.
+#6 14.08 Preparing to unpack .../04-libssl1.1_1.1.1n-0+deb10u6_amd64.deb ...
+#6 14.09 Unpacking libssl1.1:amd64 (1.1.1n-0+deb10u6) ...
+#6 14.22 Selecting previously unselected package libkeyutils1:amd64.
+#6 14.22 Preparing to unpack .../05-libkeyutils1_1.6-6_amd64.deb ...
+#6 14.22 Unpacking libkeyutils1:amd64 (1.6-6) ...
+#6 14.26 Selecting previously unselected package libkrb5support0:amd64.
+#6 14.26 Preparing to unpack .../06-libkrb5support0_1.17-3+deb10u6_amd64.deb ...
+#6 14.27 Unpacking libkrb5support0:amd64 (1.17-3+deb10u6) ...
+#6 14.31 Selecting previously unselected package libk5crypto3:amd64.
+#6 14.31 Preparing to unpack .../07-libk5crypto3_1.17-3+deb10u6_amd64.deb ...
+#6 14.32 Unpacking libk5crypto3:amd64 (1.17-3+deb10u6) ...
+#6 14.36 Selecting previously unselected package libkrb5-3:amd64.
+#6 14.36 Preparing to unpack .../08-libkrb5-3_1.17-3+deb10u6_amd64.deb ...
+#6 14.37 Unpacking libkrb5-3:amd64 (1.17-3+deb10u6) ...
+#6 14.43 Selecting previously unselected package libgssapi-krb5-2:amd64.
+#6 14.44 Preparing to unpack .../09-libgssapi-krb5-2_1.17-3+deb10u6_amd64.deb ...
+#6 14.44 Unpacking libgssapi-krb5-2:amd64 (1.17-3+deb10u6) ...
+#6 14.48 Selecting previously unselected package binutils-common:amd64.
+#6 14.48 Preparing to unpack .../10-binutils-common_2.31.1-16_amd64.deb ...
+#6 14.49 Unpacking binutils-common:amd64 (2.31.1-16) ...
+#6 14.74 Selecting previously unselected package libbinutils:amd64.
+#6 14.74 Preparing to unpack .../11-libbinutils_2.31.1-16_amd64.deb ...
+#6 14.74 Unpacking libbinutils:amd64 (2.31.1-16) ...
+#6 14.82 Selecting previously unselected package binutils-x86-64-linux-gnu.
+#6 14.82 Preparing to unpack .../12-binutils-x86-64-linux-gnu_2.31.1-16_amd64.deb ...
+#6 14.83 Unpacking binutils-x86-64-linux-gnu (2.31.1-16) ...
+#6 15.03 Selecting previously unselected package binutils.
+#6 15.03 Preparing to unpack .../13-binutils_2.31.1-16_amd64.deb ...
+#6 15.04 Unpacking binutils (2.31.1-16) ...
+#6 15.08 Selecting previously unselected package openssl.
+#6 15.08 Preparing to unpack .../14-openssl_1.1.1n-0+deb10u6_amd64.deb ...
+#6 15.08 Unpacking openssl (1.1.1n-0+deb10u6) ...
+#6 15.19 Selecting previously unselected package ca-certificates.
+#6 15.19 Preparing to unpack .../15-ca-certificates_20200601~deb10u2_all.deb ...
+#6 15.20 Unpacking ca-certificates (20200601~deb10u2) ...
+#6 15.26 Selecting previously unselected package libisl19:amd64.
+#6 15.26 Preparing to unpack .../16-libisl19_0.20-2_amd64.deb ...
+#6 15.27 Unpacking libisl19:amd64 (0.20-2) ...
+#6 15.36 Selecting previously unselected package libmpfr6:amd64.
+#6 15.36 Preparing to unpack .../17-libmpfr6_4.0.2-1_amd64.deb ...
+#6 15.36 Unpacking libmpfr6:amd64 (4.0.2-1) ...
+#6 15.42 Selecting previously unselected package libmpc3:amd64.
+#6 15.42 Preparing to unpack .../18-libmpc3_1.1.0-1_amd64.deb ...
+#6 15.42 Unpacking libmpc3:amd64 (1.1.0-1) ...
+#6 15.46 Selecting previously unselected package cpp-8.
+#6 15.46 Preparing to unpack .../19-cpp-8_8.3.0-6_amd64.deb ...
+#6 15.46 Unpacking cpp-8 (8.3.0-6) ...
+#6 15.27 Selecting previously unselected package cpp.
+#6 15.27 Preparing to unpack .../20-cpp_4%3a8.3.0-1_amd64.deb ...
+#6 15.28 Unpacking cpp (4:8.3.0-1) ...
+#6 15.33 Selecting previously unselected package libcc1-0:amd64.
+#6 15.33 Preparing to unpack .../21-libcc1-0_8.3.0-6_amd64.deb ...
+#6 15.34 Unpacking libcc1-0:amd64 (8.3.0-6) ...
+#6 15.39 Selecting previously unselected package libgomp1:amd64.
+#6 15.39 Preparing to unpack .../22-libgomp1_8.3.0-6_amd64.deb ...
+#6 15.39 Unpacking libgomp1:amd64 (8.3.0-6) ...
+#6 15.45 Selecting previously unselected package libitm1:amd64.
+#6 15.45 Preparing to unpack .../23-libitm1_8.3.0-6_amd64.deb ...
+#6 15.45 Unpacking libitm1:amd64 (8.3.0-6) ...
+#6 15.51 Selecting previously unselected package libatomic1:amd64.
+#6 15.51 Preparing to unpack .../24-libatomic1_8.3.0-6_amd64.deb ...
+#6 15.52 Unpacking libatomic1:amd64 (8.3.0-6) ...
+#6 15.57 Selecting previously unselected package libasan5:amd64.
+#6 15.57 Preparing to unpack .../25-libasan5_8.3.0-6_amd64.deb ...
+#6 15.58 Unpacking libasan5:amd64 (8.3.0-6) ...
+#6 15.66 Selecting previously unselected package liblsan0:amd64.
+#6 15.66 Preparing to unpack .../26-liblsan0_8.3.0-6_amd64.deb ...
+#6 15.66 Unpacking liblsan0:amd64 (8.3.0-6) ...
+#6 15.73 Selecting previously unselected package libtsan0:amd64.
+#6 15.73 Preparing to unpack .../27-libtsan0_8.3.0-6_amd64.deb ...
+#6 15.74 Unpacking libtsan0:amd64 (8.3.0-6) ...
+#6 15.81 Selecting previously unselected package libubsan1:amd64.
+#6 15.82 Preparing to unpack .../28-libubsan1_8.3.0-6_amd64.deb ...
+#6 15.82 Unpacking libubsan1:amd64 (8.3.0-6) ...
+#6 15.88 Selecting previously unselected package libmpx2:amd64.
+#6 15.88 Preparing to unpack .../29-libmpx2_8.3.0-6_amd64.deb ...
+#6 15.89 Unpacking libmpx2:amd64 (8.3.0-6) ...
+#6 15.93 Selecting previously unselected package libquadmath0:amd64.
+#6 15.93 Preparing to unpack .../30-libquadmath0_8.3.0-6_amd64.deb ...
+#6 15.95 Unpacking libquadmath0:amd64 (8.3.0-6) ...
+#6 15.99 Selecting previously unselected package libgcc-8-dev:amd64.
+#6 15.99 Preparing to unpack .../31-libgcc-8-dev_8.3.0-6_amd64.deb ...
+#6 16.00 Unpacking libgcc-8-dev:amd64 (8.3.0-6) ...
+#6 16.23 Selecting previously unselected package gcc-8.
+#6 16.23 Preparing to unpack .../32-gcc-8_8.3.0-6_amd64.deb ...
+#6 16.24 Unpacking gcc-8 (8.3.0-6) ...
+#6 17.18 Selecting previously unselected package gcc.
+#6 17.18 Preparing to unpack .../33-gcc_4%3a8.3.0-1_amd64.deb ...
+#6 17.19 Unpacking gcc (4:8.3.0-1) ...
+#6 17.24 Selecting previously unselected package libsasl2-modules-db:amd64.
+#6 17.24 Preparing to unpack .../34-libsasl2-modules-db_2.1.27+dfsg-1+deb10u2_amd64.deb ...
+#6 17.25 Unpacking libsasl2-modules-db:amd64 (2.1.27+dfsg-1+deb10u2) ...
+#6 17.30 Selecting previously unselected package libsasl2-2:amd64.
+#6 17.30 Preparing to unpack .../35-libsasl2-2_2.1.27+dfsg-1+deb10u2_amd64.deb ...
+#6 17.31 Unpacking libsasl2-2:amd64 (2.1.27+dfsg-1+deb10u2) ...
+#6 17.36 Selecting previously unselected package libldap-common.
+#6 17.36 Preparing to unpack .../36-libldap-common_2.4.47+dfsg-3+deb10u7_all.deb ...
+#6 17.37 Unpacking libldap-common (2.4.47+dfsg-3+deb10u7) ...
+#6 17.42 Selecting previously unselected package libldap-2.4-2:amd64.
+#6 17.42 Preparing to unpack .../37-libldap-2.4-2_2.4.47+dfsg-3+deb10u7_amd64.deb ...
+#6 17.43 Unpacking libldap-2.4-2:amd64 (2.4.47+dfsg-3+deb10u7) ...
+#6 17.49 Selecting previously unselected package libnghttp2-14:amd64.
+#6 17.49 Preparing to unpack .../38-libnghttp2-14_1.36.0-2+deb10u3_amd64.deb ...
+#6 17.50 Unpacking libnghttp2-14:amd64 (1.36.0-2+deb10u3) ...
+#6 17.54 Selecting previously unselected package libpsl5:amd64.
+#6 17.55 Preparing to unpack .../39-libpsl5_0.20.2-2_amd64.deb ...
+#6 17.55 Unpacking libpsl5:amd64 (0.20.2-2) ...
+#6 17.60 Selecting previously unselected package librtmp1:amd64.
+#6 17.60 Preparing to unpack .../40-librtmp1_2.4+20151223.gitfa8646d.1-2_amd64.deb ...
+#6 17.60 Unpacking librtmp1:amd64 (2.4+20151223.gitfa8646d.1-2) ...
+#6 17.64 Selecting previously unselected package libssh2-1:amd64.
+#6 17.65 Preparing to unpack .../41-libssh2-1_1.8.0-2.1+deb10u1_amd64.deb ...
+#6 17.65 Unpacking libssh2-1:amd64 (1.8.0-2.1+deb10u1) ...
+#6 17.70 Selecting previously unselected package libcurl3-gnutls:amd64.
+#6 17.70 Preparing to unpack .../42-libcurl3-gnutls_7.64.0-4+deb10u9_amd64.deb ...
+#6 17.71 Unpacking libcurl3-gnutls:amd64 (7.64.0-4+deb10u9) ...
+#6 17.77 Selecting previously unselected package libexpat1:amd64.
+#6 17.77 Preparing to unpack .../43-libexpat1_2.2.6-2+deb10u7_amd64.deb ...
+#6 17.78 Unpacking libexpat1:amd64 (2.2.6-2+deb10u7) ...
+#6 17.82 Selecting previously unselected package libpcre2-8-0:amd64.
+#6 17.82 Preparing to unpack .../44-libpcre2-8-0_10.32-5+deb10u1_amd64.deb ...
+#6 17.83 Unpacking libpcre2-8-0:amd64 (10.32-5+deb10u1) ...
+#6 17.89 Selecting previously unselected package liberror-perl.
+#6 17.89 Preparing to unpack .../45-liberror-perl_0.17027-2_all.deb ...
+#6 17.90 Unpacking liberror-perl (0.17027-2) ...
+#6 17.94 Selecting previously unselected package git-man.
+#6 17.94 Preparing to unpack .../46-git-man_1%3a2.20.1-2+deb10u9_all.deb ...
+#6 17.94 Unpacking git-man (1:2.20.1-2+deb10u9) ...
+#6 18.07 Selecting previously unselected package git.
+#6 18.07 Preparing to unpack .../47-git_1%3a2.20.1-2+deb10u9_amd64.deb ...
+#6 18.09 Unpacking git (1:2.20.1-2+deb10u9) ...
+#6 18.73 Selecting previously unselected package libc-dev-bin.
+#6 18.73 Preparing to unpack .../48-libc-dev-bin_2.28-10+deb10u4_amd64.deb ...
+#6 18.74 Unpacking libc-dev-bin (2.28-10+deb10u4) ...
+#6 18.78 Selecting previously unselected package linux-libc-dev:amd64.
+#6 18.78 Preparing to unpack .../49-linux-libc-dev_4.19.316-1_amd64.deb ...
+#6 18.79 Unpacking linux-libc-dev:amd64 (4.19.316-1) ...
+#6 18.99 Selecting previously unselected package libc6-dev:amd64.
+#6 18.99 Preparing to unpack .../50-libc6-dev_2.28-10+deb10u4_amd64.deb ...
+#6 19.00 Unpacking libc6-dev:amd64 (2.28-10+deb10u4) ...
+#6 19.36 Selecting previously unselected package liblua5.3-0:amd64.
+#6 19.36 Preparing to unpack .../51-liblua5.3-0_5.3.3-1.1+deb10u1_amd64.deb ...
+#6 19.37 Unpacking liblua5.3-0:amd64 (5.3.3-1.1+deb10u1) ...
+#6 19.46 Selecting previously unselected package libpcap0.8:amd64.
+#6 19.46 Preparing to unpack .../52-libpcap0.8_1.8.1-6+deb10u1_amd64.deb ...
+#6 19.48 Unpacking libpcap0.8:amd64 (1.8.1-6+deb10u1) ...
+#6 19.56 Selecting previously unselected package make.
+#6 19.56 Preparing to unpack .../53-make_4.2.1-1.2_amd64.deb ...
+#6 19.56 Unpacking make (4.2.1-1.2) ...
+#6 19.66 Selecting previously unselected package ncat.
+#6 19.66 Preparing to unpack .../54-ncat_7.70+dfsg1-6+deb10u2_amd64.deb ...
+#6 19.66 Unpacking ncat (7.70+dfsg1-6+deb10u2) ...
+#6 19.74 Setting up perl-modules-5.28 (5.28.1-6+deb10u1) ...
+#6 19.76 Setting up libexpat1:amd64 (2.2.6-2+deb10u7) ...
+#6 19.78 Setting up libkeyutils1:amd64 (1.6-6) ...
+#6 19.82 Setting up libpsl5:amd64 (0.20.2-2) ...
+#6 19.85 Setting up libssl1.1:amd64 (1.1.1n-0+deb10u6) ...
+#6 19.92 debconf: unable to initialize frontend: Dialog
+#6 19.92 debconf: (TERM is not set, so the dialog frontend is not usable.)
+#6 19.92 debconf: falling back to frontend: Readline
+#6 19.96 Setting up binutils-common:amd64 (2.31.1-16) ...
+#6 19.98 Setting up libnghttp2-14:amd64 (1.36.0-2+deb10u3) ...
+#6 19.99 Setting up linux-libc-dev:amd64 (4.19.316-1) ...
+#6 20.01 Setting up libgomp1:amd64 (8.3.0-6) ...
+#6 20.03 Setting up libldap-common (2.4.47+dfsg-3+deb10u7) ...
+#6 20.05 Setting up libkrb5support0:amd64 (1.17-3+deb10u6) ...
+#6 20.07 Setting up libsasl2-modules-db:amd64 (2.1.27+dfsg-1+deb10u2) ...
+#6 20.09 Setting up libasan5:amd64 (8.3.0-6) ...
+#6 20.11 Setting up libpcap0.8:amd64 (1.8.1-6+deb10u1) ...
+#6 20.13 Setting up make (4.2.1-1.2) ...
+#6 20.15 Setting up libmpfr6:amd64 (4.0.2-1) ...
+#6 20.16 Setting up librtmp1:amd64 (2.4+20151223.gitfa8646d.1-2) ...
+#6 20.18 Setting up libquadmath0:amd64 (8.3.0-6) ...
+#6 20.20 Setting up libmpc3:amd64 (1.1.0-1) ...
+#6 20.21 Setting up libatomic1:amd64 (8.3.0-6) ...
+#6 20.23 Setting up libpcre2-8-0:amd64 (10.32-5+deb10u1) ...
+#6 20.25 Setting up libk5crypto3:amd64 (1.17-3+deb10u6) ...
+#6 20.27 Setting up libsasl2-2:amd64 (2.1.27+dfsg-1+deb10u2) ...
+#6 20.29 Setting up libmpx2:amd64 (8.3.0-6) ...
+#6 20.31 Setting up libubsan1:amd64 (8.3.0-6) ...
+#6 20.33 Setting up libisl19:amd64 (0.20-2) ...
+#6 20.34 Setting up liblua5.3-0:amd64 (5.3.3-1.1+deb10u1) ...
+#6 20.37 Setting up git-man (1:2.20.1-2+deb10u9) ...
+#6 20.38 Setting up libssh2-1:amd64 (1.8.0-2.1+deb10u1) ...
+#6 20.40 Setting up libkrb5-3:amd64 (1.17-3+deb10u6) ...
+#6 20.42 Setting up libbinutils:amd64 (2.31.1-16) ...
+#6 20.44 Setting up cpp-8 (8.3.0-6) ...
+#6 20.45 Setting up libc-dev-bin (2.28-10+deb10u4) ...
+#6 20.47 Setting up openssl (1.1.1n-0+deb10u6) ...
+#6 20.49 Setting up libcc1-0:amd64 (8.3.0-6) ...
+#6 20.51 Setting up liblsan0:amd64 (8.3.0-6) ...
+#6 20.53 Setting up libitm1:amd64 (8.3.0-6) ...
+#6 20.54 Setting up libgdbm6:amd64 (1.18.1-4) ...
+#6 20.55 Setting up binutils-x86-64-linux-gnu (2.31.1-16) ...
+#6 20.57 Setting up libtsan0:amd64 (8.3.0-6) ...
+#6 20.58 Setting up libldap-2.4-2:amd64 (2.4.47+dfsg-3+deb10u7) ...
+#6 20.60 Setting up binutils (2.31.1-16) ...
+#6 20.61 Setting up ca-certificates (20200601~deb10u2) ...
+#6 20.68 debconf: unable to initialize frontend: Dialog
+#6 20.68 debconf: (TERM is not set, so the dialog frontend is not usable.)
+#6 20.68 debconf: falling back to frontend: Readline
+#6 21.01 Updating certificates in /etc/ssl/certs...
+#6 21.50 137 added, 0 removed; done.
+#6 21.55 Setting up ncat (7.70+dfsg1-6+deb10u2) ...
+#6 21.56 update-alternatives: using /usr/bin/ncat to provide /bin/nc (nc) in auto mode
+#6 21.57 Setting up libgssapi-krb5-2:amd64 (1.17-3+deb10u6) ...
+#6 21.59 Setting up libgdbm-compat4:amd64 (1.18.1-4) ...
+#6 21.60 Setting up libgcc-8-dev:amd64 (8.3.0-6) ...
+#6 21.62 Setting up libperl5.28:amd64 (5.28.1-6+deb10u1) ...
+#6 21.63 Setting up cpp (4:8.3.0-1) ...
+#6 21.66 Setting up libc6-dev:amd64 (2.28-10+deb10u4) ...
+#6 21.67 Setting up gcc-8 (8.3.0-6) ...
+#6 21.68 Setting up libcurl3-gnutls:amd64 (7.64.0-4+deb10u9) ...
+#6 21.70 Setting up gcc (4:8.3.0-1) ...
+#6 21.73 Setting up perl (5.28.1-6+deb10u1) ...
+#6 21.76 Setting up liberror-perl (0.17027-2) ...
+#6 21.77 Setting up git (1:2.20.1-2+deb10u9) ...
+#6 21.81 Processing triggers for libc-bin (2.28-10+deb10u3) ...
+#6 21.85 Processing triggers for ca-certificates (20200601~deb10u2) ...
+#6 21.86 Updating certificates in /etc/ssl/certs...
+#6 22.22 0 added, 0 removed; done.
+#6 22.22 Running hooks in /etc/ca-certificates/update.d...
+#6 22.22 done.
+#6 DONE 23.1s
+
+#8 [ 4/15] RUN apt-get update && apt-get install -y --no-install-recommends dh-autoreconf && apt-get clean
+#8 0.410 Hit:1 http://archive.debian.org/debian buster InRelease
+#8 0.410 Hit:2 http://archive.debian.org/debian-security buster/updates InRelease
+#8 0.610 Reading package lists...
+#8 1.192 Reading package lists...
+#8 1.807 Building dependency tree...
+#8 1.941 Reading state information...
+#8 2.065 The following additional packages will be installed:
+#8 2.065   autoconf automake autopoint autotools-dev bsdmainutils bzip2 debhelper
+#8 2.065   dh-strip-nondeterminism dpkg-dev dwz file gettext gettext-base groff-base
+#8 2.065   intltool-debian libarchive-zip-perl libbsd0 libcroco3 libdpkg-perl
+#8 2.065   libfile-stripnondeterminism-perl libglib2.0-0 libicu63 libmagic-mgc
+#8 2.066   libmagic1 libncurses6 libpipeline1 libsigsegv2 libtool libuchardet0 libxml2
+#8 2.066   m4 man-db patch po-debconf sensible-utils xz-utils
+#8 2.067 Suggested packages:
+#8 2.067   autoconf-archive gnu-standards autoconf-doc wamerican | wordlist whois
+#8 2.067   vacation bzip2-doc dh-make debian-keyring gettext-doc libasprintf-dev
+#8 2.067   libgettextpo-dev groff gnupg | gnupg2 bzr libtool-doc gfortran
+#8 2.067   | fortran95-compiler gcj-jdk m4-doc apparmor less www-browser ed
+#8 2.067   diffutils-doc libmail-box-perl
+#8 2.067 Recommended packages:
+#8 2.067   build-essential fakeroot gnupg | gnupg2 libalgorithm-merge-perl curl | wget
+#8 2.067   | lynx libfile-fcntllock-perl liblocale-gettext-perl libarchive-cpio-perl
+#8 2.067   libglib2.0-data shared-mime-info xdg-user-dirs libgpm2 libltdl-dev
+#8 2.067   libmail-sendmail-perl
+#8 2.264 The following NEW packages will be installed:
+#8 2.264   autoconf automake autopoint autotools-dev bsdmainutils bzip2 debhelper
+#8 2.264   dh-autoreconf dh-strip-nondeterminism dpkg-dev dwz file gettext gettext-base
+#8 2.264   groff-base intltool-debian libarchive-zip-perl libbsd0 libcroco3
+#8 2.264   libdpkg-perl libfile-stripnondeterminism-perl libglib2.0-0 libicu63
+#8 2.265   libmagic-mgc libmagic1 libncurses6 libpipeline1 libsigsegv2 libtool
+#8 2.266   libuchardet0 libxml2 m4 man-db patch po-debconf sensible-utils xz-utils
+#8 2.306 0 upgraded, 37 newly installed, 0 to remove and 1 not upgraded.
+#8 2.306 Need to get 22.4 MB of archives.
+#8 2.306 After this operation, 74.1 MB of additional disk space will be used.
+#8 2.306 Get:1 http://archive.debian.org/debian buster/main amd64 libbsd0 amd64 0.9.1-2+deb10u1 [99.5 kB]
+#8 2.344 Get:2 http://archive.debian.org/debian buster/main amd64 bsdmainutils amd64 11.1.2+b1 [191 kB]
+#8 2.366 Get:3 http://archive.debian.org/debian buster/main amd64 libuchardet0 amd64 0.0.6-3 [64.9 kB]
+#8 2.380 Get:4 http://archive.debian.org/debian buster/main amd64 groff-base amd64 1.22.4-3+deb10u1 [916 kB]
+#8 2.482 Get:5 http://archive.debian.org/debian buster/main amd64 libpipeline1 amd64 1.5.1-2 [31.2 kB]
+#8 2.486 Get:6 http://archive.debian.org/debian-security buster/updates/main amd64 man-db amd64 2.8.5-2+deb10u1 [1274 kB]
+#8 2.655 Get:7 http://archive.debian.org/debian buster/main amd64 sensible-utils all 0.0.12 [15.8 kB]
+#8 2.658 Get:8 http://archive.debian.org/debian-security buster/updates/main amd64 bzip2 amd64 1.0.6-9.2~deb10u2 [48.5 kB]
+#8 2.665 Get:9 http://archive.debian.org/debian buster/main amd64 libmagic-mgc amd64 1:5.35-4+deb10u2 [242 kB]
+#8 2.696 Get:10 http://archive.debian.org/debian buster/main amd64 libmagic1 amd64 1:5.35-4+deb10u2 [118 kB]
+#8 2.713 Get:11 http://archive.debian.org/debian buster/main amd64 file amd64 1:5.35-4+deb10u2 [66.4 kB]
+#8 2.722 Get:12 http://archive.debian.org/debian buster/main amd64 gettext-base amd64 0.19.8.1-9 [123 kB]
+#8 2.737 Get:13 http://archive.debian.org/debian buster/main amd64 libicu63 amd64 63.1-6+deb10u3 [8293 kB]
+#8 3.964 Get:14 http://archive.debian.org/debian-security buster/updates/main amd64 libxml2 amd64 2.9.4+dfsg1-7+deb10u6 [690 kB]
+#8 4.049 Get:15 http://archive.debian.org/debian buster/main amd64 xz-utils amd64 5.2.4-1+deb10u1 [183 kB]
+#8 4.083 Get:16 http://archive.debian.org/debian buster/main amd64 libsigsegv2 amd64 2.12-2 [32.8 kB]
+#8 4.087 Get:17 http://archive.debian.org/debian buster/main amd64 m4 amd64 1.4.18-2 [203 kB]
+#8 4.112 Get:18 http://archive.debian.org/debian buster/main amd64 autoconf all 2.69-11 [341 kB]
+#8 4.137 Get:19 http://archive.debian.org/debian buster/main amd64 autotools-dev all 20180224.1 [77.0 kB]
+#8 4.142 Get:20 http://archive.debian.org/debian buster/main amd64 automake all 1:1.16.1-4 [771 kB]
+#8 4.206 Get:21 http://archive.debian.org/debian buster/main amd64 autopoint all 0.19.8.1-9 [434 kB]
+#8 4.242 Get:22 http://archive.debian.org/debian buster/main amd64 libtool all 2.4.6-9 [547 kB]
+#8 4.315 Get:23 http://archive.debian.org/debian buster/main amd64 dh-autoreconf all 19 [16.9 kB]
+#8 4.319 Get:24 http://archive.debian.org/debian buster/main amd64 libarchive-zip-perl all 1.64-1 [96.8 kB]
+#8 4.327 Get:25 http://archive.debian.org/debian buster/main amd64 libfile-stripnondeterminism-perl all 1.1.2-1 [19.8 kB]
+#8 4.330 Get:26 http://archive.debian.org/debian buster/main amd64 dh-strip-nondeterminism all 1.1.2-1 [13.0 kB]
+#8 4.331 Get:27 http://archive.debian.org/debian buster/main amd64 libdpkg-perl all 1.19.8 [1415 kB]
+#8 4.521 Get:28 http://archive.debian.org/debian buster/main amd64 patch amd64 2.7.6-3+deb10u1 [126 kB]
+#8 4.535 Get:29 http://archive.debian.org/debian buster/main amd64 dpkg-dev all 1.19.8 [1776 kB]
+#8 4.796 Get:30 http://archive.debian.org/debian buster/main amd64 dwz amd64 0.12-3 [78.0 kB]
+#8 4.805 Get:31 http://archive.debian.org/debian-security buster/updates/main amd64 libglib2.0-0 amd64 2.58.3-2+deb10u6 [1263 kB]
+#8 4.885 Get:32 http://archive.debian.org/debian buster/main amd64 libcroco3 amd64 0.6.12-3 [145 kB]
+#8 4.898 Get:33 http://archive.debian.org/debian-security buster/updates/main amd64 libncurses6 amd64 6.1+20181013-2+deb10u5 [102 kB]
+#8 4.904 Get:34 http://archive.debian.org/debian buster/main amd64 gettext amd64 0.19.8.1-9 [1303 kB]
+#8 4.996 Get:35 http://archive.debian.org/debian buster/main amd64 intltool-debian all 0.35.0+20060710.5 [26.8 kB]
+#8 4.999 Get:36 http://archive.debian.org/debian buster/main amd64 po-debconf all 1.0.21 [248 kB]
+#8 5.012 Get:37 http://archive.debian.org/debian buster/main amd64 debhelper all 12.1.1 [1016 kB]
+#8 5.173 debconf: delaying package configuration, since apt-utils is not installed
+#8 5.200 Fetched 22.4 MB in 3s (8084 kB/s)
+#8 5.237 Selecting previously unselected package libbsd0:amd64.
+#8 5.237 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 12205 files and directories currently installed.)
+#8 5.246 Preparing to unpack .../00-libbsd0_0.9.1-2+deb10u1_amd64.deb ...
+#8 5.260 Unpacking libbsd0:amd64 (0.9.1-2+deb10u1) ...
+#8 5.313 Selecting previously unselected package bsdmainutils.
+#8 5.314 Preparing to unpack .../01-bsdmainutils_11.1.2+b1_amd64.deb ...
+#8 5.321 Unpacking bsdmainutils (11.1.2+b1) ...
+#8 5.387 Selecting previously unselected package libuchardet0:amd64.
+#8 5.388 Preparing to unpack .../02-libuchardet0_0.0.6-3_amd64.deb ...
+#8 5.394 Unpacking libuchardet0:amd64 (0.0.6-3) ...
+#8 5.437 Selecting previously unselected package groff-base.
+#8 5.438 Preparing to unpack .../03-groff-base_1.22.4-3+deb10u1_amd64.deb ...
+#8 5.444 Unpacking groff-base (1.22.4-3+deb10u1) ...
+#8 5.568 Selecting previously unselected package libpipeline1:amd64.
+#8 5.569 Preparing to unpack .../04-libpipeline1_1.5.1-2_amd64.deb ...
+#8 5.575 Unpacking libpipeline1:amd64 (1.5.1-2) ...
+#8 5.624 Selecting previously unselected package man-db.
+#8 5.625 Preparing to unpack .../05-man-db_2.8.5-2+deb10u1_amd64.deb ...
+#8 5.634 Unpacking man-db (2.8.5-2+deb10u1) ...
+#8 5.833 Selecting previously unselected package sensible-utils.
+#8 5.835 Preparing to unpack .../06-sensible-utils_0.0.12_all.deb ...
+#8 5.841 Unpacking sensible-utils (0.0.12) ...
+#8 5.878 Selecting previously unselected package bzip2.
+#8 5.879 Preparing to unpack .../07-bzip2_1.0.6-9.2~deb10u2_amd64.deb ...
+#8 5.886 Unpacking bzip2 (1.0.6-9.2~deb10u2) ...
+#8 5.927 Selecting previously unselected package libmagic-mgc.
+#8 5.928 Preparing to unpack .../08-libmagic-mgc_1%3a5.35-4+deb10u2_amd64.deb ...
+#8 5.934 Unpacking libmagic-mgc (1:5.35-4+deb10u2) ...
+#8 6.013 Selecting previously unselected package libmagic1:amd64.
+#8 6.014 Preparing to unpack .../09-libmagic1_1%3a5.35-4+deb10u2_amd64.deb ...
+#8 6.023 Unpacking libmagic1:amd64 (1:5.35-4+deb10u2) ...
+#8 6.064 Selecting previously unselected package file.
+#8 6.065 Preparing to unpack .../10-file_1%3a5.35-4+deb10u2_amd64.deb ...
+#8 6.072 Unpacking file (1:5.35-4+deb10u2) ...
+#8 6.113 Selecting previously unselected package gettext-base.
+#8 6.114 Preparing to unpack .../11-gettext-base_0.19.8.1-9_amd64.deb ...
+#8 6.119 Unpacking gettext-base (0.19.8.1-9) ...
+#8 6.181 Selecting previously unselected package libicu63:amd64.
+#8 6.182 Preparing to unpack .../12-libicu63_63.1-6+deb10u3_amd64.deb ...
+#8 6.188 Unpacking libicu63:amd64 (63.1-6+deb10u3) ...
+#8 7.088 Selecting previously unselected package libxml2:amd64.
+#8 7.090 Preparing to unpack .../13-libxml2_2.9.4+dfsg1-7+deb10u6_amd64.deb ...
+#8 7.103 Unpacking libxml2:amd64 (2.9.4+dfsg1-7+deb10u6) ...
+#8 7.213 Selecting previously unselected package xz-utils.
+#8 7.214 Preparing to unpack .../14-xz-utils_5.2.4-1+deb10u1_amd64.deb ...
+#8 7.223 Unpacking xz-utils (5.2.4-1+deb10u1) ...
+#8 7.285 Selecting previously unselected package libsigsegv2:amd64.
+#8 7.287 Preparing to unpack .../15-libsigsegv2_2.12-2_amd64.deb ...
+#8 7.293 Unpacking libsigsegv2:amd64 (2.12-2) ...
+#8 7.337 Selecting previously unselected package m4.
+#8 7.339 Preparing to unpack .../16-m4_1.4.18-2_amd64.deb ...
+#8 7.348 Unpacking m4 (1.4.18-2) ...
+#8 7.410 Selecting previously unselected package autoconf.
+#8 7.412 Preparing to unpack .../17-autoconf_2.69-11_all.deb ...
+#8 7.418 Unpacking autoconf (2.69-11) ...
+#8 7.486 Selecting previously unselected package autotools-dev.
+#8 7.488 Preparing to unpack .../18-autotools-dev_20180224.1_all.deb ...
+#8 7.496 Unpacking autotools-dev (20180224.1) ...
+#8 7.557 Selecting previously unselected package automake.
+#8 7.558 Preparing to unpack .../19-automake_1%3a1.16.1-4_all.deb ...
+#8 7.566 Unpacking automake (1:1.16.1-4) ...
+#8 7.663 Selecting previously unselected package autopoint.
+#8 7.665 Preparing to unpack .../20-autopoint_0.19.8.1-9_all.deb ...
+#8 7.673 Unpacking autopoint (0.19.8.1-9) ...
+#8 7.733 Selecting previously unselected package libtool.
+#8 7.734 Preparing to unpack .../21-libtool_2.4.6-9_all.deb ...
+#8 7.746 Unpacking libtool (2.4.6-9) ...
+#8 7.823 Selecting previously unselected package dh-autoreconf.
+#8 7.824 Preparing to unpack .../22-dh-autoreconf_19_all.deb ...
+#8 7.830 Unpacking dh-autoreconf (19) ...
+#8 7.874 Selecting previously unselected package libarchive-zip-perl.
+#8 7.876 Preparing to unpack .../23-libarchive-zip-perl_1.64-1_all.deb ...
+#8 7.882 Unpacking libarchive-zip-perl (1.64-1) ...
+#8 7.929 Selecting previously unselected package libfile-stripnondeterminism-perl.
+#8 7.931 Preparing to unpack .../24-libfile-stripnondeterminism-perl_1.1.2-1_all.deb ...
+#8 7.938 Unpacking libfile-stripnondeterminism-perl (1.1.2-1) ...
+#8 7.981 Selecting previously unselected package dh-strip-nondeterminism.
+#8 7.982 Preparing to unpack .../25-dh-strip-nondeterminism_1.1.2-1_all.deb ...
+#8 7.990 Unpacking dh-strip-nondeterminism (1.1.2-1) ...
+#8 8.028 Selecting previously unselected package libdpkg-perl.
+#8 8.029 Preparing to unpack .../26-libdpkg-perl_1.19.8_all.deb ...
+#8 8.037 Unpacking libdpkg-perl (1.19.8) ...
+#8 8.127 Selecting previously unselected package patch.
+#8 8.128 Preparing to unpack .../27-patch_2.7.6-3+deb10u1_amd64.deb ...
+#8 8.135 Unpacking patch (2.7.6-3+deb10u1) ...
+#8 8.190 Selecting previously unselected package dpkg-dev.
+#8 8.192 Preparing to unpack .../28-dpkg-dev_1.19.8_all.deb ...
+#8 8.203 Unpacking dpkg-dev (1.19.8) ...
+#8 8.337 Selecting previously unselected package dwz.
+#8 8.339 Preparing to unpack .../29-dwz_0.12-3_amd64.deb ...
+#8 8.350 Unpacking dwz (0.12-3) ...
+#8 8.411 Selecting previously unselected package libglib2.0-0:amd64.
+#8 8.412 Preparing to unpack .../30-libglib2.0-0_2.58.3-2+deb10u6_amd64.deb ...
+#8 8.420 Unpacking libglib2.0-0:amd64 (2.58.3-2+deb10u6) ...
+#8 8.598 Selecting previously unselected package libcroco3:amd64.
+#8 8.599 Preparing to unpack .../31-libcroco3_0.6.12-3_amd64.deb ...
+#8 8.609 Unpacking libcroco3:amd64 (0.6.12-3) ...
+#8 8.677 Selecting previously unselected package libncurses6:amd64.
+#8 8.678 Preparing to unpack .../32-libncurses6_6.1+20181013-2+deb10u5_amd64.deb ...
+#8 8.684 Unpacking libncurses6:amd64 (6.1+20181013-2+deb10u5) ...
+#8 8.748 Selecting previously unselected package gettext.
+#8 8.750 Preparing to unpack .../33-gettext_0.19.8.1-9_amd64.deb ...
+#8 8.762 Unpacking gettext (0.19.8.1-9) ...
+#8 8.925 Selecting previously unselected package intltool-debian.
+#8 8.926 Preparing to unpack .../34-intltool-debian_0.35.0+20060710.5_all.deb ...
+#8 8.934 Unpacking intltool-debian (0.35.0+20060710.5) ...
+#8 8.976 Selecting previously unselected package po-debconf.
+#8 8.978 Preparing to unpack .../35-po-debconf_1.0.21_all.deb ...
+#8 8.985 Unpacking po-debconf (1.0.21) ...
+#8 9.068 Selecting previously unselected package debhelper.
+#8 9.069 Preparing to unpack .../36-debhelper_12.1.1_all.deb ...
+#8 9.074 Unpacking debhelper (12.1.1) ...
+#8 9.228 Setting up libpipeline1:amd64 (1.5.1-2) ...
+#8 9.252 Setting up libmagic-mgc (1:5.35-4+deb10u2) ...
+#8 9.272 Setting up libarchive-zip-perl (1.64-1) ...
+#8 9.292 Setting up libglib2.0-0:amd64 (2.58.3-2+deb10u6) ...
+#8 9.307 No schema files found: doing nothing.
+#8 9.317 Setting up libmagic1:amd64 (1:5.35-4+deb10u2) ...
+#8 9.347 Setting up gettext-base (0.19.8.1-9) ...
+#8 9.369 Setting up file (1:5.35-4+deb10u2) ...
+#8 9.387 Setting up bzip2 (1.0.6-9.2~deb10u2) ...
+#8 9.402 Setting up libicu63:amd64 (63.1-6+deb10u3) ...
+#8 9.418 Setting up autotools-dev (20180224.1) ...
+#8 9.431 Setting up libncurses6:amd64 (6.1+20181013-2+deb10u5) ...
+#8 9.445 Setting up libsigsegv2:amd64 (2.12-2) ...
+#8 9.459 Setting up xz-utils (5.2.4-1+deb10u1) ...
+#8 9.475 update-alternatives: using /usr/bin/xz to provide /usr/bin/lzma (lzma) in auto mode
+#8 9.489 Setting up patch (2.7.6-3+deb10u1) ...
+#8 9.504 Setting up autopoint (0.19.8.1-9) ...
+#8 9.518 Setting up libdpkg-perl (1.19.8) ...
+#8 9.534 Setting up dwz (0.12-3) ...
+#8 9.549 Setting up sensible-utils (0.0.12) ...
+#8 9.564 Setting up libuchardet0:amd64 (0.0.6-3) ...
+#8 9.584 Setting up libbsd0:amd64 (0.9.1-2+deb10u1) ...
+#8 9.598 Setting up libxml2:amd64 (2.9.4+dfsg1-7+deb10u6) ...
+#8 9.613 Setting up libfile-stripnondeterminism-perl (1.1.2-1) ...
+#8 9.629 Setting up libtool (2.4.6-9) ...
+#8 9.644 Setting up m4 (1.4.18-2) ...
+#8 9.657 Setting up dpkg-dev (1.19.8) ...
+#8 9.680 Setting up bsdmainutils (11.1.2+b1) ...
+#8 9.718 update-alternatives: using /usr/bin/bsd-write to provide /usr/bin/write (write) in auto mode
+#8 9.730 update-alternatives: using /usr/bin/bsd-from to provide /usr/bin/from (from) in auto mode
+#8 9.745 Setting up libcroco3:amd64 (0.6.12-3) ...
+#8 9.764 Setting up autoconf (2.69-11) ...
+#8 9.785 Setting up groff-base (1.22.4-3+deb10u1) ...
+#8 9.811 Setting up automake (1:1.16.1-4) ...
+#8 9.823 update-alternatives: using /usr/bin/automake-1.16 to provide /usr/bin/automake (automake) in auto mode
+#8 9.833 Setting up gettext (0.19.8.1-9) ...
+#8 9.849 Setting up man-db (2.8.5-2+deb10u1) ...
+#8 9.940 debconf: unable to initialize frontend: Dialog
+#8 9.940 debconf: (TERM is not set, so the dialog frontend is not usable.)
+#8 9.940 debconf: falling back to frontend: Readline
+#8 9.964 Building database of manual pages ...
+#8 16.33 Setting up intltool-debian (0.35.0+20060710.5) ...
+#8 16.35 Setting up po-debconf (1.0.21) ...
+#8 16.38 Setting up debhelper (12.1.1) ...
+#8 16.40 Setting up dh-autoreconf (19) ...
+#8 16.42 Setting up dh-strip-nondeterminism (1.1.2-1) ...
+#8 16.44 Processing triggers for libc-bin (2.28-10+deb10u3) ...
+#8 DONE 16.8s
+
+#9 [ 5/15] RUN git clone https://github.com/wolfSSL/wolfssl.git
+#9 0.336 Cloning into 'wolfssl'...
+#9 194.9 Checking out files:  88% (3822/4306)   Checking out files:  89% (3833/4306)   Checking out files:  90% (3876/4306)   Checking out files:  91% (3919/4306)   Checking out files:  92% (3962/4306)   Checking out files:  93% (4005/4306)   Checking out files:  94% (4048/4306)   Checking out files:  95% (4091/4306)   Checking out files:  96% (4134/4306)   Checking out files:  97% (4177/4306)   Checking out files:  98% (4220/4306)   Checking out files:  99% (4263/4306)   Checking out files: 100% (4306/4306)   Checking out files: 100% (4306/4306), done.
+#9 DONE 195.7s
+
+#10 [ 6/15] WORKDIR /wolfssl
+#10 DONE 0.1s
+
+#11 [ 7/15] RUN git checkout -b current v5.1.1-stable
+#11 5.030 Switched to a new branch 'current'
+#11 DONE 5.5s
+
+#12 [ 8/15] RUN ./autogen.sh
+#12 7.217 libtoolize: putting auxiliary files in AC_CONFIG_AUX_DIR, 'build-aux'.
+#12 7.217 libtoolize: copying file 'build-aux/ltmain.sh'
+#12 7.287 libtoolize: putting macros in AC_CONFIG_MACRO_DIRS, 'm4'.
+#12 7.287 libtoolize: copying file 'm4/libtool.m4'
+#12 7.414 libtoolize: copying file 'm4/ltoptions.m4'
+#12 7.520 libtoolize: copying file 'm4/ltsugar.m4'
+#12 7.623 libtoolize: copying file 'm4/ltversion.m4'
+#12 7.720 libtoolize: copying file 'm4/lt~obsolete.m4'
+#12 12.64 configure.ac:22: installing 'build-aux/compile'
+#12 12.64 configure.ac:24: installing 'build-aux/config.guess'
+#12 12.64 configure.ac:24: installing 'build-aux/config.sub'
+#12 12.65 configure.ac:28: installing 'build-aux/install-sh'
+#12 12.65 configure.ac:28: installing 'build-aux/missing'
+#12 12.92 Makefile.am: installing 'build-aux/depcomp'
+#12 13.20 parallel-tests: installing 'build-aux/test-driver'
+#12 DONE 13.3s
+
+#13 [ 9/15] RUN ./configure --enable-tlsv10 --enable-sni --enable-tls13 C_EXTRA_FLAGS="-DWOLFSSL_STATIC_RSA"
+#13 1.142 checking for gcc... gcc
+#13 1.184 checking whether the C compiler works... yes
+#13 1.242 checking for C compiler default output file name... a.out
+#13 1.244 checking for suffix of executables... 
+#13 1.291 checking whether we are cross compiling... no
+#13 1.345 checking for suffix of object files... o
+#13 1.381 checking whether we are using the GNU C compiler... yes
+#13 1.415 checking whether gcc accepts -g... yes
+#13 1.441 checking for gcc option to accept ISO C89... none needed
+#13 1.483 checking whether gcc understands -c and -o together... yes
+#13 1.556 checking build system type... x86_64-pc-linux-gnu
+#13 1.634 checking host system type... x86_64-pc-linux-gnu
+#13 1.635 checking target system type... x86_64-pc-linux-gnu
+#13 1.638 checking for a BSD-compatible install... /usr/bin/install -c
+#13 1.654 checking whether build environment is sane... yes
+#13 1.672 checking for a thread-safe mkdir -p... /bin/mkdir -p
+#13 1.676 checking for gawk... no
+#13 1.678 checking for mawk... mawk
+#13 1.679 checking whether make sets $(MAKE)... yes
+#13 1.698 checking whether make supports the include directive... yes (GNU style)
+#13 1.714 checking whether make supports nested variables... yes
+#13 1.729 checking whether UID '0' is supported by ustar format... yes
+#13 1.729 checking whether GID '0' is supported by ustar format... yes
+#13 1.730 checking how to create a ustar tar archive... gnutar
+#13 1.755 checking dependency style of gcc... gcc3
+#13 1.820 checking whether make supports nested variables... (cached) yes
+#13 1.823 checking how to print strings... printf
+#13 1.828 checking for a sed that does not truncate output... /bin/sed
+#13 1.837 checking for grep that handles long lines and -e... /bin/grep
+#13 1.842 checking for egrep... /bin/grep -E
+#13 1.846 checking for fgrep... /bin/grep -F
+#13 1.850 checking for ld used by gcc... /usr/bin/ld
+#13 1.857 checking if the linker (/usr/bin/ld) is GNU ld... yes
+#13 1.863 checking for BSD- or MS-compatible name lister (nm)... /usr/bin/nm -B
+#13 1.868 checking the name lister (/usr/bin/nm -B) interface... BSD nm
+#13 1.907 checking whether ln -s works... yes
+#13 1.907 checking the maximum length of command line arguments... 1572864
+#13 1.922 checking how to convert x86_64-pc-linux-gnu file names to x86_64-pc-linux-gnu format... func_convert_file_noop
+#13 1.922 checking how to convert x86_64-pc-linux-gnu file names to toolchain format... func_convert_file_noop
+#13 1.923 checking for /usr/bin/ld option to reload object files... -r
+#13 1.925 checking for objdump... objdump
+#13 1.926 checking how to recognize dependent libraries... pass_all
+#13 1.928 checking for dlltool... no
+#13 1.929 checking how to associate runtime and link libraries... printf %s\n
+#13 1.931 checking for ar... ar
+#13 1.934 checking for archiver @FILE support... @
+#13 1.980 checking for strip... strip
+#13 1.982 checking for ranlib... ranlib
+#13 1.983 checking command to parse /usr/bin/nm -B output from gcc object... ok
+#13 2.094 checking for sysroot... no
+#13 2.095 checking for a working dd... /bin/dd
+#13 2.109 checking how to truncate binary pipes... /bin/dd bs=4096 count=1
+#13 2.186 checking for mt... no
+#13 2.187 checking if : is a manifest tool... no
+#13 2.199 checking how to run the C preprocessor... gcc -E
+#13 2.277 checking for ANSI C header files... yes
+#13 2.417 checking for sys/types.h... yes
+#13 2.457 checking for sys/stat.h... yes
+#13 2.500 checking for stdlib.h... yes
+#13 2.542 checking for string.h... yes
+#13 2.584 checking for memory.h... yes
+#13 2.625 checking for strings.h... yes
+#13 2.670 checking for inttypes.h... yes
+#13 2.716 checking for stdint.h... yes
+#13 2.765 checking for unistd.h... yes
+#13 2.809 checking for dlfcn.h... yes
+#13 2.847 checking for objdir... .libs
+#13 2.935 checking if gcc supports -fno-rtti -fno-exceptions... no
+#13 2.970 checking for gcc option to produce PIC... -fPIC -DPIC
+#13 2.970 checking if gcc PIC flag -fPIC -DPIC works... yes
+#13 3.004 checking if gcc static flag -static works... yes
+#13 3.081 checking if gcc supports -c -o file.o... yes
+#13 3.124 checking if gcc supports -c -o file.o... (cached) yes
+#13 3.125 checking whether the gcc linker (/usr/bin/ld -m elf_x86_64) supports shared libraries... yes
+#13 3.140 checking whether -lc should be explicitly linked in... no
+#13 3.183 checking dynamic linker characteristics... GNU/Linux ld.so
+#13 3.278 checking how to hardcode library paths into programs... immediate
+#13 3.279 checking whether stripping libraries is possible... yes
+#13 3.282 checking if libtool supports shared libraries... yes
+#13 3.283 checking whether to build shared libraries... yes
+#13 3.285 checking whether to build static libraries... no
+#13 3.287 checking whether the -Werror option is usable... yes
+#13 3.315 checking for simple visibility declarations... yes
+#13 3.356 checking size of long long... 8
+#13 3.432 checking size of long... 8
+#13 3.498 checking size of time_t... 8
+#13 3.566 checking for __uint128_t... yes
+#13 3.645 checking arpa/inet.h usability... yes
+#13 3.685 checking arpa/inet.h presence... yes
+#13 3.699 checking for arpa/inet.h... yes
+#13 3.711 checking fcntl.h usability... yes
+#13 3.747 checking fcntl.h presence... yes
+#13 3.762 checking for fcntl.h... yes
+#13 3.777 checking limits.h usability... yes
+#13 3.808 checking limits.h presence... yes
+#13 3.821 checking for limits.h... yes
+#13 3.834 checking netdb.h usability... yes
+#13 3.874 checking netdb.h presence... yes
+#13 3.890 checking for netdb.h... yes
+#13 3.902 checking netinet/in.h usability... yes
+#13 3.937 checking netinet/in.h presence... yes
+#13 3.956 checking for netinet/in.h... yes
+#13 3.968 checking stddef.h usability... yes
+#13 4.002 checking stddef.h presence... yes
+#13 4.015 checking for stddef.h... yes
+#13 4.031 checking time.h usability... yes
+#13 4.065 checking time.h presence... yes
+#13 4.081 checking for time.h... yes
+#13 4.093 checking sys/ioctl.h usability... yes
+#13 4.130 checking sys/ioctl.h presence... yes
+#13 4.144 checking for sys/ioctl.h... yes
+#13 4.156 checking sys/socket.h usability... yes
+#13 4.191 checking sys/socket.h presence... yes
+#13 4.206 checking for sys/socket.h... yes
+#13 4.218 checking sys/time.h usability... yes
+#13 4.255 checking sys/time.h presence... yes
+#13 4.271 checking for sys/time.h... yes
+#13 4.283 checking errno.h usability... yes
+#13 4.319 checking errno.h presence... yes
+#13 4.330 checking for errno.h... yes
+#13 4.338 checking for socket in -lnetwork... no
+#13 4.376 checking whether byte ordering is bigendian... no
+#13 4.459 checking for gethostbyname... yes
+#13 4.523 checking for getaddrinfo... yes
+#13 4.584 checking for gettimeofday... yes
+#13 4.647 checking for gmtime_r... yes
+#13 4.703 checking for inet_ntoa... yes
+#13 4.760 checking for memset... yes
+#13 4.828 checking for socket... yes
+#13 4.886 checking for strftime... yes
+#13 4.947 checking for atexit... yes
+#13 5.007 checking whether gethostbyname is declared... yes
+#13 5.049 checking whether getaddrinfo is declared... yes
+#13 5.094 checking whether gettimeofday is declared... yes
+#13 5.137 checking whether gmtime_r is declared... yes
+#13 5.187 checking whether inet_ntoa is declared... yes
+#13 5.235 checking whether memset is declared... yes
+#13 5.283 checking whether socket is declared... yes
+#13 5.332 checking whether strftime is declared... yes
+#13 5.372 checking for size_t... yes
+#13 5.463 checking for uint8_t... yes
+#13 5.508 checking for uintptr_t... yes
+#13 5.574 checking dependency style of gcc... gcc3
+#13 5.624 checking for cos in -lm... yes
+#13 5.691 checking for thread local storage (TLS) class... _Thread_local
+#13 5.750 checking for debug... no
+#13 5.756 checking whether gcc is Clang... no
+#13 5.776 checking whether pthreads work with "-pthread" and "-lpthread"... yes
+#13 5.842 checking for joinable pthread attribute... PTHREAD_CREATE_JOINABLE
+#13 5.889 checking whether more special flags are required for pthreads... no
+#13 5.889 checking for PTHREAD_PRIO_INHERIT... yes
+#13 5.983 checking for fast RSA... no
+#13 5.996 checking for library containing gethostbyname... none required
+#13 6.048 checking for library containing socket... none required
+#13 6.108 checking for vcs system... git
+#13 6.112 checking for vcs checkout... yes
+#13 6.113 checking whether the linker accepts -Werror... yes
+#13 6.167 checking whether the linker accepts -z relro -z now... yes
+#13 6.225 checking whether the linker accepts -pie... yes
+#13 6.283 checking whether C compiler accepts -Werror... yes
+#13 6.316 checking whether C compiler accepts -Wno-pragmas... yes
+#13 6.352 checking whether C compiler accepts -Wall... yes
+#13 6.386 checking whether C compiler accepts -Wno-strict-aliasing... yes
+#13 6.420 checking whether C compiler accepts -Wextra... yes
+#13 6.457 checking whether C compiler accepts -Wunknown-pragmas... yes
+#13 6.489 checking whether C compiler accepts -Wthis-test-should-fail... no
+#13 6.517 checking whether C compiler accepts --param=ssp-buffer-size=1... yes
+#13 6.554 checking whether C compiler accepts -Waddress... yes
+#13 6.591 checking whether C compiler accepts -Warray-bounds... yes
+#13 6.626 checking whether C compiler accepts -Wbad-function-cast... yes
+#13 6.664 checking whether C compiler accepts -Wchar-subscripts... yes
+#13 6.701 checking whether C compiler accepts -Wcomment... yes
+#13 6.735 checking whether C compiler accepts -Wfloat-equal... yes
+#13 6.772 checking whether C compiler accepts -Wformat-security... yes
+#13 6.812 checking whether C compiler accepts -Wformat=2... yes
+#13 6.847 checking whether C compiler accepts -Wmaybe-uninitialized... yes
+#13 6.880 checking whether C compiler accepts -Wmissing-field-initializers... yes
+#13 6.922 checking whether C compiler accepts -Wmissing-noreturn... yes
+#13 6.960 checking whether C compiler accepts -Wmissing-prototypes... yes
+#13 6.995 checking whether C compiler accepts -Wnested-externs... yes
+#13 7.032 checking whether C compiler accepts -Wnormalized=id... yes
+#13 7.070 checking whether C compiler accepts -Woverride-init... yes
+#13 7.104 checking whether C compiler accepts -Wpointer-arith... yes
+#13 7.137 checking whether C compiler accepts -Wpointer-sign... yes
+#13 7.175 checking whether C compiler accepts -Wredundant-decls... yes
+#13 7.210 checking whether C compiler accepts -Wshadow... yes
+#13 7.244 checking whether C compiler accepts -Wshorten-64-to-32... no
+#13 7.271 checking whether C compiler accepts -Wsign-compare... yes
+#13 7.305 checking whether C compiler accepts -Wstrict-overflow=1... yes
+#13 7.342 checking whether C compiler accepts -Wstrict-prototypes... no
+#13 7.379 checking whether C compiler accepts -Wswitch-enum... yes
+#13 7.415 checking whether C compiler accepts -Wundef... yes
+#13 7.449 checking whether C compiler accepts -Wunused... yes
+#13 7.488 checking whether C compiler accepts -Wunused-result... yes
+#13 7.520 checking whether C compiler accepts -Wunused-variable... yes
+#13 7.557 checking whether C compiler accepts -Wwrite-strings... yes
+#13 7.593 checking whether C compiler accepts -fwrapv... yes
+#13 7.654 creating wolfssl-config - generic 5.1.1 for -lwolfssl -lpthread
+#13 7.655 checking the number of available CPUs... 12
+#13 7.659 configure: adding automake macro support
+#13 7.659 configure: creating aminclude.am
+#13 7.662 configure: added jobserver support to make for 13 jobs
+#13 7.710 checking that generated files are newer than configure... done
+#13 7.714 configure: creating ./config.status
+#13 8.441 config.status: creating stamp-h
+#13 8.457 config.status: creating Makefile
+#13 8.485 config.status: creating wolfssl/version.h
+#13 8.513 config.status: creating wolfssl/options.h
+#13 8.538 config.status: creating cyassl/options.h
+#13 8.562 config.status: creating support/wolfssl.pc
+#13 8.586 config.status: creating rpm/spec
+#13 8.613 config.status: creating wolfcrypt/test/test_paths.h
+#13 8.639 config.status: creating scripts/unit.test
+#13 8.667 config.status: creating config.h
+#13 8.681 config.status: executing depfiles commands
+#13 9.552 config.status: executing libtool commands
+#13 9.573 config.status: executing wolfssl/wolfcrypt/async.h commands
+#13 9.580 config.status: executing wolfssl/wolfcrypt/fips.h commands
+#13 9.590 config.status: executing wolfssl/wolfcrypt/port/cavium/cavium_nitrox.h commands
+#13 9.598 config.status: executing wolfssl/wolfcrypt/port/intel/quickassist.h commands
+#13 9.607 config.status: executing wolfssl/wolfcrypt/port/intel/quickassist_mem.h commands
+#13 9.610 configure: ---
+#13 9.611 configure: Running make clean...
+#13 9.771 configure: ---
+#13 9.771 configure: Generating user options header...
+#13 10.55 ---
+#13 10.55 Configuration summary for wolfssl version 5.1.1
+#13 10.55 
+#13 10.55    * Installation prefix:        /usr/local
+#13 10.55    * System type:                pc-linux-gnu
+#13 10.55    * Host CPU:                   x86_64
+#13 10.55    * C Compiler:                 gcc
+#13 10.55    * C Flags:                     -DWOLFSSL_STATIC_RSA  -Werror -Wno-pragmas -Wall -Wno-strict-aliasing -Wextra -Wunknown-pragmas --param=ssp-buffer-size=1 -Waddress -Warray-bounds -Wbad-function-cast -Wchar-subscripts -Wcomment -Wfloat-equal -Wformat-security -Wformat=2 -Wmaybe-uninitialized -Wmissing-field-initializers -Wmissing-noreturn -Wmissing-prototypes -Wnested-externs -Wnormalized=id -Woverride-init -Wpointer-arith -Wpointer-sign -Wredundant-decls -Wshadow -Wsign-compare -Wstrict-overflow=1 -Wswitch-enum -Wundef -Wunused -Wunused-result -Wunused-variable -Wwrite-strings -fwrapv
+#13 10.55    * C++ Compiler:               
+#13 10.55    * C++ Flags:                  
+#13 10.55    * CPP Flags:                  
+#13 10.55    * CCAS Flags:                  -DWOLFSSL_STATIC_RSA 
+#13 10.55    * LIB Flags:                   -pie -z relro -z now -Werror 
+#13 10.55    * Debug enabled:              no
+#13 10.55    * Coverage enabled:           
+#13 10.55    * Warnings as failure:        yes
+#13 10.55    * make -j:                    13
+#13 10.55    * VCS checkout:               yes
+#13 10.55 
+#13 10.55    Features 
+#13 10.55    * FIPS:                       no
+#13 10.55    * Single threaded:            no
+#13 10.55    * Filesystem:                 yes
+#13 10.55    * OpenSSH Build:              no
+#13 10.55    * OpenSSL Extra API:          no
+#13 10.55    * OpenSSL Coexist:            no
+#13 10.55    * Old Names:                  yes
+#13 10.55    * Max Strength Build:         no
+#13 10.55    * Distro Build:               no
+#13 10.55    * Reproducible Build:         no
+#13 10.55    * fastmath:                   yes
+#13 10.55    * Assembly Allowed:           yes
+#13 10.55    * sniffer:                    no
+#13 10.55    * snifftest:                  no
+#13 10.55    * ARC4:                       no
+#13 10.55    * AES:                        yes
+#13 10.55    * AES-NI:                     no
+#13 10.55    * AES-CBC:                    yes
+#13 10.55    * AES-CBC length checks:      no
+#13 10.55    * AES-GCM:                    yes
+#13 10.55    * AES-GCM streaming:          no
+#13 10.55    * AES-CCM:                    no
+#13 10.55    * AES-CTR:                    no
+#13 10.55    * AES-CFB:                    no
+#13 10.55    * AES-OFB:                    no
+#13 10.55    * DES3:                       no
+#13 10.55    * IDEA:                       no
+#13 10.55    * Camellia:                   no
+#13 10.55    * NULL Cipher:                no
+#13 10.55    * MD2:                        no
+#13 10.55    * MD4:                        no
+#13 10.55    * MD5:                        yes
+#13 10.55    * RIPEMD:                     no
+#13 10.55    * SHA:                        yes
+#13 10.55    * SHA-224:                    yes
+#13 10.55    * SHA-384:                    yes
+#13 10.55    * SHA-512:                    yes
+#13 10.55    * SHA3:                       yes
+#13 10.55    * SHAKE256:                   
+#13 10.55    * BLAKE2:                     no
+#13 10.55    * BLAKE2S:                    no
+#13 10.55    * CMAC:                       no
+#13 10.55    * keygen:                     no
+#13 10.55    * certgen:                    no
+#13 10.55    * certreq:                    no
+#13 10.55    * certext:                    no
+#13 10.55    * certgencache:               no
+#13 10.55    * HC-128:                     no
+#13 10.55    * RABBIT:                     no
+#13 10.55    * CHACHA:                     yes
+#13 10.55    * XCHACHA:                    no
+#13 10.55    * Hash DRBG:                  yes
+#13 10.55    * PWDBASED:                   yes
+#13 10.55    * scrypt:                     no
+#13 10.55    * wolfCrypt Only:             no
+#13 10.55    * HKDF:                       yes
+#13 10.55    * X9.63 KDF:                  no
+#13 10.55    * MD4:                        no
+#13 10.55    * PSK:                        no
+#13 10.55    * Poly1305:                   yes
+#13 10.55    * LEANPSK:                    no
+#13 10.55    * LEANTLS:                    no
+#13 10.55    * RSA:                        yes
+#13 10.55    * RSA-PSS:                    yes
+#13 10.55    * DSA:                        no
+#13 10.55    * DH:                         yes
+#13 10.55    * DH Default Parameters:      yes
+#13 10.55    * ECC:                        yes
+#13 10.55    * ECC Custom Curves:          no
+#13 10.55    * ECC Minimum Bits:           224
+#13 10.55    * CURVE25519:                 no
+#13 10.55    * ED25519:                    no
+#13 10.55    * ED25519 streaming:          no
+#13 10.55    * CURVE448:                   no
+#13 10.56    * ED448:                      no
+#13 10.56    * ED448 streaming:            no
+#13 10.56    * FPECC:                      no
+#13 10.56    * ECC_ENCRYPT:                no
+#13 10.56    * ECCSI                       no
+#13 10.56    * SAKKE                       no
+#13 10.56    * ASN:                        yes
+#13 10.56    * Anonymous cipher:           no
+#13 10.56    * CODING:                     yes
+#13 10.56    * MEMORY:                     yes
+#13 10.56    * I/O POOL:                   no
+#13 10.56    * wolfSentry:                 no
+#13 10.56    * LIGHTY:                     no
+#13 10.56    * HAPROXY:                    no
+#13 10.56    * STUNNEL:                    no
+#13 10.56    * tcpdump:                    no
+#13 10.56    * libssh2:                    no
+#13 10.56    * ntp:                        no
+#13 10.56    * rsyslog:                    no
+#13 10.56    * Apache httpd:               no
+#13 10.56    * NGINX:                      no
+#13 10.56    * OpenResty:                  no
+#13 10.56    * ASIO:                       no
+#13 10.56    * LIBWEBSOCKETS:              no
+#13 10.56    * Qt:                         no
+#13 10.56    * Qt Unit Testing:            no
+#13 10.56    * SIGNAL:                     no
+#13 10.56    * ERROR_STRINGS:              yes
+#13 10.56    * DTLS:                       no
+#13 10.56    * SCTP:                       no
+#13 10.56    * Indefinite Length:          no
+#13 10.56    * Multicast:                  no
+#13 10.56    * SSL v3.0 (Old):             no
+#13 10.56    * TLS v1.0 (Old):             yes
+#13 10.56    * TLS v1.1 (Old):             yes
+#13 10.56    * TLS v1.2:                   yes
+#13 10.56    * TLS v1.3:                   yes
+#13 10.56    * Post-handshake Auth:        no
+#13 10.56    * Early Data:                 no
+#13 10.56    * Send State in HRR Cookie:   no
+#13 10.56    * OCSP:                       no
+#13 10.56    * OCSP Stapling:              no
+#13 10.56    * OCSP Stapling v2:           no
+#13 10.56    * CRL:                        no
+#13 10.56    * CRL-MONITOR:                no
+#13 10.56    * Persistent session cache:   no
+#13 10.56    * Persistent cert    cache:   no
+#13 10.56    * Atomic User Record Layer:   no
+#13 10.56    * Public Key Callbacks:       no
+#13 10.56    * liboqs:                     no
+#13 10.56    * Whitewood netRandom:        no
+#13 10.56    * Server Name Indication:     yes
+#13 10.56    * ALPN:                       no
+#13 10.56    * Maximum Fragment Length:    no
+#13 10.56    * Trusted CA Indication:      no
+#13 10.56    * Truncated HMAC:             no
+#13 10.56    * Supported Elliptic Curves:  yes
+#13 10.56    * FFDHE only in client:       no
+#13 10.56    * Session Ticket:             no
+#13 10.56    * Extended Master Secret:     yes
+#13 10.56    * Renegotiation Indication:   no
+#13 10.56    * Secure Renegotiation:       no
+#13 10.56    * Fallback SCSV:              no
+#13 10.56    * Keying Material Exporter:   no
+#13 10.56    * All TLS Extensions:         no
+#13 10.56    * PKCS#7:                     no
+#13 10.56    * S/MIME:                     no
+#13 10.56    * wolfSSH:                    no
+#13 10.56    * wolfTPM:                    no
+#13 10.56    * wolfCLU:                    no
+#13 10.56    * wolfSCEP:                   no
+#13 10.56    * Secure Remote Password:     no
+#13 10.56    * Small Stack:                no
+#13 10.56    * Linux Kernel Module:        no
+#13 10.56    * valgrind unit tests:        no
+#13 10.56    * LIBZ:                       no
+#13 10.56    * Examples:                   yes
+#13 10.56    * Crypt tests:                yes
+#13 10.56    * Stack sizes in tests:       no
+#13 10.56    * Heap stats in tests:        no
+#13 10.56    * User Crypto:                no
+#13 10.56    * Fast RSA:                   no
+#13 10.56    * Single Precision:           no
+#13 10.56    * SP math implementation:     no
+#13 10.56    * Async Crypto:               no
+#13 10.56    * PKCS#8:                     yes
+#13 10.56    * PKCS#11:                    no
+#13 10.56    * PKCS#12:                    yes
+#13 10.56    * Cavium Nitrox:              no
+#13 10.56    * Cavium Octeon (Sync):       no
+#13 10.56    * Intel Quick Assist:         no
+#13 10.56    * ARM ASM:                    no
+#13 10.56    * ARM ASM SHA512 Crypto       
+#13 10.56    * AES Key Wrap:               no
+#13 10.56    * Write duplicate:            no
+#13 10.56    * Xilinx Hardware Acc.:       no
+#13 10.56    * Inline Code:                yes
+#13 10.56    * Linux AF_ALG:               no
+#13 10.56    * Linux KCAPI:                no
+#13 10.56    * Linux devcrypto:            no
+#13 10.56    * Crypto callbacks:           no
+#13 10.56    * i.MX6 CAAM:                 no
+#13 10.56    * IoT-Safe:                   no
+#13 10.56    * IoT-Safe HWRNG:             no
+#13 10.56    * NXP SE050:                  no
+#13 10.56 
+#13 10.56 ---
+#13 DONE 10.7s
+
+#14 [10/15] RUN sed -i 's/-Werror /-DUSE_ANY_ADDR=1 /' Makefile
+#14 DONE 1.3s
+
+#15 [11/15] RUN make
+#15 1.194 make -j13  all-recursive
+#15 1.246 make[1]: Entering directory '/wolfssl'
+#15 1.277 make[2]: Entering directory '/wolfssl'
+#15 1.278 make[2]: warning: -j13 forced in submake: resetting jobserver mode.
+#15 1.529   CC       wolfcrypt/test/testsuite_testsuite_test-test.o
+#15 1.533   CC       examples/client/testsuite_testsuite_test-client.o
+#15 1.535   CC       examples/echoclient/testsuite_testsuite_test-echoclient.o
+#15 1.537   CC       examples/echoserver/testsuite_testsuite_test-echoserver.o
+#15 1.614   CC       examples/client/tests_unit_test-client.o
+#15 1.656   CC       examples/server/tests_unit_test-server.o
+#15 1.779   CC       wolfcrypt/benchmark/benchmark.o
+#15 1.799   CC       wolfcrypt/src/src_libwolfssl_la-hmac.lo
+#15 1.856   CC       wolfcrypt/src/src_libwolfssl_la-hash.lo
+#15 1.866   CC       wolfcrypt/src/src_libwolfssl_la-cpuid.lo
+#15 1.897   CC       wolfcrypt/src/src_libwolfssl_la-kdf.lo
+#15 1.914   CC       wolfcrypt/src/src_libwolfssl_la-random.lo
+#15 1.924   CC       wolfcrypt/src/src_libwolfssl_la-sha256.lo
+#15 2.037   CC       wolfcrypt/src/src_libwolfssl_la-rsa.lo
+#15 2.245   CC       wolfcrypt/src/src_libwolfssl_la-aes.lo
+#15 3.606   CC       wolfcrypt/src/src_libwolfssl_la-sha.lo
+#15 3.678   CC       wolfcrypt/src/src_libwolfssl_la-sha512.lo
+#15 3.866   CC       wolfcrypt/src/src_libwolfssl_la-sha3.lo
+#15 4.096   CC       wolfcrypt/src/src_libwolfssl_la-logging.lo
+#15 4.358   CC       wolfcrypt/src/src_libwolfssl_la-wc_port.lo
+#15 4.680   CC       wolfcrypt/src/src_libwolfssl_la-error.lo
+#15 4.874   CC       wolfcrypt/src/src_libwolfssl_la-wc_encrypt.lo
+#15 4.961   CC       wolfcrypt/src/src_libwolfssl_la-signature.lo
+#15 5.237   CC       wolfcrypt/src/src_libwolfssl_la-wolfmath.lo
+#15 5.647   CC       wolfcrypt/src/src_libwolfssl_la-memory.lo
+#15 5.705   CC       wolfcrypt/src/src_libwolfssl_la-dh.lo
+#15 5.726   CC       wolfcrypt/src/src_libwolfssl_la-asn.lo
+#15 5.976   CC       wolfcrypt/src/src_libwolfssl_la-coding.lo
+#15 6.096   CC       wolfcrypt/src/src_libwolfssl_la-poly1305.lo
+#15 6.474   CC       wolfcrypt/src/src_libwolfssl_la-md5.lo
+#15 6.595   CC       wolfcrypt/src/src_libwolfssl_la-pwdbased.lo
+#15 6.816   CC       wolfcrypt/src/src_libwolfssl_la-pkcs12.lo
+#15 6.911   CC       wolfcrypt/src/src_libwolfssl_la-chacha.lo
+#15 7.087   CC       wolfcrypt/src/src_libwolfssl_la-chacha20_poly1305.lo
+#15 7.117   CC       wolfcrypt/src/src_libwolfssl_la-tfm.lo
+#15 7.135   CC       wolfcrypt/src/src_libwolfssl_la-ecc.lo
+#15 7.357   CC       src/libwolfssl_la-internal.lo
+#15 7.875   CC       src/libwolfssl_la-wolfio.lo
+#15 8.030   CC       src/libwolfssl_la-keys.lo
+#15 8.042   CC       src/libwolfssl_la-ssl.lo
+#15 8.581   CC       src/libwolfssl_la-tls.lo
+#15 9.093   CC       src/libwolfssl_la-tls13.lo
+#15 9.316   CC       wolfcrypt/test/test.o
+#15 9.469   CC       examples/benchmark/tls_bench.o
+#15 9.925   CC       examples/client/client-client.o
+#15 11.18   CC       examples/echoclient/echoclient.o
+#15 11.22   CC       examples/echoserver/echoserver.o
+#15 11.36   CC       examples/server/server-server.o
+#15 11.48   CC       examples/server/testsuite_testsuite_test-server.o
+#15 11.99   CC       testsuite/testsuite_test-testsuite.o
+#15 12.29   CC       tests/unit_test-unit.o
+#15 12.37   CC       tests/unit_test-api.o
+#15 12.45   CC       tests/unit_test-suites.o
+#15 12.71   CC       tests/unit_test-hash.o
+#15 12.93   CC       tests/unit_test-srp.o
+#15 16.99   CCLD     src/libwolfssl.la
+#15 17.37   CCLD     wolfcrypt/benchmark/benchmark
+#15 17.37   CCLD     wolfcrypt/test/testwolfcrypt
+#15 17.38   CCLD     examples/benchmark/tls_bench
+#15 17.38   CCLD     examples/client/client
+#15 17.38   CCLD     examples/echoclient/echoclient
+#15 17.38   CCLD     examples/echoserver/echoserver
+#15 17.39   CCLD     examples/server/server
+#15 17.39   CCLD     testsuite/testsuite.test
+#15 18.44   CCLD     tests/unit.test
+#15 18.70 make[2]: Leaving directory '/wolfssl'
+#15 18.70 make[1]: Leaving directory '/wolfssl'
+#15 DONE 18.8s
+
+#16 [12/15] RUN make install
+#16 1.308 make -j13  install-recursive
+#16 1.363 make[1]: Entering directory '/wolfssl'
+#16 1.373 make[2]: Entering directory '/wolfssl'
+#16 1.373 make[2]: warning: -j13 forced in submake: resetting jobserver mode.
+#16 1.470 make[3]: warning: -j13 forced in submake: resetting jobserver mode.
+#16 1.471 make[3]: Entering directory '/wolfssl'
+#16 1.547 /bin/bash /wolfssl/build-aux/install-sh -d /usr/local/bin
+#16 1.550  /bin/mkdir -p '/usr/local/share/doc/wolfssl'
+#16 1.553  /bin/mkdir -p '/usr/local/share/doc/wolfssl/example'
+#16 1.561  /usr/bin/install -c -m 644 examples/benchmark/tls_bench.c examples/client/client.c examples/echoclient/echoclient.c examples/echoserver/echoserver.c examples/server/server.c examples/sctp/sctp-server.c examples/sctp/sctp-server-dtls.c examples/sctp/sctp-client.c examples/sctp/sctp-client-dtls.c '/usr/local/share/doc/wolfssl/example'
+#16 1.567 /usr/bin/install -c wolfssl-config /usr/local/bin
+#16 1.568  /usr/bin/install -c -m 644 certs/taoCert.txt doc/README.txt '/usr/local/share/doc/wolfssl'
+#16 1.569  /bin/mkdir -p '/usr/local/include'
+#16 1.570  /bin/mkdir -p '/usr/local/lib/pkgconfig'
+#16 1.576  /bin/mkdir -p '/usr/local/lib'
+#16 1.579  /bin/bash ./libtool   --mode=install /usr/bin/install -c   src/libwolfssl.la '/usr/local/lib'
+#16 1.583  /usr/bin/install -c -m 644 support/wolfssl.pc '/usr/local/lib/pkgconfig'
+#16 1.589  /bin/mkdir -p '/usr/local/include/cyassl/ctaocrypt'
+#16 1.593  /usr/bin/install -c -m 644  cyassl/ctaocrypt/aes.h cyassl/ctaocrypt/arc4.h cyassl/ctaocrypt/asn.h cyassl/ctaocrypt/asn_public.h cyassl/ctaocrypt/poly1305.h cyassl/ctaocrypt/camellia.h cyassl/ctaocrypt/coding.h cyassl/ctaocrypt/compress.h cyassl/ctaocrypt/des3.h cyassl/ctaocrypt/dh.h cyassl/ctaocrypt/dsa.h cyassl/ctaocrypt/ecc.h cyassl/ctaocrypt/error-crypt.h cyassl/ctaocrypt/fips_test.h cyassl/ctaocrypt/hc128.h cyassl/ctaocrypt/hmac.h cyassl/ctaocrypt/integer.h cyassl/ctaocrypt/md2.h cyassl/ctaocrypt/md4.h cyassl/ctaocrypt/md5.h cyassl/ctaocrypt/misc.h cyassl/ctaocrypt/pkcs7.h cyassl/ctaocrypt/wc_port.h cyassl/ctaocrypt/pwdbased.h cyassl/ctaocrypt/rabbit.h cyassl/ctaocrypt/chacha.h cyassl/ctaocrypt/random.h cyassl/ctaocrypt/ripemd.h cyassl/ctaocrypt/rsa.h cyassl/ctaocrypt/settings.h cyassl/ctaocrypt/settings_comp.h cyassl/ctaocrypt/sha256.h cyassl/ctaocrypt/sha512.h cyassl/ctaocrypt/sha.h cyassl/ctaocrypt/blake2.h cyassl/ctaocrypt/blake2-int.h cyassl/ctaocrypt/blake2-impl.h cyassl/ctaocrypt/tfm.h cyassl/ctaocrypt/types.h cyassl/ctaocrypt/visibility.h '/usr/local/include/cyassl/ctaocrypt'
+#16 1.610  /bin/mkdir -p '/usr/local/include/wolfssl/wolfcrypt'
+#16 1.613  /usr/bin/install -c -m 644  wolfssl/wolfcrypt/aes.h wolfssl/wolfcrypt/arc4.h wolfssl/wolfcrypt/asn.h wolfssl/wolfcrypt/asn_public.h wolfssl/wolfcrypt/poly1305.h wolfssl/wolfcrypt/camellia.h wolfssl/wolfcrypt/cmac.h wolfssl/wolfcrypt/coding.h wolfssl/wolfcrypt/compress.h wolfssl/wolfcrypt/des3.h wolfssl/wolfcrypt/dh.h wolfssl/wolfcrypt/dsa.h wolfssl/wolfcrypt/ecc.h wolfssl/wolfcrypt/curve25519.h wolfssl/wolfcrypt/ed25519.h wolfssl/wolfcrypt/fe_operations.h wolfssl/wolfcrypt/ge_operations.h wolfssl/wolfcrypt/curve448.h wolfssl/wolfcrypt/ed448.h wolfssl/wolfcrypt/falcon.h wolfssl/wolfcrypt/fe_448.h wolfssl/wolfcrypt/ge_448.h wolfssl/wolfcrypt/eccsi.h wolfssl/wolfcrypt/sakke.h wolfssl/wolfcrypt/error-crypt.h wolfssl/wolfcrypt/fips_test.h wolfssl/wolfcrypt/hash.h wolfssl/wolfcrypt/hc128.h wolfssl/wolfcrypt/hmac.h wolfssl/wolfcrypt/kdf.h wolfssl/wolfcrypt/integer.h wolfssl/wolfcrypt/md2.h wolfssl/wolfcrypt/md4.h wolfssl/wolfcrypt/md5.h wolfssl/wolfcrypt/misc.h wolfssl/wolfcrypt/pkcs7.h wolfssl/wolfcrypt/wc_encrypt.h wolfssl/wolfcrypt/wc_port.h wolfssl/wolfcrypt/pwdbased.h wolfssl/wolfcrypt/rabbit.h '/usr/local/include/wolfssl/wolfcrypt'
+#16 1.634  /bin/mkdir -p '/usr/local/include/wolfssl/openssl'
+#16 1.636  /usr/bin/install -c -m 644  wolfssl/openssl/asn1.h wolfssl/openssl/asn1t.h wolfssl/openssl/aes.h wolfssl/openssl/bio.h wolfssl/openssl/bn.h wolfssl/openssl/buffer.h wolfssl/openssl/camellia.h wolfssl/openssl/cmac.h wolfssl/openssl/cms.h wolfssl/openssl/compat_types.h wolfssl/openssl/conf.h wolfssl/openssl/crypto.h wolfssl/openssl/des.h wolfssl/openssl/dh.h wolfssl/openssl/dsa.h wolfssl/openssl/ecdsa.h wolfssl/openssl/ecdh.h wolfssl/openssl/ec.h wolfssl/openssl/ec25519.h wolfssl/openssl/ed25519.h wolfssl/openssl/ec448.h wolfssl/openssl/ed448.h wolfssl/openssl/engine.h wolfssl/openssl/err.h wolfssl/openssl/evp.h wolfssl/openssl/hmac.h wolfssl/openssl/lhash.h wolfssl/openssl/md4.h wolfssl/openssl/md5.h wolfssl/openssl/modes.h wolfssl/openssl/ripemd.h wolfssl/openssl/obj_mac.h wolfssl/openssl/objects.h wolfssl/openssl/ocsp.h wolfssl/openssl/opensslconf.h wolfssl/openssl/opensslv.h wolfssl/openssl/ossl_typ.h wolfssl/openssl/pem.h wolfssl/openssl/pkcs12.h wolfssl/openssl/pkcs7.h '/usr/local/include/wolfssl/openssl'
+#16 1.642 libtool: install: /usr/bin/install -c src/.libs/libwolfssl.so.30.1.1 /usr/local/lib/libwolfssl.so.30.1.1
+#16 1.648 libtool: install: (cd /usr/local/lib && { ln -s -f libwolfssl.so.30.1.1 libwolfssl.so.30 || { rm -f libwolfssl.so.30 && ln -s libwolfssl.so.30.1.1 libwolfssl.so.30; }; })
+#16 1.656 libtool: install: (cd /usr/local/lib && { ln -s -f libwolfssl.so.30.1.1 libwolfssl.so || { rm -f libwolfssl.so && ln -s libwolfssl.so.30.1.1 libwolfssl.so; }; })
+#16 1.658  /bin/mkdir -p '/usr/local/include/cyassl/openssl'
+#16 1.662 libtool: install: /usr/bin/install -c src/.libs/libwolfssl.lai /usr/local/lib/libwolfssl.la
+#16 1.662  /usr/bin/install -c -m 644  cyassl/openssl/asn1.h cyassl/openssl/bio.h cyassl/openssl/bn.h cyassl/openssl/conf.h cyassl/openssl/crypto.h cyassl/openssl/des.h cyassl/openssl/dh.h cyassl/openssl/dsa.h cyassl/openssl/ecdsa.h cyassl/openssl/ecdh.h cyassl/openssl/ec.h cyassl/openssl/ec25519.h cyassl/openssl/ed25519.h cyassl/openssl/ec448.h cyassl/openssl/ed448.h cyassl/openssl/engine.h cyassl/openssl/err.h cyassl/openssl/evp.h cyassl/openssl/hmac.h cyassl/openssl/lhash.h cyassl/openssl/md4.h cyassl/openssl/md5.h cyassl/openssl/ripemd.h cyassl/openssl/ocsp.h cyassl/openssl/opensslconf.h cyassl/openssl/opensslv.h cyassl/openssl/ossl_typ.h cyassl/openssl/pem.h cyassl/openssl/pkcs12.h cyassl/openssl/rand.h cyassl/openssl/rsa.h cyassl/openssl/sha.h cyassl/openssl/ssl23.h cyassl/openssl/ssl.h cyassl/openssl/stack.h cyassl/openssl/ui.h cyassl/openssl/x509.h cyassl/openssl/x509v3.h '/usr/local/include/cyassl/openssl'
+#16 1.676  /bin/mkdir -p '/usr/local/include/wolfssl'
+#16 1.681  /usr/bin/install -c -m 644  wolfssl/error-ssl.h wolfssl/ssl.h wolfssl/sniffer_error.h wolfssl/sniffer.h wolfssl/callbacks.h wolfssl/certs_test.h wolfssl/test.h wolfssl/version.h wolfssl/ocsp.h wolfssl/crl.h wolfssl/wolfio.h wolfssl/options.h '/usr/local/include/wolfssl'
+#16 1.695  /bin/mkdir -p '/usr/local/include/cyassl/ctaocrypt'
+#16 1.695  /usr/bin/install -c -m 644  cyassl/ctaocrypt/logging.h cyassl/ctaocrypt/memory.h cyassl/ctaocrypt/mpi_class.h cyassl/ctaocrypt/mpi_superclass.h '/usr/local/include/cyassl/ctaocrypt'
+#16 1.700  /bin/mkdir -p '/usr/local/include/cyassl'
+#16 1.703  /usr/bin/install -c -m 644  cyassl/error-ssl.h cyassl/ssl.h cyassl/sniffer_error.h cyassl/sniffer.h cyassl/callbacks.h cyassl/certs_test.h cyassl/test.h cyassl/version.h cyassl/ocsp.h cyassl/crl.h cyassl/options.h '/usr/local/include/cyassl'
+#16 1.716  /bin/mkdir -p '/usr/local/include/wolfssl/openssl'
+#16 1.718  /usr/bin/install -c -m 644  wolfssl/openssl/rand.h wolfssl/openssl/rsa.h wolfssl/openssl/sha.h wolfssl/openssl/sha3.h wolfssl/openssl/srp.h wolfssl/openssl/ssl23.h wolfssl/openssl/ssl.h wolfssl/openssl/stack.h wolfssl/openssl/tls1.h wolfssl/openssl/txt_db.h wolfssl/openssl/ui.h wolfssl/openssl/x509.h wolfssl/openssl/x509_vfy.h wolfssl/openssl/x509v3.h wolfssl/openssl/rc4.h '/usr/local/include/wolfssl/openssl'
+#16 1.729  /bin/mkdir -p '/usr/local/include/wolfssl/wolfcrypt'
+#16 1.731  /usr/bin/install -c -m 644  wolfssl/wolfcrypt/chacha.h wolfssl/wolfcrypt/chacha20_poly1305.h wolfssl/wolfcrypt/random.h wolfssl/wolfcrypt/ripemd.h wolfssl/wolfcrypt/rsa.h wolfssl/wolfcrypt/rc2.h wolfssl/wolfcrypt/settings.h wolfssl/wolfcrypt/sha256.h wolfssl/wolfcrypt/sha512.h wolfssl/wolfcrypt/sha.h wolfssl/wolfcrypt/signature.h wolfssl/wolfcrypt/blake2.h wolfssl/wolfcrypt/blake2-int.h wolfssl/wolfcrypt/blake2-impl.h wolfssl/wolfcrypt/tfm.h wolfssl/wolfcrypt/srp.h wolfssl/wolfcrypt/idea.h wolfssl/wolfcrypt/types.h wolfssl/wolfcrypt/visibility.h wolfssl/wolfcrypt/logging.h wolfssl/wolfcrypt/memory.h wolfssl/wolfcrypt/mpi_class.h wolfssl/wolfcrypt/mpi_superclass.h wolfssl/wolfcrypt/mem_track.h wolfssl/wolfcrypt/wolfevent.h wolfssl/wolfcrypt/pkcs12.h wolfssl/wolfcrypt/wolfmath.h wolfssl/wolfcrypt/sha3.h wolfssl/wolfcrypt/cpuid.h wolfssl/wolfcrypt/cryptocb.h '/usr/local/include/wolfssl/wolfcrypt'
+#16 1.760 libtool: finish: PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/sbin" ldconfig -n /usr/local/lib
+#16 1.765 ----------------------------------------------------------------------
+#16 1.765 Libraries have been installed in:
+#16 1.766    /usr/local/lib
+#16 1.766 
+#16 1.766 If you ever happen to want to link against installed libraries
+#16 1.766 in a given directory, LIBDIR, you must either use libtool, and
+#16 1.766 specify the full pathname of the library, or use the '-LLIBDIR'
+#16 1.766 flag during linking and do at least one of the following:
+#16 1.767    - add LIBDIR to the 'LD_LIBRARY_PATH' environment variable
+#16 1.767      during execution
+#16 1.767    - add LIBDIR to the 'LD_RUN_PATH' environment variable
+#16 1.767      during linking
+#16 1.767    - use the '-Wl,-rpath -Wl,LIBDIR' linker flag
+#16 1.767    - have your system administrator add LIBDIR to '/etc/ld.so.conf'
+#16 1.767 
+#16 1.768 See any operating system documentation about shared libraries for
+#16 1.768 more information, such as the ld(1) and ld.so(8) manual pages.
+#16 1.768 ----------------------------------------------------------------------
+#16 1.778 make[3]: Leaving directory '/wolfssl'
+#16 1.781 make[2]: Leaving directory '/wolfssl'
+#16 1.781 make[1]: Leaving directory '/wolfssl'
+#16 DONE 2.0s
+
+#17 [13/15] RUN ldconfig
+#17 DONE 0.9s
+
+#18 [14/15] COPY run_server.sh /run_server.sh
+#18 DONE 0.1s
+
+#19 [15/15] COPY run_client.sh /run_client.sh
+#19 DONE 0.1s
+
+#20 exporting to image
+#20 exporting layers
+#20 exporting layers 53.6s done
+#20 exporting manifest sha256:24828cc9b690f81b5304e0a04db4d07e88cd02a44a7b1b0780de93b9875180e2 0.1s done
+#20 exporting config sha256:76106393b8433a622502a0c3b9729424fd25a1bc04f46576d537941a59cad675 0.1s done
+#20 exporting attestation manifest sha256:4fa35d5d612e5f42f0a2523ddc0f369dda504959b51fe876177008157e8c79c8 0.1s done
+#20 exporting manifest list sha256:8fb57b17012893eda4c4bfac045146eaab1a55b10e8eef9f95d805aab87fdfce
+#20 exporting manifest list sha256:8fb57b17012893eda4c4bfac045146eaab1a55b10e8eef9f95d805aab87fdfce 0.1s done
+#20 naming to docker.io/tls-test-bed/wolfssl:v5.1.1-stable 0.0s done
+#20 unpacking to docker.io/tls-test-bed/wolfssl:v5.1.1-stable
+#20 unpacking to docker.io/tls-test-bed/wolfssl:v5.1.1-stable 61.4s done
+#20 DONE 115.4s
+mkdir -p $(dirname containers/wolfssl/v5.1.1-stable.docker)
+docker image ls -q tls-test-bed/wolfssl:$(basename containers/wolfssl/v5.1.1-stable) > containers/wolfssl/v5.1.1-stable.docker
+docker build --build-arg COMMIT=$(basename containers/curl-wolfssl/v5.1.1-stable) -t tls-test-bed/curl-wolfssl:$(basename containers/curl-wolfssl/v5.1.1-stable) stacks/curl-wolfssl-git
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile:
+#1 transferring dockerfile: 399B 0.1s done
+#1 DONE 0.2s
+
+#2 [internal] load metadata for docker.io/tls-test-bed/wolfssl:v5.1.1-stable
+#2 DONE 0.1s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B 0.0s done
+#3 DONE 0.1s
+
+#4 [internal] load build context
+#4 transferring context: 2.30kB 0.0s done
+#4 DONE 0.1s
+
+#5 [ 1/10] FROM docker.io/tls-test-bed/wolfssl:v5.1.1-stable@sha256:8fb57b17012893eda4c4bfac045146eaab1a55b10e8eef9f95d805aab87fdfce
+#5 resolve docker.io/tls-test-bed/wolfssl:v5.1.1-stable@sha256:8fb57b17012893eda4c4bfac045146eaab1a55b10e8eef9f95d805aab87fdfce 0.1s done
+#5 DONE 0.4s
+
+#6 [ 2/10] RUN git clone https://github.com/curl/curl
+#6 0.887 Cloning into 'curl'...
+#6 DONE 41.0s
+
+#7 [ 3/10] RUN cd curl && git checkout -b current curl-7_75_0
+#7 1.452 Switched to a new branch 'current'
+#7 DONE 1.7s
+
+#8 [ 4/10] RUN cd curl && autoreconf -fi
+#8 6.824 libtoolize: putting auxiliary files in '.'.
+#8 6.824 libtoolize: copying file './ltmain.sh'
+#8 6.862 libtoolize: putting macros in AC_CONFIG_MACRO_DIRS, 'm4'.
+#8 6.862 libtoolize: copying file 'm4/libtool.m4'
+#8 6.936 libtoolize: copying file 'm4/ltoptions.m4'
+#8 7.009 libtoolize: copying file 'm4/ltsugar.m4'
+#8 7.086 libtoolize: copying file 'm4/ltversion.m4'
+#8 7.160 libtoolize: copying file 'm4/lt~obsolete.m4'
+#8 7.239 libtoolize: Remember to add 'LT_INIT' to configure.ac.
+#8 15.28 configure.ac:120: installing './compile'
+#8 15.28 configure.ac:185: installing './config.guess'
+#8 15.29 configure.ac:185: installing './config.sub'
+#8 15.29 configure.ac:120: installing './install-sh'
+#8 15.30 configure.ac:125: installing './missing'
+#8 15.60 docs/examples/Makefile.am: installing './depcomp'
+#8 15.69 parallel-tests: installing './test-driver'
+#8 DONE 19.7s
+
+#9 [ 5/10] RUN cd curl && ./configure --with-wolfssl=/usr/local
+#9 0.707 checking whether to enable maintainer-specific portions of Makefiles... no
+#9 0.707 checking whether make supports nested variables... yes
+#9 0.722 checking whether to enable debug build options... no
+#9 0.722 checking whether to enable compiler optimizer... (assumed) yes
+#9 0.723 checking whether to enable strict compiler warnings... no
+#9 0.724 checking whether to enable compiler warnings as errors... no
+#9 0.725 checking whether to enable curl debug memory tracking... no
+#9 0.726 checking whether to enable hiding of library internal symbols... yes
+#9 0.726 checking whether to enable c-ares for DNS lookups... no
+#9 0.727 checking whether to disable dependency on -lrt... (assumed no)
+#9 0.728 checking whether to enable ECH support... no
+#9 0.728 checking for path separator... :
+#9 0.729 checking for sed... /bin/sed
+#9 0.730 checking for grep... /bin/grep
+#9 0.735 checking for egrep... /bin/grep -E
+#9 0.737 checking for ar... /usr/bin/ar
+#9 0.742 checking for a BSD-compatible install... /usr/bin/install -c
+#9 0.767 checking for gcc... gcc
+#9 0.814 checking whether the C compiler works... yes
+#9 1.084 checking for C compiler default output file name... a.out
+#9 1.087 checking for suffix of executables... 
+#9 1.125 checking whether we are cross compiling... no
+#9 1.179 checking for suffix of object files... o
+#9 1.203 checking whether we are using the GNU C compiler... yes
+#9 1.224 checking whether gcc accepts -g... yes
+#9 1.256 checking for gcc option to accept ISO C89... none needed
+#9 1.338 checking whether gcc understands -c and -o together... yes
+#9 1.375 checking how to run the C preprocessor... gcc -E
+#9 1.433 checking for a sed that does not truncate output... (cached) /bin/sed
+#9 1.435 checking for code coverage support... no
+#9 1.436 checking whether build environment is sane... yes
+#9 1.455 checking for a thread-safe mkdir -p... /bin/mkdir -p
+#9 1.459 checking for gawk... no
+#9 1.459 checking for mawk... mawk
+#9 1.460 checking whether make sets $(MAKE)... yes
+#9 1.478 checking whether make supports the include directive... yes (GNU style)
+#9 1.496 checking dependency style of gcc... gcc3
+#9 1.548 checking curl version... 7.75.0-DEV
+#9 1.564 checking build system type... x86_64-pc-linux-gnu
+#9 1.627 checking host system type... x86_64-pc-linux-gnu
+#9 1.630 checking for grep that handles long lines and -e... (cached) /bin/grep
+#9 1.630 checking for egrep... /bin/grep -E
+#9 1.632 checking if OS is AIX (to define _ALL_SOURCE)... no
+#9 1.641 checking if _THREAD_SAFE is already defined... no
+#9 1.666 checking if _THREAD_SAFE is actually needed... no
+#9 1.666 checking if _THREAD_SAFE is onwards defined... no
+#9 1.666 checking if _REENTRANT is already defined... no
+#9 1.691 checking if _REENTRANT is actually needed... no
+#9 2.274 checking if _REENTRANT is onwards defined... no
+#9 2.276 checking for special C compiler options needed for large files... no
+#9 2.277 checking for _FILE_OFFSET_BITS value needed for large files... no
+#9 2.308 checking how to print strings... printf
+#9 2.313 checking for a sed that does not truncate output... (cached) /bin/sed
+#9 2.315 checking for fgrep... /bin/grep -F
+#9 2.319 checking for ld used by gcc... /usr/bin/ld
+#9 2.327 checking if the linker (/usr/bin/ld) is GNU ld... yes
+#9 2.330 checking for BSD- or MS-compatible name lister (nm)... /usr/bin/nm -B
+#9 2.335 checking the name lister (/usr/bin/nm -B) interface... BSD nm
+#9 2.366 checking whether ln -s works... yes
+#9 2.366 checking the maximum length of command line arguments... 1572864
+#9 2.380 checking how to convert x86_64-pc-linux-gnu file names to x86_64-pc-linux-gnu format... func_convert_file_noop
+#9 2.381 checking how to convert x86_64-pc-linux-gnu file names to toolchain format... func_convert_file_noop
+#9 2.381 checking for /usr/bin/ld option to reload object files... -r
+#9 2.382 checking for objdump... objdump
+#9 2.383 checking how to recognize dependent libraries... pass_all
+#9 2.385 checking for dlltool... no
+#9 2.386 checking how to associate runtime and link libraries... printf %s\n
+#9 2.388 checking for archiver @FILE support... @
+#9 2.426 checking for strip... strip
+#9 2.428 checking for ranlib... ranlib
+#9 2.429 checking command to parse /usr/bin/nm -B output from gcc object... ok
+#9 2.523 checking for sysroot... no
+#9 2.524 checking for a working dd... /bin/dd
+#9 2.535 checking how to truncate binary pipes... /bin/dd bs=4096 count=1
+#9 2.579 checking for mt... no
+#9 2.579 checking if : is a manifest tool... no
+#9 2.588 checking for ANSI C header files... yes
+#9 2.722 checking for sys/types.h... yes
+#9 2.763 checking for sys/stat.h... yes
+#9 2.803 checking for stdlib.h... yes
+#9 2.842 checking for string.h... yes
+#9 2.879 checking for memory.h... yes
+#9 2.923 checking for strings.h... yes
+#9 2.970 checking for inttypes.h... yes
+#9 3.016 checking for stdint.h... yes
+#9 3.059 checking for unistd.h... yes
+#9 3.103 checking for dlfcn.h... yes
+#9 3.144 checking for objdir... .libs
+#9 3.238 checking if gcc supports -fno-rtti -fno-exceptions... no
+#9 3.277 checking for gcc option to produce PIC... -fPIC -DPIC
+#9 3.277 checking if gcc PIC flag -fPIC -DPIC works... yes
+#9 3.306 checking if gcc static flag -static works... yes
+#9 3.443 checking if gcc supports -c -o file.o... yes
+#9 3.487 checking if gcc supports -c -o file.o... (cached) yes
+#9 3.487 checking whether the gcc linker (/usr/bin/ld -m elf_x86_64) supports shared libraries... yes
+#9 3.505 checking whether -lc should be explicitly linked in... no
+#9 3.551 checking dynamic linker characteristics... GNU/Linux ld.so
+#9 3.625 checking how to hardcode library paths into programs... immediate
+#9 3.626 checking whether stripping libraries is possible... yes
+#9 3.631 checking if libtool supports shared libraries... yes
+#9 3.631 checking whether to build shared libraries... yes
+#9 3.632 checking whether to build static libraries... yes
+#9 3.633 checking whether to build shared libraries with -version-info... yes
+#9 3.633 checking whether to build shared libraries with -no-undefined... no
+#9 3.633 checking whether to build shared libraries with -mimpure-text... no
+#9 3.634 checking whether to build shared libraries with PIC... yes
+#9 3.634 checking whether to build static libraries with PIC... yes
+#9 3.634 checking whether to build shared libraries only... no
+#9 3.635 checking whether to build static libraries only... no
+#9 3.636 checking for inline... inline
+#9 3.660 checking if cpp -P is needed... yes
+#9 3.675 checking if cpp -P works... yes
+#9 3.688 checking if compiler is DEC/Compaq/HP C... no
+#9 3.740 checking if compiler is HP-UX C... no
+#9 3.763 checking if compiler is IBM C... no
+#9 3.789 checking if compiler is Intel C... no
+#9 3.811 checking if compiler is clang... no
+#9 3.835 checking if compiler is GNU C... yes
+#9 3.889 checking if compiler is LCC... no
+#9 3.910 checking if compiler is SGI MIPSpro C... no
+#9 3.982 checking if compiler is SGI MIPS C... no
+#9 4.023 checking if compiler is SunPro C... no
+#9 4.047 checking if compiler is Tiny C... no
+#9 4.073 checking if compiler is Watcom C... no
+#9 4.098 checking if compiler accepts some basic options... yes
+#9 4.235 configure: compiler options added: -Werror-implicit-function-declaration 
+#9 4.237 checking if compiler accepts debug disabling options... yes
+#9 4.384 configure: compiler options added: 
+#9 4.386 checking if compiler optimizer assumed setting might be used... yes
+#9 4.386 checking if compiler accepts optimizer enabling options... yes
+#9 4.527 configure: compiler options added: -O2
+#9 4.531 checking if compiler accepts strict warning options... yes
+#9 4.685 configure: compiler options added: -Wno-system-headers 
+#9 4.686 checking if compiler halts on compilation errors... yes
+#9 4.712 checking if compiler halts on negative sized arrays... yes
+#9 4.737 checking if compiler halts on function prototype mismatch... yes
+#9 4.781 checking if compiler supports hiding library internal symbols... yes
+#9 4.846 checking for windows.h... no
+#9 4.874 checking whether build target is a native Windows one... no
+#9 4.876 checking whether build target supports WIN32 file API... no
+#9 4.877 checking for good-to-use Mac CFLAGS... no
+#9 4.879 checking to see if the compiler supports __builtin_available()... no
+#9 4.917 checking whether to support http... yes
+#9 4.918 checking whether to support ftp... yes
+#9 4.918 checking whether to support file... yes
+#9 4.919 checking whether to support ldap... yes
+#9 4.919 checking whether to support ldaps... yes
+#9 4.920 checking whether to support rtsp... yes
+#9 4.920 checking whether to support proxies... yes
+#9 4.921 checking whether to support dict... yes
+#9 4.921 checking whether to support telnet... yes
+#9 4.922 checking whether to support tftp... yes
+#9 4.922 checking whether to support pop3... yes
+#9 4.923 checking whether to support imap... yes
+#9 4.923 checking whether to support smb... yes
+#9 4.925 checking whether to support smtp... yes
+#9 4.926 checking whether to support gopher... yes
+#9 4.928 checking whether to support mqtt... no
+#9 4.929 checking whether to provide built-in manual... yes
+#9 4.931 checking whether to enable generation of C code... yes
+#9 4.933 checking whether to use libgcc... no
+#9 4.934 checking if X/Open network library is required... no
+#9 4.964 checking for gethostbyname... yes
+#9 5.026 checking for windows.h... (cached) no
+#9 5.027 checking for winsock.h... (cached) no
+#9 5.028 checking for winsock2.h... (cached) no
+#9 5.029 checking for proto/bsdsocket.h... no
+#9 5.054 checking for connect in libraries... yes
+#9 5.111 checking whether time.h and sys/time.h may both be included... yes
+#9 5.151 checking for sys/types.h... (cached) yes
+#9 5.165 checking sys/time.h usability... yes
+#9 5.204 checking sys/time.h presence... yes
+#9 5.220 checking for sys/time.h... yes
+#9 5.234 checking time.h usability... yes
+#9 5.274 checking time.h presence... yes
+#9 5.290 checking for time.h... yes
+#9 5.298 checking for monotonic clock_gettime... yes
+#9 5.334 checking for clock_gettime in libraries... no additional lib required
+#9 5.408 checking if monotonic clock_gettime works... yes
+#9 5.487 checking for pkg-config... no
+#9 5.489 checking for inflateEnd in -lz... no
+#9 5.544 checking zlib.h usability... no
+#9 5.600 checking zlib.h presence... no
+#9 5.624 checking for zlib.h... no
+#9 5.626 checking for BrotliDecoderDecompress in -lbrotlidec... no
+#9 5.690 checking brotli/decode.h usability... no
+#9 5.741 checking brotli/decode.h presence... no
+#9 5.770 checking for brotli/decode.h... no
+#9 5.774 checking for ZSTD_createDStream in -lzstd... no
+#9 5.843 checking zstd.h usability... no
+#9 5.888 checking zstd.h presence... no
+#9 5.913 checking for zstd.h... no
+#9 5.916 checking for lber.h... no
+#9 5.948 checking for ldap.h... no
+#9 5.983 checking for ldapssl.h... no
+#9 6.016 checking for ldap_ssl.h... no
+#9 6.054 checking for LDAP libraries... cannot find LDAP libraries
+#9 6.312 configure: WARNING: Cannot find libraries for LDAP support: LDAP disabled
+#9 6.313 checking whether to enable IPv6... yes
+#9 6.391 checking if struct sockaddr_in6 has sin6_scope_id member... yes
+#9 6.441 checking if argv can be written to... yes
+#9 6.505 checking if GSS-API support is requested... no
+#9 6.506 checking whether to enable Windows native SSL/TLS (Windows native builds only)... no
+#9 6.507 checking whether to enable Secure Transport... no
+#9 6.508 checking whether to enable Amiga native SSL/TLS (AmiSSL)... no
+#9 6.512 checking for pkg-config... no
+#9 6.513 checking for HMAC_Update in -lcrypto... no
+#9 6.564 checking for HMAC_Init_ex in -lcrypto... no
+#9 6.589 checking OpenSSL linking with -ldl... no
+#9 6.613 checking OpenSSL linking with -ldl and -lpthread... no
+#9 6.645 checking for pkg-config... no
+#9 6.646 configure: Check dir /usr/local/lib/pkgconfig
+#9 6.646 configure: Add -L/usr/local/lib to LDFLAGS
+#9 6.647 configure: Add -I/usr/local/include to CPPFLAGS
+#9 6.647 configure: Add -lwolfssl to LIBS
+#9 6.648 checking for wolfSSL_Init in -lwolfssl... yes
+#9 6.790 configure: detected wolfSSL
+#9 6.790 checking size of long long... 8
+#9 6.870 checking for wolfSSLv3_client_method... no
+#9 6.943 checking for wolfSSL_get_peer_certificate... no
+#9 7.018 checking for wolfSSL_UseALPN... no
+#9 7.082 checking for wolfSSL_DES_ecb_encrypt... no
+#9 7.152 configure: Added /usr/local/lib to CURL_LIBRARY_PATH
+#9 7.155 configure: built with one SSL backend
+#9 7.156 checking default CA cert bundle/path... /etc/ssl/certs/ca-certificates.crt
+#9 7.159 checking whether to use builtin CA store of SSL library... no
+#9 7.161 checking for library containing psl_builtin... no
+#9 7.285 configure: WARNING: libpsl was not found
+#9 7.289 checking for RTMP_Init in -lrtmp... no
+#9 7.339 checking whether versioned symbols are wanted... no
+#9 7.340 checking whether to enable Windows native IDN (Windows native builds only)... no
+#9 7.341 checking whether to build with libidn2... (assumed) yes
+#9 7.343 checking for pkg-config... no
+#9 7.345 configure: IDN_LIBS: "-lidn2"
+#9 7.345 configure: IDN_LDFLAGS: ""
+#9 7.345 configure: IDN_CPPFLAGS: ""
+#9 7.345 configure: IDN_DIR: ""
+#9 7.345 checking if idn2_lookup_ul can be linked... no
+#9 7.399 checking idn2.h usability... no
+#9 7.434 checking idn2.h presence... no
+#9 7.453 checking for idn2.h... no
+#9 7.454 configure: WARNING: Cannot find libraries for IDN support: IDN disabled
+#9 7.455 checking for pkg-config... no
+#9 7.457 checking for pkg-config... no
+#9 7.461 checking for pkg-config... no
+#9 7.464 checking for pkg-config... no
+#9 7.464 configure: -l is -lhyper
+#9 7.464 configure: -I is 
+#9 7.464 configure: -L is 
+#9 7.468 checking for hyper_io_new in -lhyper... no
+#9 7.516 checking for pkg-config... no
+#9 7.517 checking for ANSI C header files... (cached) yes
+#9 7.518 checking for malloc.h... yes
+#9 7.588 checking for memory.h... no
+#9 7.630 checking for sys/types.h... (cached) yes
+#9 7.642 checking for sys/time.h... (cached) yes
+#9 7.656 checking for sys/select.h... yes
+#9 7.695 checking for sys/socket.h... yes
+#9 7.734 checking for sys/ioctl.h... yes
+#9 7.776 checking for sys/uio.h... yes
+#9 7.819 checking for assert.h... yes
+#9 7.859 checking for unistd.h... (cached) yes
+#9 7.872 checking for stdlib.h... (cached) yes
+#9 7.885 checking for arpa/inet.h... yes
+#9 7.935 checking for net/if.h... yes
+#9 7.978 checking for netinet/in.h... yes
+#9 8.018 checking for netinet/in6.h... no
+#9 8.055 checking for sys/un.h... yes
+#9 8.096 checking for linux/tcp.h... yes
+#9 8.145 checking for netinet/tcp.h... yes
+#9 8.187 checking for netdb.h... yes
+#9 8.227 checking for sys/sockio.h... no
+#9 8.261 checking for sys/stat.h... (cached) yes
+#9 8.274 checking for sys/param.h... yes
+#9 8.321 checking for termios.h... yes
+#9 8.363 checking for termio.h... yes
+#9 8.410 checking for sgtty.h... yes
+#9 8.455 checking for fcntl.h... yes
+#9 8.497 checking for alloca.h... yes
+#9 8.540 checking for time.h... (cached) yes
+#9 8.553 checking for io.h... no
+#9 8.590 checking for pwd.h... yes
+#9 8.640 checking for utime.h... yes
+#9 8.690 checking for sys/utime.h... no
+#9 8.744 checking for sys/poll.h... yes
+#9 8.793 checking for poll.h... yes
+#9 8.857 checking for socket.h... no
+#9 8.899 checking for sys/resource.h... yes
+#9 8.956 checking for libgen.h... yes
+#9 9.022 checking for locale.h... yes
+#9 9.085 checking for errno.h... yes
+#9 9.142 checking for stdbool.h... yes
+#9 9.200 checking for arpa/tftp.h... yes
+#9 9.249 checking for sys/filio.h... no
+#9 9.292 checking for sys/wait.h... yes
+#9 9.352 checking for setjmp.h... yes
+#9 9.399 checking for an ANSI C-conforming const... yes
+#9 9.433 checking for compiler support of C99 variadic macro style... yes
+#9 9.470 checking for compiler support of old gcc variadic macro style... yes
+#9 9.510 checking for size_t... yes
+#9 9.593 checking whether time.h and sys/time.h may both be included... (cached) yes
+#9 9.599 checking for sys/types.h... (cached) yes
+#9 9.611 checking for sys/time.h... (cached) yes
+#9 9.625 checking for time.h... (cached) yes
+#9 9.640 checking for sys/socket.h... (cached) yes
+#9 9.647 checking for struct timeval... yes
+#9 9.683 checking run-time libs availability... fine
+#9 9.746 checking size of size_t... 8
+#9 9.806 checking size of long... 8
+#9 9.873 checking size of int... 4
+#9 9.909 checking size of short... 2
+#9 10.03 checking size of time_t... 8
+#9 10.10 checking size of off_t... 8
+#9 10.16 checking size of curl_off_t... 8
+#9 10.23 checking for long long... yes
+#9 10.32 checking if numberLL works... yes
+#9 10.35 checking for ssize_t... yes
+#9 10.43 checking for bool... yes
+#9 10.50 checking for sa_family_t... yes
+#9 10.56 checking for suseconds_t... yes
+#9 10.63 checking if time_t is unsigned... no
+#9 10.65 checking for sys/types.h... (cached) yes
+#9 10.67 checking for poll.h... (cached) yes
+#9 10.68 checking for sys/poll.h... (cached) yes
+#9 10.72 checking for in_addr_t... yes
+#9 10.81 checking for struct sockaddr_storage... yes
+#9 10.90 checking signal.h usability... yes
+#9 10.94 checking signal.h presence... yes
+#9 10.95 checking for signal.h... yes
+#9 10.96 checking for sig_atomic_t... yes
+#9 11.02 checking if sig_atomic_t is already defined as volatile... no
+#9 11.09 checking return type of signal handlers... void
+#9 11.13 checking for sys/select.h... (cached) yes
+#9 11.14 checking for sys/socket.h... (cached) yes
+#9 11.15 checking for select... yes
+#9 11.21 checking types of args and return type for select... int,fd_set *,struct timeval *,int
+#9 11.27 checking for sys/types.h... (cached) yes
+#9 11.28 checking for sys/socket.h... (cached) yes
+#9 11.29 checking for recv... yes
+#9 11.35 checking types of args and return type for recv... int,void *,size_t,int,ssize_t
+#9 13.01 checking for sys/types.h... (cached) yes
+#9 13.02 checking for sys/socket.h... (cached) yes
+#9 13.03 checking for send... yes
+#9 13.10 checking types of args and return type for send... int,const void *,size_t,int,ssize_t
+#9 16.03 checking for sys/types.h... (cached) yes
+#9 15.73 checking for sys/socket.h... (cached) yes
+#9 15.74 checking for MSG_NOSIGNAL... yes
+#9 15.77 checking for sys/types.h... (cached) yes
+#9 15.79 checking for unistd.h... (cached) yes
+#9 15.79 checking if alarm can be linked... yes
+#9 15.84 checking if alarm is prototyped... yes
+#9 15.86 checking if alarm is compilable... yes
+#9 15.89 checking if alarm usage allowed... yes
+#9 15.89 checking if alarm might be used... yes
+#9 15.90 checking for sys/types.h... (cached) yes
+#9 15.91 checking for string.h... (cached) yes
+#9 15.92 checking for strings.h... (cached) yes
+#9 15.93 checking for sys/types.h... (cached) yes
+#9 15.95 checking for libgen.h... (cached) yes
+#9 15.95 checking if basename can be linked... yes
+#9 16.01 checking if basename is prototyped... yes
+#9 16.03 checking if basename is compilable... yes
+#9 16.06 checking if basename usage allowed... yes
+#9 16.06 checking if basename might be used... yes
+#9 16.07 checking for sys/types.h... (cached) yes
+#9 16.08 checking for socket.h... (cached) no
+#9 16.08 checking if closesocket can be linked... no
+#9 16.12 checking if closesocket might be used... no
+#9 16.12 checking for sys/types.h... (cached) yes
+#9 16.14 checking for sys/socket.h... (cached) yes
+#9 16.14 checking if CloseSocket can be linked... no
+#9 16.18 checking if CloseSocket might be used... no
+#9 16.18 checking if connect can be linked... yes
+#9 16.25 checking if connect is prototyped... yes
+#9 16.27 checking if connect is compilable... yes
+#9 16.30 checking if connect usage allowed... yes
+#9 16.30 checking if connect might be used... yes
+#9 16.31 checking for sys/types.h... (cached) yes
+#9 16.32 checking for unistd.h... (cached) yes
+#9 16.34 checking for fcntl.h... (cached) yes
+#9 16.35 checking if fcntl can be linked... yes
+#9 16.41 checking if fcntl is prototyped... yes
+#9 16.43 checking if fcntl is compilable... yes
+#9 16.46 checking if fcntl usage allowed... yes
+#9 16.46 checking if fcntl might be used... yes
+#9 16.47 checking if fcntl O_NONBLOCK is compilable... yes
+#9 16.51 checking if fcntl O_NONBLOCK usage allowed... yes
+#9 16.51 checking if fcntl O_NONBLOCK might be used... yes
+#9 16.51 checking for windows.h... (cached) no
+#9 16.51 checking for winsock2.h... (cached) no
+#9 16.51 checking for ws2tcpip.h... (cached) no
+#9 16.52 checking for sys/types.h... (cached) yes
+#9 16.53 checking for netdb.h... (cached) yes
+#9 16.54 checking if freeaddrinfo can be linked... yes
+#9 16.60 checking if freeaddrinfo is prototyped... yes
+#9 16.62 checking if freeaddrinfo is compilable... yes
+#9 16.66 checking if freeaddrinfo usage allowed... yes
+#9 16.66 checking if freeaddrinfo might be used... yes
+#9 16.67 checking for sys/types.h... (cached) yes
+#9 16.68 checking for sys/socket.h... (cached) yes
+#9 16.70 checking for netinet/in.h... (cached) yes
+#9 16.71 checking for ifaddrs.h... yes
+#9 16.75 checking if freeifaddrs can be linked... yes
+#9 16.80 checking if freeifaddrs is prototyped... yes
+#9 16.82 checking if freeifaddrs is compilable... yes
+#9 16.85 checking if freeifaddrs usage allowed... yes
+#9 16.86 checking if freeifaddrs might be used... yes
+#9 16.86 checking for sys/types.h... (cached) yes
+#9 16.88 checking for sys/xattr.h... yes
+#9 16.91 checking if fsetxattr can be linked... yes
+#9 16.96 checking if fsetxattr is prototyped... yes
+#9 16.98 checking if fsetxattr takes 5 args.... yes
+#9 17.01 checking if fsetxattr is compilable... yes
+#9 17.01 checking if fsetxattr usage allowed... yes
+#9 17.01 checking if fsetxattr might be used... yes
+#9 17.02 checking if ftruncate can be linked... yes
+#9 17.08 checking if ftruncate is prototyped... yes
+#9 17.10 checking if ftruncate is compilable... yes
+#9 17.13 checking if ftruncate usage allowed... yes
+#9 17.13 checking if ftruncate might be used... yes
+#9 17.14 checking for sys/types.h... (cached) yes
+#9 17.15 checking for stdlib.h... (cached) yes
+#9 17.16 checking if getaddrinfo can be linked... yes
+#9 17.24 checking if getaddrinfo is prototyped... yes
+#9 17.26 checking if getaddrinfo is compilable... yes
+#9 17.30 checking if getaddrinfo seems to work... yes
+#9 17.39 checking if getaddrinfo usage allowed... yes
+#9 17.39 checking if getaddrinfo might be used... yes
+#9 17.39 checking if getaddrinfo is threadsafe... yes
+#9 17.49 checking if gai_strerror can be linked... yes
+#9 17.56 checking if gai_strerror is prototyped... yes
+#9 17.58 checking if gai_strerror is compilable... yes
+#9 17.61 checking if gai_strerror usage allowed... yes
+#9 17.61 checking if gai_strerror might be used... yes
+#9 17.62 checking if gethostbyaddr can be linked... yes
+#9 17.69 checking if gethostbyaddr is prototyped... yes
+#9 17.71 checking if gethostbyaddr is compilable... yes
+#9 17.76 checking if gethostbyaddr usage allowed... yes
+#9 17.76 checking if gethostbyaddr might be used... yes
+#9 17.77 checking if gethostbyaddr_r can be linked... yes
+#9 17.83 checking if gethostbyaddr_r is prototyped... yes
+#9 17.85 checking if gethostbyaddr_r takes 5 args.... no
+#9 17.88 checking if gethostbyaddr_r takes 7 args.... no
+#9 17.91 checking if gethostbyaddr_r takes 8 args.... yes
+#9 17.95 checking if gethostbyaddr_r is compilable... yes
+#9 17.95 checking if gethostbyaddr_r usage allowed... yes
+#9 17.96 checking if gethostbyaddr_r might be used... yes
+#9 17.96 checking if gethostbyname can be linked... yes
+#9 18.02 checking if gethostbyname is prototyped... yes
+#9 18.04 checking if gethostbyname is compilable... yes
+#9 18.08 checking if gethostbyname usage allowed... yes
+#9 18.08 checking if gethostbyname might be used... yes
+#9 18.09 checking if gethostbyname_r can be linked... yes
+#9 18.15 checking if gethostbyname_r is prototyped... yes
+#9 18.17 checking if gethostbyname_r takes 3 args.... no
+#9 18.19 checking if gethostbyname_r takes 5 args.... no
+#9 18.22 checking if gethostbyname_r takes 6 args.... yes
+#9 18.27 checking if gethostbyname_r is compilable... yes
+#9 18.27 checking if gethostbyname_r usage allowed... yes
+#9 18.27 checking if gethostbyname_r might be used... yes
+#9 18.27 checking if gethostname can be linked... yes
+#9 18.40 checking if gethostname is prototyped... yes
+#9 18.43 checking if gethostname is compilable... yes
+#9 18.48 checking for gethostname arg 2 data type... size_t
+#9 18.62 checking if gethostname usage allowed... yes
+#9 18.62 checking if gethostname might be used... yes
+#9 18.62 checking if getpeername can be linked... yes
+#9 18.70 checking if getpeername is prototyped... yes
+#9 18.72 checking if getpeername is compilable... yes
+#9 18.76 checking if getpeername usage allowed... yes
+#9 18.76 checking if getpeername might be used... yes
+#9 18.77 checking if getsockname can be linked... yes
+#9 18.85 checking if getsockname is prototyped... yes
+#9 18.87 checking if getsockname is compilable... yes
+#9 18.91 checking if getsockname usage allowed... yes
+#9 18.91 checking if getsockname might be used... yes
+#9 18.91 checking for net/if.h... (cached) yes
+#9 18.92 checking if if_nametoindex can be linked... yes
+#9 19.00 checking if if_nametoindex is prototyped... yes
+#9 19.01 checking if if_nametoindex is compilable... yes
+#9 19.06 checking if if_nametoindex usage allowed... yes
+#9 19.06 checking if if_nametoindex might be used... yes
+#9 19.06 checking if getifaddrs can be linked... yes
+#9 19.13 checking if getifaddrs is prototyped... yes
+#9 19.14 checking if getifaddrs is compilable... yes
+#9 19.18 checking if getifaddrs seems to work... yes
+#9 19.24 checking if getifaddrs usage allowed... yes
+#9 19.24 checking if getifaddrs might be used... yes
+#9 19.25 checking if getservbyport_r can be linked... yes
+#9 19.30 checking if getservbyport_r is prototyped... yes
+#9 19.33 checking if getservbyport_r takes 4 args.... no
+#9 19.36 checking if getservbyport_r takes 5 args.... no
+#9 19.40 checking if getservbyport_r takes 6 args.... yes
+#9 19.44 checking if getservbyport_r is compilable... yes
+#9 19.45 checking if getservbyport_r usage allowed... yes
+#9 19.45 checking if getservbyport_r might be used... yes
+#9 19.46 checking for sys/types.h... (cached) yes
+#9 19.47 checking for sys/time.h... (cached) yes
+#9 19.48 checking for time.h... (cached) yes
+#9 19.49 checking if gmtime_r can be linked... yes
+#9 19.56 checking if gmtime_r is prototyped... yes
+#9 19.58 checking if gmtime_r is compilable... yes
+#9 19.62 checking if gmtime_r seems to work... yes
+#9 19.71 checking if gmtime_r usage allowed... yes
+#9 19.71 checking if gmtime_r might be used... yes
+#9 19.72 checking for sys/types.h... (cached) yes
+#9 19.73 checking for sys/socket.h... (cached) yes
+#9 19.75 checking for netinet/in.h... (cached) yes
+#9 19.76 checking for arpa/inet.h... (cached) yes
+#9 19.77 checking if inet_ntoa_r can be linked... no
+#9 19.84 checking if inet_ntoa_r might be used... no
+#9 19.84 checking if inet_ntop can be linked... yes
+#9 19.91 checking if inet_ntop is prototyped... yes
+#9 19.93 checking if inet_ntop is compilable... yes
+#9 19.97 checking if inet_ntop seems to work... yes
+#9 20.07 checking if inet_ntop usage allowed... yes
+#9 20.07 checking if inet_ntop might be used... yes
+#9 20.07 checking if inet_pton can be linked... yes
+#9 20.13 checking if inet_pton is prototyped... yes
+#9 20.15 checking if inet_pton is compilable... yes
+#9 20.19 checking if inet_pton seems to work... yes
+#9 20.29 checking if inet_pton usage allowed... yes
+#9 20.29 checking if inet_pton might be used... yes
+#9 20.30 checking for sys/types.h... (cached) yes
+#9 20.32 checking for unistd.h... (cached) yes
+#9 20.33 checking for sys/socket.h... (cached) yes
+#9 20.35 checking for sys/ioctl.h... (cached) yes
+#9 20.36 checking for stropts.h... yes
+#9 20.40 checking if ioctl can be linked... yes
+#9 20.46 checking if ioctl is prototyped... yes
+#9 20.48 checking if ioctl is compilable... yes
+#9 20.52 checking if ioctl usage allowed... yes
+#9 20.52 checking if ioctl might be used... yes
+#9 20.52 checking if ioctl FIONBIO is compilable... yes
+#9 20.56 checking if ioctl FIONBIO usage allowed... yes
+#9 20.56 checking if ioctl FIONBIO might be used... yes
+#9 20.57 checking if ioctl SIOCGIFADDR is compilable... yes
+#9 20.62 checking if ioctl SIOCGIFADDR usage allowed... yes
+#9 20.62 checking if ioctl SIOCGIFADDR might be used... yes
+#9 20.62 checking if ioctlsocket can be linked... no
+#9 20.66 checking if ioctlsocket might be used... no
+#9 20.66 checking if IoctlSocket can be linked... no
+#9 20.80 checking if IoctlSocket might be used... no
+#9 20.80 checking if localtime_r can be linked... yes
+#9 20.89 checking if localtime_r is prototyped... yes
+#9 20.90 checking if localtime_r is compilable... yes
+#9 20.96 checking if localtime_r seems to work... yes
+#9 21.08 checking if localtime_r usage allowed... yes
+#9 21.08 checking if localtime_r might be used... yes
+#9 21.08 checking if memrchr can be linked... yes
+#9 21.19 checking if memrchr is prototyped... no
+#9 21.22 checking if memrchr might be used... no
+#9 21.22 checking if poll can be linked... yes
+#9 21.31 checking if poll is prototyped... yes
+#9 21.35 checking if poll is compilable... yes
+#9 21.42 checking if poll seems to work... yes
+#9 22.08 checking if poll usage allowed... yes
+#9 22.08 checking if poll might be used... yes
+#9 22.09 checking if setsockopt can be linked... yes
+#9 22.18 checking if setsockopt is prototyped... yes
+#9 22.20 checking if setsockopt is compilable... yes
+#9 22.24 checking if setsockopt usage allowed... yes
+#9 22.25 checking if setsockopt might be used... yes
+#9 22.25 checking if setsockopt SO_NONBLOCK is compilable... no
+#9 22.28 checking if setsockopt SO_NONBLOCK might be used... no
+#9 22.29 checking for sys/types.h... (cached) yes
+#9 22.31 checking for signal.h... (cached) yes
+#9 22.32 checking if sigaction can be linked... yes
+#9 22.39 checking if sigaction is prototyped... yes
+#9 22.40 checking if sigaction is compilable... yes
+#9 22.44 checking if sigaction usage allowed... yes
+#9 22.45 checking if sigaction might be used... yes
+#9 22.45 checking if siginterrupt can be linked... yes
+#9 22.52 checking if siginterrupt is prototyped... yes
+#9 22.54 checking if siginterrupt is compilable... yes
+#9 22.58 checking if siginterrupt usage allowed... yes
+#9 22.58 checking if siginterrupt might be used... yes
+#9 22.58 checking if signal can be linked... yes
+#9 22.66 checking if signal is prototyped... yes
+#9 22.68 checking if signal is compilable... yes
+#9 22.73 checking if signal usage allowed... yes
+#9 22.73 checking if signal might be used... yes
+#9 22.74 checking for sys/types.h... (cached) yes
+#9 22.76 checking for setjmp.h... (cached) yes
+#9 22.77 checking if sigsetjmp can be linked... no
+#9 22.87 checking if sigsetjmp seems a macro... yes
+#9 22.96 checking if sigsetjmp is compilable... yes
+#9 22.99 checking if sigsetjmp usage allowed... yes
+#9 23.00 checking if sigsetjmp might be used... yes
+#9 23.00 checking if socket can be linked... yes
+#9 23.08 checking if socket is prototyped... yes
+#9 23.10 checking if socket is compilable... yes
+#9 23.13 checking if socket usage allowed... yes
+#9 23.13 checking if socket might be used... yes
+#9 23.14 checking if socketpair can be linked... yes
+#9 23.21 checking if socketpair is prototyped... yes
+#9 23.23 checking if socketpair is compilable... yes
+#9 23.27 checking if socketpair usage allowed... yes
+#9 23.27 checking if socketpair might be used... yes
+#9 23.28 checking if strcasecmp can be linked... yes
+#9 23.35 checking if strcasecmp is prototyped... yes
+#9 23.37 checking if strcasecmp is compilable... yes
+#9 23.41 checking if strcasecmp usage allowed... yes
+#9 23.41 checking if strcasecmp might be used... yes
+#9 23.41 checking if strcmpi can be linked... no
+#9 23.49 checking if strcmpi might be used... no
+#9 23.49 checking if strdup can be linked... yes
+#9 23.59 checking if strdup is prototyped... yes
+#9 23.60 checking if strdup is compilable... yes
+#9 23.66 checking if strdup usage allowed... yes
+#9 23.66 checking if strdup might be used... yes
+#9 23.67 checking if strerror_r can be linked... yes
+#9 23.75 checking if strerror_r is prototyped... yes
+#9 23.78 checking if strerror_r is compilable... yes
+#9 23.83 checking if strerror_r is glibc like... no
+#9 23.94 checking if strerror_r is POSIX like... yes
+#9 23.99 checking if strerror_r seems to work... yes
+#9 24.09 checking if strerror_r usage allowed... yes
+#9 24.09 checking if strerror_r might be used... yes
+#9 24.10 checking if stricmp can be linked... no
+#9 24.19 checking if stricmp might be used... no
+#9 24.19 checking if strncasecmp can be linked... yes
+#9 24.29 checking if strncasecmp is prototyped... yes
+#9 24.31 checking if strncasecmp is compilable... yes
+#9 24.37 checking if strncasecmp usage allowed... yes
+#9 24.37 checking if strncasecmp might be used... yes
+#9 24.38 checking if strncmpi can be linked... no
+#9 24.53 checking if strncmpi might be used... no
+#9 24.53 checking if strnicmp can be linked... no
+#9 24.68 checking if strnicmp might be used... no
+#9 24.68 checking if strstr can be linked... yes
+#9 24.78 checking if strstr is prototyped... yes
+#9 24.80 checking if strstr is compilable... yes
+#9 24.84 checking if strstr usage allowed... yes
+#9 24.84 checking if strstr might be used... yes
+#9 24.85 checking if strtok_r can be linked... yes
+#9 24.92 checking if strtok_r is prototyped... yes
+#9 24.94 checking if strtok_r is compilable... yes
+#9 24.98 checking if strtok_r usage allowed... yes
+#9 24.98 checking if strtok_r might be used... yes
+#9 24.99 checking if strtoll can be linked... yes
+#9 25.06 checking if strtoll is prototyped... yes
+#9 25.08 checking if strtoll is compilable... yes
+#9 25.12 checking if strtoll usage allowed... yes
+#9 25.12 checking if strtoll might be used... yes
+#9 25.13 checking for sys/types.h... (cached) yes
+#9 25.15 checking for sys/uio.h... (cached) yes
+#9 25.15 checking if writev can be linked... yes
+#9 25.22 checking if writev is prototyped... yes
+#9 25.24 checking if writev is compilable... yes
+#9 25.27 checking if writev usage allowed... yes
+#9 25.27 checking if writev might be used... yes
+#9 25.29 checking whether getpwuid_r is declared... yes
+#9 25.33 checking for fnmatch... yes
+#9 25.42 checking for geteuid... yes
+#9 25.50 checking for getpass_r... no
+#9 25.56 checking deeper for getpass_r... but still no
+#9 25.61 checking for getppid... yes
+#9 25.69 checking for getpwuid... yes
+#9 25.78 checking for getpwuid_r... yes
+#9 25.86 checking for getrlimit... yes
+#9 25.94 checking for gettimeofday... yes
+#9 26.02 checking for if_nametoindex... yes
+#9 26.11 checking for mach_absolute_time... no
+#9 26.18 checking deeper for mach_absolute_time... but still no
+#9 26.22 checking for pipe... yes
+#9 26.29 checking for setlocale... yes
+#9 26.36 checking for setmode... no
+#9 26.43 checking deeper for setmode... but still no
+#9 26.47 checking for setrlimit... yes
+#9 26.54 checking for usleep... yes
+#9 26.61 checking for utime... yes
+#9 26.67 checking for utimes... yes
+#9 26.74 checking how to set a socket into non-blocking mode... fcntl O_NONBLOCK
+#9 26.74 checking for perl... /usr/bin/perl
+#9 26.74 checking for gnroff... no
+#9 26.74 checking for nroff... /usr/bin/nroff
+#9 26.74 checking how to use *nroff to get plain text from man pages... -man
+#9 26.80 checking whether to enable the threaded resolver... yes
+#9 26.80 checking whether to use POSIX threads for threaded resolver... auto
+#9 26.80 checking pthread.h usability... yes
+#9 26.84 checking pthread.h presence... yes
+#9 26.85 checking for pthread.h... yes
+#9 26.85 checking for pthread_create... no
+#9 26.90 checking for pthread_create in -lpthread... yes
+#9 26.95 checking convert -I options to -isystem... yes
+#9 26.96 checking whether to enable verbose strings... yes
+#9 26.96 checking whether to enable SSPI support (Windows native builds only)... no
+#9 26.96 checking whether to enable cryptographic authentication methods... yes
+#9 26.96 checking whether to enable NTLM delegation to winbind's helper... yes
+#9 26.97 checking whether to enable TLS-SRP authentication... yes
+#9 26.97 checking whether to enable Unix domain sockets... auto
+#9 26.97 checking for struct sockaddr_un.sun_path... yes
+#9 27.00 checking whether to support cookies... yes
+#9 27.00 checking whether to support socketpair... yes
+#9 27.00 checking whether to support HTTP authentication... yes
+#9 27.00 checking whether to support DoH... yes
+#9 27.00 checking whether to support the MIME API... yes
+#9 27.00 checking whether to support date parsing... yes
+#9 27.00 checking whether to support netrc parsing... yes
+#9 27.00 checking whether to support progress-meter... yes
+#9 27.01 checking whether to support DNS shuffling... yes
+#9 27.01 checking whether to support curl_easy_option*... yes
+#9 27.01 checking whether to support alt-svc... no
+#9 27.01 checking whether to support HSTS... no
+#9 27.01 checking whether hiding of library internal symbols will actually happen... yes
+#9 27.07 checking that generated files are newer than configure... done
+#9 27.07 configure: creating ./config.status
+#9 27.89 config.status: creating Makefile
+#9 27.91 config.status: creating docs/Makefile
+#9 27.94 config.status: creating docs/examples/Makefile
+#9 27.98 config.status: creating docs/libcurl/Makefile
+#9 28.00 config.status: creating docs/libcurl/opts/Makefile
+#9 28.03 config.status: creating docs/cmdline-opts/Makefile
+#9 28.06 config.status: creating include/Makefile
+#9 28.09 config.status: creating include/curl/Makefile
+#9 28.11 config.status: creating src/Makefile
+#9 28.15 config.status: creating lib/Makefile
+#9 28.18 config.status: creating scripts/Makefile
+#9 28.20 config.status: creating lib/libcurl.vers
+#9 28.23 config.status: creating tests/Makefile
+#9 28.25 config.status: creating tests/certs/Makefile
+#9 28.28 config.status: creating tests/certs/scripts/Makefile
+#9 28.31 config.status: creating tests/data/Makefile
+#9 28.33 config.status: creating tests/server/Makefile
+#9 28.36 config.status: creating tests/libtest/Makefile
+#9 28.42 config.status: creating tests/unit/Makefile
+#9 28.44 config.status: creating packages/Makefile
+#9 28.47 config.status: creating packages/vms/Makefile
+#9 28.50 config.status: creating curl-config
+#9 28.52 config.status: creating libcurl.pc
+#9 28.54 config.status: creating lib/curl_config.h
+#9 28.57 config.status: executing depfiles commands
+#9 33.68 config.status: executing libtool commands
+#9 33.71 configure: amending lib/Makefile
+#9 33.77 configure: amending src/Makefile
+#9 33.82 configure: amending tests/unit/Makefile
+#9 33.86 configure: amending tests/server/Makefile
+#9 33.91 configure: amending tests/libtest/Makefile
+#9 34.05 configure: amending docs/examples/Makefile
+#9 34.10 configure: Configured to build curl/libcurl:
+#9 34.10 
+#9 34.10   Host setup:       x86_64-pc-linux-gnu
+#9 34.10   Install prefix:   /usr/local
+#9 34.10   Compiler:         gcc
+#9 34.10    CFLAGS:          -Werror-implicit-function-declaration -O2 -Wno-system-headers -pthread
+#9 34.10    CPPFLAGS:        -isystem /usr/local/include
+#9 34.10    LDFLAGS:         -L/usr/local/lib
+#9 34.10    LIBS:            -lwolfssl -lm
+#9 34.10 
+#9 34.10   curl version:     7.75.0-DEV
+#9 34.10   SSL:              enabled (WolfSSL)
+#9 34.10   SSH:              no      (--with-{libssh,libssh2})
+#9 34.10   zlib:             no      (--with-zlib)
+#9 34.10   brotli:           no      (--with-brotli)
+#9 34.10   zstd:             no      (--with-zstd)
+#9 34.10   GSS-API:          no      (--with-gssapi)
+#9 34.10   TLS-SRP:          no      (--enable-tls-srp)
+#9 34.10   resolver:         POSIX threaded
+#9 34.10   IPv6:             enabled
+#9 34.10   Unix sockets:     enabled
+#9 34.10   IDN:              no      (--with-{libidn2,winidn})
+#9 34.10   Build libcurl:    Shared=yes, Static=yes
+#9 34.10   Built-in manual:  enabled
+#9 34.10   --libcurl option: enabled (--disable-libcurl-option)
+#9 34.10   Verbose errors:   enabled (--disable-verbose)
+#9 34.10   Code coverage:    disabled
+#9 34.10   SSPI:             no      (--enable-sspi)
+#9 34.10   ca cert bundle:   /etc/ssl/certs/ca-certificates.crt
+#9 34.10   ca cert path:     no
+#9 34.10   ca fallback:      no
+#9 34.10   LDAP:             no      (--enable-ldap / --with-ldap-lib / --with-lber-lib)
+#9 34.10   LDAPS:            no      (--enable-ldaps)
+#9 34.10   RTSP:             enabled
+#9 34.10   RTMP:             no      (--with-librtmp)
+#9 34.10   Metalink:         no      (--with-libmetalink)
+#9 34.10   PSL:              no      (libpsl not found)
+#9 34.10   Alt-svc:          enabled
+#9 34.10   HTTP1:            enabled (--with-hyper)
+#9 34.10   HTTP2:            no      (--with-nghttp2)
+#9 34.10   HTTP3:            no      (--with-ngtcp2, --with-quiche)
+#9 34.10   ECH:              no      (--enable-ech)
+#9 34.10   Protocols:        DICT FILE FTP FTPS GOPHER GOPHERS HTTP HTTPS IMAP IMAPS MQTT POP3 POP3S RTSP SMTP SMTPS TELNET TFTP
+#9 34.10   Features:         AsynchDNS IPv6 SSL UnixSockets alt-svc
+#9 34.10 
+#9 DONE 34.3s
+
+#10 [ 6/10] RUN cd curl && make -j
+#10 1.143 Making all in lib
+#10 1.183 make[1]: Entering directory '/wolfssl/curl/lib'
+#10 1.188 make  all-am
+#10 1.222 make[2]: Entering directory '/wolfssl/curl/lib'
+#10 1.224   CC       libcurl_la-altsvc.lo
+#10 1.224   CC       libcurl_la-amigaos.lo
+#10 1.225   CC       libcurl_la-asyn-ares.lo
+#10 1.226   CC       libcurl_la-base64.lo
+#10 1.226   CC       libcurl_la-asyn-thread.lo
+#10 1.227   CC       libcurl_la-c-hyper.lo
+#10 1.227   CC       libcurl_la-conncache.lo
+#10 1.228   CC       libcurl_la-connect.lo
+#10 1.229   CC       libcurl_la-content_encoding.lo
+#10 1.231   CC       libcurl_la-curl_addrinfo.lo
+#10 1.231   CC       libcurl_la-cookie.lo
+#10 1.234   CC       libcurl_la-curl_ctype.lo
+#10 1.239   CC       libcurl_la-curl_des.lo
+#10 1.243   CC       libcurl_la-curl_endian.lo
+#10 1.247   CC       libcurl_la-curl_fnmatch.lo
+#10 1.248   CC       libcurl_la-curl_get_line.lo
+#10 1.265   CC       libcurl_la-curl_gethostname.lo
+#10 1.285   CC       libcurl_la-curl_gssapi.lo
+#10 1.288   CC       libcurl_la-curl_memrchr.lo
+#10 1.290   CC       libcurl_la-curl_multibyte.lo
+#10 1.293   CC       libcurl_la-curl_ntlm_core.lo
+#10 1.307   CC       libcurl_la-curl_ntlm_wb.lo
+#10 1.327   CC       libcurl_la-curl_path.lo
+#10 1.348   CC       libcurl_la-curl_rtmp.lo
+#10 1.369   CC       libcurl_la-curl_range.lo
+#10 1.377   CC       libcurl_la-curl_sasl.lo
+#10 1.394   CC       libcurl_la-curl_sspi.lo
+#10 1.465   CC       libcurl_la-curl_threads.lo
+#10 1.501   CC       libcurl_la-dict.lo
+#10 1.566   CC       libcurl_la-doh.lo
+#10 1.589   CC       libcurl_la-dotdot.lo
+#10 1.600   CC       libcurl_la-dynbuf.lo
+#10 1.640   CC       libcurl_la-easy.lo
+#10 1.727   CC       libcurl_la-easygetopt.lo
+#10 1.730   CC       libcurl_la-easyoptions.lo
+#10 1.794   CC       libcurl_la-escape.lo
+#10 1.829   CC       libcurl_la-file.lo
+#10 1.854   CC       libcurl_la-fileinfo.lo
+#10 1.895   CC       libcurl_la-formdata.lo
+#10 1.991   CC       libcurl_la-ftplistparser.lo
+#10 2.002   CC       libcurl_la-ftp.lo
+#10 2.046   CC       libcurl_la-getinfo.lo
+#10 2.059   CC       libcurl_la-getenv.lo
+#10 2.117   CC       libcurl_la-gopher.lo
+#10 2.124   CC       libcurl_la-hash.lo
+#10 2.174   CC       libcurl_la-hmac.lo
+#10 2.258   CC       libcurl_la-hostcheck.lo
+#10 2.325   CC       libcurl_la-hostasyn.lo
+#10 2.357   CC       libcurl_la-hostip.lo
+#10 2.655   CC       libcurl_la-hostip6.lo
+#10 2.821   CC       libcurl_la-hostip4.lo
+#10 3.027   CC       libcurl_la-hostsyn.lo
+#10 3.077   CC       libcurl_la-hsts.lo
+#10 3.294   CC       libcurl_la-http.lo
+#10 3.434   CC       libcurl_la-http2.lo
+#10 3.455   CC       libcurl_la-http_chunks.lo
+#10 3.503   CC       libcurl_la-http_digest.lo
+#10 3.530   CC       libcurl_la-http_negotiate.lo
+#10 3.544   CC       libcurl_la-http_ntlm.lo
+#10 3.550   CC       libcurl_la-http_proxy.lo
+#10 3.639   CC       libcurl_la-http_aws_sigv4.lo
+#10 4.029   CC       libcurl_la-idn_win32.lo
+#10 4.628   CC       libcurl_la-if2ip.lo
+#10 4.682   CC       libcurl_la-inet_ntop.lo
+#10 4.688   CC       libcurl_la-inet_pton.lo
+#10 4.694   CC       libcurl_la-krb5.lo
+#10 4.703   CC       libcurl_la-imap.lo
+#10 4.716   CC       libcurl_la-ldap.lo
+#10 4.870   CC       libcurl_la-llist.lo
+#10 4.936   CC       libcurl_la-md4.lo
+#10 5.035   CC       libcurl_la-md5.lo
+#10 5.088   CC       libcurl_la-mime.lo
+#10 5.104   CC       libcurl_la-memdebug.lo
+#10 5.143   CC       libcurl_la-mprintf.lo
+#10 5.161   CC       libcurl_la-mqtt.lo
+#10 5.183   CC       libcurl_la-multi.lo
+#10 5.217   CC       libcurl_la-netrc.lo
+#10 5.335   CC       libcurl_la-non-ascii.lo
+#10 6.347   CC       libcurl_la-nonblock.lo
+#10 6.350   CC       libcurl_la-openldap.lo
+#10 6.355   CC       libcurl_la-parsedate.lo
+#10 6.476   CC       libcurl_la-pop3.lo
+#10 6.480   CC       libcurl_la-pingpong.lo
+#10 6.517   CC       libcurl_la-progress.lo
+#10 6.610   CC       libcurl_la-psl.lo
+#10 6.724   CC       libcurl_la-rand.lo
+#10 6.795   CC       libcurl_la-rename.lo
+#10 7.015   CC       libcurl_la-sendf.lo
+#10 7.103   CC       libcurl_la-setopt.lo
+#10 7.151   CC       libcurl_la-rtsp.lo
+#10 7.182   CC       libcurl_la-sha256.lo
+#10 7.205   CC       libcurl_la-select.lo
+#10 7.288   CC       libcurl_la-slist.lo
+#10 7.507   CC       libcurl_la-smb.lo
+#10 7.551   CC       libcurl_la-share.lo
+#10 7.849   CC       libcurl_la-smtp.lo
+#10 7.932   CC       libcurl_la-socketpair.lo
+#10 8.009   CC       libcurl_la-socks.lo
+#10 8.050   CC       libcurl_la-socks_gssapi.lo
+#10 8.204   CC       libcurl_la-socks_sspi.lo
+#10 8.598   CC       libcurl_la-speedcheck.lo
+#10 8.632   CC       libcurl_la-splay.lo
+#10 8.723   CC       libcurl_la-strcase.lo
+#10 8.842   CC       libcurl_la-strdup.lo
+#10 8.976   CC       libcurl_la-strerror.lo
+#10 9.183   CC       libcurl_la-strtok.lo
+#10 9.252   CC       libcurl_la-strtoofft.lo
+#10 9.266   CC       libcurl_la-system_win32.lo
+#10 9.537   CC       libcurl_la-telnet.lo
+#10 9.832   CC       libcurl_la-tftp.lo
+#10 9.942   CC       libcurl_la-timeval.lo
+#10 10.01   CC       libcurl_la-transfer.lo
+#10 10.02   CC       libcurl_la-url.lo
+#10 10.33   CC       libcurl_la-urlapi.lo
+#10 10.45   CC       libcurl_la-version.lo
+#10 10.46   CC       libcurl_la-version_win32.lo
+#10 10.57   CC       libcurl_la-warnless.lo
+#10 10.60   CC       libcurl_la-wildcard.lo
+#10 10.62   CC       libcurl_la-x509asn1.lo
+#10 12.35   CC       vauth/libcurl_la-cleartext.lo
+#10 12.41   CC       vauth/libcurl_la-cram.lo
+#10 12.62   CC       vauth/libcurl_la-digest.lo
+#10 12.90   CC       vauth/libcurl_la-digest_sspi.lo
+#10 13.05   CC       vauth/libcurl_la-krb5_gssapi.lo
+#10 13.10   CC       vauth/libcurl_la-krb5_sspi.lo
+#10 13.15   CC       vauth/libcurl_la-ntlm.lo
+#10 13.32   CC       vauth/libcurl_la-oauth2.lo
+#10 13.35   CC       vauth/libcurl_la-ntlm_sspi.lo
+#10 13.74   CC       vauth/libcurl_la-spnego_gssapi.lo
+#10 13.78   CC       vauth/libcurl_la-spnego_sspi.lo
+#10 13.81   CC       vauth/libcurl_la-vauth.lo
+#10 14.09   CC       vtls/libcurl_la-bearssl.lo
+#10 14.30   CC       vtls/libcurl_la-gskit.lo
+#10 14.64   CC       vtls/libcurl_la-gtls.lo
+#10 14.76   CC       vtls/libcurl_la-keylog.lo
+#10 14.90   CC       vtls/libcurl_la-mbedtls.lo
+#10 15.38   CC       vtls/libcurl_la-mbedtls_threadlock.lo
+#10 15.47   CC       vtls/libcurl_la-mesalink.lo
+#10 15.58   CC       vtls/libcurl_la-openssl.lo
+#10 15.71   CC       vtls/libcurl_la-nss.lo
+#10 15.72   CC       vtls/libcurl_la-schannel_verify.lo
+#10 15.73   CC       vtls/libcurl_la-schannel.lo
+#10 15.83   CC       vtls/libcurl_la-sectransp.lo
+#10 15.91   CC       vtls/libcurl_la-vtls.lo
+#10 15.92   CC       vtls/libcurl_la-wolfssl.lo
+#10 15.96   CC       vquic/libcurl_la-ngtcp2.lo
+#10 15.99   CC       vquic/libcurl_la-quiche.lo
+#10 16.06   CC       vquic/libcurl_la-vquic.lo
+#10 16.14   CC       vssh/libcurl_la-libssh.lo
+#10 16.17   CC       vssh/libcurl_la-libssh2.lo
+#10 16.31   CC       vssh/libcurl_la-wolfssh.lo
+#10 30.14   CCLD     libcurl.la
+#10 30.91 make[2]: Leaving directory '/wolfssl/curl/lib'
+#10 30.91 make[1]: Leaving directory '/wolfssl/curl/lib'
+#10 30.92 Making all in src
+#10 30.96 make[1]: Entering directory '/wolfssl/curl/src'
+#10 30.97 Making all in ../docs
+#10 30.97 make[2]: Entering directory '/wolfssl/curl/docs'
+#10 30.98 Making all in .
+#10 30.98 make[3]: Entering directory '/wolfssl/curl/docs'
+#10 30.98 if test "..x" != "..x" -a -e "./curl.1"; then \
+#10 30.98 	/usr/bin/install -c -m 644 "./curl.1" /wolfssl/curl/docs/curl.1; fi
+#10 30.98 cd cmdline-opts && make
+#10 30.99 make[4]: Entering directory '/wolfssl/curl/docs/cmdline-opts'
+#10 30.99 generate ../../docs/curl.1
+#10 34.48 make[4]: Leaving directory '/wolfssl/curl/docs/cmdline-opts'
+#10 34.48 make[3]: Leaving directory '/wolfssl/curl/docs'
+#10 34.48 Making all in cmdline-opts
+#10 34.48 make[3]: Entering directory '/wolfssl/curl/docs/cmdline-opts'
+#10 34.48 make[3]: Nothing to be done for 'all'.
+#10 34.48 make[3]: Leaving directory '/wolfssl/curl/docs/cmdline-opts'
+#10 34.48 make[2]: Leaving directory '/wolfssl/curl/docs'
+#10 34.49 make[2]: Entering directory '/wolfssl/curl/src'
+#10 34.49   CC       curl-slist_wc.o
+#10 34.50   CC       curl-tool_bname.o
+#10 34.50   CC       curl-tool_cb_dbg.o
+#10 34.50   CC       curl-tool_cb_hdr.o
+#10 34.50   CC       curl-tool_binmode.o
+#10 34.50   CC       curl-tool_cb_rea.o
+#10 34.50   CC       curl-tool_cb_prg.o
+#10 34.50   CC       curl-tool_cb_see.o
+#10 34.50   CC       curl-tool_cb_wrt.o
+#10 34.51   CC       curl-tool_cfgable.o
+#10 34.52   CC       curl-tool_convert.o
+#10 34.52   CC       curl-tool_dirhie.o
+#10 34.54   CC       curl-tool_doswin.o
+#10 34.56   CC       curl-tool_easysrc.o
+#10 34.57   CC       curl-tool_filetime.o
+#10 34.57   CC       curl-tool_formparse.o
+#10 34.58   CC       curl-tool_getparam.o
+#10 34.58   CC       curl-tool_getpass.o
+#10 34.58   CC       curl-tool_help.o
+#10 34.58   CC       curl-tool_helpers.o
+#10 34.59   CC       curl-tool_homedir.o
+#10 34.59   HUGE     tool_hugehelp.c
+#10 34.60   CC       curl-tool_libinfo.o
+#10 34.61   CC       curl-tool_main.o
+#10 34.63   CC       curl-tool_metalink.o
+#10 34.67   CC       curl-tool_msgs.o
+#10 34.68   CC       curl-tool_operate.o
+#10 34.72   CC       curl-tool_operhlp.o
+#10 34.81   CC       curl-tool_panykey.o
+#10 34.84   CC       curl-tool_paramhlp.o
+#10 34.90   CC       curl-tool_parsecfg.o
+#10 34.91   CC       curl-tool_strdup.o
+#10 34.91   CC       curl-tool_progress.o
+#10 34.92   CC       curl-tool_setopt.o
+#10 34.93   CC       curl-tool_sleep.o
+#10 34.94   CC       curl-tool_urlglob.o
+#10 34.95   CC       curl-tool_util.o
+#10 34.97   CC       curl-tool_vms.o
+#10 35.09   CC       curl-tool_writeout.o
+#10 35.12   CC       curl-tool_writeout_json.o
+#10 35.13   CC       curl-tool_xattr.o
+#10 35.33   CC       curl-tool_hugehelp.o
+#10 35.36   CC       ../lib/curl-strtoofft.o
+#10 35.38   CC       ../lib/curl-nonblock.o
+#10 35.43   CC       ../lib/curl-warnless.o
+#10 35.47   CC       ../lib/curl-curl_ctype.o
+#10 35.51   CC       ../lib/curl-curl_multibyte.o
+#10 35.57   CC       ../lib/curl-version_win32.o
+#10 35.58   CC       ../lib/curl-dynbuf.o
+#10 38.03   CCLD     curl
+#10 38.44 make[2]: Leaving directory '/wolfssl/curl/src'
+#10 38.44 make[1]: Leaving directory '/wolfssl/curl/src'
+#10 38.45 make[1]: Entering directory '/wolfssl/curl'
+#10 38.45 make[1]: Nothing to be done for 'all-am'.
+#10 38.45 make[1]: Leaving directory '/wolfssl/curl'
+#10 DONE 38.5s
+
+#11 [ 7/10] RUN cd curl && make install
+#11 0.557 Making install in lib
+#11 0.658 make[1]: Entering directory '/wolfssl/curl/lib'
+#11 0.790 make[2]: Entering directory '/wolfssl/curl/lib'
+#11 0.819  /bin/mkdir -p '/usr/local/lib'
+#11 0.821  /bin/bash ../libtool   --mode=install /usr/bin/install -c   libcurl.la '/usr/local/lib'
+#11 0.854 libtool: install: /usr/bin/install -c .libs/libcurl.so.4.7.0 /usr/local/lib/libcurl.so.4.7.0
+#11 0.859 libtool: install: (cd /usr/local/lib && { ln -s -f libcurl.so.4.7.0 libcurl.so.4 || { rm -f libcurl.so.4 && ln -s libcurl.so.4.7.0 libcurl.so.4; }; })
+#11 0.863 libtool: install: (cd /usr/local/lib && { ln -s -f libcurl.so.4.7.0 libcurl.so || { rm -f libcurl.so && ln -s libcurl.so.4.7.0 libcurl.so; }; })
+#11 0.867 libtool: install: /usr/bin/install -c .libs/libcurl.lai /usr/local/lib/libcurl.la
+#11 0.870 libtool: install: /usr/bin/install -c .libs/libcurl.a /usr/local/lib/libcurl.a
+#11 0.874 libtool: install: chmod 644 /usr/local/lib/libcurl.a
+#11 0.877 libtool: install: ranlib /usr/local/lib/libcurl.a
+#11 0.933 libtool: finish: PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/sbin" ldconfig -n /usr/local/lib
+#11 0.958 ----------------------------------------------------------------------
+#11 0.958 Libraries have been installed in:
+#11 0.959    /usr/local/lib
+#11 0.959 
+#11 0.959 If you ever happen to want to link against installed libraries
+#11 0.959 in a given directory, LIBDIR, you must either use libtool, and
+#11 0.959 specify the full pathname of the library, or use the '-LLIBDIR'
+#11 0.959 flag during linking and do at least one of the following:
+#11 0.959    - add LIBDIR to the 'LD_LIBRARY_PATH' environment variable
+#11 0.959      during execution
+#11 0.959    - add LIBDIR to the 'LD_RUN_PATH' environment variable
+#11 0.959      during linking
+#11 0.961    - use the '-Wl,-rpath -Wl,LIBDIR' linker flag
+#11 0.961    - have your system administrator add LIBDIR to '/etc/ld.so.conf'
+#11 0.961 
+#11 0.961 See any operating system documentation about shared libraries for
+#11 0.961 more information, such as the ld(1) and ld.so(8) manual pages.
+#11 0.961 ----------------------------------------------------------------------
+#11 0.962 make[2]: Nothing to be done for 'install-data-am'.
+#11 0.962 make[2]: Leaving directory '/wolfssl/curl/lib'
+#11 0.965 make[1]: Leaving directory '/wolfssl/curl/lib'
+#11 0.967 Making install in src
+#11 0.987 make[1]: Entering directory '/wolfssl/curl/src'
+#11 0.993 Making install in ../docs
+#11 0.997 make[2]: Entering directory '/wolfssl/curl/docs'
+#11 1.003 Making install in .
+#11 1.005 make[3]: Entering directory '/wolfssl/curl/docs'
+#11 1.009 make[4]: Entering directory '/wolfssl/curl/docs'
+#11 1.009 make[4]: Nothing to be done for 'install-exec-am'.
+#11 1.012  /bin/mkdir -p '/usr/local/share/man/man1'
+#11 1.023  /usr/bin/install -c -m 644 curl-config.1 /wolfssl/curl/docs/curl.1 '/usr/local/share/man/man1'
+#11 1.028 make[4]: Leaving directory '/wolfssl/curl/docs'
+#11 1.028 make[3]: Leaving directory '/wolfssl/curl/docs'
+#11 1.029 Making install in cmdline-opts
+#11 1.033 make[3]: Entering directory '/wolfssl/curl/docs/cmdline-opts'
+#11 1.039 make[4]: Entering directory '/wolfssl/curl/docs/cmdline-opts'
+#11 1.039 make[4]: Nothing to be done for 'install-exec-am'.
+#11 1.039 make[4]: Nothing to be done for 'install-data-am'.
+#11 1.039 make[4]: Leaving directory '/wolfssl/curl/docs/cmdline-opts'
+#11 1.039 make[3]: Leaving directory '/wolfssl/curl/docs/cmdline-opts'
+#11 1.040 make[2]: Leaving directory '/wolfssl/curl/docs'
+#11 1.077 make[2]: Entering directory '/wolfssl/curl/src'
+#11 1.111 make[3]: Entering directory '/wolfssl/curl/src'
+#11 1.114  /bin/mkdir -p '/usr/local/bin'
+#11 1.120   /bin/bash ../libtool   --mode=install /usr/bin/install -c curl '/usr/local/bin'
+#11 1.177 libtool: install: /usr/bin/install -c .libs/curl /usr/local/bin/curl
+#11 1.183 make[3]: Nothing to be done for 'install-data-am'.
+#11 1.183 make[3]: Leaving directory '/wolfssl/curl/src'
+#11 1.184 make[2]: Leaving directory '/wolfssl/curl/src'
+#11 1.185 make[1]: Leaving directory '/wolfssl/curl/src'
+#11 1.189 make[1]: Entering directory '/wolfssl/curl'
+#11 1.193 make[2]: Entering directory '/wolfssl/curl'
+#11 1.196  /bin/mkdir -p '/usr/local/bin'
+#11 1.202  /usr/bin/install -c curl-config '/usr/local/bin'
+#11 1.209  /bin/mkdir -p '/usr/local/lib/pkgconfig'
+#11 1.214  /usr/bin/install -c -m 644 libcurl.pc '/usr/local/lib/pkgconfig'
+#11 1.219 make  install-data-hook
+#11 1.224 make[3]: Entering directory '/wolfssl/curl'
+#11 1.224 (cd include && make install)
+#11 1.231 make[4]: Entering directory '/wolfssl/curl/include'
+#11 1.238 Making install in curl
+#11 1.242 make[5]: Entering directory '/wolfssl/curl/include/curl'
+#11 1.246 make[6]: Entering directory '/wolfssl/curl/include/curl'
+#11 1.246 make[6]: Nothing to be done for 'install-exec-am'.
+#11 1.248  /bin/mkdir -p '/usr/local/include/curl'
+#11 1.254  /usr/bin/install -c -m 644 curl.h curlver.h easy.h mprintf.h stdcheaders.h multi.h typecheck-gcc.h system.h urlapi.h options.h '/usr/local/include/curl'
+#11 1.259 make[6]: Leaving directory '/wolfssl/curl/include/curl'
+#11 1.259 make[5]: Leaving directory '/wolfssl/curl/include/curl'
+#11 1.262 make[5]: Entering directory '/wolfssl/curl/include'
+#11 1.266 make[6]: Entering directory '/wolfssl/curl/include'
+#11 1.266 make[6]: Nothing to be done for 'install-exec-am'.
+#11 1.266 make[6]: Nothing to be done for 'install-data-am'.
+#11 1.266 make[6]: Leaving directory '/wolfssl/curl/include'
+#11 1.267 make[5]: Leaving directory '/wolfssl/curl/include'
+#11 1.267 make[4]: Leaving directory '/wolfssl/curl/include'
+#11 1.268 (cd docs && make install)
+#11 1.273 make[4]: Entering directory '/wolfssl/curl/docs'
+#11 1.279 Making install in .
+#11 1.282 make[5]: Entering directory '/wolfssl/curl/docs'
+#11 1.286 make[6]: Entering directory '/wolfssl/curl/docs'
+#11 1.286 make[6]: Nothing to be done for 'install-exec-am'.
+#11 1.290  /bin/mkdir -p '/usr/local/share/man/man1'
+#11 1.299  /usr/bin/install -c -m 644 curl-config.1 /wolfssl/curl/docs/curl.1 '/usr/local/share/man/man1'
+#11 1.303 make[6]: Leaving directory '/wolfssl/curl/docs'
+#11 1.303 make[5]: Leaving directory '/wolfssl/curl/docs'
+#11 1.304 Making install in cmdline-opts
+#11 1.308 make[5]: Entering directory '/wolfssl/curl/docs/cmdline-opts'
+#11 1.312 make[6]: Entering directory '/wolfssl/curl/docs/cmdline-opts'
+#11 1.312 make[6]: Nothing to be done for 'install-exec-am'.
+#11 1.312 make[6]: Nothing to be done for 'install-data-am'.
+#11 1.312 make[6]: Leaving directory '/wolfssl/curl/docs/cmdline-opts'
+#11 1.312 make[5]: Leaving directory '/wolfssl/curl/docs/cmdline-opts'
+#11 1.313 make[4]: Leaving directory '/wolfssl/curl/docs'
+#11 1.314 (cd docs/libcurl && make install)
+#11 1.325 make[4]: Entering directory '/wolfssl/curl/docs/libcurl'
+#11 1.332 Making install in opts
+#11 1.347 make[5]: Entering directory '/wolfssl/curl/docs/libcurl/opts'
+#11 1.354 make[6]: Entering directory '/wolfssl/curl/docs/libcurl/opts'
+#11 1.354 make[6]: Nothing to be done for 'install-exec-am'.
+#11 1.361  /bin/mkdir -p '/usr/local/share/man/man3'
+#11 1.395  /usr/bin/install -c -m 644 CURLINFO_ACTIVESOCKET.3 CURLINFO_APPCONNECT_TIME.3 CURLINFO_APPCONNECT_TIME_T.3 CURLINFO_CERTINFO.3 CURLINFO_CONDITION_UNMET.3 CURLINFO_CONNECT_TIME.3 CURLINFO_CONNECT_TIME_T.3 CURLINFO_CONTENT_LENGTH_DOWNLOAD.3 CURLINFO_CONTENT_LENGTH_DOWNLOAD_T.3 CURLINFO_CONTENT_LENGTH_UPLOAD.3 CURLINFO_CONTENT_LENGTH_UPLOAD_T.3 CURLINFO_CONTENT_TYPE.3 CURLINFO_COOKIELIST.3 CURLINFO_EFFECTIVE_METHOD.3 CURLINFO_EFFECTIVE_URL.3 CURLINFO_FILETIME.3 CURLINFO_FILETIME_T.3 CURLINFO_FTP_ENTRY_PATH.3 CURLINFO_HEADER_SIZE.3 CURLINFO_HTTPAUTH_AVAIL.3 CURLINFO_HTTP_CONNECTCODE.3 CURLINFO_HTTP_VERSION.3 CURLINFO_LASTSOCKET.3 CURLINFO_LOCAL_IP.3 CURLINFO_LOCAL_PORT.3 CURLINFO_NAMELOOKUP_TIME.3 CURLINFO_NAMELOOKUP_TIME_T.3 CURLINFO_NUM_CONNECTS.3 CURLINFO_OS_ERRNO.3 CURLINFO_PRETRANSFER_TIME.3 CURLINFO_PRETRANSFER_TIME_T.3 CURLINFO_PRIMARY_IP.3 CURLINFO_PRIMARY_PORT.3 CURLINFO_PRIVATE.3 CURLINFO_PROTOCOL.3 CURLINFO_PROXY_ERROR.3 CURLINFO_PROXY_SSL_VERIFYRESULT.3 CURLINFO_PROXYAUTH_AVAIL.3 CURLINFO_REDIRECT_COUNT.3 CURLINFO_REDIRECT_TIME.3 '/usr/local/share/man/man3'
+#11 1.421  /usr/bin/install -c -m 644 CURLINFO_REDIRECT_TIME_T.3 CURLINFO_REDIRECT_URL.3 CURLINFO_REQUEST_SIZE.3 CURLINFO_RESPONSE_CODE.3 CURLINFO_RETRY_AFTER.3 CURLINFO_RTSP_CLIENT_CSEQ.3 CURLINFO_RTSP_CSEQ_RECV.3 CURLINFO_RTSP_SERVER_CSEQ.3 CURLINFO_RTSP_SESSION_ID.3 CURLINFO_SCHEME.3 CURLINFO_SIZE_DOWNLOAD.3 CURLINFO_SIZE_DOWNLOAD_T.3 CURLINFO_SIZE_UPLOAD.3 CURLINFO_SIZE_UPLOAD_T.3 CURLINFO_SPEED_DOWNLOAD.3 CURLINFO_SPEED_DOWNLOAD_T.3 CURLINFO_SPEED_UPLOAD.3 CURLINFO_SPEED_UPLOAD_T.3 CURLINFO_SSL_ENGINES.3 CURLINFO_SSL_VERIFYRESULT.3 CURLINFO_STARTTRANSFER_TIME.3 CURLINFO_STARTTRANSFER_TIME_T.3 CURLINFO_TLS_SESSION.3 CURLINFO_TLS_SSL_PTR.3 CURLINFO_TOTAL_TIME.3 CURLINFO_TOTAL_TIME_T.3 CURLMOPT_CHUNK_LENGTH_PENALTY_SIZE.3 CURLMOPT_CONTENT_LENGTH_PENALTY_SIZE.3 CURLMOPT_MAXCONNECTS.3 CURLMOPT_MAX_CONCURRENT_STREAMS.3 CURLMOPT_MAX_HOST_CONNECTIONS.3 CURLMOPT_MAX_PIPELINE_LENGTH.3 CURLMOPT_MAX_TOTAL_CONNECTIONS.3 CURLMOPT_PIPELINING.3 CURLMOPT_PIPELINING_SERVER_BL.3 CURLMOPT_PIPELINING_SITE_BL.3 CURLMOPT_PUSHDATA.3 CURLMOPT_PUSHFUNCTION.3 CURLMOPT_SOCKETDATA.3 CURLMOPT_SOCKETFUNCTION.3 '/usr/local/share/man/man3'
+#11 1.444  /usr/bin/install -c -m 644 CURLMOPT_TIMERDATA.3 CURLMOPT_TIMERFUNCTION.3 CURLOPT_ABSTRACT_UNIX_SOCKET.3 CURLOPT_ACCEPTTIMEOUT_MS.3 CURLOPT_ACCEPT_ENCODING.3 CURLOPT_ADDRESS_SCOPE.3 CURLOPT_ALTSVC.3 CURLOPT_ALTSVC_CTRL.3 CURLOPT_APPEND.3 CURLOPT_AUTOREFERER.3 CURLOPT_BUFFERSIZE.3 CURLOPT_CAINFO.3 CURLOPT_CAPATH.3 CURLOPT_CERTINFO.3 CURLOPT_CHUNK_BGN_FUNCTION.3 CURLOPT_CHUNK_DATA.3 CURLOPT_CHUNK_END_FUNCTION.3 CURLOPT_CLOSESOCKETDATA.3 CURLOPT_CLOSESOCKETFUNCTION.3 CURLOPT_CONNECTTIMEOUT.3 CURLOPT_CONNECTTIMEOUT_MS.3 CURLOPT_CONNECT_ONLY.3 CURLOPT_CONNECT_TO.3 CURLOPT_CONV_FROM_NETWORK_FUNCTION.3 CURLOPT_CONV_FROM_UTF8_FUNCTION.3 CURLOPT_CONV_TO_NETWORK_FUNCTION.3 CURLOPT_COOKIE.3 CURLOPT_COOKIEFILE.3 CURLOPT_COOKIEJAR.3 CURLOPT_COOKIELIST.3 CURLOPT_COOKIESESSION.3 CURLOPT_COPYPOSTFIELDS.3 CURLOPT_CRLF.3 CURLOPT_CRLFILE.3 CURLOPT_CURLU.3 CURLOPT_CUSTOMREQUEST.3 CURLOPT_DEBUGDATA.3 CURLOPT_DEBUGFUNCTION.3 CURLOPT_DEFAULT_PROTOCOL.3 CURLOPT_DIRLISTONLY.3 '/usr/local/share/man/man3'
+#11 1.472  /usr/bin/install -c -m 644 CURLOPT_DISALLOW_USERNAME_IN_URL.3 CURLOPT_DNS_CACHE_TIMEOUT.3 CURLOPT_DNS_INTERFACE.3 CURLOPT_DNS_LOCAL_IP4.3 CURLOPT_DNS_LOCAL_IP6.3 CURLOPT_DNS_SERVERS.3 CURLOPT_DNS_SHUFFLE_ADDRESSES.3 CURLOPT_DNS_USE_GLOBAL_CACHE.3 CURLOPT_DOH_URL.3 CURLOPT_EGDSOCKET.3 CURLOPT_ERRORBUFFER.3 CURLOPT_EXPECT_100_TIMEOUT_MS.3 CURLOPT_FAILONERROR.3 CURLOPT_FILETIME.3 CURLOPT_FNMATCH_DATA.3 CURLOPT_FNMATCH_FUNCTION.3 CURLOPT_FOLLOWLOCATION.3 CURLOPT_FORBID_REUSE.3 CURLOPT_FRESH_CONNECT.3 CURLOPT_FTPPORT.3 CURLOPT_FTPSSLAUTH.3 CURLOPT_FTP_ACCOUNT.3 CURLOPT_FTP_ALTERNATIVE_TO_USER.3 CURLOPT_FTP_CREATE_MISSING_DIRS.3 CURLOPT_FTP_FILEMETHOD.3 CURLOPT_FTP_RESPONSE_TIMEOUT.3 CURLOPT_FTP_SKIP_PASV_IP.3 CURLOPT_FTP_SSL_CCC.3 CURLOPT_FTP_USE_EPRT.3 CURLOPT_FTP_USE_EPSV.3 CURLOPT_FTP_USE_PRET.3 CURLOPT_GSSAPI_DELEGATION.3 CURLOPT_HAPPY_EYEBALLS_TIMEOUT_MS.3 CURLOPT_HAPROXYPROTOCOL.3 CURLOPT_HEADER.3 CURLOPT_HEADERDATA.3 CURLOPT_HEADERFUNCTION.3 CURLOPT_HEADEROPT.3 CURLOPT_HSTS.3 CURLOPT_HSTSREADDATA.3 '/usr/local/share/man/man3'
+#11 1.500  /usr/bin/install -c -m 644 CURLOPT_HSTSREADFUNCTION.3 CURLOPT_HSTSWRITEDATA.3 CURLOPT_HSTSWRITEFUNCTION.3 CURLOPT_HSTS_CTRL.3 CURLOPT_HTTP09_ALLOWED.3 CURLOPT_HTTP200ALIASES.3 CURLOPT_HTTPAUTH.3 CURLOPT_HTTPGET.3 CURLOPT_HTTPHEADER.3 CURLOPT_HTTPPOST.3 CURLOPT_HTTPPROXYTUNNEL.3 CURLOPT_HTTP_CONTENT_DECODING.3 CURLOPT_HTTP_TRANSFER_DECODING.3 CURLOPT_HTTP_VERSION.3 CURLOPT_IGNORE_CONTENT_LENGTH.3 CURLOPT_INFILESIZE.3 CURLOPT_INFILESIZE_LARGE.3 CURLOPT_INTERFACE.3 CURLOPT_INTERLEAVEDATA.3 CURLOPT_INTERLEAVEFUNCTION.3 CURLOPT_IOCTLDATA.3 CURLOPT_IOCTLFUNCTION.3 CURLOPT_IPRESOLVE.3 CURLOPT_ISSUERCERT.3 CURLOPT_ISSUERCERT_BLOB.3 CURLOPT_KEEP_SENDING_ON_ERROR.3 CURLOPT_KEYPASSWD.3 CURLOPT_KRBLEVEL.3 CURLOPT_LOCALPORT.3 CURLOPT_LOCALPORTRANGE.3 CURLOPT_LOGIN_OPTIONS.3 CURLOPT_LOW_SPEED_LIMIT.3 CURLOPT_LOW_SPEED_TIME.3 CURLOPT_MAIL_AUTH.3 CURLOPT_MAIL_FROM.3 CURLOPT_MAIL_RCPT.3 CURLOPT_MAIL_RCPT_ALLLOWFAILS.3 CURLOPT_MAXAGE_CONN.3 CURLOPT_MAXCONNECTS.3 CURLOPT_MAXFILESIZE.3 '/usr/local/share/man/man3'
+#11 1.527  /usr/bin/install -c -m 644 CURLOPT_MAXFILESIZE_LARGE.3 CURLOPT_MAXREDIRS.3 CURLOPT_MAX_RECV_SPEED_LARGE.3 CURLOPT_MAX_SEND_SPEED_LARGE.3 CURLOPT_MIMEPOST.3 CURLOPT_NETRC.3 CURLOPT_NETRC_FILE.3 CURLOPT_NEW_DIRECTORY_PERMS.3 CURLOPT_NEW_FILE_PERMS.3 CURLOPT_NOBODY.3 CURLOPT_NOPROGRESS.3 CURLOPT_NOPROXY.3 CURLOPT_NOSIGNAL.3 CURLOPT_OPENSOCKETDATA.3 CURLOPT_OPENSOCKETFUNCTION.3 CURLOPT_PASSWORD.3 CURLOPT_PATH_AS_IS.3 CURLOPT_PINNEDPUBLICKEY.3 CURLOPT_PIPEWAIT.3 CURLOPT_PORT.3 CURLOPT_POST.3 CURLOPT_POSTFIELDS.3 CURLOPT_POSTFIELDSIZE.3 CURLOPT_POSTFIELDSIZE_LARGE.3 CURLOPT_POSTQUOTE.3 CURLOPT_POSTREDIR.3 CURLOPT_PREQUOTE.3 CURLOPT_PRE_PROXY.3 CURLOPT_PRIVATE.3 CURLOPT_PROGRESSDATA.3 CURLOPT_PROGRESSFUNCTION.3 CURLOPT_PROTOCOLS.3 CURLOPT_PROXY.3 CURLOPT_PROXYAUTH.3 CURLOPT_PROXYHEADER.3 CURLOPT_PROXYPASSWORD.3 CURLOPT_PROXYPORT.3 CURLOPT_PROXYTYPE.3 CURLOPT_PROXYUSERNAME.3 CURLOPT_PROXYUSERPWD.3 '/usr/local/share/man/man3'
+#11 1.555  /usr/bin/install -c -m 644 CURLOPT_PROXY_CAINFO.3 CURLOPT_PROXY_CAPATH.3 CURLOPT_PROXY_CRLFILE.3 CURLOPT_PROXY_KEYPASSWD.3 CURLOPT_PROXY_ISSUERCERT.3 CURLOPT_PROXY_ISSUERCERT_BLOB.3 CURLOPT_PROXY_PINNEDPUBLICKEY.3 CURLOPT_PROXY_SERVICE_NAME.3 CURLOPT_PROXY_SSLCERT.3 CURLOPT_PROXY_SSLCERT_BLOB.3 CURLOPT_PROXY_SSLCERTTYPE.3 CURLOPT_PROXY_SSLKEY.3 CURLOPT_PROXY_SSLKEY_BLOB.3 CURLOPT_PROXY_SSLKEYTYPE.3 CURLOPT_PROXY_SSLVERSION.3 CURLOPT_PROXY_SSL_CIPHER_LIST.3 CURLOPT_PROXY_SSL_OPTIONS.3 CURLOPT_PROXY_SSL_VERIFYHOST.3 CURLOPT_PROXY_SSL_VERIFYPEER.3 CURLOPT_PROXY_TLS13_CIPHERS.3 CURLOPT_PROXY_TLSAUTH_PASSWORD.3 CURLOPT_PROXY_TLSAUTH_TYPE.3 CURLOPT_PROXY_TLSAUTH_USERNAME.3 CURLOPT_PROXY_TRANSFER_MODE.3 CURLOPT_PUT.3 CURLOPT_QUOTE.3 CURLOPT_RANDOM_FILE.3 CURLOPT_RANGE.3 CURLOPT_READDATA.3 CURLOPT_READFUNCTION.3 CURLOPT_REDIR_PROTOCOLS.3 CURLOPT_REFERER.3 CURLOPT_REQUEST_TARGET.3 CURLOPT_RESOLVE.3 CURLOPT_RESOLVER_START_DATA.3 CURLOPT_RESOLVER_START_FUNCTION.3 CURLOPT_RESUME_FROM.3 CURLOPT_RESUME_FROM_LARGE.3 CURLOPT_RTSP_CLIENT_CSEQ.3 CURLOPT_RTSP_REQUEST.3 '/usr/local/share/man/man3'
+#11 1.582  /usr/bin/install -c -m 644 CURLOPT_RTSP_SERVER_CSEQ.3 CURLOPT_RTSP_SESSION_ID.3 CURLOPT_RTSP_STREAM_URI.3 CURLOPT_RTSP_TRANSPORT.3 CURLOPT_SASL_AUTHZID.3 CURLOPT_SASL_IR.3 CURLOPT_SEEKDATA.3 CURLOPT_SEEKFUNCTION.3 CURLOPT_SERVICE_NAME.3 CURLOPT_SHARE.3 CURLOPT_SOCKOPTDATA.3 CURLOPT_SOCKOPTFUNCTION.3 CURLOPT_SOCKS5_AUTH.3 CURLOPT_SOCKS5_GSSAPI_NEC.3 CURLOPT_SOCKS5_GSSAPI_SERVICE.3 CURLOPT_SSH_AUTH_TYPES.3 CURLOPT_SSH_COMPRESSION.3 CURLOPT_SSH_HOST_PUBLIC_KEY_MD5.3 CURLOPT_SSH_KEYDATA.3 CURLOPT_SSH_KEYFUNCTION.3 CURLOPT_SSH_KNOWNHOSTS.3 CURLOPT_SSH_PRIVATE_KEYFILE.3 CURLOPT_SSH_PUBLIC_KEYFILE.3 CURLOPT_SSLCERT.3 CURLOPT_SSLCERT_BLOB.3 CURLOPT_SSLCERTTYPE.3 CURLOPT_SSLENGINE.3 CURLOPT_SSLENGINE_DEFAULT.3 CURLOPT_SSLKEY.3 CURLOPT_SSLKEY_BLOB.3 CURLOPT_SSLKEYTYPE.3 CURLOPT_SSLVERSION.3 CURLOPT_SSL_CIPHER_LIST.3 CURLOPT_SSL_CTX_DATA.3 CURLOPT_SSL_CTX_FUNCTION.3 CURLOPT_SSL_EC_CURVES.3 CURLOPT_SSL_ENABLE_ALPN.3 CURLOPT_SSL_ENABLE_NPN.3 CURLOPT_SSL_FALSESTART.3 CURLOPT_SSL_OPTIONS.3 '/usr/local/share/man/man3'
+#11 1.620  /usr/bin/install -c -m 644 CURLOPT_SSL_SESSIONID_CACHE.3 CURLOPT_SSL_VERIFYHOST.3 CURLOPT_SSL_VERIFYPEER.3 CURLOPT_SSL_VERIFYSTATUS.3 CURLOPT_STDERR.3 CURLOPT_STREAM_DEPENDS.3 CURLOPT_STREAM_DEPENDS_E.3 CURLOPT_STREAM_WEIGHT.3 CURLOPT_SUPPRESS_CONNECT_HEADERS.3 CURLOPT_TCP_FASTOPEN.3 CURLOPT_TCP_KEEPALIVE.3 CURLOPT_TCP_KEEPIDLE.3 CURLOPT_TCP_KEEPINTVL.3 CURLOPT_TCP_NODELAY.3 CURLOPT_TELNETOPTIONS.3 CURLOPT_TFTP_BLKSIZE.3 CURLOPT_TFTP_NO_OPTIONS.3 CURLOPT_TIMECONDITION.3 CURLOPT_TIMEOUT.3 CURLOPT_TIMEOUT_MS.3 CURLOPT_TIMEVALUE.3 CURLOPT_TIMEVALUE_LARGE.3 CURLOPT_TLS13_CIPHERS.3 CURLOPT_TLSAUTH_PASSWORD.3 CURLOPT_TLSAUTH_TYPE.3 CURLOPT_TLSAUTH_USERNAME.3 CURLOPT_TRAILERDATA.3 CURLOPT_TRAILERFUNCTION.3 CURLOPT_TRANSFERTEXT.3 CURLOPT_TRANSFER_ENCODING.3 CURLOPT_UNIX_SOCKET_PATH.3 CURLOPT_UNRESTRICTED_AUTH.3 CURLOPT_UPKEEP_INTERVAL_MS.3 CURLOPT_UPLOAD.3 CURLOPT_UPLOAD_BUFFERSIZE.3 CURLOPT_URL.3 CURLOPT_USERAGENT.3 CURLOPT_USERNAME.3 CURLOPT_USERPWD.3 CURLOPT_USE_SSL.3 '/usr/local/share/man/man3'
+#11 1.653  /usr/bin/install -c -m 644 CURLOPT_AWS_SIGV4.3 CURLOPT_VERBOSE.3 CURLOPT_WILDCARDMATCH.3 CURLOPT_WRITEDATA.3 CURLOPT_WRITEFUNCTION.3 CURLOPT_XFERINFODATA.3 CURLOPT_XFERINFOFUNCTION.3 CURLOPT_XOAUTH2_BEARER.3 '/usr/local/share/man/man3'
+#11 1.664 make[6]: Leaving directory '/wolfssl/curl/docs/libcurl/opts'
+#11 1.664 make[5]: Leaving directory '/wolfssl/curl/docs/libcurl/opts'
+#11 1.672 make[5]: Entering directory '/wolfssl/curl/docs/libcurl'
+#11 1.672 perl ./mksymbolsmanpage.pl < ./symbols-in-versions > libcurl-symbols.3
+#11 1.720 make[6]: Entering directory '/wolfssl/curl/docs/libcurl'
+#11 1.720 make[6]: Nothing to be done for 'install-exec-am'.
+#11 1.723  /bin/mkdir -p '/usr/local/share/aclocal'
+#11 1.729  /usr/bin/install -c -m 644 libcurl.m4 '/usr/local/share/aclocal'
+#11 1.738  /bin/mkdir -p '/usr/local/share/man/man3'
+#11 1.754  /usr/bin/install -c -m 644 curl_easy_cleanup.3 curl_easy_duphandle.3 curl_easy_escape.3 curl_easy_getinfo.3 curl_easy_init.3 curl_easy_option_by_id.3 curl_easy_option_by_name.3 curl_easy_option_next.3 curl_easy_pause.3 curl_easy_perform.3 curl_easy_recv.3 curl_easy_reset.3 curl_easy_send.3 curl_easy_setopt.3 curl_easy_strerror.3 curl_easy_unescape.3 curl_easy_upkeep.3 curl_escape.3 curl_formadd.3 curl_formfree.3 curl_formget.3 curl_free.3 curl_getdate.3 curl_getenv.3 curl_global_cleanup.3 curl_global_init.3 curl_global_init_mem.3 curl_global_sslset.3 curl_mime_addpart.3 curl_mime_data.3 curl_mime_data_cb.3 curl_mime_encoder.3 curl_mime_filedata.3 curl_mime_filename.3 curl_mime_free.3 curl_mime_headers.3 curl_mime_init.3 curl_mime_name.3 curl_mime_subparts.3 curl_mime_type.3 '/usr/local/share/man/man3'
+#11 1.782  /usr/bin/install -c -m 644 curl_mprintf.3 curl_multi_add_handle.3 curl_multi_assign.3 curl_multi_cleanup.3 curl_multi_fdset.3 curl_multi_info_read.3 curl_multi_init.3 curl_multi_perform.3 curl_multi_poll.3 curl_multi_remove_handle.3 curl_multi_setopt.3 curl_multi_socket.3 curl_multi_socket_action.3 curl_multi_socket_all.3 curl_multi_strerror.3 curl_multi_timeout.3 curl_multi_wakeup.3 curl_multi_wait.3 curl_share_cleanup.3 curl_share_init.3 curl_share_setopt.3 curl_share_strerror.3 curl_slist_append.3 curl_slist_free_all.3 curl_strequal.3 curl_strnequal.3 curl_unescape.3 curl_url.3 curl_url_cleanup.3 curl_url_dup.3 curl_url_get.3 curl_url_set.3 curl_version.3 curl_version_info.3 libcurl-easy.3 libcurl-env.3 libcurl-errors.3 libcurl-multi.3 libcurl-security.3 libcurl-share.3 '/usr/local/share/man/man3'
+#11 1.810  /usr/bin/install -c -m 644 libcurl-symbols.3 libcurl-thread.3 libcurl-tutorial.3 libcurl-url.3 libcurl.3 '/usr/local/share/man/man3'
+#11 1.817 make[6]: Leaving directory '/wolfssl/curl/docs/libcurl'
+#11 1.817 make[5]: Leaving directory '/wolfssl/curl/docs/libcurl'
+#11 1.818 make[4]: Leaving directory '/wolfssl/curl/docs/libcurl'
+#11 1.820 make[3]: Leaving directory '/wolfssl/curl'
+#11 1.820 make[2]: Leaving directory '/wolfssl/curl'
+#11 1.820 make[1]: Leaving directory '/wolfssl/curl'
+#11 DONE 1.9s
+
+#12 [ 8/10] RUN ldconfig
+#12 DONE 0.5s
+
+#13 [ 9/10] RUN rm /run_server.sh
+#13 DONE 1.0s
+
+#14 [10/10] COPY run_client.sh /run_client.sh
+#14 DONE 0.1s
+
+#15 exporting to image
+#15 exporting layers
+#15 exporting layers 11.0s done
+#15 exporting manifest sha256:934d3f3be44c4172a170c67c20d7b4ab668544c7f889c3f59ca497e0f9246843 0.0s done
+#15 exporting config sha256:781e111aca4cb428f111b8929f5c97f86c6140085564c7db432c68ee7044174e 0.0s done
+#15 exporting attestation manifest sha256:8ab749a54521ec0c58b49cf22cd85f8e01a7392cb237704b2f0b64053eaa5bf0 0.0s done
+#15 exporting manifest list sha256:4100d2098eb9eb1574f801b98bf87a371e6b69515f7063a2baf116048f8a2db8
+#15 exporting manifest list sha256:4100d2098eb9eb1574f801b98bf87a371e6b69515f7063a2baf116048f8a2db8 0.0s done
+#15 naming to docker.io/tls-test-bed/curl-wolfssl:v5.1.1-stable done
+#15 unpacking to docker.io/tls-test-bed/curl-wolfssl:v5.1.1-stable
+#15 unpacking to docker.io/tls-test-bed/curl-wolfssl:v5.1.1-stable 3.7s done
+#15 DONE 15.0s
+mkdir -p $(dirname containers/curl-wolfssl/v5.1.1-stable.docker)
+docker image ls -q tls-test-bed/curl-wolfssl:$(basename containers/curl-wolfssl/v5.1.1-stable) > containers/curl-wolfssl/v5.1.1-stable.docker

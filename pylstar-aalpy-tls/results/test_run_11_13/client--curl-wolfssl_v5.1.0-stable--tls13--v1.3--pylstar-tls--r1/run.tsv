@@ -1,0 +1,19 @@
+campaign	test_run_11_13
+kind	client
+image	tls-test-bed/curl-wolfssl:v5.1.0-stable
+tls_version	1.3
+scenario	tls13
+extra_args	
+eq_method	RW:10000:0.1
+inferer	pylstar-tls
+repeat	1
+jobs	6
+start_epoch	1794595613.357510682
+end_epoch	1794595649.220625757
+wall_seconds	35.9
+exit_code	1
+status	failed
+loadavg_start	42.29 19.22 7.72
+loadavg_end	25.22 17.51 7.57
+host	aendri
+command	INFERER_IMAGE=tls-test-bed/pylstar-tls ./infer-client.sh tls-test-bed/curl-wolfssl:v5.1.0-stable 1.3 tls13 -E RW:10000:0.1

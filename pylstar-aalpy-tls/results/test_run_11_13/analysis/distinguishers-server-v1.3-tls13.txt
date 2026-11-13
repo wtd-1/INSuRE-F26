@@ -1,0 +1,10 @@
+16 classes
+8 distinguishing sequences:
+  TLS13ClientHello
+  TLS13ClientHello, TLS13Certificate_valid
+  TLS13ClientHello, TLS13EmptyCertificate, TLSInvalidCertificateVerify, TLSInvalidCertificateVerify
+  TLS13ClientHello, TLS13ClientHello
+  TLS13ClientHello, TLS13EmptyCertificate, TLSInvalidCertificateVerify
+  TLS13ClientHello, TLS13EmptyCertificate, TLSCertificateVerify
+  TLS13ClientHello, TLSFinished, TLSCloseNotify
+  TLSCloseNotify, TLS13ClientHello, NoRenegotiation, TLSFinished, TLS13ClientHello

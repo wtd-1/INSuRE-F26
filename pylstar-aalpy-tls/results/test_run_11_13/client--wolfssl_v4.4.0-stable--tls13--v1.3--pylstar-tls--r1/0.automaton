@@ -1,0 +1,209 @@
+NoRenegotiation TLS13CertificateRequest TLS13CertificateVerify TLS13Certificate_invalid TLS13Certificate_untrusted TLS13Certificate_valid TLS13EmptyCertificate TLS13EncryptedExtensions TLS13InvalidCertificateVerify TLS13SH_WITH_00_RandBytes TLS13ServerHello TLSApplicationData TLSApplicationDataEmpty TLSChangeCipherSpec TLSCloseNotify TLSFinished
+0, 12, NoRenegotiation, FatalAlert(unexpected_message)
+0, 12, TLS13CertificateRequest, FatalAlert(unexpected_message)
+0, 12, TLS13CertificateVerify, FatalAlert(unexpected_message)
+0, 12, TLS13Certificate_invalid, FatalAlert(unexpected_message)
+0, 12, TLS13Certificate_untrusted, FatalAlert(unexpected_message)
+0, 12, TLS13Certificate_valid, FatalAlert(unexpected_message)
+0, 12, TLS13EmptyCertificate, FatalAlert(unexpected_message)
+0, 12, TLS13EncryptedExtensions, FatalAlert(unexpected_message)
+0, 12, TLS13InvalidCertificateVerify, FatalAlert(unexpected_message)
+0, 12, TLS13SH_WITH_00_RandBytes, FatalAlert(protocol_version)
+0, 1, TLS13ServerHello, No RSP
+0, 12, TLSApplicationData, FatalAlert(unexpected_message)
+0, 12, TLSApplicationDataEmpty, FatalAlert(unexpected_message)
+0, 0, TLSChangeCipherSpec, No RSP
+0, 12, TLSCloseNotify, FatalAlert(unexpected_message)
+0, 12, TLSFinished, FatalAlert(unexpected_message)
+1, 1, NoRenegotiation, No RSP
+1, 12, TLS13CertificateRequest, UnknownPacket
+1, 12, TLS13CertificateVerify, UnknownPacket
+1, 12, TLS13Certificate_invalid, UnknownPacket
+1, 12, TLS13Certificate_untrusted, UnknownPacket
+1, 12, TLS13Certificate_valid, UnknownPacket
+1, 12, TLS13EmptyCertificate, UnknownPacket
+1, 2, TLS13EncryptedExtensions, No RSP
+1, 12, TLS13InvalidCertificateVerify, UnknownPacket
+1, 12, TLS13SH_WITH_00_RandBytes, UnknownPacket
+1, 12, TLS13ServerHello, UnknownPacket
+1, 12, TLSApplicationData, UnknownPacket
+1, 12, TLSApplicationDataEmpty, UnknownPacket
+1, 12, TLSChangeCipherSpec, UnknownPacket
+1, 12, TLSCloseNotify, EOF
+1, 12, TLSFinished, UnknownPacket
+2, 2, NoRenegotiation, No RSP
+2, 3, TLS13CertificateRequest, No RSP
+2, 12, TLS13CertificateVerify, FatalAlert(unexpected_message)
+2, 4, TLS13Certificate_invalid, No RSP
+2, 12, TLS13Certificate_untrusted, EOF
+2, 4, TLS13Certificate_valid, No RSP
+2, 5, TLS13EmptyCertificate, No RSP
+2, 12, TLS13EncryptedExtensions, FatalAlert(unexpected_message)
+2, 12, TLS13InvalidCertificateVerify, FatalAlert(unexpected_message)
+2, 12, TLS13SH_WITH_00_RandBytes, FatalAlert(protocol_version)
+2, 12, TLS13ServerHello, FatalAlert(unexpected_message)
+2, 12, TLSApplicationData, FatalAlert(unexpected_message)
+2, 12, TLSApplicationDataEmpty, FatalAlert(unexpected_message)
+2, 12, TLSChangeCipherSpec, FatalAlert(illegal_parameter)
+2, 12, TLSCloseNotify, EOF
+2, 6, TLSFinished, TLSFinished+TLSApplicationData
+3, 3, NoRenegotiation, No RSP
+3, 12, TLS13CertificateRequest, FatalAlert(unexpected_message)
+3, 12, TLS13CertificateVerify, FatalAlert(unexpected_message)
+3, 7, TLS13Certificate_invalid, No RSP
+3, 12, TLS13Certificate_untrusted, EOF
+3, 7, TLS13Certificate_valid, No RSP
+3, 8, TLS13EmptyCertificate, No RSP
+3, 12, TLS13EncryptedExtensions, FatalAlert(unexpected_message)
+3, 12, TLS13InvalidCertificateVerify, FatalAlert(unexpected_message)
+3, 12, TLS13SH_WITH_00_RandBytes, FatalAlert(protocol_version)
+3, 12, TLS13ServerHello, FatalAlert(unexpected_message)
+3, 12, TLSApplicationData, FatalAlert(unexpected_message)
+3, 12, TLSApplicationDataEmpty, FatalAlert(unexpected_message)
+3, 12, TLSChangeCipherSpec, FatalAlert(illegal_parameter)
+3, 12, TLSCloseNotify, EOF
+3, 6, TLSFinished, TLS13Certificate+TLSCertificateVerify+TLSFinished+TLSApplicationData
+4, 4, NoRenegotiation, No RSP
+4, 12, TLS13CertificateRequest, FatalAlert(unexpected_message)
+4, 9, TLS13CertificateVerify, No RSP
+4, 12, TLS13Certificate_invalid, FatalAlert(unexpected_message)
+4, 12, TLS13Certificate_untrusted, FatalAlert(unexpected_message)
+4, 12, TLS13Certificate_valid, FatalAlert(unexpected_message)
+4, 12, TLS13EmptyCertificate, FatalAlert(unexpected_message)
+4, 12, TLS13EncryptedExtensions, FatalAlert(unexpected_message)
+4, 12, TLS13InvalidCertificateVerify, FatalAlert(decrypt_error)
+4, 12, TLS13SH_WITH_00_RandBytes, FatalAlert(protocol_version)
+4, 12, TLS13ServerHello, FatalAlert(unexpected_message)
+4, 12, TLSApplicationData, FatalAlert(unexpected_message)
+4, 12, TLSApplicationDataEmpty, FatalAlert(unexpected_message)
+4, 12, TLSChangeCipherSpec, FatalAlert(illegal_parameter)
+4, 12, TLSCloseNotify, EOF
+4, 6, TLSFinished, TLSFinished+TLSApplicationData
+5, 5, NoRenegotiation, No RSP
+5, 12, TLS13CertificateRequest, FatalAlert(unexpected_message)
+5, 9, TLS13CertificateVerify, No RSP
+5, 12, TLS13Certificate_invalid, FatalAlert(unexpected_message)
+5, 12, TLS13Certificate_untrusted, FatalAlert(unexpected_message)
+5, 12, TLS13Certificate_valid, FatalAlert(unexpected_message)
+5, 12, TLS13EmptyCertificate, FatalAlert(unexpected_message)
+5, 12, TLS13EncryptedExtensions, FatalAlert(unexpected_message)
+5, 9, TLS13InvalidCertificateVerify, No RSP
+5, 12, TLS13SH_WITH_00_RandBytes, FatalAlert(protocol_version)
+5, 12, TLS13ServerHello, FatalAlert(unexpected_message)
+5, 12, TLSApplicationData, FatalAlert(unexpected_message)
+5, 12, TLSApplicationDataEmpty, FatalAlert(unexpected_message)
+5, 12, TLSChangeCipherSpec, FatalAlert(illegal_parameter)
+5, 12, TLSCloseNotify, EOF
+5, 6, TLSFinished, TLSFinished+TLSApplicationData
+6, 6, NoRenegotiation, No RSP
+6, 12, TLS13CertificateRequest, FatalAlert(unexpected_message)
+6, 12, TLS13CertificateVerify, FatalAlert(unexpected_message)
+6, 12, TLS13Certificate_invalid, FatalAlert(unexpected_message)
+6, 12, TLS13Certificate_untrusted, FatalAlert(unexpected_message)
+6, 12, TLS13Certificate_valid, FatalAlert(unexpected_message)
+6, 12, TLS13EmptyCertificate, FatalAlert(unexpected_message)
+6, 12, TLS13EncryptedExtensions, UnknownPacket
+6, 12, TLS13InvalidCertificateVerify, FatalAlert(unexpected_message)
+6, 12, TLS13SH_WITH_00_RandBytes, FatalAlert(protocol_version)
+6, 12, TLS13ServerHello, FatalAlert(unexpected_message)
+6, 10, TLSApplicationData, No RSP
+6, 6, TLSApplicationDataEmpty, No RSP
+6, 12, TLSChangeCipherSpec, FatalAlert(unexpected_message)
+6, 12, TLSCloseNotify, EOF
+6, 12, TLSFinished, FatalAlert(unexpected_message)
+7, 7, NoRenegotiation, No RSP
+7, 12, TLS13CertificateRequest, FatalAlert(unexpected_message)
+7, 11, TLS13CertificateVerify, No RSP
+7, 12, TLS13Certificate_invalid, FatalAlert(unexpected_message)
+7, 12, TLS13Certificate_untrusted, FatalAlert(unexpected_message)
+7, 12, TLS13Certificate_valid, FatalAlert(unexpected_message)
+7, 12, TLS13EmptyCertificate, FatalAlert(unexpected_message)
+7, 12, TLS13EncryptedExtensions, FatalAlert(unexpected_message)
+7, 12, TLS13InvalidCertificateVerify, FatalAlert(decrypt_error)
+7, 12, TLS13SH_WITH_00_RandBytes, FatalAlert(protocol_version)
+7, 12, TLS13ServerHello, FatalAlert(unexpected_message)
+7, 12, TLSApplicationData, FatalAlert(unexpected_message)
+7, 12, TLSApplicationDataEmpty, FatalAlert(unexpected_message)
+7, 12, TLSChangeCipherSpec, FatalAlert(illegal_parameter)
+7, 12, TLSCloseNotify, EOF
+7, 6, TLSFinished, TLS13Certificate+TLSCertificateVerify+TLSFinished+TLSApplicationData
+8, 8, NoRenegotiation, No RSP
+8, 12, TLS13CertificateRequest, FatalAlert(unexpected_message)
+8, 11, TLS13CertificateVerify, No RSP
+8, 12, TLS13Certificate_invalid, FatalAlert(unexpected_message)
+8, 12, TLS13Certificate_untrusted, FatalAlert(unexpected_message)
+8, 12, TLS13Certificate_valid, FatalAlert(unexpected_message)
+8, 12, TLS13EmptyCertificate, FatalAlert(unexpected_message)
+8, 12, TLS13EncryptedExtensions, FatalAlert(unexpected_message)
+8, 11, TLS13InvalidCertificateVerify, No RSP
+8, 12, TLS13SH_WITH_00_RandBytes, FatalAlert(protocol_version)
+8, 12, TLS13ServerHello, FatalAlert(unexpected_message)
+8, 12, TLSApplicationData, FatalAlert(unexpected_message)
+8, 12, TLSApplicationDataEmpty, FatalAlert(unexpected_message)
+8, 12, TLSChangeCipherSpec, FatalAlert(illegal_parameter)
+8, 12, TLSCloseNotify, EOF
+8, 6, TLSFinished, TLS13Certificate+TLSCertificateVerify+TLSFinished+TLSApplicationData
+9, 9, NoRenegotiation, No RSP
+9, 12, TLS13CertificateRequest, FatalAlert(unexpected_message)
+9, 12, TLS13CertificateVerify, FatalAlert(unexpected_message)
+9, 12, TLS13Certificate_invalid, FatalAlert(unexpected_message)
+9, 12, TLS13Certificate_untrusted, FatalAlert(unexpected_message)
+9, 12, TLS13Certificate_valid, FatalAlert(unexpected_message)
+9, 12, TLS13EmptyCertificate, FatalAlert(unexpected_message)
+9, 12, TLS13EncryptedExtensions, FatalAlert(unexpected_message)
+9, 12, TLS13InvalidCertificateVerify, FatalAlert(unexpected_message)
+9, 12, TLS13SH_WITH_00_RandBytes, FatalAlert(protocol_version)
+9, 12, TLS13ServerHello, FatalAlert(unexpected_message)
+9, 12, TLSApplicationData, FatalAlert(unexpected_message)
+9, 12, TLSApplicationDataEmpty, FatalAlert(unexpected_message)
+9, 12, TLSChangeCipherSpec, FatalAlert(illegal_parameter)
+9, 12, TLSCloseNotify, EOF
+9, 6, TLSFinished, TLSFinished+TLSApplicationData
+10, 10, NoRenegotiation, No RSP
+10, 12, TLS13CertificateRequest, FatalAlert(unexpected_message)
+10, 12, TLS13CertificateVerify, FatalAlert(unexpected_message)
+10, 12, TLS13Certificate_invalid, FatalAlert(unexpected_message)
+10, 12, TLS13Certificate_untrusted, FatalAlert(unexpected_message)
+10, 12, TLS13Certificate_valid, FatalAlert(unexpected_message)
+10, 12, TLS13EmptyCertificate, FatalAlert(unexpected_message)
+10, 12, TLS13EncryptedExtensions, UnknownPacket
+10, 12, TLS13InvalidCertificateVerify, FatalAlert(unexpected_message)
+10, 12, TLS13SH_WITH_00_RandBytes, FatalAlert(protocol_version)
+10, 12, TLS13ServerHello, FatalAlert(unexpected_message)
+10, 12, TLSApplicationData, Warning(close_notify)
+10, 10, TLSApplicationDataEmpty, No RSP
+10, 12, TLSChangeCipherSpec, FatalAlert(unexpected_message)
+10, 12, TLSCloseNotify, EOF
+10, 12, TLSFinished, FatalAlert(unexpected_message)
+11, 11, NoRenegotiation, No RSP
+11, 12, TLS13CertificateRequest, FatalAlert(unexpected_message)
+11, 12, TLS13CertificateVerify, FatalAlert(unexpected_message)
+11, 12, TLS13Certificate_invalid, FatalAlert(unexpected_message)
+11, 12, TLS13Certificate_untrusted, FatalAlert(unexpected_message)
+11, 12, TLS13Certificate_valid, FatalAlert(unexpected_message)
+11, 12, TLS13EmptyCertificate, FatalAlert(unexpected_message)
+11, 12, TLS13EncryptedExtensions, FatalAlert(unexpected_message)
+11, 12, TLS13InvalidCertificateVerify, FatalAlert(unexpected_message)
+11, 12, TLS13SH_WITH_00_RandBytes, FatalAlert(protocol_version)
+11, 12, TLS13ServerHello, FatalAlert(unexpected_message)
+11, 12, TLSApplicationData, FatalAlert(unexpected_message)
+11, 12, TLSApplicationDataEmpty, FatalAlert(unexpected_message)
+11, 12, TLSChangeCipherSpec, FatalAlert(illegal_parameter)
+11, 12, TLSCloseNotify, EOF
+11, 6, TLSFinished, TLS13Certificate+TLSCertificateVerify+TLSFinished+TLSApplicationData
+12, 12, NoRenegotiation, EOF
+12, 12, TLS13CertificateRequest, EOF
+12, 12, TLS13CertificateVerify, EOF
+12, 12, TLS13Certificate_invalid, EOF
+12, 12, TLS13Certificate_untrusted, EOF
+12, 12, TLS13Certificate_valid, EOF
+12, 12, TLS13EmptyCertificate, EOF
+12, 12, TLS13EncryptedExtensions, EOF
+12, 12, TLS13InvalidCertificateVerify, EOF
+12, 12, TLS13SH_WITH_00_RandBytes, EOF
+12, 12, TLS13ServerHello, EOF
+12, 12, TLSApplicationData, EOF
+12, 12, TLSApplicationDataEmpty, EOF
+12, 12, TLSChangeCipherSpec, EOF
+12, 12, TLSCloseNotify, EOF
+12, 12, TLSFinished, EOF

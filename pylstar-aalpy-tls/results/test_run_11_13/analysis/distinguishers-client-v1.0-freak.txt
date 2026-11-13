@@ -1,0 +1,3 @@
+3 classes
+1 distinguishing sequences:
+  TLS12ServerHello_RSA_EXPORT, TLS12Certificate_valid, TLS12ServerHelloDone

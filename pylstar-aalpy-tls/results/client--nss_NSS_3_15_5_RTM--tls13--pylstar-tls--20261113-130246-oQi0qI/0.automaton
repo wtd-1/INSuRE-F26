@@ -1,0 +1,17 @@
+NoRenegotiation TLS13CertificateRequest TLS13CertificateVerify TLS13Certificate_invalid TLS13Certificate_untrusted TLS13Certificate_valid TLS13EmptyCertificate TLS13EncryptedExtensions TLS13InvalidCertificateVerify TLS13SH_WITH_00_RandBytes TLS13ServerHello TLSApplicationData TLSApplicationDataEmpty TLSChangeCipherSpec TLSCloseNotify TLSFinished
+0, 0, NoRenegotiation, NO_CONNECTION
+0, 0, TLS13CertificateRequest, NO_CONNECTION
+0, 0, TLS13CertificateVerify, NO_CONNECTION
+0, 0, TLS13Certificate_invalid, NO_CONNECTION
+0, 0, TLS13Certificate_untrusted, NO_CONNECTION
+0, 0, TLS13Certificate_valid, NO_CONNECTION
+0, 0, TLS13EmptyCertificate, NO_CONNECTION
+0, 0, TLS13EncryptedExtensions, NO_CONNECTION
+0, 0, TLS13InvalidCertificateVerify, NO_CONNECTION
+0, 0, TLS13SH_WITH_00_RandBytes, NO_CONNECTION
+0, 0, TLS13ServerHello, NO_CONNECTION
+0, 0, TLSApplicationData, NO_CONNECTION
+0, 0, TLSApplicationDataEmpty, NO_CONNECTION
+0, 0, TLSChangeCipherSpec, NO_CONNECTION
+0, 0, TLSCloseNotify, NO_CONNECTION
+0, 0, TLSFinished, NO_CONNECTION

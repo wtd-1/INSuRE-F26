@@ -1,0 +1,17 @@
+class,states,model_hash,n_stacks,stacks,inferers,security_results
+1,8,d78b5471a9419a01b05a5d040cd2396b,1,erlang_OTP-24.2.1,pylstar-tls,"Pre-['CH', 'CH_rand00'] loops found"
+2,9,d76af120e43e3525e436f6a4efabfaf4,1,erlang_OTP-24.2.1,pylstar-tls-lsharp,"Pre-['CH', 'CH_rand00'] loops found"
+3,4,1d9b4e9c19420ae6b7ea087e5bb67cac,1,gnutls_3.7.2,pylstar-tls pylstar-tls-lsharp,
+4,4,f1688b79a60fe25fd1306f225bbe0c98,1,nss_NSS_3_39_RTM,pylstar-tls pylstar-tls-lsharp,
+5,4,c7cb54ee9a861b9518eef5cd243fe5f3,1,nss_NSS_3_78_RTM,pylstar-tls pylstar-tls-lsharp,
+6,4,8069cf51dd27e76eda4ef8cd1ad88014,1,openssl_OpenSSL_1_1_1k,pylstar-tls pylstar-tls-lsharp,
+7,4,7e8e2aebd2d131951f4b5ff9e77523b4,1,openssl_openssl-3.0.2,pylstar-tls pylstar-tls-lsharp,
+8,7,8b9e6449da95cec8fa315f5434839f96,1,wolfssl_v4.0.0-stable,pylstar-tls,
+9,6,7ded2f2c1a779d0c1d2cadd060560117,1,wolfssl_v4.0.0-stable,pylstar-tls-lsharp,
+10,7,c95f2fd8c5565cf77f4385aa80fa0205,2,wolfssl_v4.4.0-stable wolfssl_v4.6.0-stable,pylstar-tls,
+11,6,5dac04eb0062ae14a9873ddd09e638d2,2,wolfssl_v4.4.0-stable wolfssl_v4.6.0-stable,pylstar-tls-lsharp,
+12,7,a3a1c7751d2aa1272471595962c8584c,1,wolfssl_v4.8.1-stable,pylstar-tls,
+13,6,5e1bb5c2e7448e11b84da6ac1c56980b,1,wolfssl_v4.8.1-stable,pylstar-tls-lsharp,
+14,7,212be19578cd73dcbe27a2f45950719b,1,wolfssl_v5.1.1-stable,pylstar-tls,
+15,6,cdf1aa74af8796ad58a2e8368b77416d,1,wolfssl_v5.1.1-stable,pylstar-tls-lsharp,
+16,6,074d81f873b4b86a17fc75166e79630e,1,wolfssl_v5.2.0-stable,pylstar-tls pylstar-tls-lsharp,

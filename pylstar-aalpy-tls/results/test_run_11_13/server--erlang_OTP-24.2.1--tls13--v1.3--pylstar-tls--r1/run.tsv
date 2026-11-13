@@ -1,0 +1,19 @@
+campaign	test_run_11_13
+kind	server
+image	tls-test-bed/erlang:OTP-24.2.1
+tls_version	1.3
+scenario	tls13
+extra_args	
+eq_method	RW:10000:0.1
+inferer	pylstar-tls
+repeat	1
+jobs	6
+start_epoch	1794595727.617320169
+end_epoch	1794604343.146518748
+wall_seconds	8615.5
+exit_code	0
+status	ok
+loadavg_start	9.65 14.31 7.27
+loadavg_end	0.00 0.06 0.33
+host	aendri
+command	INFERER_IMAGE=tls-test-bed/pylstar-tls ./infer-server.sh tls-test-bed/erlang:OTP-24.2.1 1.3 tls13 -E RW:10000:0.1
