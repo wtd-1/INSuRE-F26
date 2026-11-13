@@ -1,0 +1,102 @@
+# One experiment per result of the paper (Rasoamanana, Levillain, Debar, ESORICS 2022).
+# "expect:" gives what the paper reports; docs/reproducing-the-paper.md explains how to check it.
+#
+#   ./run-experiments.sh --campaign findings --build --jobs 4 experiments/paper-findings.tsv
+#
+# kind  image  tls_version  scenario  [extra pylstar-tls arguments]
+
+# --- E3 (Sec. 7.1, Fig. 4): server authentication bypasses in wolfSSL TLS 1.3 clients ----------
+# expect: v4.4.0 accepts SH, EE, Cert, Fin (no CertificateVerify) -> Fin+AppData (CVE-2020-24613)
+client	wolfssl:v4.4.0-stable	1.3	tls13
+# expect: v4.5.0 no longer accepts a missing CV, but EmptyCert + CV signed by any key works (CVE-2021-3336)
+client	wolfssl:v4.5.0-stable	1.3	tls13
+client	wolfssl:v4.6.0-stable	1.3	tls13
+# expect: v5.1.0 EmptyCert + invalid CV (unknown signature algorithm) -> AppData (CVE-2022-25638)
+client	wolfssl:v5.1.0-stable	1.3	tls13
+# expect: v5.2.0 fixed: no path to AppData without Cert + valid CV
+client	wolfssl:v5.2.0-stable	1.3	tls13
+# Same with curl linked against wolfSSL (the paper checked both to confirm the bypasses)
+client	curl-wolfssl:v4.4.0-stable	1.3	tls13
+client	curl-wolfssl:v4.6.0-stable	1.3	tls13
+client	curl-wolfssl:v5.1.0-stable	1.3	tls13
+client	curl-wolfssl:v5.1.1-stable	1.3	tls13
+
+# --- E4 (Sec. 7.1, Fig. 5): client authentication bypass in wolfSSL TLS 1.3 servers -------------
+# expect: CH, [Cert,] Fin (no CertificateVerify) -> AppData up to 5.1.x (CVE-2022-25640); fixed in 5.2.0
+srv-auth	wolfssl:v4.4.0-stable	1.3	tls13
+srv-auth	wolfssl:v5.1.0-stable	1.3	tls13
+srv-auth	wolfssl:v5.2.0-stable	1.3	tls13
+
+# --- E5 (Sec. 7.1): OpenSSL s_client "bypasses" are false positives ------------------------------
+# expect: s_client paths accept any certificate; they disappear with curl+OpenSSL
+client	openssl:OpenSSL_1_1_1k	1.3	tls13
+client	curl-openssl:OpenSSL_1_1_1k	1.3	tls13
+client	openssl:openssl-3.0.2	1.3	tls13
+client	curl-openssl:openssl-3.0.2	1.3	tls13
+
+# --- E6 (Sec. 7.2, Table 2, App. B.1): loops before encryption (DoS) ----------------------------
+# expect: Erlang 24 server loops on NoRenegotiation / ApplicationData (TLS 1.0/1.2)
+server	erlang:OTP-24.2.1	1.2	tls12
+server	erlang:OTP-24.2.1	1.0	tls10
+# expect: fizz 2021 TLS 1.3 clients loop on ChangeCipherSpec
+client	fizz:v2021.06.14.00	1.3	tls13
+client	fizz:v2021.02.01.00	1.3	tls13
+# expect: NSS 3.15-3.78 TLS 1.0/1.2 servers loop on the NoRenegotiation alert
+server	nss:NSS_3_15_5_RTM	1.2	tls12
+server	nss:NSS_3_78_RTM	1.2	tls12
+# expect: OpenSSL < 1.1.0 TLS 1.0/1.2 servers loop on empty ApplicationData; 1.1.1k does not
+server	openssl:OpenSSL_1_0_2u	1.2	tls12
+server	openssl:OpenSSL_1_1_1k	1.2	tls12
+# expect: wolfSSL <= 4.4.0 TLS 1.2 server DoS (CVE-2020-12457); fixed in 4.5.0
+server	wolfssl:v4.4.0-stable	1.2	tls12
+server	wolfssl:v4.5.0-stable	1.2	tls12
+# expect: wolfSSL TLS 1.2 server NoRenegotiation loop on the initial state = FALSE POSITIVE
+#         (the server really closes after 4 warnings; confirm with replay mode)
+server	wolfssl:v5.2.0-stable	1.2	tls12
+# (MatrixSSL 4.0-4.3, CVE-2022-25639, cannot be reproduced: the MatrixSSL 4.x sources are gone)
+
+# --- E7 (Sec. 7.3): unsolicited client authentication ---------------------------------------------
+# expect: several wolfSSL servers accept Certificate/CertificateVerify that they never requested
+server	wolfssl:v4.4.0-stable	1.3	tls13
+server	wolfssl:v5.2.0-stable	1.3	tls13
+
+# --- E8 (App. B.2): EarlyCCS (CVE-2014-0224) and FREAK (CVE-2015-0204) in OpenSSL ----------------
+# expect: unexpected early ChangeCipherSpec transitions up to 0.9.8za / 1.0.0l / 1.0.1h, gone after
+server	openssl:OpenSSL_0_9_8za	1.0	tls10
+server	openssl:OpenSSL_0_9_8zb	1.0	tls10
+server	openssl:OpenSSL_1_0_0l	1.0	tls10
+server	openssl:OpenSSL_1_0_0m	1.0	tls10
+server	openssl:OpenSSL_1_0_1h	1.2	tls12
+server	openssl:OpenSSL_1_0_1i	1.2	tls12
+# expect: clients accept an RSA EXPORT ServerHello up to 0.9.8zc / 1.0.0o / 1.0.1j, not after
+client	openssl:OpenSSL_0_9_8zc	1.0	freak
+client	openssl:OpenSSL_0_9_8zd	1.0	freak
+client	openssl:OpenSSL_1_0_0o	1.0	freak
+client	openssl:OpenSSL_1_0_0p	1.0	freak
+client	openssl:OpenSSL_1_0_1j	1.0	freak
+client	openssl:OpenSSL_1_0_1k	1.0	freak
+
+# --- E9 (App. B.3): Bleichenbacher padding oracles (bb-oracle scenario) ---------------------------
+# expect: well-formed and malformed ClientKeyExchange distinguishable (ROBOT) in wolfSSL <= 3.12.2
+server	wolfssl:v3.12.2-stable	1.0	bb-oracle
+server	wolfssl:v3.13.0-stable	1.0	bb-oracle
+# expect: Erlang 20.0 vulnerable (CVE-2017-1000385)
+server	erlang:OTP-20.0	1.0	bb-oracle
+# expect: MatrixSSL <= 3.8.2 vulnerable (CVE-2016-6883)
+server	matrixssl:3.7.2	1.0	bb-oracle
+
+# --- E10 (Sec. 8.1, Table 3): TLS 1.3 server fingerprinting, one version per class ---------------
+# expect (states): Erlang 24 = 9, GnuTLS = 4, NSS 3.39-3.40 = 4, NSS 3.41-3.78 = 4, OpenSSL 1.1.1 = 4,
+#   OpenSSL 3.0 = 4, wolfSSL 3.15.5-4.0.0 / 4.1.0-4.6.0 / 4.7.0-4.8.1 / 5.0.0-5.1.1 = 7, wolfSSL 5.2.0 = 6
+#   (13 classes in the paper, 11 here without MatrixSSL 4.x; 8 sequences separate them)
+server	erlang:OTP-24.2.1	1.3	tls13
+server	gnutls:3.7.2	1.3	tls13
+server	nss:NSS_3_39_RTM	1.3	tls13
+server	nss:NSS_3_78_RTM	1.3	tls13
+server	openssl:OpenSSL_1_1_1k	1.3	tls13
+server	openssl:openssl-3.0.2	1.3	tls13
+server	wolfssl:v4.0.0-stable	1.3	tls13
+server	wolfssl:v4.6.0-stable	1.3	tls13
+server	wolfssl:v4.8.1-stable	1.3	tls13
+server	wolfssl:v5.1.1-stable	1.3	tls13
+server	wolfssl:v5.2.0-stable	1.3	tls13

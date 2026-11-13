@@ -1,0 +1,32 @@
+From 8663f57cf7d3a638d2c140e832b11b5b3f185b6c Mon Sep 17 00:00:00 2001
+From: Olivier Levillain <olivier.levillain@telecom-sudparis.eu>
+Date: Tue, 27 Aug 2019 16:28:24 +0000
+Subject: [PATCH] Explicit FFT oracle.
+
+---
+ library/ssl_srv.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/library/ssl_srv.c b/library/ssl_srv.c
+index bc77f8020..e6babad7a 100644
+--- a/library/ssl_srv.c
++++ b/library/ssl_srv.c
+@@ -3573,6 +3573,15 @@ static int ssl_parse_encrypted_pms( mbedtls_ssl_context *ssl,
+                                      &peer_pmslen,
+                                      sizeof( peer_pms ) );
+ 
++    // DON'T DO THIS AT HOME
++    /* Stage-BB Reintroduce a Bleichenbacher oracle */
++    if (ret == MBEDTLS_ERR_RSA_INVALID_PADDING) {
++        mbedtls_ssl_send_alert_message( ssl, MBEDTLS_SSL_ALERT_LEVEL_FATAL,
++                                       MBEDTLS_SSL_ALERT_MSG_DECRYPT_ERROR );
++        return (MBEDTLS_ERR_SSL_BAD_HS_CLIENT_KEY_EXCHANGE);
++    }
++
++
+ #if defined(MBEDTLS_SSL_ASYNC_PRIVATE)
+     if ( ret == MBEDTLS_ERR_SSL_ASYNC_IN_PROGRESS )
+         return( ret );
+-- 
+2.20.1
+

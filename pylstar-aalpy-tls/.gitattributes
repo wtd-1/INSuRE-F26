@@ -1,0 +1,4 @@
+# Everything here runs on Linux (inside Docker or WSL): always check out with
+# LF line endings, regardless of core.autocrlf. CRLF breaks the shell scripts
+# ("/bin/bash^M: bad interpreter").
+* text=auto eol=lf
