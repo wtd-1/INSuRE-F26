@@ -2,7 +2,7 @@
 
 % Mallory intercepts a message encrypted with Alice's key.
 
-intruder_initial(
+intercepted(
     mallory,
     enc(msg(secret, alice), pubk(alice))
 ).
