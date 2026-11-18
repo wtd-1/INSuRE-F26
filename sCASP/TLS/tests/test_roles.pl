@@ -7,10 +7,10 @@ test_session_keys :-
         cr, sr, client_x, server_y,
         keys(CHK, SHK, CAK, SAK)),
 
-    CHK = hash(_, client_hs_traffic, cr, sr),
-    SHK = hash(_, server_hs_traffic, cr, sr),
-    CAK = hash(client_ap_traffic, cr, sr, _),
-    SAK = hash(server_ap_traffic, cr, sr, _).
+    CHK = hash(_, 'c hs traffic', cr, sr),
+    SHK = hash(_, 's hs traffic', cr, sr),
+    CAK = hash('c ap traffic', cr, sr, _),
+    SAK = hash('s ap traffic', cr, sr, _).
 
 % Test 2: Complete honest exchange.
 test_honest_exchange :-
@@ -34,8 +34,8 @@ test_distinct_traffic_keys :-
         cr, sr, client_x, server_y,
         keys(CHK, SHK, CAK, SAK)),
 
-    CAK = hash(client_ap_traffic, cr, sr, _),
-    SAK = hash(server_ap_traffic, cr, sr, _),
+    CAK = hash('c ap traffic', cr, sr, _),
+    SAK = hash('s ap traffic', cr, sr, _),
     CAK \= SAK,
     CHK \= SHK.
 

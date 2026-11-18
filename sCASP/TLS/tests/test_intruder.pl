@@ -85,7 +85,7 @@ network_message(
 network_message(
     enc(dh_protected_secret,
         hash(dh_secret(leaked_x, leak_y),
-             client_hs_traffic, leak_cr, leak_sr))
+             'c hs traffic', leak_cr, leak_sr))
 ).
 
 % --------------------------------------------------

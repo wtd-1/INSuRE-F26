@@ -36,19 +36,19 @@ master_secret(HandshakeSecret,
 
 % Client handshake traffic key
 client_handshake_key(CR, SR, HS,
-    hash(HS, client_hs_traffic, CR, SR)).
+    hash(HS, 'c hs traffic', CR, SR)).
 
 % Server handshake traffic key
 server_handshake_key(CR, SR, HS,
-    hash(HS, server_hs_traffic, CR, SR)).
+    hash(HS, 's hs traffic', CR, SR)).
 
 % Client application traffic key
 client_application_key(CR, SR, MS,
-    hash(client_ap_traffic, CR, SR, MS)).
+    hash('c ap traffic', CR, SR, MS)).
 
 % Server application traffic key
 server_application_key(CR, SR, MS,
-    hash(server_ap_traffic, CR, SR, MS)).
+    hash('s ap traffic', CR, SR, MS)).
 
 % Finished key
 finished_key(HandshakeKey,

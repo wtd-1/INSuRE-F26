@@ -41,12 +41,28 @@ honest_session_keys(Keys) :-
 % 2. Network: every message of the honest exchange
 % --------------------------------------------------
 
-network_message(M) :- honest_exchange(exchange(M, _, _, _, _, _)).
-network_message(M) :- honest_exchange(exchange(_, M, _, _, _, _)).
-network_message(M) :- honest_exchange(exchange(_, _, M, _, _, _)).
-network_message(M) :- honest_exchange(exchange(_, _, _, M, _, _)).
-network_message(M) :- honest_exchange(exchange(_, _, _, _, M, _)).
-network_message(M) :- honest_exchange(exchange(_, _, _, _, _, M)).
+% CPSA's TLS macro has five wire events in this abstraction:
+%   1. ClientHello
+%   2. ServerHello || encrypted server flight
+%   3. encrypted client Finished
+%   4. encrypted application request
+%   5. encrypted application response
+% Keep ServerHello and the encrypted flight in one cat/2 term;
+% exposing them as separate network messages changes the trace.
+network_message(ClientHello) :-
+    honest_exchange(exchange(ClientHello, _, _, _, _, _)).
+
+network_message(cat(ServerHello, EncryptedServerFlight)) :-
+    honest_exchange(exchange(_, ServerHello, EncryptedServerFlight, _, _, _)).
+
+network_message(EncryptedClientFinished) :-
+    honest_exchange(exchange(_, _, _, EncryptedClientFinished, _, _)).
+
+network_message(EncryptedRequest) :-
+    honest_exchange(exchange(_, _, _, _, EncryptedRequest, _)).
+
+network_message(EncryptedResponse) :-
+    honest_exchange(exchange(_, _, _, _, _, EncryptedResponse)).
 
 % --------------------------------------------------
 % 3. Compromise

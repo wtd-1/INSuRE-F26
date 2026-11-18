@@ -20,22 +20,22 @@ test_master_secret :-
 % Test 4: Client handshake traffic key
 test_client_handshake_key :-
     client_handshake_key(cr, sr, hs_secret, Result),
-    Result = hash(hs_secret, client_hs_traffic, cr, sr).
+    Result = hash(hs_secret, 'c hs traffic', cr, sr).
 
 % Test 5: Server handshake traffic key
 test_server_handshake_key :-
     server_handshake_key(cr, sr, hs_secret, Result),
-    Result = hash(hs_secret, server_hs_traffic, cr, sr).
+    Result = hash(hs_secret, 's hs traffic', cr, sr).
 
 % Test 6: Client application traffic key
 test_client_application_key :-
     client_application_key(cr, sr, ms_secret, Result),
-    Result = hash(client_ap_traffic, cr, sr, ms_secret).
+    Result = hash('c ap traffic', cr, sr, ms_secret).
 
 % Test 7: Server application traffic key
 test_server_application_key :-
     server_application_key(cr, sr, ms_secret, Result),
-    Result = hash(server_ap_traffic, cr, sr, ms_secret).
+    Result = hash('s ap traffic', cr, sr, ms_secret).
 
 % Test 8: Finished key
 test_finished_key :-

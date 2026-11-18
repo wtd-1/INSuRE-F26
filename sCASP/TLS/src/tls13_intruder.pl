@@ -57,10 +57,10 @@ initial_knowledge(mallory, ca).
 % Key-schedule labels are public constants
 % (quoted strings in the CPSA macros).
 initial_knowledge(mallory, derived).
-initial_knowledge(mallory, client_hs_traffic).
-initial_knowledge(mallory, server_hs_traffic).
-initial_knowledge(mallory, client_ap_traffic).
-initial_knowledge(mallory, server_ap_traffic).
+initial_knowledge(mallory, 'c hs traffic').
+initial_knowledge(mallory, 's hs traffic').
+initial_knowledge(mallory, 'c ap traffic').
+initial_knowledge(mallory, 's ap traffic').
 initial_knowledge(mallory, finished).
 
 % --------------------------------------------------
