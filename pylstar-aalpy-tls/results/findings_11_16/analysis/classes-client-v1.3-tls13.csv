@@ -1,0 +1,11 @@
+class,states,model_hash,n_stacks,stacks,inferers,security_results
+1,16,9739ec139dac860fe9fc271e351eb515,1,curl-openssl_OpenSSL_1_1_1k,pylstar-tls,
+2,15,3c310145ac2aa3244dc882c84d17aa58,1,curl-openssl_OpenSSL_1_1_1k,pylstar-tls-lsharp,
+3,12,08b1603dbaae26179e381d474b7311d9,1,curl-wolfssl_v4.4.0-stable,pylstar-tls pylstar-tls-lsharp,"Pre-['SH', 'SH_rand00'] loops found; Possible authentication bypass"
+4,13,9e4e85d9503af6f0a55cf0d2a0ca89cc,1,curl-wolfssl_v4.6.0-stable,pylstar-tls pylstar-tls-lsharp,Possible authentication bypass
+5,13,7719b7fa697f8794c19c6c928e4dc1ab,2,curl-wolfssl_v5.1.0-stable curl-wolfssl_v5.1.1-stable,pylstar-tls pylstar-tls-lsharp,Possible authentication bypass
+6,10,e23a845e777c6ec0cec0db8106bafee6,2,fizz_v2021.02.01.00 fizz_v2021.06.14.00,pylstar-tls pylstar-tls-lsharp,"Pre-['SH', 'SH_rand00'] loops found"
+7,9,5921906f49578d2e789dea877affc6f7,2,openssl_OpenSSL_1_1_1k openssl_openssl-3.0.2,pylstar-tls pylstar-tls-lsharp,
+8,13,7d4c99117a0b5df1c6916dbacd65e914,1,wolfssl_v4.4.0-stable,pylstar-tls,"Pre-['SH', 'SH_rand00'] loops found; Possible authentication bypass"
+9,12,384c8d7c370093e634f0730c86959e48,1,wolfssl_v4.4.0-stable,pylstar-tls-lsharp,"Pre-['SH', 'SH_rand00'] loops found; Possible authentication bypass"
+10,1,c0ad5cd3f67bbc82a13f24a30cf09254,4,wolfssl_v4.5.0-stable wolfssl_v4.6.0-stable wolfssl_v5.1.0-stable wolfssl_v5.2.0-stable,pylstar-tls pylstar-tls-lsharp,

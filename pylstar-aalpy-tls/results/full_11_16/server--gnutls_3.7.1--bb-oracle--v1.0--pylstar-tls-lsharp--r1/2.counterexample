@@ -1,0 +1,7 @@
+Found a counterexample: OutputQuery(I = [Letter('TLSHardCodedFinished'), Letter('TLS12CKE_key_null'), Letter('TLS12CKE_key_null'), Letter('NoRenegotiation'), Letter('TLSCloseNotify'), Letter('NoRenegotiation'), Letter('TLS12CKE_wrong_tls_version')], O = [Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('FatalAlert(unexpected_message)'), Letter('EOF'), Letter('EOF')])
+  time spent so far: 59.97075629234314
+  n_states: 6
+  n_queries=146
+  n_submitted_queries=141
+  n_letters=705
+  n_submitted_letters=686

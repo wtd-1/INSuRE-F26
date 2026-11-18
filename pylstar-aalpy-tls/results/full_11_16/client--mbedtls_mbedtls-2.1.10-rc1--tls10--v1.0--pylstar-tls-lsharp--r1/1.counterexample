@@ -1,0 +1,7 @@
+Found a counterexample: OutputQuery(I = [Letter('TLSCloseNotify'), Letter('TLSApplicationData'), Letter('TLS12CertificateRequest'), Letter('TLS12ServerHello'), Letter('TLSCloseNotify'), Letter('TLSCloseNotify'), Letter('TLS12Certificate_untrusted'), Letter('TLSFinished'), Letter('TLSFinished'), Letter('TLS12ServerHello'), Letter('TLS12ServerKeyExchange')], O = [Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF')])
+  time spent so far: 39.44715094566345
+  n_states: 8
+  n_queries=626
+  n_submitted_queries=625
+  n_letters=3460
+  n_submitted_letters=3452

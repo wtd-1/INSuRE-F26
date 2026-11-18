@@ -1,0 +1,192 @@
+bf1827449c44440fe4d2c4e8da8de9e826ee9027409d89d746332349a2b16282
+/root/src/scapy/scapy/layers/tls/crypto/cipher_block.py:156: CryptographyDeprecationWarning: IDEA has been deprecated
+  pc_cls = algorithms.IDEA
+/root/src/scapy/scapy/layers/tls/crypto/cipher_block.py:162: CryptographyDeprecationWarning: SEED has been deprecated
+  pc_cls = algorithms.SEED
+/root/src/scapy/scapy/layers/ipsec.py:471: CryptographyDeprecationWarning: Blowfish has been deprecated
+  cipher=algorithms.Blowfish,
+/root/src/scapy/scapy/layers/ipsec.py:485: CryptographyDeprecationWarning: CAST5 has been deprecated
+  cipher=algorithms.CAST5,
+learner: L# (AALpy 2.0.0)
+input_letters ['TLS12ClientHelloRSA', 'TLS12ClientHelloDH', 'TLS12CH_WITH_00_RandBytes', 'TLS12ClientKeyExchange', 'TLSChangeCipherSpec', 'TLSFinished', 'TLSApplicationDataEmpty', 'TLSApplicationData', 'TLS12CertificateRequest', 'TLS12EmptyCertificate', 'TLSCloseNotify', 'NoRenegotiation', 'TLSCertificateVerify', 'TLS12Certificate_valid', 'TLS12Certificate_untrusted']
+eqtests: RandomWalk(10000, 0.1)
+timeout: 1.0
+7749: [INFO] StoreHypotheses:find_counterexample: Storing hyptohesis #0 in /results/0.automaton
+7749: [INFO] StoreHypotheses:write_stats:   time spent so far: 7.137178182601929
+7749: [INFO] StoreHypotheses:write_stats:   n_states: 1
+7749: [INFO] StoreHypotheses:write_stats:   n_queries=15
+7749: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=15
+7749: [INFO] StoreHypotheses:write_stats:   n_letters=15
+7749: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=15
+7767: [INFO] HappyPathFirst:find_counterexample: Starting the HappyPath Algorithm to search for a counter-example
+7810: [INFO] HappyPathFirst:__check_equivalence: Found a counter-example : input: '[Letter('TLS12ClientHelloDH'), Letter('TLS12Certificate_untrusted'), Letter('TLS12ClientKeyExchange'), Letter('TLSCertificateVerify'), Letter('TLSChangeCipherSpec'), Letter('TLSFinished'), Letter('TLSApplicationData')]', expected: '[Letter('FatalAlert(handshake_failure)'), Letter('FatalAlert(unexpected_message)'), Letter('FatalAlert(unexpected_message)'), Letter('EOF'), Letter('No RSP'), Letter('EOF'), Letter('No RSP')]', observed: '[Letter('FatalAlert(handshake_failure)'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF')]'
+7810: [INFO] StoreHypotheses:write_stats: Found a counterexample: OutputQuery(I = [Letter('TLS12ClientHelloDH'), Letter('TLS12Certificate_untrusted'), Letter('TLS12ClientKeyExchange'), Letter('TLSCertificateVerify'), Letter('TLSChangeCipherSpec'), Letter('TLSFinished'), Letter('TLSApplicationData')], O = [Letter('FatalAlert(handshake_failure)'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF')])
+7810: [INFO] StoreHypotheses:write_stats:   time spent so far: 7.198024272918701
+7810: [INFO] StoreHypotheses:write_stats:   n_states: 1
+7810: [INFO] StoreHypotheses:write_stats:   n_queries=16
+7810: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=16
+7810: [INFO] StoreHypotheses:write_stats:   n_letters=22
+7810: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=22
+48187: [INFO] StoreHypotheses:find_counterexample: Storing hyptohesis #1 in /results/1.automaton
+48187: [INFO] StoreHypotheses:write_stats:   time spent so far: 47.575429916381836
+48187: [INFO] StoreHypotheses:write_stats:   n_states: 4
+48187: [INFO] StoreHypotheses:write_stats:   n_queries=75
+48187: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=74
+48187: [INFO] StoreHypotheses:write_stats:   n_letters=189
+48187: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=182
+48192: [INFO] HappyPathFirst:find_counterexample: Starting the HappyPath Algorithm to search for a counter-example
+49309: [INFO] HappyPathFirst:__check_equivalence: Found a counter-example : input: '[Letter('TLS12ClientHelloRSA'), Letter('TLS12Certificate_valid'), Letter('TLS12ClientKeyExchange'), Letter('TLSCertificateVerify'), Letter('TLSChangeCipherSpec'), Letter('TLSFinished'), Letter('TLSApplicationData')]', expected: '[Letter('TLSServerHello+TLSCertificate+TLSCertificateRequest+TLSServerHelloDone'), Letter('No RSP'), Letter('FatalAlert(unexpected_message)'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF')]', observed: '[Letter('TLSServerHello+TLSCertificate+TLSCertificateRequest+TLSServerHelloDone'), Letter('No RSP'), Letter('No RSP'), Letter('FatalAlert(decrypt_error)'), Letter('EOF'), Letter('EOF'), Letter('EOF')]'
+49309: [INFO] StoreHypotheses:write_stats: Found a counterexample: OutputQuery(I = [Letter('TLS12ClientHelloRSA'), Letter('TLS12Certificate_valid'), Letter('TLS12ClientKeyExchange'), Letter('TLSCertificateVerify'), Letter('TLSChangeCipherSpec'), Letter('TLSFinished'), Letter('TLSApplicationData')], O = [Letter('TLSServerHello+TLSCertificate+TLSCertificateRequest+TLSServerHelloDone'), Letter('No RSP'), Letter('No RSP'), Letter('FatalAlert(decrypt_error)'), Letter('EOF'), Letter('EOF'), Letter('EOF')])
+49309: [INFO] StoreHypotheses:write_stats:   time spent so far: 48.69688439369202
+49309: [INFO] StoreHypotheses:write_stats:   n_states: 4
+49309: [INFO] StoreHypotheses:write_stats:   n_queries=78
+49309: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=77
+49309: [INFO] StoreHypotheses:write_stats:   n_letters=210
+49309: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=203
+61135: [INFO] StoreHypotheses:find_counterexample: Storing hyptohesis #2 in /results/2.automaton
+61135: [INFO] StoreHypotheses:write_stats:   time spent so far: 60.52336144447327
+61135: [INFO] StoreHypotheses:write_stats:   n_states: 6
+61135: [INFO] StoreHypotheses:write_stats:   n_queries=121
+61135: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=119
+61135: [INFO] StoreHypotheses:write_stats:   n_letters=411
+61135: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=397
+61140: [INFO] HappyPathFirst:find_counterexample: Starting the HappyPath Algorithm to search for a counter-example
+61167: [INFO] RandomWalkMethod:find_counterexample: Starting the RandomWalk Algorithm to search for a counter-example
+681406: [INFO] RandomWalkMethod:__check_equivalence: Found a counter-example : input: '[Letter('TLSCloseNotify'), Letter('TLSApplicationData'), Letter('TLSChangeCipherSpec'), Letter('TLS12CH_WITH_00_RandBytes'), Letter('TLSCertificateVerify'), Letter('TLS12Certificate_untrusted'), Letter('TLS12Certificate_valid'), Letter('TLS12Certificate_untrusted'), Letter('TLSCloseNotify'), Letter('NoRenegotiation'), Letter('TLSCertificateVerify'), Letter('TLS12Certificate_valid'), Letter('TLSChangeCipherSpec'), Letter('TLS12CH_WITH_00_RandBytes'), Letter('TLSFinished'), Letter('TLS12Certificate_untrusted'), Letter('TLS12ClientHelloRSA'), Letter('TLSCloseNotify')]', expected: '[Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP')]', observed: '[Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('EOF'), Letter('EOF'), Letter('EOF')]'
+681406: [INFO] StoreHypotheses:write_stats: Found a counterexample: OutputQuery(I = [Letter('TLSCloseNotify'), Letter('TLSApplicationData'), Letter('TLSChangeCipherSpec'), Letter('TLS12CH_WITH_00_RandBytes'), Letter('TLSCertificateVerify'), Letter('TLS12Certificate_untrusted'), Letter('TLS12Certificate_valid'), Letter('TLS12Certificate_untrusted'), Letter('TLSCloseNotify'), Letter('NoRenegotiation'), Letter('TLSCertificateVerify'), Letter('TLS12Certificate_valid'), Letter('TLSChangeCipherSpec'), Letter('TLS12CH_WITH_00_RandBytes'), Letter('TLSFinished'), Letter('TLS12Certificate_untrusted'), Letter('TLS12ClientHelloRSA'), Letter('TLSCloseNotify')], O = [Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('EOF'), Letter('EOF'), Letter('EOF')])
+681406: [INFO] StoreHypotheses:write_stats:   time spent so far: 680.7944219112396
+681406: [INFO] StoreHypotheses:write_stats:   n_states: 6
+681406: [INFO] StoreHypotheses:write_stats:   n_queries=324
+681407: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=308
+681407: [INFO] StoreHypotheses:write_stats:   n_letters=2591
+681407: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=2549
+1320564: [INFO] StoreHypotheses:find_counterexample: Storing hyptohesis #3 in /results/3.automaton
+1320564: [INFO] StoreHypotheses:write_stats:   time spent so far: 1319.9524450302124
+1320564: [INFO] StoreHypotheses:write_stats:   n_states: 11
+1320564: [INFO] StoreHypotheses:write_stats:   n_queries=589
+1320565: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=566
+1320565: [INFO] StoreHypotheses:write_stats:   n_letters=4524
+1320565: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=4449
+1320570: [INFO] HappyPathFirst:find_counterexample: Starting the HappyPath Algorithm to search for a counter-example
+1320570: [INFO] RandomWalkMethod:find_counterexample: Starting the RandomWalk Algorithm to search for a counter-example
+1724124: [INFO] RandomWalkMethod:__check_equivalence: Found a counter-example : input: '[Letter('TLSCloseNotify'), Letter('TLS12CH_WITH_00_RandBytes'), Letter('TLSFinished'), Letter('TLS12CH_WITH_00_RandBytes'), Letter('TLS12ClientKeyExchange'), Letter('TLSCloseNotify'), Letter('TLS12Certificate_valid'), Letter('TLSCertificateVerify'), Letter('TLSApplicationDataEmpty'), Letter('TLSApplicationDataEmpty'), Letter('TLS12Certificate_untrusted'), Letter('TLSApplicationData'), Letter('TLS12Certificate_untrusted'), Letter('TLSChangeCipherSpec'), Letter('TLS12Certificate_valid'), Letter('TLSChangeCipherSpec'), Letter('TLS12Certificate_valid'), Letter('TLS12Certificate_valid'), Letter('TLS12CH_WITH_00_RandBytes')]', expected: '[Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('EOF'), Letter('EOF')]', observed: '[Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('EOF'), Letter('EOF'), Letter('EOF')]'
+1724124: [INFO] StoreHypotheses:write_stats: Found a counterexample: OutputQuery(I = [Letter('TLSCloseNotify'), Letter('TLS12CH_WITH_00_RandBytes'), Letter('TLSFinished'), Letter('TLS12CH_WITH_00_RandBytes'), Letter('TLS12ClientKeyExchange'), Letter('TLSCloseNotify'), Letter('TLS12Certificate_valid'), Letter('TLSCertificateVerify'), Letter('TLSApplicationDataEmpty'), Letter('TLSApplicationDataEmpty'), Letter('TLS12Certificate_untrusted'), Letter('TLSApplicationData'), Letter('TLS12Certificate_untrusted'), Letter('TLSChangeCipherSpec'), Letter('TLS12Certificate_valid'), Letter('TLSChangeCipherSpec'), Letter('TLS12Certificate_valid'), Letter('TLS12Certificate_valid'), Letter('TLS12CH_WITH_00_RandBytes')], O = [Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('EOF'), Letter('EOF'), Letter('EOF')])
+1724124: [INFO] StoreHypotheses:write_stats:   time spent so far: 1723.5121915340424
+1724124: [INFO] StoreHypotheses:write_stats:   n_states: 11
+1724124: [INFO] StoreHypotheses:write_stats:   n_queries=831
+1724124: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=782
+1724124: [INFO] StoreHypotheses:write_stats:   n_letters=7133
+1724124: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=7002
+2186507: [INFO] StoreHypotheses:find_counterexample: Storing hyptohesis #4 in /results/4.automaton
+2186507: [INFO] StoreHypotheses:write_stats:   time spent so far: 2185.8949716091156
+2186507: [INFO] StoreHypotheses:write_stats:   n_states: 12
+2186507: [INFO] StoreHypotheses:write_stats:   n_queries=941
+2186507: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=891
+2186507: [INFO] StoreHypotheses:write_stats:   n_letters=8164
+2186507: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=8014
+2186512: [INFO] HappyPathFirst:find_counterexample: Starting the HappyPath Algorithm to search for a counter-example
+2186512: [INFO] RandomWalkMethod:find_counterexample: Starting the RandomWalk Algorithm to search for a counter-example
+2479527: [INFO] RandomWalkMethod:__check_equivalence: Found a counter-example : input: '[Letter('TLSChangeCipherSpec'), Letter('TLS12ClientKeyExchange'), Letter('TLS12CertificateRequest'), Letter('TLS12Certificate_valid'), Letter('NoRenegotiation'), Letter('TLS12Certificate_untrusted'), Letter('TLSCertificateVerify'), Letter('TLS12ClientKeyExchange'), Letter('TLS12Certificate_untrusted'), Letter('NoRenegotiation'), Letter('TLSApplicationData'), Letter('TLS12CertificateRequest'), Letter('TLS12ClientHelloRSA'), Letter('TLS12Certificate_valid'), Letter('TLS12CH_WITH_00_RandBytes'), Letter('TLSChangeCipherSpec'), Letter('TLSChangeCipherSpec'), Letter('TLS12Certificate_untrusted'), Letter('TLS12CertificateRequest'), Letter('TLSCloseNotify'), Letter('TLSApplicationDataEmpty')]', expected: '[Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP')]', observed: '[Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF')]'
+2479528: [INFO] StoreHypotheses:write_stats: Found a counterexample: OutputQuery(I = [Letter('TLSChangeCipherSpec'), Letter('TLS12ClientKeyExchange'), Letter('TLS12CertificateRequest'), Letter('TLS12Certificate_valid'), Letter('NoRenegotiation'), Letter('TLS12Certificate_untrusted'), Letter('TLSCertificateVerify'), Letter('TLS12ClientKeyExchange'), Letter('TLS12Certificate_untrusted'), Letter('NoRenegotiation'), Letter('TLSApplicationData'), Letter('TLS12CertificateRequest'), Letter('TLS12ClientHelloRSA'), Letter('TLS12Certificate_valid'), Letter('TLS12CH_WITH_00_RandBytes'), Letter('TLSChangeCipherSpec'), Letter('TLSChangeCipherSpec'), Letter('TLS12Certificate_untrusted'), Letter('TLS12CertificateRequest'), Letter('TLSCloseNotify'), Letter('TLSApplicationDataEmpty')], O = [Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF')])
+2479528: [INFO] StoreHypotheses:write_stats:   time spent so far: 2478.915648460388
+2479528: [INFO] StoreHypotheses:write_stats:   n_states: 12
+2479528: [INFO] StoreHypotheses:write_stats:   n_queries=1056
+2479528: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=990
+2479528: [INFO] StoreHypotheses:write_stats:   n_letters=9312
+2479528: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=9128
+3410926: [INFO] StoreHypotheses:find_counterexample: Storing hyptohesis #5 in /results/5.automaton
+3410927: [INFO] StoreHypotheses:write_stats:   time spent so far: 3410.3145854473114
+3410927: [INFO] StoreHypotheses:write_stats:   n_states: 17
+3410927: [INFO] StoreHypotheses:write_stats:   n_queries=1500
+3410927: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=1429
+3410927: [INFO] StoreHypotheses:write_stats:   n_letters=13654
+3410927: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=13407
+3410932: [INFO] HappyPathFirst:find_counterexample: Starting the HappyPath Algorithm to search for a counter-example
+3410932: [INFO] RandomWalkMethod:find_counterexample: Starting the RandomWalk Algorithm to search for a counter-example
+3604914: [INFO] RandomWalkMethod:__check_equivalence: Found a counter-example : input: '[Letter('TLSApplicationDataEmpty'), Letter('TLS12ClientHelloDH'), Letter('TLS12ClientKeyExchange'), Letter('TLS12Certificate_untrusted'), Letter('TLSCloseNotify'), Letter('TLS12ClientHelloDH'), Letter('TLSFinished'), Letter('TLS12ClientKeyExchange'), Letter('TLS12EmptyCertificate'), Letter('TLS12ClientHelloRSA'), Letter('TLS12ClientHelloRSA'), Letter('TLSChangeCipherSpec'), Letter('TLSCertificateVerify'), Letter('TLSApplicationData'), Letter('TLS12Certificate_untrusted'), Letter('TLS12EmptyCertificate'), Letter('NoRenegotiation'), Letter('TLSChangeCipherSpec'), Letter('TLSCloseNotify'), Letter('TLSCertificateVerify'), Letter('TLSChangeCipherSpec'), Letter('TLS12Certificate_untrusted'), Letter('TLSFinished'), Letter('TLS12CertificateRequest'), Letter('TLSCertificateVerify'), Letter('TLS12Certificate_untrusted'), Letter('TLSFinished'), Letter('TLS12EmptyCertificate'), Letter('TLS12ClientHelloDH'), Letter('TLS12EmptyCertificate'), Letter('NoRenegotiation'), Letter('NoRenegotiation'), Letter('TLS12Certificate_untrusted'), Letter('TLS12CertificateRequest'), Letter('TLS12Certificate_valid'), Letter('TLS12ClientKeyExchange'), Letter('TLS12ClientHelloDH'), Letter('TLS12Certificate_valid')]', expected: '[Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF')]', observed: '[Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF')]'
+3604915: [INFO] StoreHypotheses:write_stats: Found a counterexample: OutputQuery(I = [Letter('TLSApplicationDataEmpty'), Letter('TLS12ClientHelloDH'), Letter('TLS12ClientKeyExchange'), Letter('TLS12Certificate_untrusted'), Letter('TLSCloseNotify'), Letter('TLS12ClientHelloDH'), Letter('TLSFinished'), Letter('TLS12ClientKeyExchange'), Letter('TLS12EmptyCertificate'), Letter('TLS12ClientHelloRSA'), Letter('TLS12ClientHelloRSA'), Letter('TLSChangeCipherSpec'), Letter('TLSCertificateVerify'), Letter('TLSApplicationData'), Letter('TLS12Certificate_untrusted'), Letter('TLS12EmptyCertificate'), Letter('NoRenegotiation'), Letter('TLSChangeCipherSpec'), Letter('TLSCloseNotify'), Letter('TLSCertificateVerify'), Letter('TLSChangeCipherSpec'), Letter('TLS12Certificate_untrusted'), Letter('TLSFinished'), Letter('TLS12CertificateRequest'), Letter('TLSCertificateVerify'), Letter('TLS12Certificate_untrusted'), Letter('TLSFinished'), Letter('TLS12EmptyCertificate'), Letter('TLS12ClientHelloDH'), Letter('TLS12EmptyCertificate'), Letter('NoRenegotiation'), Letter('NoRenegotiation'), Letter('TLS12Certificate_untrusted'), Letter('TLS12CertificateRequest'), Letter('TLS12Certificate_valid'), Letter('TLS12ClientKeyExchange'), Letter('TLS12ClientHelloDH'), Letter('TLS12Certificate_valid')], O = [Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF')])
+3604915: [INFO] StoreHypotheses:write_stats:   time spent so far: 3604.302633523941
+3604915: [INFO] StoreHypotheses:write_stats:   n_states: 17
+3604915: [INFO] StoreHypotheses:write_stats:   n_queries=1568
+3604915: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=1488
+3604915: [INFO] StoreHypotheses:write_stats:   n_letters=14503
+3604915: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=14238
+4241318: [INFO] StoreHypotheses:find_counterexample: Storing hyptohesis #6 in /results/6.automaton
+4241318: [INFO] StoreHypotheses:write_stats:   time spent so far: 4240.705741882324
+4241318: [INFO] StoreHypotheses:write_stats:   n_states: 19
+4241318: [INFO] StoreHypotheses:write_stats:   n_queries=1758
+4241318: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=1677
+4241318: [INFO] StoreHypotheses:write_stats:   n_letters=16220
+4241318: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=15917
+4241324: [INFO] HappyPathFirst:find_counterexample: Starting the HappyPath Algorithm to search for a counter-example
+4241324: [INFO] RandomWalkMethod:find_counterexample: Starting the RandomWalk Algorithm to search for a counter-example
+4568879: [INFO] RandomWalkMethod:__check_equivalence: Found a counter-example : input: '[Letter('TLSChangeCipherSpec'), Letter('TLS12CertificateRequest'), Letter('TLS12ClientHelloDH'), Letter('NoRenegotiation'), Letter('TLS12Certificate_valid'), Letter('TLSFinished'), Letter('TLS12Certificate_valid'), Letter('NoRenegotiation'), Letter('TLSChangeCipherSpec'), Letter('TLSApplicationDataEmpty'), Letter('TLS12Certificate_untrusted'), Letter('TLS12Certificate_untrusted'), Letter('TLS12ClientHelloRSA'), Letter('TLSApplicationData'), Letter('TLSApplicationData'), Letter('TLS12ClientHelloRSA'), Letter('TLS12Certificate_valid'), Letter('TLSChangeCipherSpec'), Letter('TLS12Certificate_valid'), Letter('TLS12ClientKeyExchange'), Letter('TLS12CH_WITH_00_RandBytes'), Letter('TLS12ClientKeyExchange'), Letter('TLS12CH_WITH_00_RandBytes'), Letter('NoRenegotiation'), Letter('TLS12CertificateRequest'), Letter('TLS12Certificate_untrusted'), Letter('TLS12Certificate_valid'), Letter('TLS12EmptyCertificate'), Letter('TLSCloseNotify'), Letter('TLS12CertificateRequest'), Letter('TLS12Certificate_valid'), Letter('TLSCloseNotify'), Letter('TLS12EmptyCertificate'), Letter('TLS12ClientHelloDH'), Letter('TLSCloseNotify'), Letter('TLSCloseNotify'), Letter('TLS12ClientHelloRSA'), Letter('TLSApplicationDataEmpty'), Letter('TLS12Certificate_untrusted'), Letter('TLS12EmptyCertificate'), Letter('TLSApplicationData'), Letter('TLS12Certificate_untrusted'), Letter('TLSChangeCipherSpec')]', expected: '[Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF')]', observed: '[Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF')]'
+4568879: [INFO] StoreHypotheses:write_stats: Found a counterexample: OutputQuery(I = [Letter('TLSChangeCipherSpec'), Letter('TLS12CertificateRequest'), Letter('TLS12ClientHelloDH'), Letter('NoRenegotiation'), Letter('TLS12Certificate_valid'), Letter('TLSFinished'), Letter('TLS12Certificate_valid'), Letter('NoRenegotiation'), Letter('TLSChangeCipherSpec'), Letter('TLSApplicationDataEmpty'), Letter('TLS12Certificate_untrusted'), Letter('TLS12Certificate_untrusted'), Letter('TLS12ClientHelloRSA'), Letter('TLSApplicationData'), Letter('TLSApplicationData'), Letter('TLS12ClientHelloRSA'), Letter('TLS12Certificate_valid'), Letter('TLSChangeCipherSpec'), Letter('TLS12Certificate_valid'), Letter('TLS12ClientKeyExchange'), Letter('TLS12CH_WITH_00_RandBytes'), Letter('TLS12ClientKeyExchange'), Letter('TLS12CH_WITH_00_RandBytes'), Letter('NoRenegotiation'), Letter('TLS12CertificateRequest'), Letter('TLS12Certificate_untrusted'), Letter('TLS12Certificate_valid'), Letter('TLS12EmptyCertificate'), Letter('TLSCloseNotify'), Letter('TLS12CertificateRequest'), Letter('TLS12Certificate_valid'), Letter('TLSCloseNotify'), Letter('TLS12EmptyCertificate'), Letter('TLS12ClientHelloDH'), Letter('TLSCloseNotify'), Letter('TLSCloseNotify'), Letter('TLS12ClientHelloRSA'), Letter('TLSApplicationDataEmpty'), Letter('TLS12Certificate_untrusted'), Letter('TLS12EmptyCertificate'), Letter('TLSApplicationData'), Letter('TLS12Certificate_untrusted'), Letter('TLSChangeCipherSpec')], O = [Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF')])
+4568879: [INFO] StoreHypotheses:write_stats:   time spent so far: 4568.267191410065
+4568879: [INFO] StoreHypotheses:write_stats:   n_states: 19
+4568879: [INFO] StoreHypotheses:write_stats:   n_queries=1866
+4568879: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=1770
+4568879: [INFO] StoreHypotheses:write_stats:   n_letters=17324
+4568879: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=16987
+5054911: [INFO] StoreHypotheses:find_counterexample: Storing hyptohesis #7 in /results/7.automaton
+5054911: [INFO] StoreHypotheses:write_stats:   time spent so far: 5054.298992872238
+5054911: [INFO] StoreHypotheses:write_stats:   n_states: 21
+5054911: [INFO] StoreHypotheses:write_stats:   n_queries=2061
+5054911: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=1963
+5054911: [INFO] StoreHypotheses:write_stats:   n_letters=19354
+5054911: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=18964
+5054917: [INFO] HappyPathFirst:find_counterexample: Starting the HappyPath Algorithm to search for a counter-example
+5054917: [INFO] RandomWalkMethod:find_counterexample: Starting the RandomWalk Algorithm to search for a counter-example
+5102502: [INFO] RandomWalkMethod:__check_equivalence: Found a counter-example : input: '[Letter('TLSCloseNotify'), Letter('TLS12Certificate_valid'), Letter('TLSApplicationDataEmpty'), Letter('NoRenegotiation'), Letter('TLS12CH_WITH_00_RandBytes'), Letter('TLS12ClientHelloRSA'), Letter('TLSApplicationData'), Letter('TLS12EmptyCertificate'), Letter('TLSFinished'), Letter('TLS12ClientHelloDH'), Letter('TLSApplicationDataEmpty'), Letter('TLS12CertificateRequest'), Letter('TLSCloseNotify'), Letter('TLS12ClientHelloDH'), Letter('TLS12Certificate_valid'), Letter('TLS12Certificate_valid'), Letter('TLSCloseNotify'), Letter('TLS12Certificate_valid'), Letter('TLS12Certificate_valid'), Letter('TLSChangeCipherSpec'), Letter('TLSApplicationDataEmpty'), Letter('TLSCloseNotify'), Letter('TLS12Certificate_valid'), Letter('TLS12ClientKeyExchange'), Letter('TLSApplicationData'), Letter('TLS12ClientKeyExchange'), Letter('TLS12ClientHelloRSA')]', expected: '[Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF')]', observed: '[Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF')]'
+5102502: [INFO] StoreHypotheses:write_stats: Found a counterexample: OutputQuery(I = [Letter('TLSCloseNotify'), Letter('TLS12Certificate_valid'), Letter('TLSApplicationDataEmpty'), Letter('NoRenegotiation'), Letter('TLS12CH_WITH_00_RandBytes'), Letter('TLS12ClientHelloRSA'), Letter('TLSApplicationData'), Letter('TLS12EmptyCertificate'), Letter('TLSFinished'), Letter('TLS12ClientHelloDH'), Letter('TLSApplicationDataEmpty'), Letter('TLS12CertificateRequest'), Letter('TLSCloseNotify'), Letter('TLS12ClientHelloDH'), Letter('TLS12Certificate_valid'), Letter('TLS12Certificate_valid'), Letter('TLSCloseNotify'), Letter('TLS12Certificate_valid'), Letter('TLS12Certificate_valid'), Letter('TLSChangeCipherSpec'), Letter('TLSApplicationDataEmpty'), Letter('TLSCloseNotify'), Letter('TLS12Certificate_valid'), Letter('TLS12ClientKeyExchange'), Letter('TLSApplicationData'), Letter('TLS12ClientKeyExchange'), Letter('TLS12ClientHelloRSA')], O = [Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF')])
+5102502: [INFO] StoreHypotheses:write_stats:   time spent so far: 5101.890067577362
+5102502: [INFO] StoreHypotheses:write_stats:   n_states: 21
+5102502: [INFO] StoreHypotheses:write_stats:   n_queries=2088
+5102502: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=1986
+5102502: [INFO] StoreHypotheses:write_stats:   n_letters=19585
+5102502: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=19187
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/pylstar/KnowledgeBase.py", line 113, in _resolve_word
+    return self.knowledge_tree.get_output_word(word)
+  File "/usr/local/lib/python3.10/site-packages/pylstar/KnowledgeTree.py", line 181, in get_output_word
+    raise Exception("No path found")
+Exception: No path found
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/lsharp/run_lsharp.py", line 47, in <module>
+    main()
+  File "/opt/lsharp/run_lsharp.py", line 35, in main
+    module.main()
+  File "/root/pylstar-tls/src/infer_server.py", line 226, in main
+    state_machine = lstar.learn()
+  File "/opt/lsharp/lsharp_learner.py", line 142, in learn
+    mealy, info = run_Lsharp(
+  File "/usr/local/lib/python3.10/site-packages/aalpy/learning_algs/deterministic/LSharp.py", line 65, in run_Lsharp
+    hypothesis = ob_tree.build_hypothesis()
+  File "/usr/local/lib/python3.10/site-packages/aalpy/learning_algs/deterministic/ObservationTree.py", line 724, in build_hypothesis
+    self.make_observation_tree_adequate()
+  File "/usr/local/lib/python3.10/site-packages/aalpy/learning_algs/deterministic/ObservationTree.py", line 741, in make_observation_tree_adequate
+    self.make_frontiers_identified()
+  File "/usr/local/lib/python3.10/site-packages/aalpy/learning_algs/deterministic/ObservationTree.py", line 595, in make_frontiers_identified
+    self.identify_frontier(frontier_state)
+  File "/usr/local/lib/python3.10/site-packages/aalpy/learning_algs/deterministic/ObservationTree.py", line 614, in identify_frontier
+    inputs, outputs = self._identify_frontier_sepseq(frontier_state)
+  File "/usr/local/lib/python3.10/site-packages/aalpy/learning_algs/deterministic/ObservationTree.py", line 638, in _identify_frontier_sepseq
+    outputs = self.sul.query(inputs)
+  File "/opt/lsharp/lsharp_learner.py", line 50, in query
+    return self._resolve(word) if word else []
+  File "/opt/lsharp/lsharp_learner.py", line 44, in _resolve
+    output = self.knowledge_base._resolve_word(Word([Letter(s) for s in word]))
+  File "/usr/local/lib/python3.10/site-packages/pylstar/KnowledgeBase.py", line 120, in _resolve_word
+    output = self._execute_word(word)
+  File "/usr/local/lib/python3.10/site-packages/pylstar/ActiveKnowledgeBase.py", line 57, in _execute_word
+    return self.submit_word(word)
+  File "/root/pylstar-tls/src/infer_server.py", line 58, in submit_word
+    self.tls_session = self.tools.get_tls_session()
+  File "/root/pylstar-tls/src/stubs/client_concretization.py", line 31, in get_tls_session
+    client.init_tls()
+  File "/root/pylstar-tls/src/stubs/client.py", line 384, in init_tls
+    self.socket.connect((self.remote_ip, self.remote_port))
+ConnectionRefusedError: [Errno 111] Connection refused

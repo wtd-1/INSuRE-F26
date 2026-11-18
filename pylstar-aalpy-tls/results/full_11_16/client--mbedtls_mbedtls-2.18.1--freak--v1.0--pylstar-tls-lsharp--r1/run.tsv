@@ -1,0 +1,19 @@
+campaign	full_11_16
+kind	client
+image	tls-test-bed/mbedtls:mbedtls-2.18.1
+tls_version	1.0
+scenario	freak
+extra_args	
+eq_method	RW:10000:0.1
+inferer	pylstar-tls-lsharp
+repeat	1
+jobs	12
+start_epoch	1794917097.483679559
+end_epoch	1794917111.004070616
+wall_seconds	13.5
+exit_code	0
+status	ok
+loadavg_start	5.48 6.66 6.50
+loadavg_end	6.20 6.76 6.53
+host	VeryExpensiveSpaceHeater
+command	INFERER_IMAGE=tls-test-bed/pylstar-tls-lsharp ./infer-client.sh tls-test-bed/mbedtls:mbedtls-2.18.1 1.0 freak -E RW:10000:0.1

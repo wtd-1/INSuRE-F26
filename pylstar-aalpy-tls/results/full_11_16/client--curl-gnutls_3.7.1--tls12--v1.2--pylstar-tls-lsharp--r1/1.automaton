@@ -1,0 +1,85 @@
+TLS12CertificateRequest TLS12Certificate_invalid TLS12Certificate_untrusted TLS12Certificate_valid TLS12EmptyCertificate TLS12ServerHello TLS12ServerHelloDone TLS12ServerKeyExchange TLSApplicationData TLSChangeCipherSpec TLSCloseNotify TLSFinished
+0, 6, TLS12CertificateRequest, Warning(close_notify)
+0, 6, TLS12Certificate_invalid, Warning(close_notify)
+0, 6, TLS12Certificate_untrusted, Warning(close_notify)
+0, 6, TLS12Certificate_valid, Warning(close_notify)
+0, 6, TLS12EmptyCertificate, Warning(close_notify)
+0, 1, TLS12ServerHello, No RSP
+0, 6, TLS12ServerHelloDone, Warning(close_notify)
+0, 6, TLS12ServerKeyExchange, Warning(close_notify)
+0, 6, TLSApplicationData, Warning(close_notify)
+0, 6, TLSChangeCipherSpec, Warning(close_notify)
+0, 6, TLSCloseNotify, Warning(close_notify)
+0, 6, TLSFinished, Warning(close_notify)
+1, 6, TLS12CertificateRequest, Warning(close_notify)
+1, 2, TLS12Certificate_invalid, No RSP
+1, 2, TLS12Certificate_untrusted, No RSP
+1, 2, TLS12Certificate_valid, No RSP
+1, 6, TLS12EmptyCertificate, Warning(close_notify)
+1, 6, TLS12ServerHello, Warning(close_notify)
+1, 6, TLS12ServerHelloDone, Warning(close_notify)
+1, 6, TLS12ServerKeyExchange, Warning(close_notify)
+1, 6, TLSApplicationData, Warning(close_notify)
+1, 6, TLSChangeCipherSpec, Warning(close_notify)
+1, 6, TLSCloseNotify, Warning(close_notify)
+1, 6, TLSFinished, Warning(close_notify)
+2, 6, TLS12CertificateRequest, Warning(close_notify)
+2, 6, TLS12Certificate_invalid, Warning(close_notify)
+2, 6, TLS12Certificate_untrusted, Warning(close_notify)
+2, 6, TLS12Certificate_valid, Warning(close_notify)
+2, 6, TLS12EmptyCertificate, Warning(close_notify)
+2, 6, TLS12ServerHello, Warning(close_notify)
+2, 6, TLS12ServerHelloDone, Warning(close_notify)
+2, 3, TLS12ServerKeyExchange, No RSP
+2, 6, TLSApplicationData, Warning(close_notify)
+2, 6, TLSChangeCipherSpec, Warning(close_notify)
+2, 6, TLSCloseNotify, Warning(close_notify)
+2, 6, TLSFinished, Warning(close_notify)
+3, 4, TLS12CertificateRequest, No RSP
+3, 6, TLS12Certificate_invalid, Warning(close_notify)
+3, 6, TLS12Certificate_untrusted, Warning(close_notify)
+3, 6, TLS12Certificate_valid, Warning(close_notify)
+3, 6, TLS12EmptyCertificate, Warning(close_notify)
+3, 6, TLS12ServerHello, Warning(close_notify)
+3, 5, TLS12ServerHelloDone, TLSClientKeyExchange+TLSChangeCipherSpec+TLSFinished
+3, 6, TLS12ServerKeyExchange, Warning(close_notify)
+3, 6, TLSApplicationData, Warning(close_notify)
+3, 6, TLSChangeCipherSpec, Warning(close_notify)
+3, 6, TLSCloseNotify, Warning(close_notify)
+3, 6, TLSFinished, Warning(close_notify)
+4, 6, TLS12CertificateRequest, Warning(close_notify)
+4, 6, TLS12Certificate_invalid, Warning(close_notify)
+4, 6, TLS12Certificate_untrusted, Warning(close_notify)
+4, 6, TLS12Certificate_valid, Warning(close_notify)
+4, 6, TLS12EmptyCertificate, Warning(close_notify)
+4, 6, TLS12ServerHello, Warning(close_notify)
+4, 5, TLS12ServerHelloDone, TLSCertificate+TLSClientKeyExchange+TLSChangeCipherSpec+TLSFinished
+4, 6, TLS12ServerKeyExchange, Warning(close_notify)
+4, 6, TLSApplicationData, Warning(close_notify)
+4, 6, TLSChangeCipherSpec, Warning(close_notify)
+4, 6, TLSCloseNotify, Warning(close_notify)
+4, 6, TLSFinished, Warning(close_notify)
+5, 6, TLS12CertificateRequest, Warning(close_notify)
+5, 6, TLS12Certificate_invalid, Warning(close_notify)
+5, 6, TLS12Certificate_untrusted, Warning(close_notify)
+5, 6, TLS12Certificate_valid, Warning(close_notify)
+5, 6, TLS12EmptyCertificate, Warning(close_notify)
+5, 6, TLS12ServerHello, Warning(close_notify)
+5, 6, TLS12ServerHelloDone, Warning(close_notify)
+5, 6, TLS12ServerKeyExchange, Warning(close_notify)
+5, 6, TLSApplicationData, Warning(close_notify)
+5, 0, TLSChangeCipherSpec, No RSP
+5, 6, TLSCloseNotify, Warning(close_notify)
+5, 6, TLSFinished, Warning(close_notify)
+6, 6, TLS12CertificateRequest, EOF
+6, 6, TLS12Certificate_invalid, EOF
+6, 6, TLS12Certificate_untrusted, EOF
+6, 6, TLS12Certificate_valid, EOF
+6, 6, TLS12EmptyCertificate, EOF
+6, 6, TLS12ServerHello, EOF
+6, 6, TLS12ServerHelloDone, EOF
+6, 6, TLS12ServerKeyExchange, EOF
+6, 6, TLSApplicationData, EOF
+6, 6, TLSChangeCipherSpec, EOF
+6, 6, TLSCloseNotify, EOF
+6, 6, TLSFinished, EOF

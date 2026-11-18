@@ -1,0 +1,71 @@
+1de5ec14a9579ae63c094dc5f5e46967f1714bd74e721bce3bc8e1cd0bc09490
+/root/src/scapy/scapy/layers/tls/crypto/cipher_block.py:156: CryptographyDeprecationWarning: IDEA has been deprecated
+  pc_cls = algorithms.IDEA
+/root/src/scapy/scapy/layers/tls/crypto/cipher_block.py:162: CryptographyDeprecationWarning: SEED has been deprecated
+  pc_cls = algorithms.SEED
+/root/src/scapy/scapy/layers/ipsec.py:471: CryptographyDeprecationWarning: Blowfish has been deprecated
+  cipher=algorithms.Blowfish,
+/root/src/scapy/scapy/layers/ipsec.py:485: CryptographyDeprecationWarning: CAST5 has been deprecated
+  cipher=algorithms.CAST5,
+input_letters ['TLS12ClientHelloRSA', 'TLS12ClientHelloDH', 'TLS12CH_WITH_00_RandBytes', 'TLS12ClientKeyExchange', 'TLSChangeCipherSpec', 'TLSFinished', 'TLSApplicationDataEmpty', 'TLSApplicationData', 'TLS12CertificateRequest', 'TLS12EmptyCertificate', 'TLSCloseNotify', 'NoRenegotiation', 'TLSCertificateVerify', 'TLS12Certificate_valid', 'TLS12Certificate_untrusted']
+eqtests: RandomWalk(10000, 0.1)
+timeout: 1.0
+537228: [INFO] StoreHypotheses:find_counterexample: Storing hyptohesis #0 in /results/0.automaton
+537228: [INFO] StoreHypotheses:write_stats:   time spent so far: 536.5255529880524
+537228: [INFO] StoreHypotheses:write_stats:   n_states: 10
+537228: [INFO] StoreHypotheses:write_stats:   n_queries=2400
+537228: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=2265
+537228: [INFO] StoreHypotheses:write_stats:   n_letters=11850
+537228: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=11265
+537238: [INFO] HappyPathFirst:find_counterexample: Starting the HappyPath Algorithm to search for a counter-example
+537239: [INFO] RandomWalkMethod:find_counterexample: Starting the RandomWalk Algorithm to search for a counter-example
+725869: [INFO] RandomWalkMethod:__check_equivalence: Found a counter-example : input: '[Letter('TLSChangeCipherSpec'), Letter('TLSCertificateVerify'), Letter('TLSApplicationDataEmpty'), Letter('TLSChangeCipherSpec'), Letter('NoRenegotiation'), Letter('TLSChangeCipherSpec'), Letter('TLS12EmptyCertificate'), Letter('TLS12ClientHelloDH'), Letter('NoRenegotiation'), Letter('TLS12Certificate_valid'), Letter('TLSCertificateVerify'), Letter('TLS12CH_WITH_00_RandBytes'), Letter('TLS12CertificateRequest'), Letter('TLS12EmptyCertificate'), Letter('TLSApplicationData'), Letter('TLSApplicationDataEmpty'), Letter('TLS12ClientHelloDH'), Letter('TLS12Certificate_valid'), Letter('TLS12ClientHelloRSA'), Letter('TLS12CertificateRequest'), Letter('TLSApplicationData'), Letter('TLS12Certificate_valid'), Letter('TLSCertificateVerify'), Letter('TLSChangeCipherSpec'), Letter('TLSApplicationDataEmpty'), Letter('TLS12ClientKeyExchange'), Letter('TLS12ClientHelloDH'), Letter('TLS12ClientHelloDH'), Letter('TLS12Certificate_untrusted'), Letter('TLS12ClientHelloRSA'), Letter('TLSApplicationData'), Letter('TLSFinished'), Letter('TLSCertificateVerify'), Letter('TLS12Certificate_untrusted')]', expected: '[Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP')]', observed: '[Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('EOF'), Letter('EOF'), Letter('EOF')]'
+725869: [INFO] StoreHypotheses:write_stats: Found a counterexample: OutputQuery(I = [Letter('TLSChangeCipherSpec'), Letter('TLSCertificateVerify'), Letter('TLSApplicationDataEmpty'), Letter('TLSChangeCipherSpec'), Letter('NoRenegotiation'), Letter('TLSChangeCipherSpec'), Letter('TLS12EmptyCertificate'), Letter('TLS12ClientHelloDH'), Letter('NoRenegotiation'), Letter('TLS12Certificate_valid'), Letter('TLSCertificateVerify'), Letter('TLS12CH_WITH_00_RandBytes'), Letter('TLS12CertificateRequest'), Letter('TLS12EmptyCertificate'), Letter('TLSApplicationData'), Letter('TLSApplicationDataEmpty'), Letter('TLS12ClientHelloDH'), Letter('TLS12Certificate_valid'), Letter('TLS12ClientHelloRSA'), Letter('TLS12CertificateRequest'), Letter('TLSApplicationData'), Letter('TLS12Certificate_valid'), Letter('TLSCertificateVerify'), Letter('TLSChangeCipherSpec'), Letter('TLSApplicationDataEmpty'), Letter('TLS12ClientKeyExchange'), Letter('TLS12ClientHelloDH'), Letter('TLS12ClientHelloDH'), Letter('TLS12Certificate_untrusted'), Letter('TLS12ClientHelloRSA'), Letter('TLSApplicationData'), Letter('TLSFinished'), Letter('TLSCertificateVerify'), Letter('TLS12Certificate_untrusted')], O = [Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('EOF'), Letter('EOF'), Letter('EOF')])
+725869: [INFO] StoreHypotheses:write_stats:   time spent so far: 725.1664326190948
+725869: [INFO] StoreHypotheses:write_stats:   n_states: 10
+725869: [INFO] StoreHypotheses:write_stats:   n_queries=2473
+725869: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=2330
+725869: [INFO] StoreHypotheses:write_stats:   n_letters=12716
+725869: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=12108
+7197597: [ERROR] ObservationTable:__execute_query: [Errno 111] Connection refused
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/pylstar/KnowledgeBase.py", line 113, in _resolve_word
+    return self.knowledge_tree.get_output_word(word)
+  File "/usr/local/lib/python3.10/site-packages/pylstar/KnowledgeTree.py", line 181, in get_output_word
+    raise Exception("No path found")
+Exception: No path found
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/pylstar/ObservationTable.py", line 866, in __execute_query
+    self.knowledge_base.resolve_query(query)
+  File "/usr/local/lib/python3.10/site-packages/pylstar/KnowledgeBase.py", line 103, in resolve_query
+    query.output_word = self._resolve_word(query.input_word)
+  File "/usr/local/lib/python3.10/site-packages/pylstar/KnowledgeBase.py", line 120, in _resolve_word
+    output = self._execute_word(word)
+  File "/usr/local/lib/python3.10/site-packages/pylstar/ActiveKnowledgeBase.py", line 57, in _execute_word
+    return self.submit_word(word)
+  File "/root/pylstar-tls/src/infer_server.py", line 58, in submit_word
+    self.tls_session = self.tools.get_tls_session()
+  File "/root/pylstar-tls/src/stubs/client_concretization.py", line 31, in get_tls_session
+    client.init_tls()
+  File "/root/pylstar-tls/src/stubs/client.py", line 384, in init_tls
+    self.socket.connect((self.remote_ip, self.remote_port))
+ConnectionRefusedError: [Errno 111] Connection refused
+Traceback (most recent call last):
+  File "/root/pylstar-tls/src/infer_server.py", line 246, in <module>
+    main()
+  File "/root/pylstar-tls/src/infer_server.py", line 226, in main
+    state_machine = lstar.learn()
+  File "/usr/local/lib/python3.10/site-packages/pylstar/LSTAR.py", line 288, in learn
+    self.fix_hypothesis(counterexample)
+  File "/usr/local/lib/python3.10/site-packages/pylstar/LSTAR.py", line 331, in fix_hypothesis
+    self.observation_table.add_counterexample(input_word, output_word)
+  File "/usr/local/lib/python3.10/site-packages/pylstar/ObservationTable.py", line 332, in add_counterexample
+    self.__add_word_in_S(prefix_input)
+  File "/usr/local/lib/python3.10/site-packages/pylstar/ObservationTable.py", line 803, in __add_word_in_S
+    self.__add_word_in_SA(new_word)
+  File "/usr/local/lib/python3.10/site-packages/pylstar/ObservationTable.py", line 843, in __add_word_in_SA
+    raise Exception("Query '{}' could not be queries".format(output_query))
+Exception: Query 'OutputQuery(I = [Letter('TLSChangeCipherSpec'), Letter('TLSCertificateVerify'), Letter('TLSApplicationDataEmpty'), Letter('TLSChangeCipherSpec'), Letter('NoRenegotiation'), Letter('TLSChangeCipherSpec'), Letter('TLS12EmptyCertificate'), Letter('TLS12ClientHelloDH'), Letter('NoRenegotiation'), Letter('TLS12Certificate_valid'), Letter('TLSCertificateVerify'), Letter('TLS12CH_WITH_00_RandBytes'), Letter('TLS12CertificateRequest'), Letter('TLS12EmptyCertificate'), Letter('TLSApplicationData'), Letter('TLSApplicationDataEmpty'), Letter('TLS12ClientHelloDH'), Letter('TLS12Certificate_valid'), Letter('TLS12ClientHelloRSA'), Letter('TLS12CertificateRequest'), Letter('TLSApplicationData'), Letter('TLS12Certificate_valid'), Letter('TLSCertificateVerify'), Letter('TLSChangeCipherSpec'), Letter('TLSApplicationDataEmpty'), Letter('TLS12ClientKeyExchange'), Letter('TLS12ClientHelloDH'), Letter('TLS12ClientHelloDH'), Letter('TLS12CH_WITH_00_RandBytes'), Letter('TLSFinished')], O = None)' could not be queries

@@ -1,0 +1,8 @@
+TLS12Certificate_valid TLS12ServerHelloDone TLS12ServerHello_RSA_EXPORT TLS12ServerKeyExchange TLSApplicationData TLSChangeCipherSpec TLSFinished
+0, 0, TLS12Certificate_valid, EOF
+0, 0, TLS12ServerHelloDone, EOF
+0, 0, TLS12ServerHello_RSA_EXPORT, EOF
+0, 0, TLS12ServerKeyExchange, EOF
+0, 0, TLSApplicationData, EOF
+0, 0, TLSChangeCipherSpec, EOF
+0, 0, TLSFinished, EOF

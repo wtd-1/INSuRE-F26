@@ -1,0 +1,7 @@
+Found a counterexample: OutputQuery(I = [Letter('NoRenegotiation'), Letter('TLS12ClientHelloRSA'), Letter('TLS12ClientHelloRSA'), Letter('TLS12CKE_shorten_pms'), Letter('TLS12CKE_ok')], O = [Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF')])
+  time spent so far: 12.203296661376953
+  n_states: 4
+  n_queries=84
+  n_submitted_queries=83
+  n_letters=293
+  n_submitted_letters=289

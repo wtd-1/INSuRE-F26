@@ -1,0 +1,13 @@
+TLS12CertificateRequest TLS12Certificate_invalid TLS12Certificate_untrusted TLS12Certificate_valid TLS12EmptyCertificate TLS12ServerHello TLS12ServerHelloDone TLS12ServerKeyExchange TLSApplicationData TLSChangeCipherSpec TLSCloseNotify TLSFinished
+0, 0, TLS12CertificateRequest, EOF
+0, 0, TLS12Certificate_invalid, EOF
+0, 0, TLS12Certificate_untrusted, EOF
+0, 0, TLS12Certificate_valid, EOF
+0, 0, TLS12EmptyCertificate, EOF
+0, 0, TLS12ServerHello, EOF
+0, 0, TLS12ServerHelloDone, EOF
+0, 0, TLS12ServerKeyExchange, EOF
+0, 0, TLSApplicationData, EOF
+0, 0, TLSChangeCipherSpec, EOF
+0, 0, TLSCloseNotify, EOF
+0, 0, TLSFinished, EOF

@@ -1,0 +1,19 @@
+campaign	full_11_16
+kind	srv-auth
+image	tls-test-bed/gnutls:3.6.16
+tls_version	1.0
+scenario	tls10
+extra_args	
+eq_method	RW:10000:0.1
+inferer	pylstar-tls-lsharp
+repeat	1
+jobs	12
+start_epoch	1794912505.398735064
+end_epoch	1794912549.668946304
+wall_seconds	44.3
+exit_code	0
+status	ok
+loadavg_start	5.02 6.48 7.63
+loadavg_end	4.74 6.23 7.49
+host	VeryExpensiveSpaceHeater
+command	INFERER_IMAGE=tls-test-bed/pylstar-tls-lsharp ./infer-srv-auth.sh tls-test-bed/gnutls:3.6.16 1.0 tls10 -E RW:10000:0.1

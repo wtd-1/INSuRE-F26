@@ -1,0 +1,37 @@
+NoRenegotiation TLS12CKE_0002_modified TLS12CKE_key_null TLS12CKE_longer_pms TLS12CKE_ok TLS12CKE_padding_inf_8 TLS12CKE_shorten_pms TLS12CKE_wrong_tls_version TLS12ClientHelloRSA TLSChangeCipherSpec TLSCloseNotify TLSHardCodedFinished
+0, 0, NoRenegotiation, No RSP
+0, 2, TLS12CKE_0002_modified, FatalAlert(unexpected_message)
+0, 2, TLS12CKE_key_null, FatalAlert(unexpected_message)
+0, 2, TLS12CKE_longer_pms, FatalAlert(unexpected_message)
+0, 2, TLS12CKE_ok, FatalAlert(unexpected_message)
+0, 2, TLS12CKE_padding_inf_8, FatalAlert(unexpected_message)
+0, 2, TLS12CKE_shorten_pms, FatalAlert(unexpected_message)
+0, 2, TLS12CKE_wrong_tls_version, FatalAlert(unexpected_message)
+0, 1, TLS12ClientHelloRSA, TLSServerHello+TLSCertificate+TLSServerHelloDone
+0, 2, TLSChangeCipherSpec, FatalAlert(unexpected_message)
+0, 2, TLSCloseNotify, Warning(close_notify)
+0, 2, TLSHardCodedFinished, FatalAlert(unexpected_message)
+1, 1, NoRenegotiation, No RSP
+1, 2, TLS12CKE_0002_modified, FatalAlert(decrypt_error)
+1, 2, TLS12CKE_key_null, FatalAlert(decrypt_error)
+1, 2, TLS12CKE_longer_pms, FatalAlert(decrypt_error)
+1, 0, TLS12CKE_ok, No RSP
+1, 2, TLS12CKE_padding_inf_8, FatalAlert(decrypt_error)
+1, 2, TLS12CKE_shorten_pms, FatalAlert(decrypt_error)
+1, 2, TLS12CKE_wrong_tls_version, FatalAlert(illegal_parameter)
+1, 2, TLS12ClientHelloRSA, FatalAlert(unexpected_message)
+1, 2, TLSChangeCipherSpec, FatalAlert(unexpected_message)
+1, 2, TLSCloseNotify, Warning(close_notify)
+1, 2, TLSHardCodedFinished, FatalAlert(unexpected_message)
+2, 2, NoRenegotiation, EOF
+2, 2, TLS12CKE_0002_modified, EOF
+2, 2, TLS12CKE_key_null, EOF
+2, 2, TLS12CKE_longer_pms, EOF
+2, 2, TLS12CKE_ok, EOF
+2, 2, TLS12CKE_padding_inf_8, EOF
+2, 2, TLS12CKE_shorten_pms, EOF
+2, 2, TLS12CKE_wrong_tls_version, EOF
+2, 2, TLS12ClientHelloRSA, EOF
+2, 2, TLSChangeCipherSpec, EOF
+2, 2, TLSCloseNotify, EOF
+2, 2, TLSHardCodedFinished, EOF

@@ -1,0 +1,7 @@
+Found a counterexample: OutputQuery(I = [Letter('TLS12ClientHelloDH'), Letter('TLS12ClientKeyExchange'), Letter('TLSChangeCipherSpec'), Letter('TLSFinished'), Letter('TLS12ClientHelloDH'), Letter('TLS12ClientHelloRSA')], O = [Letter('TLSServerHello+TLSCertificate+TLSServerKeyExchange+TLSServerHelloDone'), Letter('No RSP'), Letter('No RSP'), Letter('TLSChangeCipherSpec+TLSFinished'), Letter('Warning(no_renegotiation)'), Letter('Warning(no_renegotiation)')])
+  time spent so far: 8.283378839492798
+  n_states: 1
+  n_queries=17
+  n_submitted_queries=17
+  n_letters=34
+  n_submitted_letters=34

@@ -1,0 +1,43 @@
+NoRenegotiation TLS12CH_WITH_00_RandBytes TLS12CertificateRequest TLS12Certificate_valid TLS12ClientHelloDH TLS12ClientHelloRSA TLS12ClientKeyExchange TLS12EmptyCertificate TLSApplicationData TLSApplicationDataEmpty TLSCertificateVerify TLSChangeCipherSpec TLSCloseNotify TLSFinished
+0, 0, NoRenegotiation, No RSP
+0, 1, TLS12CH_WITH_00_RandBytes, TLSServerHello+TLSCertificate+TLSServerKeyExchange+TLSServerHelloDone
+0, 2, TLS12CertificateRequest, FatalAlert(unexpected_message)
+0, 2, TLS12Certificate_valid, Warning(close_notify)
+0, 1, TLS12ClientHelloDH, TLSServerHello+TLSCertificate+TLSServerKeyExchange+TLSServerHelloDone
+0, 1, TLS12ClientHelloRSA, TLSServerHello+TLSCertificate+TLSServerHelloDone
+0, 2, TLS12ClientKeyExchange, Warning(close_notify)
+0, 2, TLS12EmptyCertificate, Warning(close_notify)
+0, 2, TLSApplicationData, FatalAlert(unexpected_message)
+0, 2, TLSApplicationDataEmpty, Warning(close_notify)
+0, 2, TLSCertificateVerify, Warning(close_notify)
+0, 2, TLSChangeCipherSpec, Warning(close_notify)
+0, 2, TLSCloseNotify, Warning(close_notify)
+0, 2, TLSFinished, Warning(close_notify)
+1, 1, NoRenegotiation, No RSP
+1, 2, TLS12CH_WITH_00_RandBytes, Warning(close_notify)
+1, 1, TLS12CertificateRequest, No RSP
+1, 2, TLS12Certificate_valid, Warning(close_notify)
+1, 2, TLS12ClientHelloDH, Warning(close_notify)
+1, 2, TLS12ClientHelloRSA, Warning(close_notify)
+1, 0, TLS12ClientKeyExchange, No RSP
+1, 1, TLS12EmptyCertificate, No RSP
+1, 2, TLSApplicationData, FatalAlert(unexpected_message)
+1, 2, TLSApplicationDataEmpty, Warning(close_notify)
+1, 2, TLSCertificateVerify, Warning(close_notify)
+1, 2, TLSChangeCipherSpec, Warning(close_notify)
+1, 2, TLSCloseNotify, Warning(close_notify)
+1, 2, TLSFinished, Warning(close_notify)
+2, 2, NoRenegotiation, EOF
+2, 2, TLS12CH_WITH_00_RandBytes, EOF
+2, 2, TLS12CertificateRequest, EOF
+2, 2, TLS12Certificate_valid, EOF
+2, 2, TLS12ClientHelloDH, EOF
+2, 2, TLS12ClientHelloRSA, EOF
+2, 2, TLS12ClientKeyExchange, EOF
+2, 2, TLS12EmptyCertificate, EOF
+2, 2, TLSApplicationData, EOF
+2, 2, TLSApplicationDataEmpty, EOF
+2, 2, TLSCertificateVerify, EOF
+2, 2, TLSChangeCipherSpec, EOF
+2, 2, TLSCloseNotify, EOF
+2, 2, TLSFinished, EOF

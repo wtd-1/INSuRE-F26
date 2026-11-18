@@ -1,0 +1,7 @@
+Found a counterexample: OutputQuery(I = [Letter('TLS12CKE_wrong_tls_version'), Letter('TLS12CKE_longer_pms'), Letter('TLSCloseNotify'), Letter('TLS12CKE_wrong_tls_version'), Letter('TLS12CKE_0002_modified'), Letter('TLSCloseNotify'), Letter('TLSHardCodedFinished'), Letter('TLSCloseNotify'), Letter('TLS12CKE_0002_modified'), Letter('TLS12CKE_wrong_tls_version'), Letter('TLSHardCodedFinished'), Letter('TLSChangeCipherSpec'), Letter('NoRenegotiation'), Letter('TLSCloseNotify'), Letter('TLS12CKE_shorten_pms'), Letter('TLS12CKE_shorten_pms'), Letter('TLSHardCodedFinished'), Letter('TLS12CKE_key_null'), Letter('TLSChangeCipherSpec'), Letter('TLS12ClientHelloRSA'), Letter('TLS12CKE_shorten_pms')], O = [Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF')])
+  time spent so far: 17.324185848236084
+  n_states: 4
+  n_queries=123
+  n_submitted_queries=121
+  n_letters=483
+  n_submitted_letters=477

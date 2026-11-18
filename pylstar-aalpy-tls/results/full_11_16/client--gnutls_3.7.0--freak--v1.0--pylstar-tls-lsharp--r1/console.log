@@ -1,0 +1,55 @@
+275618d6a71e1afc0b6a3cce61dc3b1aa276919c3e90aeaf924c0294c4cfc5b0
+make: Entering directory '/mnt/c/Users/xace/OneDrive/Documents/GitHub/INSuRE-F26/pylstar-aalpy-tls/crypto'
+make: Leaving directory '/mnt/c/Users/xace/OneDrive/Documents/GitHub/INSuRE-F26/pylstar-aalpy-tls/crypto'
+/root/src/scapy/scapy/layers/tls/crypto/cipher_block.py:156: CryptographyDeprecationWarning: IDEA has been deprecated
+  pc_cls = algorithms.IDEA
+/root/src/scapy/scapy/layers/tls/crypto/cipher_block.py:162: CryptographyDeprecationWarning: SEED has been deprecated
+  pc_cls = algorithms.SEED
+/root/src/scapy/scapy/layers/ipsec.py:471: CryptographyDeprecationWarning: Blowfish has been deprecated
+  cipher=algorithms.Blowfish,
+/root/src/scapy/scapy/layers/ipsec.py:485: CryptographyDeprecationWarning: CAST5 has been deprecated
+  cipher=algorithms.CAST5,
+learner: L# (AALpy 2.0.0)
+input_letters ['TLS12ServerHello_RSA_EXPORT', 'TLS12Certificate_valid', 'TLS12ServerKeyExchange', 'TLS12ServerHelloDone', 'TLSChangeCipherSpec', 'TLSFinished', 'TLSApplicationData']
+eqtests: RandomWalk(10000, 0.1)
+timeout: 1.0
+1578: [INFO] StoreHypotheses:find_counterexample: Storing hyptohesis #0 in /results/0.automaton
+1578: [INFO] StoreHypotheses:write_stats:   time spent so far: 1.0818612575531006
+1578: [INFO] StoreHypotheses:write_stats:   n_states: 1
+1578: [INFO] StoreHypotheses:write_stats:   n_queries=7
+1578: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=7
+1578: [INFO] StoreHypotheses:write_stats:   n_letters=7
+1578: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=7
+1583: [INFO] RandomWalkMethod:find_counterexample: Starting the RandomWalk Algorithm to search for a counter-example
+1626: [INFO] RandomWalkMethod:__check_equivalence: Found a counter-example : input: '[Letter('TLS12ServerHelloDone'), Letter('TLS12Certificate_valid')]', expected: '[Letter('FatalAlert(unexpected_message)'), Letter('FatalAlert(unexpected_message)')]', observed: '[Letter('FatalAlert(unexpected_message)'), Letter('EOF')]'
+1627: [INFO] StoreHypotheses:write_stats: Found a counterexample: OutputQuery(I = [Letter('TLS12ServerHelloDone'), Letter('TLS12Certificate_valid')], O = [Letter('FatalAlert(unexpected_message)'), Letter('EOF')])
+1627: [INFO] StoreHypotheses:write_stats:   time spent so far: 1.1302158832550049
+1627: [INFO] StoreHypotheses:write_stats:   n_states: 1
+1627: [INFO] StoreHypotheses:write_stats:   n_queries=8
+1627: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=8
+1627: [INFO] StoreHypotheses:write_stats:   n_letters=9
+1627: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=9
+3591: [INFO] StoreHypotheses:find_counterexample: Storing hyptohesis #1 in /results/1.automaton
+3591: [INFO] StoreHypotheses:write_stats:   time spent so far: 3.095090627670288
+3591: [INFO] StoreHypotheses:write_stats:   n_states: 3
+3591: [INFO] StoreHypotheses:write_stats:   n_queries=29
+3592: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=28
+3592: [INFO] StoreHypotheses:write_stats:   n_letters=65
+3592: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=63
+3596: [INFO] RandomWalkMethod:find_counterexample: Starting the RandomWalk Algorithm to search for a counter-example
+10060: [INFO] StoreHypotheses:write_stats: Inference converged
+10060: [INFO] StoreHypotheses:write_stats:   time spent so far: 9.564039468765259
+10060: [INFO] StoreHypotheses:write_stats:   n_states: 3
+10060: [INFO] StoreHypotheses:write_stats:   n_queries=931
+10060: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=772
+10060: [INFO] StoreHypotheses:write_stats:   n_letters=10059
+10060: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=9671
+
+time spent in lstar.learn(): 9.566432237625122
+n_states: 3
+n_queries=931
+n_submitted_queries=772
+n_letters=10059
+n_submitted_letters=9671
+L# learning rounds: 2, learning time: 3.05s, equivalence query time: 6.52s
+Results are in /mnt/c/Users/xace/OneDrive/Documents/GitHub/INSuRE-F26/pylstar-aalpy-tls/results/full_11_16/client--gnutls_3.7.0--freak--v1.0--pylstar-tls-lsharp--r1

@@ -1,0 +1,19 @@
+campaign	full_11_16
+kind	server
+image	tls-test-bed/mbedtls:mbedtls-2.16.2
+tls_version	1.0
+scenario	tls10
+extra_args	
+eq_method	RW:10000:0.1
+inferer	pylstar-tls-lsharp
+repeat	1
+jobs	12
+start_epoch	1794916471.730596652
+end_epoch	1794916508.287612838
+wall_seconds	36.6
+exit_code	0
+status	ok
+loadavg_start	13.48 8.65 6.33
+loadavg_end	10.55 8.47 6.36
+host	VeryExpensiveSpaceHeater
+command	INFERER_IMAGE=tls-test-bed/pylstar-tls-lsharp ./infer-server.sh tls-test-bed/mbedtls:mbedtls-2.16.2 1.0 tls10 -E RW:10000:0.1

@@ -1,0 +1,73 @@
+8834a51fb9aa6ad41e385cfc3f0a0ec9f3beb79c8627a66dc55ec4429bbff393
+make: Entering directory '/mnt/c/Users/xace/OneDrive/Documents/GitHub/INSuRE-F26/pylstar-aalpy-tls/crypto'
+make: Leaving directory '/mnt/c/Users/xace/OneDrive/Documents/GitHub/INSuRE-F26/pylstar-aalpy-tls/crypto'
+/root/src/scapy/scapy/layers/tls/crypto/cipher_block.py:156: CryptographyDeprecationWarning: IDEA has been deprecated
+  pc_cls = algorithms.IDEA
+/root/src/scapy/scapy/layers/tls/crypto/cipher_block.py:162: CryptographyDeprecationWarning: SEED has been deprecated
+  pc_cls = algorithms.SEED
+/root/src/scapy/scapy/layers/ipsec.py:471: CryptographyDeprecationWarning: Blowfish has been deprecated
+  cipher=algorithms.Blowfish,
+/root/src/scapy/scapy/layers/ipsec.py:485: CryptographyDeprecationWarning: CAST5 has been deprecated
+  cipher=algorithms.CAST5,
+learner: L# (AALpy 2.0.0)
+input_letters ['TLS12ServerHello', 'TLS12CertificateRequest', 'TLS12Certificate_valid', 'TLS12Certificate_invalid', 'TLS12Certificate_untrusted', 'TLS12EmptyCertificate', 'TLS12ServerKeyExchange', 'TLS12ServerHelloDone', 'TLSChangeCipherSpec', 'TLSFinished', 'TLSApplicationData', 'TLSCloseNotify']
+eqtests: RandomWalk(10000, 0.1)
+timeout: 1.0
+2308: [INFO] StoreHypotheses:find_counterexample: Storing hyptohesis #0 in /results/0.automaton
+2308: [INFO] StoreHypotheses:write_stats:   time spent so far: 1.263211965560913
+2308: [INFO] StoreHypotheses:write_stats:   n_states: 1
+2308: [INFO] StoreHypotheses:write_stats:   n_queries=12
+2308: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=12
+2308: [INFO] StoreHypotheses:write_stats:   n_letters=12
+2308: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=12
+2315: [INFO] HappyPathFirst:find_counterexample: Starting the HappyPath Algorithm to search for a counter-example
+2384: [INFO] HappyPathFirst:__check_equivalence: Found a counter-example : input: '[Letter('TLS12ServerHello'), Letter('TLS12Certificate_untrusted'), Letter('TLS12ServerKeyExchange'), Letter('TLS12CertificateRequest'), Letter('TLS12ServerHelloDone'), Letter('TLSChangeCipherSpec'), Letter('TLSFinished'), Letter('TLSApplicationData')]', expected: '[Letter('INTERNAL ERROR DURING EMISSION'), Letter('FatalAlert(unexpected_message)'), Letter('FatalAlert(unexpected_message)'), Letter('FatalAlert(unexpected_message)'), Letter('FatalAlert(unexpected_message)'), Letter('No RSP'), Letter('FatalAlert(unexpected_message)'), Letter('FatalAlert(unexpected_message)')]', observed: '[Letter('INTERNAL ERROR DURING EMISSION'), Letter('INTERNAL ERROR DURING EMISSION'), Letter('INTERNAL ERROR DURING EMISSION'), Letter('INTERNAL ERROR DURING EMISSION'), Letter('INTERNAL ERROR DURING EMISSION'), Letter('INTERNAL ERROR DURING EMISSION'), Letter('INTERNAL ERROR DURING EMISSION'), Letter('INTERNAL ERROR DURING EMISSION')]'
+2384: [INFO] StoreHypotheses:write_stats: Found a counterexample: OutputQuery(I = [Letter('TLS12ServerHello'), Letter('TLS12Certificate_untrusted'), Letter('TLS12ServerKeyExchange'), Letter('TLS12CertificateRequest'), Letter('TLS12ServerHelloDone'), Letter('TLSChangeCipherSpec'), Letter('TLSFinished'), Letter('TLSApplicationData')], O = [Letter('INTERNAL ERROR DURING EMISSION'), Letter('INTERNAL ERROR DURING EMISSION'), Letter('INTERNAL ERROR DURING EMISSION'), Letter('INTERNAL ERROR DURING EMISSION'), Letter('INTERNAL ERROR DURING EMISSION'), Letter('INTERNAL ERROR DURING EMISSION'), Letter('INTERNAL ERROR DURING EMISSION'), Letter('INTERNAL ERROR DURING EMISSION')])
+2384: [INFO] StoreHypotheses:write_stats:   time spent so far: 1.3398921489715576
+2385: [INFO] StoreHypotheses:write_stats:   n_states: 1
+2385: [INFO] StoreHypotheses:write_stats:   n_queries=13
+2385: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=13
+2385: [INFO] StoreHypotheses:write_stats:   n_letters=20
+2385: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=20
+3979: [INFO] StoreHypotheses:find_counterexample: Storing hyptohesis #1 in /results/1.automaton
+3979: [INFO] StoreHypotheses:write_stats:   time spent so far: 2.9348013401031494
+3979: [INFO] StoreHypotheses:write_stats:   n_states: 3
+3979: [INFO] StoreHypotheses:write_stats:   n_queries=48
+3979: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=47
+3979: [INFO] StoreHypotheses:write_stats:   n_letters=119
+3979: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=111
+3984: [INFO] HappyPathFirst:find_counterexample: Starting the HappyPath Algorithm to search for a counter-example
+4506: [INFO] RandomWalkMethod:find_counterexample: Starting the RandomWalk Algorithm to search for a counter-example
+4556: [INFO] RandomWalkMethod:__check_equivalence: Found a counter-example : input: '[Letter('TLSCloseNotify'), Letter('TLSFinished'), Letter('TLSChangeCipherSpec'), Letter('TLSFinished'), Letter('TLS12Certificate_valid'), Letter('TLSCloseNotify'), Letter('TLS12ServerHello'), Letter('TLS12Certificate_valid'), Letter('TLS12CertificateRequest'), Letter('TLS12Certificate_invalid'), Letter('TLS12ServerHello')]', expected: '[Letter('FatalAlert(unexpected_message)'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('INTERNAL ERROR DURING EMISSION'), Letter('INTERNAL ERROR DURING EMISSION'), Letter('INTERNAL ERROR DURING EMISSION'), Letter('INTERNAL ERROR DURING EMISSION'), Letter('INTERNAL ERROR DURING EMISSION')]', observed: '[Letter('FatalAlert(unexpected_message)'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF')]'
+4556: [INFO] StoreHypotheses:write_stats: Found a counterexample: OutputQuery(I = [Letter('TLSCloseNotify'), Letter('TLSFinished'), Letter('TLSChangeCipherSpec'), Letter('TLSFinished'), Letter('TLS12Certificate_valid'), Letter('TLSCloseNotify'), Letter('TLS12ServerHello'), Letter('TLS12Certificate_valid'), Letter('TLS12CertificateRequest'), Letter('TLS12Certificate_invalid'), Letter('TLS12ServerHello')], O = [Letter('FatalAlert(unexpected_message)'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF')])
+4556: [INFO] StoreHypotheses:write_stats:   time spent so far: 3.511199474334717
+4556: [INFO] StoreHypotheses:write_stats:   n_states: 3
+4556: [INFO] StoreHypotheses:write_stats:   n_queries=61
+4556: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=60
+4556: [INFO] StoreHypotheses:write_stats:   n_letters=208
+4556: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=200
+4740: [INFO] StoreHypotheses:find_counterexample: Storing hyptohesis #2 in /results/2.automaton
+4740: [INFO] StoreHypotheses:write_stats:   time spent so far: 3.695162296295166
+4740: [INFO] StoreHypotheses:write_stats:   n_states: 4
+4740: [INFO] StoreHypotheses:write_stats:   n_queries=97
+4740: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=95
+4740: [INFO] StoreHypotheses:write_stats:   n_letters=331
+4740: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=312
+4745: [INFO] HappyPathFirst:find_counterexample: Starting the HappyPath Algorithm to search for a counter-example
+4745: [INFO] RandomWalkMethod:find_counterexample: Starting the RandomWalk Algorithm to search for a counter-example
+31364: [INFO] StoreHypotheses:write_stats: Inference converged
+31364: [INFO] StoreHypotheses:write_stats:   time spent so far: 30.319735288619995
+31364: [INFO] StoreHypotheses:write_stats:   n_states: 4
+31364: [INFO] StoreHypotheses:write_stats:   n_queries=984
+31364: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=893
+31364: [INFO] StoreHypotheses:write_stats:   n_letters=10329
+31364: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=10116
+
+time spent in lstar.learn(): 30.32237958908081
+n_states: 4
+n_queries=984
+n_submitted_queries=893
+n_letters=10329
+n_submitted_letters=10116
+L# learning rounds: 3, learning time: 3.03s, equivalence query time: 27.29s
+Results are in /mnt/c/Users/xace/OneDrive/Documents/GitHub/INSuRE-F26/pylstar-aalpy-tls/results/full_11_16/client--curl-wolfssl_v4.2.0-stable--tls10--v1.0--pylstar-tls-lsharp--r1

@@ -1,0 +1,380 @@
+e7087adc59dff4c8cf96c812d82e3b00ab8a2dcc652a22f60c80a7bb2c35d4a4
+/root/src/scapy/scapy/layers/tls/crypto/cipher_block.py:156: CryptographyDeprecationWarning: IDEA has been deprecated
+  pc_cls = algorithms.IDEA
+/root/src/scapy/scapy/layers/tls/crypto/cipher_block.py:162: CryptographyDeprecationWarning: SEED has been deprecated
+  pc_cls = algorithms.SEED
+/root/src/scapy/scapy/layers/ipsec.py:471: CryptographyDeprecationWarning: Blowfish has been deprecated
+  cipher=algorithms.Blowfish,
+/root/src/scapy/scapy/layers/ipsec.py:485: CryptographyDeprecationWarning: CAST5 has been deprecated
+  cipher=algorithms.CAST5,
+learner: L# (AALpy 2.0.0)
+input_letters ['TLS13ClientHello', 'TLSChangeCipherSpec', 'TLS13EmptyCertificate', 'TLSInvalidCertificateVerify', 'TLSFinished', 'TLSApplicationData', 'TLSApplicationDataEmpty', 'TLSCloseNotify', 'NoRenegotiation', 'TLSCertificateVerify', 'TLS13Certificate_valid']
+eqtests: RandomWalk(10000, 0.1)
+timeout: 1.0
+11560: [INFO] StoreHypotheses:find_counterexample: Storing hyptohesis #0 in /results/0.automaton
+11560: [INFO] StoreHypotheses:write_stats:   time spent so far: 11.112801790237427
+11560: [INFO] StoreHypotheses:write_stats:   n_states: 1
+11560: [INFO] StoreHypotheses:write_stats:   n_queries=11
+11560: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=11
+11560: [INFO] StoreHypotheses:write_stats:   n_letters=11
+11560: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=11
+11568: [INFO] HappyPathFirst:find_counterexample: Starting the HappyPath Algorithm to search for a counter-example
+11635: [INFO] HappyPathFirst:__check_equivalence: Found a counter-example : input: '[Letter('TLS13ClientHello'), Letter('TLS13Certificate_valid'), Letter('TLSChangeCipherSpec'), Letter('TLSCertificateVerify'), Letter('TLSChangeCipherSpec'), Letter('TLSFinished')]', expected: '[Letter('TLS13ServerHello+TLSChangeCipherSpec+TLSEncryptedExtensions+TLS13Certificate+TLSCertificateVerify+TLSFinished'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP')]', observed: '[Letter('TLS13ServerHello+TLSChangeCipherSpec+TLSEncryptedExtensions+TLS13Certificate+TLSCertificateVerify+TLSFinished'), Letter('UnknownPacket'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF')]'
+11635: [INFO] StoreHypotheses:write_stats: Found a counterexample: OutputQuery(I = [Letter('TLS13ClientHello'), Letter('TLS13Certificate_valid'), Letter('TLSChangeCipherSpec'), Letter('TLSCertificateVerify'), Letter('TLSChangeCipherSpec'), Letter('TLSFinished')], O = [Letter('TLS13ServerHello+TLSChangeCipherSpec+TLSEncryptedExtensions+TLS13Certificate+TLSCertificateVerify+TLSFinished'), Letter('UnknownPacket'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF')])
+11635: [INFO] StoreHypotheses:write_stats:   time spent so far: 11.18815279006958
+11635: [INFO] StoreHypotheses:write_stats:   n_states: 1
+11635: [INFO] StoreHypotheses:write_stats:   n_queries=13
+11635: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=12
+11635: [INFO] StoreHypotheses:write_stats:   n_letters=18
+11635: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=17
+31326: [INFO] StoreHypotheses:find_counterexample: Storing hyptohesis #1 in /results/1.automaton
+31326: [INFO] StoreHypotheses:write_stats:   time spent so far: 30.87941265106201
+31326: [INFO] StoreHypotheses:write_stats:   n_states: 4
+31326: [INFO] StoreHypotheses:write_stats:   n_queries=55
+31326: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=53
+31326: [INFO] StoreHypotheses:write_stats:   n_letters=158
+31326: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=151
+31331: [INFO] HappyPathFirst:find_counterexample: Starting the HappyPath Algorithm to search for a counter-example
+31346: [INFO] RandomWalkMethod:find_counterexample: Starting the RandomWalk Algorithm to search for a counter-example
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+48522: [INFO] RandomWalkMethod:__check_equivalence: Found a counter-example : input: '[Letter('TLS13EmptyCertificate'), Letter('TLSCloseNotify'), Letter('NoRenegotiation'), Letter('TLSCloseNotify'), Letter('TLS13ClientHello'), Letter('NoRenegotiation'), Letter('NoRenegotiation'), Letter('TLSInvalidCertificateVerify'), Letter('TLSFinished'), Letter('TLS13ClientHello'), Letter('TLSChangeCipherSpec'), Letter('NoRenegotiation'), Letter('TLSCloseNotify'), Letter('TLS13EmptyCertificate'), Letter('TLSChangeCipherSpec'), Letter('TLS13EmptyCertificate'), Letter('TLSCertificateVerify'), Letter('TLSInvalidCertificateVerify'), Letter('TLS13Certificate_valid'), Letter('TLS13ClientHello'), Letter('TLSApplicationDataEmpty'), Letter('TLS13ClientHello'), Letter('TLSCloseNotify'), Letter('TLSCloseNotify'), Letter('TLSCertificateVerify'), Letter('TLS13Certificate_valid'), Letter('TLS13EmptyCertificate'), Letter('TLSCertificateVerify'), Letter('NoRenegotiation'), Letter('TLSCertificateVerify'), Letter('TLSApplicationData'), Letter('TLSChangeCipherSpec'), Letter('TLS13Certificate_valid'), Letter('TLSChangeCipherSpec'), Letter('TLSFinished'), Letter('TLSApplicationData'), Letter('TLS13ClientHello'), Letter('TLSApplicationData'), Letter('TLSInvalidCertificateVerify')]', expected: '[Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('TLS13ServerHello+TLSChangeCipherSpec+TLSEncryptedExtensions+TLS13Certificate+TLSCertificateVerify+TLSFinished'), Letter('No RSP'), Letter('No RSP'), Letter('UnknownPacket'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF')]', observed: '[Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('TLS13ServerHello+TLSChangeCipherSpec+UnknownPacket+UnknownPacket+UnknownPacket+UnknownPacket'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('UnknownPacket'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF')]'
+48522: [INFO] StoreHypotheses:write_stats: Found a counterexample: OutputQuery(I = [Letter('TLS13EmptyCertificate'), Letter('TLSCloseNotify'), Letter('NoRenegotiation'), Letter('TLSCloseNotify'), Letter('TLS13ClientHello'), Letter('NoRenegotiation'), Letter('NoRenegotiation'), Letter('TLSInvalidCertificateVerify'), Letter('TLSFinished'), Letter('TLS13ClientHello'), Letter('TLSChangeCipherSpec'), Letter('NoRenegotiation'), Letter('TLSCloseNotify'), Letter('TLS13EmptyCertificate'), Letter('TLSChangeCipherSpec'), Letter('TLS13EmptyCertificate'), Letter('TLSCertificateVerify'), Letter('TLSInvalidCertificateVerify'), Letter('TLS13Certificate_valid'), Letter('TLS13ClientHello'), Letter('TLSApplicationDataEmpty'), Letter('TLS13ClientHello'), Letter('TLSCloseNotify'), Letter('TLSCloseNotify'), Letter('TLSCertificateVerify'), Letter('TLS13Certificate_valid'), Letter('TLS13EmptyCertificate'), Letter('TLSCertificateVerify'), Letter('NoRenegotiation'), Letter('TLSCertificateVerify'), Letter('TLSApplicationData'), Letter('TLSChangeCipherSpec'), Letter('TLS13Certificate_valid'), Letter('TLSChangeCipherSpec'), Letter('TLSFinished'), Letter('TLSApplicationData'), Letter('TLS13ClientHello'), Letter('TLSApplicationData'), Letter('TLSInvalidCertificateVerify')], O = [Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('TLS13ServerHello+TLSChangeCipherSpec+UnknownPacket+UnknownPacket+UnknownPacket+UnknownPacket'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('UnknownPacket'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF')])
+48522: [INFO] StoreHypotheses:write_stats:   time spent so far: 48.07476282119751
+48522: [INFO] StoreHypotheses:write_stats:   n_states: 4
+48522: [INFO] StoreHypotheses:write_stats:   n_queries=60
+48522: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=57
+48522: [INFO] StoreHypotheses:write_stats:   n_letters=219
+48522: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=209
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+176467: [INFO] StoreHypotheses:find_counterexample: Storing hyptohesis #2 in /results/2.automaton
+176468: [INFO] StoreHypotheses:write_stats:   time spent so far: 176.02054142951965
+176468: [INFO] StoreHypotheses:write_stats:   n_states: 6
+176468: [INFO] StoreHypotheses:write_stats:   n_queries=97
+176468: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=93
+176468: [INFO] StoreHypotheses:write_stats:   n_letters=458
+176468: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=409
+176473: [INFO] HappyPathFirst:find_counterexample: Starting the HappyPath Algorithm to search for a counter-example
+176473: [INFO] RandomWalkMethod:find_counterexample: Starting the RandomWalk Algorithm to search for a counter-example
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: Unknown TLS version
+WARNING: more Unknown TLS version
+3378852: [INFO] RandomWalkMethod:__check_equivalence: Found a counter-example : input: '[Letter('TLS13ClientHello'), Letter('TLSApplicationDataEmpty'), Letter('TLSFinished'), Letter('TLSApplicationData')]', expected: '[Letter('TLS13ServerHello+TLSChangeCipherSpec+TLSEncryptedExtensions+TLS13Certificate+TLSCertificateVerify+TLSFinished'), Letter('No RSP'), Letter('No RSP'), Letter('TLSApplicationData+TLSApplicationData')]', observed: '[Letter('TLS13ServerHello+TLSChangeCipherSpec+TLSEncryptedExtensions+TLS13Certificate+TLSCertificateVerify+TLSFinished'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP')]'
+3378852: [INFO] StoreHypotheses:write_stats: Found a counterexample: OutputQuery(I = [Letter('TLS13ClientHello'), Letter('TLSApplicationDataEmpty'), Letter('TLSFinished'), Letter('TLSApplicationData')], O = [Letter('TLS13ServerHello+TLSChangeCipherSpec+TLSEncryptedExtensions+TLS13Certificate+TLSCertificateVerify+TLSFinished'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP')])
+3378852: [INFO] StoreHypotheses:write_stats:   time spent so far: 3378.405023097992
+3378852: [INFO] StoreHypotheses:write_stats:   n_states: 6
+3378852: [INFO] StoreHypotheses:write_stats:   n_queries=640
+3378852: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=575
+3378852: [INFO] StoreHypotheses:write_stats:   n_letters=6461
+3378852: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=6275
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/pylstar/KnowledgeBase.py", line 113, in _resolve_word
+    return self.knowledge_tree.get_output_word(word)
+  File "/usr/local/lib/python3.10/site-packages/pylstar/KnowledgeTree.py", line 181, in get_output_word
+    raise Exception("No path found")
+Exception: No path found
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/lsharp/run_lsharp.py", line 47, in <module>
+    main()
+  File "/opt/lsharp/run_lsharp.py", line 35, in main
+    module.main()
+  File "/root/pylstar-tls/src/infer_server.py", line 226, in main
+    state_machine = lstar.learn()
+  File "/opt/lsharp/lsharp_learner.py", line 142, in learn
+    mealy, info = run_Lsharp(
+  File "/usr/local/lib/python3.10/site-packages/aalpy/learning_algs/deterministic/LSharp.py", line 65, in run_Lsharp
+    hypothesis = ob_tree.build_hypothesis()
+  File "/usr/local/lib/python3.10/site-packages/aalpy/learning_algs/deterministic/ObservationTree.py", line 724, in build_hypothesis
+    self.make_observation_tree_adequate()
+  File "/usr/local/lib/python3.10/site-packages/aalpy/learning_algs/deterministic/ObservationTree.py", line 740, in make_observation_tree_adequate
+    self.make_basis_complete()
+  File "/usr/local/lib/python3.10/site-packages/aalpy/learning_algs/deterministic/ObservationTree.py", line 431, in make_basis_complete
+    self.explore_frontier(basis_state, inp)
+  File "/usr/local/lib/python3.10/site-packages/aalpy/learning_algs/deterministic/ObservationTree.py", line 474, in explore_frontier
+    outputs = self.sul.query(inputs)
+  File "/opt/lsharp/lsharp_learner.py", line 50, in query
+    return self._resolve(word) if word else []
+  File "/opt/lsharp/lsharp_learner.py", line 44, in _resolve
+    output = self.knowledge_base._resolve_word(Word([Letter(s) for s in word]))
+  File "/usr/local/lib/python3.10/site-packages/pylstar/KnowledgeBase.py", line 123, in _resolve_word
+    self.knowledge_tree.add_word(input_word = word, output_word = output)
+  File "/usr/local/lib/python3.10/site-packages/pylstar/KnowledgeTree.py", line 222, in add_word
+    self.__add_letters(input_word.letters, output_word.letters)
+  File "/usr/local/lib/python3.10/site-packages/pylstar/KnowledgeTree.py", line 307, in __add_letters
+    return retained_root.traverse(input_letters, output_letters)
+  File "/usr/local/lib/python3.10/site-packages/pylstar/KnowledgeTree.py", line 103, in traverse
+    return [self.output_letter] + child.traverse(new_input_letters, output_letters = new_output_letters)
+  File "/usr/local/lib/python3.10/site-packages/pylstar/KnowledgeTree.py", line 103, in traverse
+    return [self.output_letter] + child.traverse(new_input_letters, output_letters = new_output_letters)
+  File "/usr/local/lib/python3.10/site-packages/pylstar/KnowledgeTree.py", line 94, in traverse
+    raise Exception("Incompatible path found, expected '{}' found '{}'".format(child.output_letter.symbols, current_output_letter.symbols))
+Exception: Incompatible path found, expected '{'FatalAlert(bad_record_mac)'}' found '{'UnknownPacket'}'

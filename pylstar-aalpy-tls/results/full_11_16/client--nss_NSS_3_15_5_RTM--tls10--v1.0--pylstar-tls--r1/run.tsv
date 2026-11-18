@@ -1,0 +1,19 @@
+campaign	full_11_16
+kind	client
+image	tls-test-bed/nss:NSS_3_15_5_RTM
+tls_version	1.0
+scenario	tls10
+extra_args	
+eq_method	RW:10000:0.1
+inferer	pylstar-tls
+repeat	1
+jobs	12
+start_epoch	1794949206.332223727
+end_epoch	1794949210.659565085
+wall_seconds	4.3
+exit_code	0
+status	ok
+loadavg_start	2.06 1.78 1.58
+loadavg_end	1.98 1.76 1.57
+host	VeryExpensiveSpaceHeater
+command	INFERER_IMAGE=tls-test-bed/pylstar-tls ./infer-client.sh tls-test-bed/nss:NSS_3_15_5_RTM 1.0 tls10 -E RW:10000:0.1

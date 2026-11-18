@@ -1,0 +1,7 @@
+Found a counterexample: OutputQuery(I = [Letter('TLSChangeCipherSpec'), Letter('TLS12Certificate_untrusted'), Letter('TLS12Certificate_valid'), Letter('TLS12ClientHelloDH'), Letter('TLS12Certificate_untrusted'), Letter('TLSApplicationData'), Letter('TLS12CertificateRequest'), Letter('TLSApplicationDataEmpty'), Letter('TLSApplicationDataEmpty'), Letter('TLS12EmptyCertificate'), Letter('TLS12ClientHelloDH'), Letter('TLS12CertificateRequest'), Letter('TLSApplicationDataEmpty'), Letter('TLSChangeCipherSpec'), Letter('TLSCertificateVerify'), Letter('TLS12CH_WITH_00_RandBytes'), Letter('TLS12ClientKeyExchange'), Letter('TLS12CH_WITH_00_RandBytes'), Letter('TLS12ClientKeyExchange'), Letter('TLS12CertificateRequest'), Letter('NoRenegotiation'), Letter('NoRenegotiation'), Letter('TLS12ClientHelloRSA'), Letter('TLS12Certificate_untrusted'), Letter('TLSCloseNotify'), Letter('TLS12Certificate_valid')], O = [Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('EOF')])
+  time spent so far: 636.9373185634613
+  n_states: 10
+  n_queries=2437
+  n_submitted_queries=2297
+  n_letters=12220
+  n_submitted_letters=11620

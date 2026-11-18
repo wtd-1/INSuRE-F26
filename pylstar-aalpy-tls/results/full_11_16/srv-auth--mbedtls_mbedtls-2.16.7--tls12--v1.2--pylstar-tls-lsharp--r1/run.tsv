@@ -1,0 +1,19 @@
+campaign	full_11_16
+kind	srv-auth
+image	tls-test-bed/mbedtls:mbedtls-2.16.7
+tls_version	1.2
+scenario	tls12
+extra_args	
+eq_method	RW:10000:0.1
+inferer	pylstar-tls-lsharp
+repeat	1
+jobs	12
+start_epoch	1794916810.202285217
+end_epoch	1794916815.080506693
+wall_seconds	4.9
+exit_code	1
+status	failed
+loadavg_start	7.24 7.75 6.62
+loadavg_end	7.38 7.77 6.63
+host	VeryExpensiveSpaceHeater
+command	INFERER_IMAGE=tls-test-bed/pylstar-tls-lsharp ./infer-srv-auth.sh tls-test-bed/mbedtls:mbedtls-2.16.7 1.2 tls12 -E RW:10000:0.1

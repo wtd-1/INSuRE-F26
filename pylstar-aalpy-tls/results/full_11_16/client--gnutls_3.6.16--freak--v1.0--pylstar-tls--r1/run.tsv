@@ -1,0 +1,19 @@
+campaign	full_11_16
+kind	client
+image	tls-test-bed/gnutls:3.6.16
+tls_version	1.0
+scenario	freak
+extra_args	
+eq_method	RW:10000:0.1
+inferer	pylstar-tls
+repeat	1
+jobs	12
+start_epoch	1794912646.816448556
+end_epoch	1794912662.092977957
+wall_seconds	15.3
+exit_code	0
+status	ok
+loadavg_start	4.94 5.91 7.25
+loadavg_end	4.60 5.79 7.18
+host	VeryExpensiveSpaceHeater
+command	INFERER_IMAGE=tls-test-bed/pylstar-tls ./infer-client.sh tls-test-bed/gnutls:3.6.16 1.0 freak -E RW:10000:0.1

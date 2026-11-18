@@ -1,0 +1,8 @@
+TLS12Certificate_valid TLS12ServerHelloDone TLS12ServerHello_RSA_EXPORT TLS12ServerKeyExchange TLSApplicationData TLSChangeCipherSpec TLSFinished
+0, 0, TLS12Certificate_valid, Warning(close_notify)
+0, 0, TLS12ServerHelloDone, Warning(close_notify)
+0, 0, TLS12ServerHello_RSA_EXPORT, Warning(close_notify)
+0, 0, TLS12ServerKeyExchange, Warning(close_notify)
+0, 0, TLSApplicationData, Warning(close_notify)
+0, 0, TLSChangeCipherSpec, Warning(close_notify)
+0, 0, TLSFinished, Warning(close_notify)

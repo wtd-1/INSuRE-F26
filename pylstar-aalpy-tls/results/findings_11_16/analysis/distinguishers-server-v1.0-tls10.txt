@@ -1,0 +1,4 @@
+4 classes
+2 distinguishing sequences:
+  TLS12CH_WITH_00_RandBytes, TLSChangeCipherSpec
+  TLS12CH_WITH_00_RandBytes, TLS12ClientKeyExchange, TLSChangeCipherSpec, TLS12Certificate_valid

@@ -1,0 +1,17 @@
+baff319e90ce559933e9450f6a1cc29dfb71b9de05d009f05af1e4299bcd1859
+/root/src/scapy/scapy/layers/tls/crypto/cipher_block.py:156: CryptographyDeprecationWarning: IDEA has been deprecated
+  pc_cls = algorithms.IDEA
+/root/src/scapy/scapy/layers/tls/crypto/cipher_block.py:162: CryptographyDeprecationWarning: SEED has been deprecated
+  pc_cls = algorithms.SEED
+/root/src/scapy/scapy/layers/ipsec.py:471: CryptographyDeprecationWarning: Blowfish has been deprecated
+  cipher=algorithms.Blowfish,
+/root/src/scapy/scapy/layers/ipsec.py:485: CryptographyDeprecationWarning: CAST5 has been deprecated
+  cipher=algorithms.CAST5,
+learner: L# (AALpy 2.0.0)
+Unable to resolve tls-server-255433:4433
+usage: infer_server.py [-h] [-T TRIGGER_ENDPOINT_STR] [-R REMOTE_ENDPOINT_STR]
+                       [-C CRYPTO_MATERIAL_LIST] [--timeout TIMEOUT]
+                       [--expected-minimal-timeout EXPECTED_MINIMAL_TIMEOUT]
+                       [-E EQ_METHOD_STR] [--disable-happy-path-first]
+                       [-o OUTPUT_DIR] [-v] [-S SCENARIO] [--loops LOOPS]
+                       [messages ...]

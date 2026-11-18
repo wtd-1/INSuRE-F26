@@ -1,0 +1,37 @@
+TLS12CertificateRequest TLS12Certificate_invalid TLS12Certificate_untrusted TLS12Certificate_valid TLS12EmptyCertificate TLS12ServerHello TLS12ServerHelloDone TLS12ServerKeyExchange TLSApplicationData TLSChangeCipherSpec TLSCloseNotify TLSFinished
+0, 2, TLS12CertificateRequest, FatalAlert(unexpected_message)
+0, 2, TLS12Certificate_invalid, FatalAlert(unexpected_message)
+0, 2, TLS12Certificate_untrusted, FatalAlert(unexpected_message)
+0, 2, TLS12Certificate_valid, FatalAlert(unexpected_message)
+0, 2, TLS12EmptyCertificate, FatalAlert(unexpected_message)
+0, 1, TLS12ServerHello, No RSP
+0, 2, TLS12ServerHelloDone, FatalAlert(unexpected_message)
+0, 2, TLS12ServerKeyExchange, FatalAlert(unexpected_message)
+0, 2, TLSApplicationData, FatalAlert(unexpected_message)
+0, 2, TLSChangeCipherSpec, FatalAlert(unexpected_message)
+0, 2, TLSCloseNotify, EOF
+0, 2, TLSFinished, FatalAlert(unexpected_message)
+1, 2, TLS12CertificateRequest, FatalAlert(unexpected_message)
+1, 0, TLS12Certificate_invalid, No RSP
+1, 2, TLS12Certificate_untrusted, FatalAlert(unknown_ca)
+1, 0, TLS12Certificate_valid, No RSP
+1, 2, TLS12EmptyCertificate, FatalAlert(certificate_unknown)
+1, 2, TLS12ServerHello, FatalAlert(unexpected_message)
+1, 2, TLS12ServerHelloDone, FatalAlert(unexpected_message)
+1, 2, TLS12ServerKeyExchange, FatalAlert(unexpected_message)
+1, 2, TLSApplicationData, FatalAlert(unexpected_message)
+1, 2, TLSChangeCipherSpec, FatalAlert(unexpected_message)
+1, 2, TLSCloseNotify, EOF
+1, 2, TLSFinished, FatalAlert(unexpected_message)
+2, 2, TLS12CertificateRequest, EOF
+2, 2, TLS12Certificate_invalid, EOF
+2, 2, TLS12Certificate_untrusted, EOF
+2, 2, TLS12Certificate_valid, EOF
+2, 2, TLS12EmptyCertificate, EOF
+2, 2, TLS12ServerHello, EOF
+2, 2, TLS12ServerHelloDone, EOF
+2, 2, TLS12ServerKeyExchange, EOF
+2, 2, TLSApplicationData, EOF
+2, 2, TLSChangeCipherSpec, EOF
+2, 2, TLSCloseNotify, EOF
+2, 2, TLSFinished, EOF

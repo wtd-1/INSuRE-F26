@@ -1,0 +1,7 @@
+Found a counterexample: OutputQuery(I = [Letter('TLS12ServerKeyExchange'), Letter('TLS12Certificate_valid'), Letter('TLS12ServerHelloDone')], O = [Letter('FatalAlert(decode_error)'), Letter('EOF'), Letter('EOF')])
+  time spent so far: 1.1372706890106201
+  n_states: 1
+  n_queries=8
+  n_submitted_queries=8
+  n_letters=10
+  n_submitted_letters=10

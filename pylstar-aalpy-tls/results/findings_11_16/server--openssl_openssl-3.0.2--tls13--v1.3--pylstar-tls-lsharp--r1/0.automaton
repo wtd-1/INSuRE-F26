@@ -1,0 +1,12 @@
+NoRenegotiation TLS13Certificate_valid TLS13ClientHello TLS13EmptyCertificate TLSApplicationData TLSApplicationDataEmpty TLSCertificateVerify TLSChangeCipherSpec TLSCloseNotify TLSFinished TLSInvalidCertificateVerify
+0, 0, NoRenegotiation, FatalAlert(unexpected_message)
+0, 0, TLS13Certificate_valid, FatalAlert(unexpected_message)
+0, 0, TLS13ClientHello, TLS13ServerHello+TLSChangeCipherSpec+TLSEncryptedExtensions+TLS13Certificate+TLSCertificateVerify+TLSFinished
+0, 0, TLS13EmptyCertificate, FatalAlert(unexpected_message)
+0, 0, TLSApplicationData, FatalAlert(unexpected_message)
+0, 0, TLSApplicationDataEmpty, FatalAlert(unexpected_message)
+0, 0, TLSCertificateVerify, FatalAlert(unexpected_message)
+0, 0, TLSChangeCipherSpec, FatalAlert(unexpected_message)
+0, 0, TLSCloseNotify, FatalAlert(unexpected_message)
+0, 0, TLSFinished, FatalAlert(unexpected_message)
+0, 0, TLSInvalidCertificateVerify, FatalAlert(unexpected_message)

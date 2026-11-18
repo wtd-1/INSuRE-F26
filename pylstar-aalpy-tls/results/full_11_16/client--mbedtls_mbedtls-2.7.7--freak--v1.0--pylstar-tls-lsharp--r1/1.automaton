@@ -1,0 +1,15 @@
+TLS12Certificate_valid TLS12ServerHelloDone TLS12ServerHello_RSA_EXPORT TLS12ServerKeyExchange TLSApplicationData TLSChangeCipherSpec TLSFinished
+0, 0, TLS12Certificate_valid, FatalAlert(decode_error)
+0, 0, TLS12ServerHelloDone, FatalAlert(decode_error)
+0, 1, TLS12ServerHello_RSA_EXPORT, No RSP
+0, 0, TLS12ServerKeyExchange, FatalAlert(decode_error)
+0, 0, TLSApplicationData, FatalAlert(unexpected_message)
+0, 0, TLSChangeCipherSpec, EOF
+0, 0, TLSFinished, FatalAlert(decode_error)
+1, 1, TLS12Certificate_valid, No RSP
+1, 0, TLS12ServerHelloDone, FatalAlert(decode_error)
+1, 0, TLS12ServerHello_RSA_EXPORT, FatalAlert(decode_error)
+1, 0, TLS12ServerKeyExchange, FatalAlert(decode_error)
+1, 0, TLSApplicationData, FatalAlert(unexpected_message)
+1, 0, TLSChangeCipherSpec, FatalAlert(unexpected_message)
+1, 0, TLSFinished, FatalAlert(decode_error)

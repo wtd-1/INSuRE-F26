@@ -1,0 +1,13 @@
+TLS12CertificateRequest TLS12Certificate_invalid TLS12Certificate_untrusted TLS12Certificate_valid TLS12EmptyCertificate TLS12ServerHello TLS12ServerHelloDone TLS12ServerKeyExchange TLSApplicationData TLSChangeCipherSpec TLSCloseNotify TLSFinished
+0, 0, TLS12CertificateRequest, Warning(close_notify)
+0, 0, TLS12Certificate_invalid, Warning(close_notify)
+0, 0, TLS12Certificate_untrusted, Warning(close_notify)
+0, 0, TLS12Certificate_valid, Warning(close_notify)
+0, 0, TLS12EmptyCertificate, Warning(close_notify)
+0, 0, TLS12ServerHello, No RSP
+0, 0, TLS12ServerHelloDone, Warning(close_notify)
+0, 0, TLS12ServerKeyExchange, Warning(close_notify)
+0, 0, TLSApplicationData, Warning(close_notify)
+0, 0, TLSChangeCipherSpec, Warning(close_notify)
+0, 0, TLSCloseNotify, Warning(close_notify)
+0, 0, TLSFinished, Warning(close_notify)

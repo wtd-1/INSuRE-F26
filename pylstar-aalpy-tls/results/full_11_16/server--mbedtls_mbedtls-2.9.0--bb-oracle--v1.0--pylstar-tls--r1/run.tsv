@@ -1,0 +1,19 @@
+campaign	full_11_16
+kind	server
+image	tls-test-bed/mbedtls:mbedtls-2.9.0
+tls_version	1.0
+scenario	bb-oracle
+extra_args	
+eq_method	RW:10000:0.1
+inferer	pylstar-tls
+repeat	1
+jobs	12
+start_epoch	1794920175.540449350
+end_epoch	1794920214.371458511
+wall_seconds	38.8
+exit_code	0
+status	ok
+loadavg_start	7.70 7.56 7.84
+loadavg_end	7.37 7.49 7.80
+host	VeryExpensiveSpaceHeater
+command	INFERER_IMAGE=tls-test-bed/pylstar-tls ./infer-server.sh tls-test-bed/mbedtls:mbedtls-2.9.0 1.0 bb-oracle -E RW:10000:0.1

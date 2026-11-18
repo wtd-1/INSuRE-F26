@@ -1,0 +1,4 @@
+6 classes
+2 distinguishing sequences:
+  TLS12ClientHelloRSA, TLS12CKE_ok, TLSChangeCipherSpec, NoRenegotiation
+  TLS12ClientHelloRSA, TLS12CKE_wrong_tls_version

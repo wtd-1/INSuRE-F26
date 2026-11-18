@@ -1,0 +1,8 @@
+10 classes
+6 distinguishing sequences:
+  TLS13SH_WITH_00_RandBytes
+  TLS13ServerHello, TLSCloseNotify
+  TLS13ServerHello, TLS13EncryptedExtensions, TLS13CertificateRequest, TLS13Certificate_untrusted
+  TLS13ServerHello, TLS13EncryptedExtensions, TLS13CertificateRequest, TLS13Certificate_valid, TLS13CertificateVerify, TLSFinished, TLSApplicationData, TLSApplicationData
+  TLS13ServerHello, TLS13EncryptedExtensions, TLS13CertificateRequest, TLS13Certificate_valid, TLSFinished
+  TLS13ServerHello, TLSChangeCipherSpec, TLS13EncryptedExtensions, TLS13CertificateRequest, TLS13Certificate_valid, TLS13CertificateVerify, TLSFinished, TLS13CertificateRequest, TLS13ServerHello

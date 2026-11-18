@@ -1,0 +1,7 @@
+Found a counterexample: OutputQuery(I = [Letter('TLSHardCodedFinished'), Letter('TLS12CKE_key_null'), Letter('TLS12CKE_padding_inf_8'), Letter('TLSChangeCipherSpec')], O = [Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('FatalAlert(unexpected_message)')])
+  time spent so far: 24.68889021873474
+  n_states: 5
+  n_queries=87
+  n_submitted_queries=85
+  n_letters=366
+  n_submitted_letters=359

@@ -1,2 +1,15 @@
 *~
 containers
+
+# Python bytecode
+__pycache__/
+*.pyc
+
+# Campaign runner internals: docker build logs, .lock and pending-* markers
+results/**/.runner/
+
+# Per-run files nothing reads (pylstar's own log, usually empty)
+results/**/infer_*.log
+
+# Intermediate hypotheses (0.automaton, 1.automaton, ...). final.automaton is kept
+#results/**/[0-9]*.automaton

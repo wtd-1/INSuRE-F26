@@ -1,0 +1,71 @@
+fa2ce076c2ff97137bf29a531f31445558c9c084f1da8a191dcfff6b1bc5e218
+/root/src/scapy/scapy/layers/tls/crypto/cipher_block.py:156: CryptographyDeprecationWarning: IDEA has been deprecated
+  pc_cls = algorithms.IDEA
+/root/src/scapy/scapy/layers/tls/crypto/cipher_block.py:162: CryptographyDeprecationWarning: SEED has been deprecated
+  pc_cls = algorithms.SEED
+/root/src/scapy/scapy/layers/ipsec.py:471: CryptographyDeprecationWarning: Blowfish has been deprecated
+  cipher=algorithms.Blowfish,
+/root/src/scapy/scapy/layers/ipsec.py:485: CryptographyDeprecationWarning: CAST5 has been deprecated
+  cipher=algorithms.CAST5,
+learner: L# (AALpy 2.0.0)
+input_letters ['TLS12ClientHelloRSA', 'TLS12CKE_ok', 'TLS12CKE_wrong_tls_version', 'TLS12CKE_0002_modified', 'TLS12CKE_padding_inf_8', 'TLS12CKE_key_null', 'TLS12CKE_longer_pms', 'TLS12CKE_shorten_pms', 'TLSChangeCipherSpec', 'TLSHardCodedFinished', 'TLSCloseNotify', 'NoRenegotiation']
+eqtests: RandomWalk(10000, 0.1)
+timeout: 1.0
+1549: [INFO] StoreHypotheses:find_counterexample: Storing hyptohesis #0 in /results/0.automaton
+1549: [INFO] StoreHypotheses:write_stats:   time spent so far: 1.0255227088928223
+1549: [INFO] StoreHypotheses:write_stats:   n_states: 1
+1549: [INFO] StoreHypotheses:write_stats:   n_queries=12
+1549: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=12
+1549: [INFO] StoreHypotheses:write_stats:   n_letters=12
+1549: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=12
+1553: [INFO] HappyPathFirst:find_counterexample: Starting the HappyPath Algorithm to search for a counter-example
+3565: [INFO] HappyPathFirst:__check_equivalence: Found a counter-example : input: '[Letter('TLS12ClientHelloRSA'), Letter('TLS12CKE_0002_modified'), Letter('TLSChangeCipherSpec'), Letter('TLSHardCodedFinished')]', expected: '[Letter('TLSServerHello+TLSCertificate+TLSServerHelloDone'), Letter('EOF'), Letter('EOF'), Letter('EOF')]', observed: '[Letter('TLSServerHello+TLSCertificate+TLSServerHelloDone'), Letter('No RSP'), Letter('No RSP'), Letter('FatalAlert(bad_record_mac)')]'
+3565: [INFO] StoreHypotheses:write_stats: Found a counterexample: OutputQuery(I = [Letter('TLS12ClientHelloRSA'), Letter('TLS12CKE_0002_modified'), Letter('TLSChangeCipherSpec'), Letter('TLSHardCodedFinished')], O = [Letter('TLSServerHello+TLSCertificate+TLSServerHelloDone'), Letter('No RSP'), Letter('No RSP'), Letter('FatalAlert(bad_record_mac)')])
+3565: [INFO] StoreHypotheses:write_stats:   time spent so far: 3.0415141582489014
+3565: [INFO] StoreHypotheses:write_stats:   n_states: 1
+3565: [INFO] StoreHypotheses:write_stats:   n_queries=13
+3565: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=13
+3565: [INFO] StoreHypotheses:write_stats:   n_letters=16
+3565: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=16
+17789: [INFO] StoreHypotheses:find_counterexample: Storing hyptohesis #1 in /results/1.automaton
+17789: [INFO] StoreHypotheses:write_stats:   time spent so far: 17.265493631362915
+17789: [INFO] StoreHypotheses:write_stats:   n_states: 4
+17789: [INFO] StoreHypotheses:write_stats:   n_queries=115
+17789: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=114
+17789: [INFO] StoreHypotheses:write_stats:   n_letters=393
+17789: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=389
+17793: [INFO] HappyPathFirst:find_counterexample: Starting the HappyPath Algorithm to search for a counter-example
+17844: [INFO] RandomWalkMethod:find_counterexample: Starting the RandomWalk Algorithm to search for a counter-example
+17844: [INFO] RandomWalkMethod:__check_equivalence: Found a counter-example : input: '[Letter('TLSCloseNotify'), Letter('TLS12ClientHelloRSA'), Letter('TLS12CKE_key_null')]', expected: '[Letter('EOF'), Letter('TLSServerHello+TLSCertificate+TLSServerHelloDone'), Letter('No RSP')]', observed: '[Letter('EOF'), Letter('EOF'), Letter('EOF')]'
+17844: [INFO] StoreHypotheses:write_stats: Found a counterexample: OutputQuery(I = [Letter('TLSCloseNotify'), Letter('TLS12ClientHelloRSA'), Letter('TLS12CKE_key_null')], O = [Letter('EOF'), Letter('EOF'), Letter('EOF')])
+17844: [INFO] StoreHypotheses:write_stats:   time spent so far: 17.32070279121399
+17844: [INFO] StoreHypotheses:write_stats:   n_states: 4
+17844: [INFO] StoreHypotheses:write_stats:   n_queries=117
+17844: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=116
+17844: [INFO] StoreHypotheses:write_stats:   n_letters=400
+17844: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=396
+18316: [INFO] StoreHypotheses:find_counterexample: Storing hyptohesis #2 in /results/2.automaton
+18316: [INFO] StoreHypotheses:write_stats:   time spent so far: 17.793193340301514
+18316: [INFO] StoreHypotheses:write_stats:   n_states: 5
+18316: [INFO] StoreHypotheses:write_stats:   n_queries=191
+18316: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=189
+18316: [INFO] StoreHypotheses:write_stats:   n_letters=647
+18316: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=640
+18322: [INFO] HappyPathFirst:find_counterexample: Starting the HappyPath Algorithm to search for a counter-example
+18322: [INFO] RandomWalkMethod:find_counterexample: Starting the RandomWalk Algorithm to search for a counter-example
+23084: [INFO] StoreHypotheses:write_stats: Inference converged
+23084: [INFO] StoreHypotheses:write_stats:   time spent so far: 22.5611310005188
+23084: [INFO] StoreHypotheses:write_stats:   n_states: 5
+23084: [INFO] StoreHypotheses:write_stats:   n_queries=1112
+23084: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=1005
+23085: [INFO] StoreHypotheses:write_stats:   n_letters=10643
+23085: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=10404
+
+time spent in lstar.learn(): 22.563817024230957
+n_states: 5
+n_queries=1112
+n_submitted_queries=1005
+n_letters=10643
+n_submitted_letters=10404
+L# learning rounds: 3, learning time: 15.71s, equivalence query time: 6.85s
+Results are in /mnt/c/Users/xace/OneDrive/Documents/GitHub/INSuRE-F26/pylstar-aalpy-tls/results/full_11_16/server--mbedtls_mbedtls-2.1.0--bb-oracle--v1.0--pylstar-tls-lsharp--r1

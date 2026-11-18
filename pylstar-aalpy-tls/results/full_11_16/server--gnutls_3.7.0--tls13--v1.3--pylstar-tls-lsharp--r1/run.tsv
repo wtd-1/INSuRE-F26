@@ -1,0 +1,19 @@
+campaign	full_11_16
+kind	server
+image	tls-test-bed/gnutls:3.7.0
+tls_version	1.3
+scenario	tls13
+extra_args	
+eq_method	RW:10000:0.1
+inferer	pylstar-tls-lsharp
+repeat	1
+jobs	12
+start_epoch	1794913002.034879197
+end_epoch	1794913014.729707940
+wall_seconds	12.7
+exit_code	0
+status	ok
+loadavg_start	4.03 4.89 6.39
+loadavg_end	3.87 4.83 6.36
+host	VeryExpensiveSpaceHeater
+command	INFERER_IMAGE=tls-test-bed/pylstar-tls-lsharp ./infer-server.sh tls-test-bed/gnutls:3.7.0 1.3 tls13 -E RW:10000:0.1

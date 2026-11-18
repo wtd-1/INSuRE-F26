@@ -1,0 +1,42 @@
+725ed48b438de645fab0fd8289616116c2c3040399ced7e6c727b9e0d4f5b3de
+make: getcwd: No such file or directory
+make: Entering directory '(unreachable)/Users/xace/OneDrive/Documents/GitHub/INSuRE-F26/pylstar-aalpy-tls/crypto'
+make: getcwd: No such file or directory
+sh: 0: getcwd() failed: No such file or directory
+shell-init: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory
+chdir: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory
+make: Leaving an unknown directory
+/root/src/scapy/scapy/layers/tls/crypto/cipher_block.py:156: CryptographyDeprecationWarning: IDEA has been deprecated
+  pc_cls = algorithms.IDEA
+/root/src/scapy/scapy/layers/tls/crypto/cipher_block.py:162: CryptographyDeprecationWarning: SEED has been deprecated
+  pc_cls = algorithms.SEED
+/root/src/scapy/scapy/layers/ipsec.py:471: CryptographyDeprecationWarning: Blowfish has been deprecated
+  cipher=algorithms.Blowfish,
+/root/src/scapy/scapy/layers/ipsec.py:485: CryptographyDeprecationWarning: CAST5 has been deprecated
+  cipher=algorithms.CAST5,
+input_letters ['TLS12ServerHello_RSA_EXPORT', 'TLS12Certificate_valid', 'TLS12ServerKeyExchange', 'TLS12ServerHelloDone', 'TLSChangeCipherSpec', 'TLSFinished', 'TLSApplicationData']
+eqtests: RandomWalk(10000, 0.1)
+timeout: 1.0
+1600: [INFO] StoreHypotheses:find_counterexample: Storing hyptohesis #0 in /results/0.automaton
+1600: [INFO] StoreHypotheses:write_stats:   time spent so far: 1.0059220790863037
+1600: [INFO] StoreHypotheses:write_stats:   n_states: 1
+1600: [INFO] StoreHypotheses:write_stats:   n_queries=56
+1600: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=56
+1600: [INFO] StoreHypotheses:write_stats:   n_letters=105
+1600: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=105
+1604: [INFO] RandomWalkMethod:find_counterexample: Starting the RandomWalk Algorithm to search for a counter-example
+1954: [INFO] StoreHypotheses:write_stats: Inference converged
+1955: [INFO] StoreHypotheses:write_stats:   time spent so far: 1.3606209754943848
+1955: [INFO] StoreHypotheses:write_stats:   n_states: 1
+1955: [INFO] StoreHypotheses:write_stats:   n_queries=959
+1955: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=808
+1955: [INFO] StoreHypotheses:write_stats:   n_letters=10096
+1955: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=9712
+
+time spent in lstar.learn(): 1.3633637428283691
+n_states: 1
+n_queries=959
+n_submitted_queries=808
+n_letters=10096
+n_submitted_letters=9712
+Results are in /mnt/c/Users/xace/OneDrive/Documents/GitHub/INSuRE-F26/pylstar-aalpy-tls/results/full_11_16/client--nss_NSS_3_15_3_1_RTM--freak--v1.0--pylstar-tls--r1

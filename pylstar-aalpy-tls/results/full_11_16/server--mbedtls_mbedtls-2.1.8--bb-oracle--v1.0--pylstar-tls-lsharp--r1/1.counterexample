@@ -1,0 +1,7 @@
+Found a counterexample: OutputQuery(I = [Letter('TLSHardCodedFinished'), Letter('TLS12ClientHelloRSA'), Letter('TLS12CKE_0002_modified'), Letter('TLS12CKE_ok'), Letter('TLS12CKE_longer_pms'), Letter('TLS12CKE_shorten_pms'), Letter('TLS12CKE_0002_modified'), Letter('TLSHardCodedFinished'), Letter('TLS12CKE_key_null'), Letter('TLS12ClientHelloRSA'), Letter('TLS12CKE_ok'), Letter('TLS12CKE_wrong_tls_version'), Letter('TLS12CKE_padding_inf_8'), Letter('TLSHardCodedFinished'), Letter('TLS12CKE_ok')], O = [Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF')])
+  time spent so far: 17.464820861816406
+  n_states: 4
+  n_queries=120
+  n_submitted_queries=119
+  n_letters=433
+  n_submitted_letters=429

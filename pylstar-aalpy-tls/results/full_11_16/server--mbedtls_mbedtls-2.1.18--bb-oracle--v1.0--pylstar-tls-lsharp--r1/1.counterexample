@@ -1,0 +1,7 @@
+Found a counterexample: OutputQuery(I = [Letter('TLS12ClientHelloRSA'), Letter('TLS12CKE_key_null'), Letter('TLS12CKE_shorten_pms'), Letter('TLSCloseNotify'), Letter('TLSCloseNotify'), Letter('TLS12CKE_shorten_pms'), Letter('TLSChangeCipherSpec'), Letter('TLS12CKE_key_null'), Letter('TLS12CKE_wrong_tls_version'), Letter('TLS12CKE_0002_modified'), Letter('TLS12CKE_wrong_tls_version'), Letter('TLS12ClientHelloRSA'), Letter('TLS12CKE_key_null'), Letter('TLS12CKE_shorten_pms'), Letter('TLS12CKE_padding_inf_8'), Letter('TLSCloseNotify'), Letter('TLS12CKE_longer_pms'), Letter('TLS12CKE_shorten_pms'), Letter('TLS12CKE_0002_modified'), Letter('NoRenegotiation'), Letter('NoRenegotiation'), Letter('TLS12CKE_padding_inf_8'), Letter('TLS12CKE_key_null')], O = [Letter('TLSServerHello+TLSCertificate+TLSServerHelloDone'), Letter('No RSP'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF')])
+  time spent so far: 17.437880277633667
+  n_states: 4
+  n_queries=119
+  n_submitted_queries=118
+  n_letters=444
+  n_submitted_letters=440

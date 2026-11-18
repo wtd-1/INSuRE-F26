@@ -1,0 +1,19 @@
+campaign	full_11_16
+kind	server
+image	tls-test-bed/matrixssl:3.7.2
+tls_version	1.0
+scenario	bb-oracle
+extra_args	
+eq_method	RW:10000:0.1
+inferer	pylstar-tls
+repeat	1
+jobs	12
+start_epoch	1794913564.287061125
+end_epoch	1794913599.863590842
+wall_seconds	35.6
+exit_code	0
+status	ok
+loadavg_start	3.91 3.75 5.08
+loadavg_end	3.74 3.71 5.01
+host	VeryExpensiveSpaceHeater
+command	INFERER_IMAGE=tls-test-bed/pylstar-tls ./infer-server.sh tls-test-bed/matrixssl:3.7.2 1.0 bb-oracle -E RW:10000:0.1

@@ -1,0 +1,19 @@
+campaign	full_11_16
+kind	srv-auth
+image	tls-test-bed/erlang:OTP-24.0.3
+tls_version	1.3
+scenario	tls13
+extra_args	
+eq_method	RW:10000:0.1
+inferer	pylstar-tls-lsharp
+repeat	1
+jobs	12
+start_epoch	1794909051.856969212
+end_epoch	1794909056.483203576
+wall_seconds	4.6
+exit_code	1
+status	failed
+loadavg_start	44.47 30.72 18.60
+loadavg_end	41.63 30.36 18.54
+host	VeryExpensiveSpaceHeater
+command	INFERER_IMAGE=tls-test-bed/pylstar-tls-lsharp ./infer-srv-auth.sh tls-test-bed/erlang:OTP-24.0.3 1.3 tls13 -E RW:10000:0.1

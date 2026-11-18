@@ -1,0 +1,43 @@
+449fe8d262b35cf6610df68be7ce23a31db23735c2692aac731a30e634fde73b
+make: getcwd: No such file or directory
+make: Entering directory '(unreachable)/Users/xace/OneDrive/Documents/GitHub/INSuRE-F26/pylstar-aalpy-tls/crypto'
+make: getcwd: No such file or directory
+sh: 0: getcwd() failed: No such file or directory
+shell-init: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory
+chdir: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory
+make: Leaving an unknown directory
+/root/src/scapy/scapy/layers/tls/crypto/cipher_block.py:156: CryptographyDeprecationWarning: IDEA has been deprecated
+  pc_cls = algorithms.IDEA
+/root/src/scapy/scapy/layers/tls/crypto/cipher_block.py:162: CryptographyDeprecationWarning: SEED has been deprecated
+  pc_cls = algorithms.SEED
+/root/src/scapy/scapy/layers/ipsec.py:471: CryptographyDeprecationWarning: Blowfish has been deprecated
+  cipher=algorithms.Blowfish,
+/root/src/scapy/scapy/layers/ipsec.py:485: CryptographyDeprecationWarning: CAST5 has been deprecated
+  cipher=algorithms.CAST5,
+input_letters ['TLS12ServerHello', 'TLS12CertificateRequest', 'TLS12Certificate_valid', 'TLS12Certificate_invalid', 'TLS12Certificate_untrusted', 'TLS12EmptyCertificate', 'TLS12ServerKeyExchange', 'TLS12ServerHelloDone', 'TLSChangeCipherSpec', 'TLSFinished', 'TLSApplicationData', 'TLSCloseNotify']
+eqtests: RandomWalk(10000, 0.1)
+timeout: 1.0
+28878: [INFO] StoreHypotheses:find_counterexample: Storing hyptohesis #0 in /results/0.automaton
+28879: [INFO] StoreHypotheses:write_stats:   time spent so far: 28.380207300186157
+28879: [INFO] StoreHypotheses:write_stats:   n_states: 9
+28879: [INFO] StoreHypotheses:write_stats:   n_queries=1404
+28879: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=1308
+28879: [INFO] StoreHypotheses:write_stats:   n_letters=6756
+28879: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=6348
+28893: [INFO] HappyPathFirst:find_counterexample: Starting the HappyPath Algorithm to search for a counter-example
+44480: [INFO] RandomWalkMethod:find_counterexample: Starting the RandomWalk Algorithm to search for a counter-example
+46734: [INFO] StoreHypotheses:write_stats: Inference converged
+46734: [INFO] StoreHypotheses:write_stats:   time spent so far: 46.2357919216156
+46734: [INFO] StoreHypotheses:write_stats:   n_states: 9
+46734: [INFO] StoreHypotheses:write_stats:   n_queries=2309
+46734: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=2107
+46734: [INFO] StoreHypotheses:write_stats:   n_letters=16833
+46734: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=16184
+
+time spent in lstar.learn(): 46.24101901054382
+n_states: 9
+n_queries=2309
+n_submitted_queries=2107
+n_letters=16833
+n_submitted_letters=16184
+Results are in /mnt/c/Users/xace/OneDrive/Documents/GitHub/INSuRE-F26/pylstar-aalpy-tls/results/full_11_16/client--mbedtls_mbedtls-2.1.11-rc1--tls10--v1.0--pylstar-tls--r1

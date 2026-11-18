@@ -1,0 +1,7 @@
+Found a counterexample: OutputQuery(I = [Letter('TLSFinished'), Letter('TLS12CH_WITH_00_RandBytes')], O = [Letter('EOF'), Letter('EOF')])
+  time spent so far: 37.75557255744934
+  n_states: 5
+  n_queries=196
+  n_submitted_queries=193
+  n_letters=725
+  n_submitted_letters=711

@@ -1,0 +1,7 @@
+Found a counterexample: OutputQuery(I = [Letter('TLSHardCodedFinished'), Letter('TLS12CKE_shorten_pms'), Letter('TLS12ClientHelloRSA'), Letter('TLS12CKE_ok'), Letter('TLS12CKE_key_null'), Letter('TLS12CKE_ok'), Letter('TLSHardCodedFinished')], O = [Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP')])
+  time spent so far: 28.651251792907715
+  n_states: 5
+  n_queries=89
+  n_submitted_queries=88
+  n_letters=333
+  n_submitted_letters=329

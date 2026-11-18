@@ -1,0 +1,37 @@
+TLS12CertificateRequest TLS12Certificate_invalid TLS12Certificate_untrusted TLS12Certificate_valid TLS12EmptyCertificate TLS12ServerHello TLS12ServerHelloDone TLS12ServerKeyExchange TLSApplicationData TLSChangeCipherSpec TLSCloseNotify TLSFinished
+0, 1, TLS12CertificateRequest, Warning(close_notify)
+0, 1, TLS12Certificate_invalid, Warning(close_notify)
+0, 1, TLS12Certificate_untrusted, Warning(close_notify)
+0, 1, TLS12Certificate_valid, Warning(close_notify)
+0, 1, TLS12EmptyCertificate, Warning(close_notify)
+0, 2, TLS12ServerHello, INTERNAL ERROR DURING EMISSION
+0, 1, TLS12ServerHelloDone, Warning(close_notify)
+0, 1, TLS12ServerKeyExchange, Warning(close_notify)
+0, 1, TLSApplicationData, Warning(close_notify)
+0, 1, TLSChangeCipherSpec, Warning(close_notify)
+0, 1, TLSCloseNotify, Warning(close_notify)
+0, 1, TLSFinished, Warning(close_notify)
+1, 1, TLS12CertificateRequest, EOF
+1, 1, TLS12Certificate_invalid, EOF
+1, 1, TLS12Certificate_untrusted, EOF
+1, 1, TLS12Certificate_valid, EOF
+1, 1, TLS12EmptyCertificate, EOF
+1, 2, TLS12ServerHello, INTERNAL ERROR DURING EMISSION
+1, 1, TLS12ServerHelloDone, EOF
+1, 1, TLS12ServerKeyExchange, EOF
+1, 1, TLSApplicationData, EOF
+1, 1, TLSChangeCipherSpec, EOF
+1, 1, TLSCloseNotify, EOF
+1, 1, TLSFinished, EOF
+2, 2, TLS12CertificateRequest, INTERNAL ERROR DURING EMISSION
+2, 2, TLS12Certificate_invalid, INTERNAL ERROR DURING EMISSION
+2, 2, TLS12Certificate_untrusted, INTERNAL ERROR DURING EMISSION
+2, 2, TLS12Certificate_valid, INTERNAL ERROR DURING EMISSION
+2, 2, TLS12EmptyCertificate, INTERNAL ERROR DURING EMISSION
+2, 2, TLS12ServerHello, INTERNAL ERROR DURING EMISSION
+2, 2, TLS12ServerHelloDone, INTERNAL ERROR DURING EMISSION
+2, 2, TLS12ServerKeyExchange, INTERNAL ERROR DURING EMISSION
+2, 2, TLSApplicationData, INTERNAL ERROR DURING EMISSION
+2, 2, TLSChangeCipherSpec, INTERNAL ERROR DURING EMISSION
+2, 2, TLSCloseNotify, INTERNAL ERROR DURING EMISSION
+2, 2, TLSFinished, INTERNAL ERROR DURING EMISSION

@@ -1,0 +1,19 @@
+campaign	full_11_16
+kind	srv-auth
+image	tls-test-bed/matrixssl:3.7.2
+tls_version	1.0
+scenario	tls10
+extra_args	
+eq_method	RW:10000:0.1
+inferer	pylstar-tls-lsharp
+repeat	1
+jobs	12
+start_epoch	1794913558.675187483
+end_epoch	1794913603.553290572
+wall_seconds	44.9
+exit_code	0
+status	ok
+loadavg_start	4.08 3.78 5.10
+loadavg_end	4.08 3.78 5.03
+host	VeryExpensiveSpaceHeater
+command	INFERER_IMAGE=tls-test-bed/pylstar-tls-lsharp ./infer-srv-auth.sh tls-test-bed/matrixssl:3.7.2 1.0 tls10 -E RW:10000:0.1

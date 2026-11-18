@@ -1,0 +1,256 @@
+NoRenegotiation TLS12CH_WITH_00_RandBytes TLS12CertificateRequest TLS12Certificate_untrusted TLS12Certificate_valid TLS12ClientHelloDH TLS12ClientHelloRSA TLS12ClientKeyExchange TLS12EmptyCertificate TLSApplicationData TLSApplicationDataEmpty TLSCertificateVerify TLSChangeCipherSpec TLSCloseNotify TLSFinished
+0, 1, NoRenegotiation, No RSP
+0, 2, TLS12CH_WITH_00_RandBytes, TLSServerHello+TLSCertificate+TLSCertificateRequest+TLSServerHelloDone
+0, 16, TLS12CertificateRequest, FatalAlert(unexpected_message)
+0, 16, TLS12Certificate_untrusted, FatalAlert(unexpected_message)
+0, 16, TLS12Certificate_valid, FatalAlert(unexpected_message)
+0, 16, TLS12ClientHelloDH, FatalAlert(handshake_failure)
+0, 2, TLS12ClientHelloRSA, TLSServerHello+TLSCertificate+TLSCertificateRequest+TLSServerHelloDone
+0, 16, TLS12ClientKeyExchange, FatalAlert(unexpected_message)
+0, 16, TLS12EmptyCertificate, FatalAlert(unexpected_message)
+0, 1, TLSApplicationData, No RSP
+0, 1, TLSApplicationDataEmpty, No RSP
+0, 16, TLSCertificateVerify, EOF
+0, 1, TLSChangeCipherSpec, No RSP
+0, 1, TLSCloseNotify, No RSP
+0, 16, TLSFinished, EOF
+1, 1, NoRenegotiation, No RSP
+1, 1, TLS12CH_WITH_00_RandBytes, No RSP
+1, 1, TLS12CertificateRequest, No RSP
+1, 3, TLS12Certificate_untrusted, No RSP
+1, 3, TLS12Certificate_valid, No RSP
+1, 1, TLS12ClientHelloDH, No RSP
+1, 1, TLS12ClientHelloRSA, No RSP
+1, 1, TLS12ClientKeyExchange, No RSP
+1, 1, TLS12EmptyCertificate, No RSP
+1, 1, TLSApplicationData, No RSP
+1, 1, TLSApplicationDataEmpty, No RSP
+1, 1, TLSCertificateVerify, No RSP
+1, 1, TLSChangeCipherSpec, No RSP
+1, 1, TLSCloseNotify, No RSP
+1, 1, TLSFinished, No RSP
+2, 2, NoRenegotiation, No RSP
+2, 16, TLS12CH_WITH_00_RandBytes, FatalAlert(unexpected_message)
+2, 16, TLS12CertificateRequest, FatalAlert(unexpected_message)
+2, 16, TLS12Certificate_untrusted, FatalAlert(unknown_ca)
+2, 4, TLS12Certificate_valid, No RSP
+2, 16, TLS12ClientHelloDH, FatalAlert(unexpected_message)
+2, 16, TLS12ClientHelloRSA, FatalAlert(unexpected_message)
+2, 16, TLS12ClientKeyExchange, FatalAlert(unexpected_message)
+2, 16, TLS12EmptyCertificate, FatalAlert(bad_certificate)
+2, 16, TLSApplicationData, FatalAlert(unexpected_message)
+2, 16, TLSApplicationDataEmpty, No RSP
+2, 16, TLSCertificateVerify, EOF
+2, 16, TLSChangeCipherSpec, FatalAlert(unexpected_message)
+2, 2, TLSCloseNotify, No RSP
+2, 16, TLSFinished, EOF
+3, 3, NoRenegotiation, No RSP
+3, 5, TLS12CH_WITH_00_RandBytes, No RSP
+3, 3, TLS12CertificateRequest, No RSP
+3, 6, TLS12Certificate_untrusted, No RSP
+3, 6, TLS12Certificate_valid, No RSP
+3, 5, TLS12ClientHelloDH, No RSP
+3, 5, TLS12ClientHelloRSA, No RSP
+3, 3, TLS12ClientKeyExchange, No RSP
+3, 3, TLS12EmptyCertificate, No RSP
+3, 5, TLSApplicationData, No RSP
+3, 3, TLSApplicationDataEmpty, No RSP
+3, 5, TLSCertificateVerify, No RSP
+3, 3, TLSChangeCipherSpec, No RSP
+3, 3, TLSCloseNotify, No RSP
+3, 3, TLSFinished, No RSP
+4, 4, NoRenegotiation, No RSP
+4, 16, TLS12CH_WITH_00_RandBytes, FatalAlert(unexpected_message)
+4, 16, TLS12CertificateRequest, FatalAlert(unexpected_message)
+4, 16, TLS12Certificate_untrusted, FatalAlert(unexpected_message)
+4, 16, TLS12Certificate_valid, FatalAlert(unexpected_message)
+4, 16, TLS12ClientHelloDH, FatalAlert(unexpected_message)
+4, 16, TLS12ClientHelloRSA, FatalAlert(unexpected_message)
+4, 7, TLS12ClientKeyExchange, No RSP
+4, 16, TLS12EmptyCertificate, FatalAlert(unexpected_message)
+4, 16, TLSApplicationData, FatalAlert(unexpected_message)
+4, 16, TLSApplicationDataEmpty, No RSP
+4, 16, TLSCertificateVerify, EOF
+4, 16, TLSChangeCipherSpec, FatalAlert(unexpected_message)
+4, 4, TLSCloseNotify, No RSP
+4, 16, TLSFinished, EOF
+5, 5, NoRenegotiation, No RSP
+5, 5, TLS12CH_WITH_00_RandBytes, No RSP
+5, 5, TLS12CertificateRequest, No RSP
+5, 8, TLS12Certificate_untrusted, No RSP
+5, 6, TLS12Certificate_valid, No RSP
+5, 5, TLS12ClientHelloDH, No RSP
+5, 5, TLS12ClientHelloRSA, No RSP
+5, 5, TLS12ClientKeyExchange, No RSP
+5, 5, TLS12EmptyCertificate, No RSP
+5, 5, TLSApplicationData, No RSP
+5, 5, TLSApplicationDataEmpty, No RSP
+5, 5, TLSCertificateVerify, No RSP
+5, 5, TLSChangeCipherSpec, No RSP
+5, 5, TLSCloseNotify, No RSP
+5, 5, TLSFinished, No RSP
+6, 6, NoRenegotiation, No RSP
+6, 6, TLS12CH_WITH_00_RandBytes, No RSP
+6, 6, TLS12CertificateRequest, No RSP
+6, 9, TLS12Certificate_untrusted, No RSP
+6, 8, TLS12Certificate_valid, No RSP
+6, 6, TLS12ClientHelloDH, No RSP
+6, 6, TLS12ClientHelloRSA, No RSP
+6, 6, TLS12ClientKeyExchange, No RSP
+6, 6, TLS12EmptyCertificate, No RSP
+6, 6, TLSApplicationData, No RSP
+6, 6, TLSApplicationDataEmpty, No RSP
+6, 6, TLSCertificateVerify, No RSP
+6, 6, TLSChangeCipherSpec, No RSP
+6, 6, TLSCloseNotify, No RSP
+6, 6, TLSFinished, No RSP
+7, 7, NoRenegotiation, No RSP
+7, 16, TLS12CH_WITH_00_RandBytes, FatalAlert(unexpected_message)
+7, 16, TLS12CertificateRequest, FatalAlert(unexpected_message)
+7, 16, TLS12Certificate_untrusted, FatalAlert(unexpected_message)
+7, 16, TLS12Certificate_valid, FatalAlert(unexpected_message)
+7, 16, TLS12ClientHelloDH, FatalAlert(unexpected_message)
+7, 16, TLS12ClientHelloRSA, FatalAlert(unexpected_message)
+7, 16, TLS12ClientKeyExchange, FatalAlert(unexpected_message)
+7, 16, TLS12EmptyCertificate, FatalAlert(unexpected_message)
+7, 16, TLSApplicationData, FatalAlert(unexpected_message)
+7, 16, TLSApplicationDataEmpty, No RSP
+7, 16, TLSCertificateVerify, FatalAlert(decrypt_error)
+7, 16, TLSChangeCipherSpec, FatalAlert(unexpected_message)
+7, 7, TLSCloseNotify, No RSP
+7, 16, TLSFinished, EOF
+8, 8, NoRenegotiation, No RSP
+8, 9, TLS12CH_WITH_00_RandBytes, No RSP
+8, 9, TLS12CertificateRequest, No RSP
+8, 10, TLS12Certificate_untrusted, No RSP
+8, 10, TLS12Certificate_valid, No RSP
+8, 9, TLS12ClientHelloDH, No RSP
+8, 9, TLS12ClientHelloRSA, No RSP
+8, 8, TLS12ClientKeyExchange, No RSP
+8, 8, TLS12EmptyCertificate, No RSP
+8, 9, TLSApplicationData, No RSP
+8, 8, TLSApplicationDataEmpty, No RSP
+8, 10, TLSCertificateVerify, No RSP
+8, 8, TLSChangeCipherSpec, No RSP
+8, 8, TLSCloseNotify, No RSP
+8, 9, TLSFinished, No RSP
+9, 9, NoRenegotiation, No RSP
+9, 11, TLS12CH_WITH_00_RandBytes, No RSP
+9, 9, TLS12CertificateRequest, No RSP
+9, 10, TLS12Certificate_untrusted, No RSP
+9, 10, TLS12Certificate_valid, No RSP
+9, 11, TLS12ClientHelloDH, No RSP
+9, 11, TLS12ClientHelloRSA, No RSP
+9, 9, TLS12ClientKeyExchange, No RSP
+9, 9, TLS12EmptyCertificate, No RSP
+9, 9, TLSApplicationData, No RSP
+9, 9, TLSApplicationDataEmpty, No RSP
+9, 10, TLSCertificateVerify, No RSP
+9, 9, TLSChangeCipherSpec, No RSP
+9, 9, TLSCloseNotify, No RSP
+9, 9, TLSFinished, No RSP
+10, 10, NoRenegotiation, No RSP
+10, 10, TLS12CH_WITH_00_RandBytes, No RSP
+10, 10, TLS12CertificateRequest, No RSP
+10, 12, TLS12Certificate_untrusted, No RSP
+10, 12, TLS12Certificate_valid, No RSP
+10, 10, TLS12ClientHelloDH, No RSP
+10, 10, TLS12ClientHelloRSA, No RSP
+10, 10, TLS12ClientKeyExchange, No RSP
+10, 10, TLS12EmptyCertificate, No RSP
+10, 10, TLSApplicationData, No RSP
+10, 10, TLSApplicationDataEmpty, No RSP
+10, 12, TLSCertificateVerify, No RSP
+10, 10, TLSChangeCipherSpec, No RSP
+10, 10, TLSCloseNotify, No RSP
+10, 10, TLSFinished, No RSP
+11, 11, NoRenegotiation, No RSP
+11, 11, TLS12CH_WITH_00_RandBytes, No RSP
+11, 11, TLS12CertificateRequest, No RSP
+11, 13, TLS12Certificate_untrusted, No RSP
+11, 13, TLS12Certificate_valid, No RSP
+11, 11, TLS12ClientHelloDH, No RSP
+11, 11, TLS12ClientHelloRSA, No RSP
+11, 11, TLS12ClientKeyExchange, No RSP
+11, 11, TLS12EmptyCertificate, No RSP
+11, 11, TLSApplicationData, No RSP
+11, 11, TLSApplicationDataEmpty, No RSP
+11, 10, TLSCertificateVerify, No RSP
+11, 11, TLSChangeCipherSpec, No RSP
+11, 11, TLSCloseNotify, No RSP
+11, 11, TLSFinished, No RSP
+12, 12, NoRenegotiation, No RSP
+12, 12, TLS12CH_WITH_00_RandBytes, No RSP
+12, 12, TLS12CertificateRequest, No RSP
+12, 16, TLS12Certificate_untrusted, EOF
+12, 16, TLS12Certificate_valid, EOF
+12, 12, TLS12ClientHelloDH, No RSP
+12, 12, TLS12ClientHelloRSA, No RSP
+12, 12, TLS12ClientKeyExchange, No RSP
+12, 12, TLS12EmptyCertificate, No RSP
+12, 12, TLSApplicationData, No RSP
+12, 12, TLSApplicationDataEmpty, No RSP
+12, 16, TLSCertificateVerify, EOF
+12, 12, TLSChangeCipherSpec, No RSP
+12, 12, TLSCloseNotify, No RSP
+12, 12, TLSFinished, No RSP
+13, 13, NoRenegotiation, No RSP
+13, 14, TLS12CH_WITH_00_RandBytes, No RSP
+13, 13, TLS12CertificateRequest, No RSP
+13, 12, TLS12Certificate_untrusted, No RSP
+13, 12, TLS12Certificate_valid, No RSP
+13, 14, TLS12ClientHelloDH, No RSP
+13, 14, TLS12ClientHelloRSA, No RSP
+13, 13, TLS12ClientKeyExchange, No RSP
+13, 13, TLS12EmptyCertificate, No RSP
+13, 13, TLSApplicationData, No RSP
+13, 13, TLSApplicationDataEmpty, No RSP
+13, 12, TLSCertificateVerify, No RSP
+13, 13, TLSChangeCipherSpec, No RSP
+13, 13, TLSCloseNotify, No RSP
+13, 13, TLSFinished, No RSP
+14, 15, NoRenegotiation, No RSP
+14, 12, TLS12CH_WITH_00_RandBytes, No RSP
+14, 15, TLS12CertificateRequest, No RSP
+14, 16, TLS12Certificate_untrusted, No RSP
+14, 16, TLS12Certificate_valid, No RSP
+14, 12, TLS12ClientHelloDH, No RSP
+14, 12, TLS12ClientHelloRSA, No RSP
+14, 15, TLS12ClientKeyExchange, No RSP
+14, 15, TLS12EmptyCertificate, No RSP
+14, 15, TLSApplicationData, No RSP
+14, 15, TLSApplicationDataEmpty, No RSP
+14, 12, TLSCertificateVerify, No RSP
+14, 15, TLSChangeCipherSpec, No RSP
+14, 15, TLSCloseNotify, No RSP
+14, 15, TLSFinished, No RSP
+15, 15, NoRenegotiation, No RSP
+15, 12, TLS12CH_WITH_00_RandBytes, No RSP
+15, 15, TLS12CertificateRequest, No RSP
+15, 16, TLS12Certificate_untrusted, EOF
+15, 16, TLS12Certificate_valid, No RSP
+15, 12, TLS12ClientHelloDH, No RSP
+15, 12, TLS12ClientHelloRSA, No RSP
+15, 15, TLS12ClientKeyExchange, No RSP
+15, 15, TLS12EmptyCertificate, No RSP
+15, 15, TLSApplicationData, No RSP
+15, 15, TLSApplicationDataEmpty, No RSP
+15, 12, TLSCertificateVerify, No RSP
+15, 15, TLSChangeCipherSpec, No RSP
+15, 15, TLSCloseNotify, No RSP
+15, 15, TLSFinished, No RSP
+16, 16, NoRenegotiation, EOF
+16, 16, TLS12CH_WITH_00_RandBytes, EOF
+16, 16, TLS12CertificateRequest, EOF
+16, 16, TLS12Certificate_untrusted, EOF
+16, 16, TLS12Certificate_valid, EOF
+16, 16, TLS12ClientHelloDH, EOF
+16, 16, TLS12ClientHelloRSA, EOF
+16, 16, TLS12ClientKeyExchange, EOF
+16, 16, TLS12EmptyCertificate, EOF
+16, 16, TLSApplicationData, EOF
+16, 16, TLSApplicationDataEmpty, EOF
+16, 16, TLSCertificateVerify, EOF
+16, 16, TLSChangeCipherSpec, EOF
+16, 16, TLSCloseNotify, EOF
+16, 16, TLSFinished, EOF

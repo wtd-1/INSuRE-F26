@@ -1,0 +1,13 @@
+TLS12CertificateRequest TLS12Certificate_invalid TLS12Certificate_untrusted TLS12Certificate_valid TLS12EmptyCertificate TLS12ServerHello TLS12ServerHelloDone TLS12ServerKeyExchange TLSApplicationData TLSChangeCipherSpec TLSCloseNotify TLSFinished
+0, 0, TLS12CertificateRequest, FatalAlert(unexpected_message)
+0, 0, TLS12Certificate_invalid, FatalAlert(unexpected_message)
+0, 0, TLS12Certificate_untrusted, FatalAlert(unexpected_message)
+0, 0, TLS12Certificate_valid, FatalAlert(unexpected_message)
+0, 0, TLS12EmptyCertificate, FatalAlert(unexpected_message)
+0, 0, TLS12ServerHello, No RSP
+0, 0, TLS12ServerHelloDone, FatalAlert(unexpected_message)
+0, 0, TLS12ServerKeyExchange, FatalAlert(unexpected_message)
+0, 0, TLSApplicationData, FatalAlert(unexpected_message)
+0, 0, TLSChangeCipherSpec, FatalAlert(unexpected_message)
+0, 0, TLSCloseNotify, FatalAlert(internal_error)
+0, 0, TLSFinished, FatalAlert(unexpected_message)

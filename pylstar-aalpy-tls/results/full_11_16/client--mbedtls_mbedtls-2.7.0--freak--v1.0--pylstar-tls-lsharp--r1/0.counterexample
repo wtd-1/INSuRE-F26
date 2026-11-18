@@ -1,0 +1,7 @@
+Found a counterexample: OutputQuery(I = [Letter('TLSApplicationData'), Letter('TLSFinished')], O = [Letter('FatalAlert(unexpected_message)'), Letter('EOF')])
+  time spent so far: 1.0789825916290283
+  n_states: 1
+  n_queries=8
+  n_submitted_queries=8
+  n_letters=9
+  n_submitted_letters=9

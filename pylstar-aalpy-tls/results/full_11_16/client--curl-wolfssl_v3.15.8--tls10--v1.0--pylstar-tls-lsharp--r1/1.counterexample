@@ -1,0 +1,7 @@
+Found a counterexample: OutputQuery(I = [Letter('TLS12Certificate_untrusted'), Letter('TLSApplicationData'), Letter('TLSApplicationData'), Letter('TLS12ServerHello'), Letter('TLS12CertificateRequest'), Letter('TLS12Certificate_invalid'), Letter('TLS12EmptyCertificate'), Letter('TLS12Certificate_valid'), Letter('TLS12Certificate_untrusted'), Letter('TLSCloseNotify'), Letter('TLS12Certificate_valid'), Letter('TLSFinished'), Letter('TLS12EmptyCertificate'), Letter('TLS12ServerHello'), Letter('TLS12CertificateRequest'), Letter('TLS12ServerKeyExchange'), Letter('TLS12Certificate_valid'), Letter('TLS12ServerKeyExchange'), Letter('TLS12Certificate_untrusted'), Letter('TLSCloseNotify'), Letter('TLS12ServerHelloDone')], O = [Letter('FatalAlert(unexpected_message)'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF')])
+  time spent so far: 3.5784976482391357
+  n_states: 3
+  n_queries=64
+  n_submitted_queries=63
+  n_letters=252
+  n_submitted_letters=244

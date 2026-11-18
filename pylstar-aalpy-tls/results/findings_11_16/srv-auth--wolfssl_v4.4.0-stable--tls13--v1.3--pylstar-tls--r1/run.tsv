@@ -1,0 +1,19 @@
+campaign	findings_11_16
+kind	srv-auth
+image	tls-test-bed/wolfssl:v4.4.0-stable
+tls_version	1.3
+scenario	tls13
+extra_args	
+eq_method	RW:10000:0.1
+inferer	pylstar-tls
+repeat	1
+jobs	12
+start_epoch	1794889904.648667325
+end_epoch	1794890014.192381446
+wall_seconds	109.5
+exit_code	0
+status	ok
+loadavg_start	3.09 5.10 19.21
+loadavg_end	3.26 4.54 17.42
+host	VeryExpensiveSpaceHeater
+command	INFERER_IMAGE=tls-test-bed/pylstar-tls ./infer-srv-auth.sh tls-test-bed/wolfssl:v4.4.0-stable 1.3 tls13 -E RW:10000:0.1

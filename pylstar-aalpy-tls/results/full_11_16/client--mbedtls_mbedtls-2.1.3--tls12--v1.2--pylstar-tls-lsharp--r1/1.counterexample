@@ -1,0 +1,7 @@
+Found a counterexample: OutputQuery(I = [Letter('TLS12ServerKeyExchange'), Letter('TLSChangeCipherSpec'), Letter('TLSFinished'), Letter('TLSFinished'), Letter('TLS12EmptyCertificate'), Letter('TLS12ServerHello'), Letter('TLSFinished'), Letter('TLS12Certificate_valid'), Letter('TLSChangeCipherSpec'), Letter('TLS12CertificateRequest'), Letter('TLSCloseNotify'), Letter('TLS12Certificate_untrusted'), Letter('TLSCloseNotify'), Letter('TLS12CertificateRequest'), Letter('TLSChangeCipherSpec'), Letter('TLS12Certificate_invalid'), Letter('TLSCloseNotify'), Letter('TLS12ServerHelloDone'), Letter('TLSCloseNotify'), Letter('TLSFinished'), Letter('TLS12ServerHelloDone'), Letter('TLS12EmptyCertificate'), Letter('TLSCloseNotify'), Letter('TLSCloseNotify'), Letter('TLSFinished'), Letter('TLS12CertificateRequest'), Letter('TLS12ServerKeyExchange')], O = [Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF')])
+  time spent so far: 37.70370435714722
+  n_states: 8
+  n_queries=629
+  n_submitted_queries=627
+  n_letters=3500
+  n_submitted_letters=3491

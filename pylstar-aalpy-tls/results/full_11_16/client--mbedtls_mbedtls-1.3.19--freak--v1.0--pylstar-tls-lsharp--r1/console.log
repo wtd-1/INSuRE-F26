@@ -1,0 +1,76 @@
+33b3beab146558334e8e95bd810b5c2a186177e13c3bcae242308694157859dc
+make: getcwd: No such file or directory
+make: Entering directory '(unreachable)/Users/xace/OneDrive/Documents/GitHub/INSuRE-F26/pylstar-aalpy-tls/crypto'
+make: getcwd: No such file or directory
+sh: 0: getcwd() failed: No such file or directory
+shell-init: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory
+chdir: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory
+make: Leaving an unknown directory
+/root/src/scapy/scapy/layers/tls/crypto/cipher_block.py:156: CryptographyDeprecationWarning: IDEA has been deprecated
+  pc_cls = algorithms.IDEA
+/root/src/scapy/scapy/layers/tls/crypto/cipher_block.py:162: CryptographyDeprecationWarning: SEED has been deprecated
+  pc_cls = algorithms.SEED
+/root/src/scapy/scapy/layers/ipsec.py:471: CryptographyDeprecationWarning: Blowfish has been deprecated
+  cipher=algorithms.Blowfish,
+/root/src/scapy/scapy/layers/ipsec.py:485: CryptographyDeprecationWarning: CAST5 has been deprecated
+  cipher=algorithms.CAST5,
+learner: L# (AALpy 2.0.0)
+input_letters ['TLS12ServerHello_RSA_EXPORT', 'TLS12Certificate_valid', 'TLS12ServerKeyExchange', 'TLS12ServerHelloDone', 'TLSChangeCipherSpec', 'TLSFinished', 'TLSApplicationData']
+eqtests: RandomWalk(10000, 0.1)
+timeout: 1.0
+1674: [INFO] StoreHypotheses:find_counterexample: Storing hyptohesis #0 in /results/0.automaton
+1674: [INFO] StoreHypotheses:write_stats:   time spent so far: 1.0995347499847412
+1674: [INFO] StoreHypotheses:write_stats:   n_states: 1
+1674: [INFO] StoreHypotheses:write_stats:   n_queries=7
+1674: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=7
+1674: [INFO] StoreHypotheses:write_stats:   n_letters=7
+1674: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=7
+1681: [INFO] RandomWalkMethod:find_counterexample: Starting the RandomWalk Algorithm to search for a counter-example
+1682: [INFO] RandomWalkMethod:__check_equivalence: Found a counter-example : input: '[Letter('TLSChangeCipherSpec'), Letter('TLS12ServerKeyExchange'), Letter('TLS12ServerHello_RSA_EXPORT'), Letter('TLS12ServerKeyExchange'), Letter('TLS12Certificate_valid'), Letter('TLS12ServerHelloDone'), Letter('TLS12ServerHello_RSA_EXPORT'), Letter('TLS12Certificate_valid'), Letter('TLS12ServerHello_RSA_EXPORT'), Letter('TLS12ServerHello_RSA_EXPORT'), Letter('TLSApplicationData'), Letter('TLS12ServerHelloDone'), Letter('TLS12ServerHelloDone'), Letter('TLS12Certificate_valid')]', expected: '[Letter('EOF'), Letter('EOF'), Letter('No RSP'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('No RSP'), Letter('EOF'), Letter('No RSP'), Letter('No RSP'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF')]', observed: '[Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF')]'
+1682: [INFO] StoreHypotheses:write_stats: Found a counterexample: OutputQuery(I = [Letter('TLSChangeCipherSpec'), Letter('TLS12ServerKeyExchange'), Letter('TLS12ServerHello_RSA_EXPORT'), Letter('TLS12ServerKeyExchange'), Letter('TLS12Certificate_valid'), Letter('TLS12ServerHelloDone'), Letter('TLS12ServerHello_RSA_EXPORT'), Letter('TLS12Certificate_valid'), Letter('TLS12ServerHello_RSA_EXPORT'), Letter('TLS12ServerHello_RSA_EXPORT'), Letter('TLSApplicationData'), Letter('TLS12ServerHelloDone'), Letter('TLS12ServerHelloDone'), Letter('TLS12Certificate_valid')], O = [Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF')])
+1682: [INFO] StoreHypotheses:write_stats:   time spent so far: 1.1080350875854492
+1682: [INFO] StoreHypotheses:write_stats:   n_states: 1
+1682: [INFO] StoreHypotheses:write_stats:   n_queries=8
+1682: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=8
+1682: [INFO] StoreHypotheses:write_stats:   n_letters=21
+1682: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=21
+1697: [INFO] StoreHypotheses:find_counterexample: Storing hyptohesis #1 in /results/1.automaton
+1697: [INFO] StoreHypotheses:write_stats:   time spent so far: 1.1224651336669922
+1697: [INFO] StoreHypotheses:write_stats:   n_states: 2
+1697: [INFO] StoreHypotheses:write_stats:   n_queries=23
+1697: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=22
+1697: [INFO] StoreHypotheses:write_stats:   n_letters=70
+1697: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=56
+1704: [INFO] RandomWalkMethod:find_counterexample: Starting the RandomWalk Algorithm to search for a counter-example
+2765: [INFO] RandomWalkMethod:__check_equivalence: Found a counter-example : input: '[Letter('TLS12ServerHello_RSA_EXPORT'), Letter('TLS12Certificate_valid'), Letter('TLSFinished'), Letter('TLSApplicationData'), Letter('TLSChangeCipherSpec'), Letter('TLS12ServerHello_RSA_EXPORT'), Letter('TLS12ServerHello_RSA_EXPORT'), Letter('TLS12ServerHello_RSA_EXPORT'), Letter('TLSApplicationData'), Letter('TLSChangeCipherSpec')]', expected: '[Letter('No RSP'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF')]', observed: '[Letter('No RSP'), Letter('No RSP'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF')]'
+2765: [INFO] StoreHypotheses:write_stats: Found a counterexample: OutputQuery(I = [Letter('TLS12ServerHello_RSA_EXPORT'), Letter('TLS12Certificate_valid'), Letter('TLSFinished'), Letter('TLSApplicationData'), Letter('TLSChangeCipherSpec'), Letter('TLS12ServerHello_RSA_EXPORT'), Letter('TLS12ServerHello_RSA_EXPORT'), Letter('TLS12ServerHello_RSA_EXPORT'), Letter('TLSApplicationData'), Letter('TLSChangeCipherSpec')], O = [Letter('No RSP'), Letter('No RSP'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF')])
+2765: [INFO] StoreHypotheses:write_stats:   time spent so far: 2.190605401992798
+2765: [INFO] StoreHypotheses:write_stats:   n_states: 2
+2765: [INFO] StoreHypotheses:write_stats:   n_queries=24
+2765: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=23
+2765: [INFO] StoreHypotheses:write_stats:   n_letters=80
+2765: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=66
+3059: [INFO] StoreHypotheses:find_counterexample: Storing hyptohesis #2 in /results/2.automaton
+3059: [INFO] StoreHypotheses:write_stats:   time spent so far: 2.484614610671997
+3059: [INFO] StoreHypotheses:write_stats:   n_states: 3
+3059: [INFO] StoreHypotheses:write_stats:   n_queries=51
+3059: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=49
+3059: [INFO] StoreHypotheses:write_stats:   n_letters=163
+3059: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=139
+3079: [INFO] RandomWalkMethod:find_counterexample: Starting the RandomWalk Algorithm to search for a counter-example
+6884: [INFO] StoreHypotheses:write_stats: Inference converged
+6884: [INFO] StoreHypotheses:write_stats:   time spent so far: 6.309589624404907
+6884: [INFO] StoreHypotheses:write_stats:   n_states: 3
+6884: [INFO] StoreHypotheses:write_stats:   n_queries=986
+6884: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=814
+6884: [INFO] StoreHypotheses:write_stats:   n_letters=10147
+6884: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=9688
+
+time spent in lstar.learn(): 6.312351226806641
+n_states: 3
+n_queries=986
+n_submitted_queries=814
+n_letters=10147
+n_submitted_letters=9688
+L# learning rounds: 3, learning time: 1.4s, equivalence query time: 4.91s
+Results are in /mnt/c/Users/xace/OneDrive/Documents/GitHub/INSuRE-F26/pylstar-aalpy-tls/results/full_11_16/client--mbedtls_mbedtls-1.3.19--freak--v1.0--pylstar-tls-lsharp--r1

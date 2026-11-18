@@ -1,0 +1,55 @@
+3600378fe5aaa52d9c0a0138da0bd5c8db2e34013cd1fec4b9bfacac2bd96a8b
+make: Entering directory '/mnt/c/Users/xace/OneDrive/Documents/GitHub/INSuRE-F26/pylstar-aalpy-tls/crypto'
+make: Leaving directory '/mnt/c/Users/xace/OneDrive/Documents/GitHub/INSuRE-F26/pylstar-aalpy-tls/crypto'
+/root/src/scapy/scapy/layers/tls/crypto/cipher_block.py:156: CryptographyDeprecationWarning: IDEA has been deprecated
+  pc_cls = algorithms.IDEA
+/root/src/scapy/scapy/layers/tls/crypto/cipher_block.py:162: CryptographyDeprecationWarning: SEED has been deprecated
+  pc_cls = algorithms.SEED
+/root/src/scapy/scapy/layers/ipsec.py:471: CryptographyDeprecationWarning: Blowfish has been deprecated
+  cipher=algorithms.Blowfish,
+/root/src/scapy/scapy/layers/ipsec.py:485: CryptographyDeprecationWarning: CAST5 has been deprecated
+  cipher=algorithms.CAST5,
+learner: L# (AALpy 2.0.0)
+input_letters ['TLS12ServerHello_RSA_EXPORT', 'TLS12Certificate_valid', 'TLS12ServerKeyExchange', 'TLS12ServerHelloDone', 'TLSChangeCipherSpec', 'TLSFinished', 'TLSApplicationData']
+eqtests: RandomWalk(10000, 0.1)
+timeout: 1.0
+1740: [INFO] StoreHypotheses:find_counterexample: Storing hyptohesis #0 in /results/0.automaton
+1740: [INFO] StoreHypotheses:write_stats:   time spent so far: 1.0721030235290527
+1740: [INFO] StoreHypotheses:write_stats:   n_states: 1
+1740: [INFO] StoreHypotheses:write_stats:   n_queries=7
+1740: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=7
+1740: [INFO] StoreHypotheses:write_stats:   n_letters=7
+1740: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=7
+1745: [INFO] RandomWalkMethod:find_counterexample: Starting the RandomWalk Algorithm to search for a counter-example
+1750: [INFO] RandomWalkMethod:__check_equivalence: Found a counter-example : input: '[Letter('TLSFinished'), Letter('TLSChangeCipherSpec'), Letter('TLS12Certificate_valid')]', expected: '[Letter('FatalAlert(decode_error)'), Letter('EOF'), Letter('FatalAlert(decode_error)')]', observed: '[Letter('FatalAlert(decode_error)'), Letter('EOF'), Letter('EOF')]'
+1750: [INFO] StoreHypotheses:write_stats: Found a counterexample: OutputQuery(I = [Letter('TLSFinished'), Letter('TLSChangeCipherSpec'), Letter('TLS12Certificate_valid')], O = [Letter('FatalAlert(decode_error)'), Letter('EOF'), Letter('EOF')])
+1750: [INFO] StoreHypotheses:write_stats:   time spent so far: 1.0822439193725586
+1750: [INFO] StoreHypotheses:write_stats:   n_states: 1
+1750: [INFO] StoreHypotheses:write_stats:   n_queries=8
+1750: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=8
+1750: [INFO] StoreHypotheses:write_stats:   n_letters=10
+1750: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=10
+4441: [INFO] StoreHypotheses:find_counterexample: Storing hyptohesis #1 in /results/1.automaton
+4442: [INFO] StoreHypotheses:write_stats:   time spent so far: 3.773516893386841
+4442: [INFO] StoreHypotheses:write_stats:   n_states: 4
+4442: [INFO] StoreHypotheses:write_stats:   n_queries=37
+4442: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=36
+4442: [INFO] StoreHypotheses:write_stats:   n_letters=97
+4442: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=94
+4446: [INFO] RandomWalkMethod:find_counterexample: Starting the RandomWalk Algorithm to search for a counter-example
+11288: [INFO] StoreHypotheses:write_stats: Inference converged
+11288: [INFO] StoreHypotheses:write_stats:   time spent so far: 10.620079278945923
+11288: [INFO] StoreHypotheses:write_stats:   n_states: 4
+11288: [INFO] StoreHypotheses:write_stats:   n_queries=959
+11288: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=813
+11288: [INFO] StoreHypotheses:write_stats:   n_letters=10056
+11288: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=9685
+
+time spent in lstar.learn(): 10.622427225112915
+n_states: 4
+n_queries=959
+n_submitted_queries=813
+n_letters=10056
+n_submitted_letters=9685
+L# learning rounds: 2, learning time: 3.76s, equivalence query time: 6.86s
+Results are in /mnt/c/Users/xace/OneDrive/Documents/GitHub/INSuRE-F26/pylstar-aalpy-tls/results/full_11_16/client--mbedtls_mbedtls-2.19.0d1--freak--v1.0--pylstar-tls-lsharp--r1

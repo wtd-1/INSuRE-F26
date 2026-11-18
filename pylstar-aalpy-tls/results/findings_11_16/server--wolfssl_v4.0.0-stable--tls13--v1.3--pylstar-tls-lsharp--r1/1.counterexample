@@ -1,0 +1,7 @@
+Found a counterexample: OutputQuery(I = [Letter('TLS13ClientHello'), Letter('TLS13EmptyCertificate'), Letter('TLS13EmptyCertificate'), Letter('TLSCloseNotify')], O = [Letter('TLS13ServerHello+TLSEncryptedExtensions+TLS13Certificate+TLSCertificateVerify+TLSFinished'), Letter('No RSP'), Letter('UnknownPacket'), Letter('EOF')])
+  time spent so far: 14.491102457046509
+  n_states: 4
+  n_queries=298
+  n_submitted_queries=270
+  n_letters=2890
+  n_submitted_letters=2827

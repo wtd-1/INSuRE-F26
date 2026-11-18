@@ -1,0 +1,61 @@
+NoRenegotiation TLS12CKE_0002_modified TLS12CKE_key_null TLS12CKE_longer_pms TLS12CKE_ok TLS12CKE_padding_inf_8 TLS12CKE_shorten_pms TLS12CKE_wrong_tls_version TLS12ClientHelloRSA TLSChangeCipherSpec TLSCloseNotify TLSHardCodedFinished
+0, 0, NoRenegotiation, No RSP
+0, 4, TLS12CKE_0002_modified, Warning(close_notify)
+0, 4, TLS12CKE_key_null, Warning(close_notify)
+0, 4, TLS12CKE_longer_pms, Warning(close_notify)
+0, 4, TLS12CKE_ok, Warning(close_notify)
+0, 4, TLS12CKE_padding_inf_8, Warning(close_notify)
+0, 4, TLS12CKE_shorten_pms, Warning(close_notify)
+0, 4, TLS12CKE_wrong_tls_version, Warning(close_notify)
+0, 1, TLS12ClientHelloRSA, TLSServerHello+TLSCertificate+TLSServerHelloDone
+0, 4, TLSChangeCipherSpec, Warning(close_notify)
+0, 4, TLSCloseNotify, Warning(close_notify)
+0, 4, TLSHardCodedFinished, Warning(close_notify)
+1, 1, NoRenegotiation, No RSP
+1, 4, TLS12CKE_0002_modified, Warning(close_notify)
+1, 4, TLS12CKE_key_null, Warning(close_notify)
+1, 4, TLS12CKE_longer_pms, Warning(close_notify)
+1, 2, TLS12CKE_ok, No RSP
+1, 4, TLS12CKE_padding_inf_8, Warning(close_notify)
+1, 4, TLS12CKE_shorten_pms, Warning(close_notify)
+1, 4, TLS12CKE_wrong_tls_version, Warning(close_notify)
+1, 4, TLS12ClientHelloRSA, Warning(close_notify)
+1, 4, TLSChangeCipherSpec, Warning(close_notify)
+1, 4, TLSCloseNotify, Warning(close_notify)
+1, 4, TLSHardCodedFinished, Warning(close_notify)
+2, 2, NoRenegotiation, No RSP
+2, 4, TLS12CKE_0002_modified, Warning(close_notify)
+2, 4, TLS12CKE_key_null, Warning(close_notify)
+2, 4, TLS12CKE_longer_pms, Warning(close_notify)
+2, 4, TLS12CKE_ok, Warning(close_notify)
+2, 4, TLS12CKE_padding_inf_8, Warning(close_notify)
+2, 4, TLS12CKE_shorten_pms, Warning(close_notify)
+2, 4, TLS12CKE_wrong_tls_version, Warning(close_notify)
+2, 4, TLS12ClientHelloRSA, Warning(close_notify)
+2, 3, TLSChangeCipherSpec, No RSP
+2, 4, TLSCloseNotify, Warning(close_notify)
+2, 4, TLSHardCodedFinished, Warning(close_notify)
+3, 4, NoRenegotiation, Warning(close_notify)
+3, 4, TLS12CKE_0002_modified, Warning(close_notify)
+3, 4, TLS12CKE_key_null, Warning(close_notify)
+3, 4, TLS12CKE_longer_pms, Warning(close_notify)
+3, 4, TLS12CKE_ok, Warning(close_notify)
+3, 4, TLS12CKE_padding_inf_8, Warning(close_notify)
+3, 4, TLS12CKE_shorten_pms, Warning(close_notify)
+3, 4, TLS12CKE_wrong_tls_version, Warning(close_notify)
+3, 4, TLS12ClientHelloRSA, Warning(close_notify)
+3, 4, TLSChangeCipherSpec, Warning(close_notify)
+3, 4, TLSCloseNotify, Warning(close_notify)
+3, 4, TLSHardCodedFinished, Warning(close_notify)
+4, 4, NoRenegotiation, EOF
+4, 4, TLS12CKE_0002_modified, EOF
+4, 4, TLS12CKE_key_null, EOF
+4, 4, TLS12CKE_longer_pms, EOF
+4, 4, TLS12CKE_ok, EOF
+4, 4, TLS12CKE_padding_inf_8, EOF
+4, 4, TLS12CKE_shorten_pms, EOF
+4, 4, TLS12CKE_wrong_tls_version, EOF
+4, 4, TLS12ClientHelloRSA, EOF
+4, 4, TLSChangeCipherSpec, EOF
+4, 4, TLSCloseNotify, EOF
+4, 4, TLSHardCodedFinished, EOF

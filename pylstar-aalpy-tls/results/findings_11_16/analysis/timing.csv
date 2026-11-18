@@ -1,0 +1,13 @@
+inferer,metric,count,mean,median,p10,p90,total
+pylstar-tls,total_time_s,52,347.4,92.0,12.1,332.6,18064.2
+pylstar-tls,learning_time_s,52,144.6,82.4,9.5,317.1,7520.9
+pylstar-tls,equivalence_time_s,52,202.8,4.3,2.3,21.9,10543.3
+pylstar-tls,wall_s,52,350.6,94.3,14.5,334.7,18233.5
+pylstar-tls,n_submitted_queries,52,2449.2,1817.0,980.7,4818.0,127361.0
+pylstar-tls,n_submitted_letters,52,18017.1,13465.0,10215.2,36031.8,936888.0
+pylstar-tls-lsharp,total_time_s,52,149.6,40.3,9.5,92.8,7779.9
+pylstar-tls-lsharp,learning_time_s,52,26.4,19.7,2.5,57.2,1373.7
+pylstar-tls-lsharp,equivalence_time_s,52,123.2,16.4,6.7,36.7,6406.1
+pylstar-tls-lsharp,wall_s,52,152.4,42.5,12.5,95.1,7923.4
+pylstar-tls-lsharp,n_submitted_queries,52,1013.2,935.5,855.5,1120.9,52686.0
+pylstar-tls-lsharp,n_submitted_letters,52,11310.2,10288.5,9919.6,14076.8,588133.0

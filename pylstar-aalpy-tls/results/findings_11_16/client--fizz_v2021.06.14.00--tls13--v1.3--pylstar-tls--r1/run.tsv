@@ -1,0 +1,19 @@
+campaign	findings_11_16
+kind	client
+image	tls-test-bed/fizz:v2021.06.14.00
+tls_version	1.3
+scenario	tls13
+extra_args	
+eq_method	RW:10000:0.1
+inferer	pylstar-tls
+repeat	1
+jobs	12
+start_epoch	1794889309.532000158
+end_epoch	1794889539.398857960
+wall_seconds	229.9
+exit_code	0
+status	ok
+loadavg_start	5.47 17.60 33.64
+loadavg_end	3.74 10.07 27.04
+host	VeryExpensiveSpaceHeater
+command	INFERER_IMAGE=tls-test-bed/pylstar-tls ./infer-client.sh tls-test-bed/fizz:v2021.06.14.00 1.3 tls13 -E RW:10000:0.1

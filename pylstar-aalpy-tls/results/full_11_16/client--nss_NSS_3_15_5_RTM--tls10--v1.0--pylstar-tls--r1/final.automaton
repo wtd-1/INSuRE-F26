@@ -1,0 +1,13 @@
+TLS12CertificateRequest TLS12Certificate_invalid TLS12Certificate_untrusted TLS12Certificate_valid TLS12EmptyCertificate TLS12ServerHello TLS12ServerHelloDone TLS12ServerKeyExchange TLSApplicationData TLSChangeCipherSpec TLSCloseNotify TLSFinished
+0, 0, TLS12CertificateRequest, NO_CONNECTION
+0, 0, TLS12Certificate_invalid, NO_CONNECTION
+0, 0, TLS12Certificate_untrusted, NO_CONNECTION
+0, 0, TLS12Certificate_valid, NO_CONNECTION
+0, 0, TLS12EmptyCertificate, NO_CONNECTION
+0, 0, TLS12ServerHello, NO_CONNECTION
+0, 0, TLS12ServerHelloDone, NO_CONNECTION
+0, 0, TLS12ServerKeyExchange, NO_CONNECTION
+0, 0, TLSApplicationData, NO_CONNECTION
+0, 0, TLSChangeCipherSpec, NO_CONNECTION
+0, 0, TLSCloseNotify, NO_CONNECTION
+0, 0, TLSFinished, NO_CONNECTION

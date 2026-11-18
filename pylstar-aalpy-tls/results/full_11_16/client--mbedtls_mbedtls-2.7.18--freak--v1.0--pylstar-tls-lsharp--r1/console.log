@@ -1,0 +1,71 @@
+993b8f356a90f1439632db679a5d67160180aa127c548186a70fe7df12d3de54
+make: Entering directory '/mnt/c/Users/xace/OneDrive/Documents/GitHub/INSuRE-F26/pylstar-aalpy-tls/crypto'
+make: Leaving directory '/mnt/c/Users/xace/OneDrive/Documents/GitHub/INSuRE-F26/pylstar-aalpy-tls/crypto'
+/root/src/scapy/scapy/layers/tls/crypto/cipher_block.py:156: CryptographyDeprecationWarning: IDEA has been deprecated
+  pc_cls = algorithms.IDEA
+/root/src/scapy/scapy/layers/tls/crypto/cipher_block.py:162: CryptographyDeprecationWarning: SEED has been deprecated
+  pc_cls = algorithms.SEED
+/root/src/scapy/scapy/layers/ipsec.py:471: CryptographyDeprecationWarning: Blowfish has been deprecated
+  cipher=algorithms.Blowfish,
+/root/src/scapy/scapy/layers/ipsec.py:485: CryptographyDeprecationWarning: CAST5 has been deprecated
+  cipher=algorithms.CAST5,
+learner: L# (AALpy 2.0.0)
+input_letters ['TLS12ServerHello_RSA_EXPORT', 'TLS12Certificate_valid', 'TLS12ServerKeyExchange', 'TLS12ServerHelloDone', 'TLSChangeCipherSpec', 'TLSFinished', 'TLSApplicationData']
+eqtests: RandomWalk(10000, 0.1)
+timeout: 1.0
+1622: [INFO] StoreHypotheses:find_counterexample: Storing hyptohesis #0 in /results/0.automaton
+1623: [INFO] StoreHypotheses:write_stats:   time spent so far: 1.0643150806427002
+1623: [INFO] StoreHypotheses:write_stats:   n_states: 1
+1623: [INFO] StoreHypotheses:write_stats:   n_queries=7
+1623: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=7
+1623: [INFO] StoreHypotheses:write_stats:   n_letters=7
+1623: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=7
+1628: [INFO] RandomWalkMethod:find_counterexample: Starting the RandomWalk Algorithm to search for a counter-example
+1667: [INFO] RandomWalkMethod:__check_equivalence: Found a counter-example : input: '[Letter('TLS12Certificate_valid'), Letter('TLSChangeCipherSpec'), Letter('TLSChangeCipherSpec'), Letter('TLS12ServerKeyExchange')]', expected: '[Letter('FatalAlert(decode_error)'), Letter('EOF'), Letter('EOF'), Letter('FatalAlert(decode_error)')]', observed: '[Letter('FatalAlert(decode_error)'), Letter('EOF'), Letter('EOF'), Letter('EOF')]'
+1667: [INFO] StoreHypotheses:write_stats: Found a counterexample: OutputQuery(I = [Letter('TLS12Certificate_valid'), Letter('TLSChangeCipherSpec'), Letter('TLSChangeCipherSpec'), Letter('TLS12ServerKeyExchange')], O = [Letter('FatalAlert(decode_error)'), Letter('EOF'), Letter('EOF'), Letter('EOF')])
+1668: [INFO] StoreHypotheses:write_stats:   time spent so far: 1.109321117401123
+1668: [INFO] StoreHypotheses:write_stats:   n_states: 1
+1668: [INFO] StoreHypotheses:write_stats:   n_queries=8
+1668: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=8
+1668: [INFO] StoreHypotheses:write_stats:   n_letters=11
+1668: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=11
+1903: [INFO] StoreHypotheses:find_counterexample: Storing hyptohesis #1 in /results/1.automaton
+1903: [INFO] StoreHypotheses:write_stats:   time spent so far: 1.3445560932159424
+1903: [INFO] StoreHypotheses:write_stats:   n_states: 2
+1903: [INFO] StoreHypotheses:write_stats:   n_queries=23
+1903: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=22
+1903: [INFO] StoreHypotheses:write_stats:   n_letters=50
+1903: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=46
+1907: [INFO] RandomWalkMethod:find_counterexample: Starting the RandomWalk Algorithm to search for a counter-example
+3237: [INFO] RandomWalkMethod:__check_equivalence: Found a counter-example : input: '[Letter('TLS12ServerHello_RSA_EXPORT'), Letter('TLS12Certificate_valid'), Letter('TLS12ServerKeyExchange'), Letter('TLSApplicationData'), Letter('TLSFinished')]', expected: '[Letter('No RSP'), Letter('FatalAlert(decode_error)'), Letter('EOF'), Letter('EOF'), Letter('EOF')]', observed: '[Letter('No RSP'), Letter('No RSP'), Letter('FatalAlert(illegal_parameter)'), Letter('EOF'), Letter('EOF')]'
+3237: [INFO] StoreHypotheses:write_stats: Found a counterexample: OutputQuery(I = [Letter('TLS12ServerHello_RSA_EXPORT'), Letter('TLS12Certificate_valid'), Letter('TLS12ServerKeyExchange'), Letter('TLSApplicationData'), Letter('TLSFinished')], O = [Letter('No RSP'), Letter('No RSP'), Letter('FatalAlert(illegal_parameter)'), Letter('EOF'), Letter('EOF')])
+3238: [INFO] StoreHypotheses:write_stats:   time spent so far: 2.679311752319336
+3238: [INFO] StoreHypotheses:write_stats:   n_states: 2
+3238: [INFO] StoreHypotheses:write_stats:   n_queries=30
+3238: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=29
+3238: [INFO] StoreHypotheses:write_stats:   n_letters=145
+3238: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=141
+4765: [INFO] StoreHypotheses:find_counterexample: Storing hyptohesis #2 in /results/2.automaton
+4765: [INFO] StoreHypotheses:write_stats:   time spent so far: 4.207102298736572
+4765: [INFO] StoreHypotheses:write_stats:   n_states: 4
+4765: [INFO] StoreHypotheses:write_stats:   n_queries=43
+4765: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=41
+4765: [INFO] StoreHypotheses:write_stats:   n_letters=192
+4765: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=183
+4770: [INFO] RandomWalkMethod:find_counterexample: Starting the RandomWalk Algorithm to search for a counter-example
+10461: [INFO] StoreHypotheses:write_stats: Inference converged
+10461: [INFO] StoreHypotheses:write_stats:   time spent so far: 9.903026819229126
+10461: [INFO] StoreHypotheses:write_stats:   n_states: 4
+10461: [INFO] StoreHypotheses:write_stats:   n_queries=1001
+10461: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=834
+10461: [INFO] StoreHypotheses:write_stats:   n_letters=10190
+10461: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=9752
+
+time spent in lstar.learn(): 9.905933856964111
+n_states: 4
+n_queries=1001
+n_submitted_queries=834
+n_letters=10190
+n_submitted_letters=9752
+L# learning rounds: 3, learning time: 2.83s, equivalence query time: 7.08s
+Results are in /mnt/c/Users/xace/OneDrive/Documents/GitHub/INSuRE-F26/pylstar-aalpy-tls/results/full_11_16/client--mbedtls_mbedtls-2.7.18--freak--v1.0--pylstar-tls-lsharp--r1

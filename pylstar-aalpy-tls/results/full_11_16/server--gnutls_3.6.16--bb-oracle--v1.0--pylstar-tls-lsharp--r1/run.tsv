@@ -1,0 +1,19 @@
+campaign	full_11_16
+kind	server
+image	tls-test-bed/gnutls:3.6.16
+tls_version	1.0
+scenario	bb-oracle
+extra_args	
+eq_method	RW:10000:0.1
+inferer	pylstar-tls-lsharp
+repeat	1
+jobs	12
+start_epoch	1794912519.090765750
+end_epoch	1794912841.438359244
+wall_seconds	322.3
+exit_code	0
+status	ok
+loadavg_start	5.33 6.49 7.61
+loadavg_end	4.70 5.52 6.84
+host	VeryExpensiveSpaceHeater
+command	INFERER_IMAGE=tls-test-bed/pylstar-tls-lsharp ./infer-server.sh tls-test-bed/gnutls:3.6.16 1.0 bb-oracle -E RW:10000:0.1

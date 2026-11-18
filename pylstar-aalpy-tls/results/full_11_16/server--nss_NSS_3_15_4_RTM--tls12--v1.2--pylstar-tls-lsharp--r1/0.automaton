@@ -1,0 +1,15 @@
+NoRenegotiation TLS12CH_WITH_00_RandBytes TLS12CertificateRequest TLS12Certificate_valid TLS12ClientHelloDH TLS12ClientHelloRSA TLS12ClientKeyExchange TLS12EmptyCertificate TLSApplicationData TLSApplicationDataEmpty TLSCertificateVerify TLSChangeCipherSpec TLSCloseNotify TLSFinished
+0, 0, NoRenegotiation, No RSP
+0, 0, TLS12CH_WITH_00_RandBytes, TLSServerHello+TLSCertificate+TLSServerHelloDone
+0, 0, TLS12CertificateRequest, FatalAlert(unexpected_message)
+0, 0, TLS12Certificate_valid, FatalAlert(unexpected_message)
+0, 0, TLS12ClientHelloDH, FatalAlert(handshake_failure)
+0, 0, TLS12ClientHelloRSA, TLSServerHello+TLSCertificate+TLSServerHelloDone
+0, 0, TLS12ClientKeyExchange, FatalAlert(unexpected_message)
+0, 0, TLS12EmptyCertificate, FatalAlert(unexpected_message)
+0, 0, TLSApplicationData, No RSP
+0, 0, TLSApplicationDataEmpty, No RSP
+0, 0, TLSCertificateVerify, EOF
+0, 0, TLSChangeCipherSpec, No RSP
+0, 0, TLSCloseNotify, No RSP
+0, 0, TLSFinished, EOF

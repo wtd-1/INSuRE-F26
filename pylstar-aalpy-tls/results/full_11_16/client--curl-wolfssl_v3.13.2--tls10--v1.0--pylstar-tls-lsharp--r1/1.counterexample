@@ -1,0 +1,7 @@
+Found a counterexample: OutputQuery(I = [Letter('TLS12ServerHello'), Letter('TLS12Certificate_valid'), Letter('TLS12Certificate_invalid')], O = [Letter('No RSP'), Letter('No RSP'), Letter('Warning(close_notify)')])
+  time spent so far: 11.257207155227661
+  n_states: 5
+  n_queries=122
+  n_submitted_queries=121
+  n_letters=450
+  n_submitted_letters=442

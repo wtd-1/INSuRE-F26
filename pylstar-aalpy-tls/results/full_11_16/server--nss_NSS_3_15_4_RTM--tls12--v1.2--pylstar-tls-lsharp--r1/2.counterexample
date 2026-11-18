@@ -1,0 +1,7 @@
+Found a counterexample: OutputQuery(I = [Letter('TLSCloseNotify'), Letter('TLS12ClientHelloDH'), Letter('TLSCloseNotify'), Letter('TLSCertificateVerify'), Letter('TLS12Certificate_valid'), Letter('TLS12EmptyCertificate'), Letter('TLSCloseNotify'), Letter('TLSCertificateVerify'), Letter('TLS12ClientKeyExchange'), Letter('TLSFinished'), Letter('TLS12CertificateRequest'), Letter('TLS12Certificate_valid'), Letter('TLS12Certificate_valid'), Letter('TLS12CH_WITH_00_RandBytes'), Letter('TLS12Certificate_valid'), Letter('TLS12Certificate_valid'), Letter('TLSApplicationDataEmpty'), Letter('TLSApplicationData'), Letter('TLS12ClientKeyExchange'), Letter('TLSFinished'), Letter('TLSChangeCipherSpec'), Letter('TLS12ClientHelloDH')], O = [Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF'), Letter('EOF')])
+  time spent so far: 364.5496497154236
+  n_states: 7
+  n_queries=225
+  n_submitted_queries=220
+  n_letters=1611
+  n_submitted_letters=1589

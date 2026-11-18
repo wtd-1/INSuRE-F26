@@ -1,0 +1,19 @@
+campaign	full_11_16
+kind	server
+image	tls-test-bed/erlang:OTP-24.2.1
+tls_version	1.3
+scenario	tls13
+extra_args	
+eq_method	RW:10000:0.1
+inferer	pylstar-tls
+repeat	1
+jobs	12
+start_epoch	1794909112.961952944
+end_epoch	1794916313.664122282
+wall_seconds	7200.7
+exit_code	143
+status	timeout
+loadavg_start	16.01 25.04 17.45
+loadavg_end	7.64 6.81 5.48
+host	VeryExpensiveSpaceHeater
+command	INFERER_IMAGE=tls-test-bed/pylstar-tls ./infer-server.sh tls-test-bed/erlang:OTP-24.2.1 1.3 tls13 -E RW:10000:0.1

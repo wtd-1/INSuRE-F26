@@ -1,0 +1,19 @@
+campaign	full_11_16
+kind	server
+image	tls-test-bed/erlang:OTP-24.2.1
+tls_version	1.0
+scenario	bb-oracle
+extra_args	
+eq_method	RW:10000:0.1
+inferer	pylstar-tls
+repeat	1
+jobs	12
+start_epoch	1794909065.048899942
+end_epoch	1794909126.899413809
+wall_seconds	61.9
+exit_code	0
+status	ok
+loadavg_start	35.46 29.41 18.36
+loadavg_end	13.62 24.24 17.27
+host	VeryExpensiveSpaceHeater
+command	INFERER_IMAGE=tls-test-bed/pylstar-tls ./infer-server.sh tls-test-bed/erlang:OTP-24.2.1 1.0 bb-oracle -E RW:10000:0.1

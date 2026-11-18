@@ -1,0 +1,12 @@
+NoRenegotiation TLS13Certificate_valid TLS13ClientHello TLS13EmptyCertificate TLSApplicationData TLSApplicationDataEmpty TLSCertificateVerify TLSChangeCipherSpec TLSCloseNotify TLSFinished TLSInvalidCertificateVerify
+0, 0, NoRenegotiation, No RSP
+0, 0, TLS13Certificate_valid, No RSP
+0, 0, TLS13ClientHello, TLS13ServerHello+TLSChangeCipherSpec+TLSEncryptedExtensions+TLS13Certificate+TLSCertificateVerify+TLSFinished
+0, 0, TLS13EmptyCertificate, No RSP
+0, 0, TLSApplicationData, No RSP
+0, 0, TLSApplicationDataEmpty, No RSP
+0, 0, TLSCertificateVerify, No RSP
+0, 0, TLSChangeCipherSpec, No RSP
+0, 0, TLSCloseNotify, No RSP
+0, 0, TLSFinished, No RSP
+0, 0, TLSInvalidCertificateVerify, No RSP

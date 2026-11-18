@@ -1,0 +1,19 @@
+campaign	full_11_16
+kind	server
+image	tls-test-bed/nss:NSS_3_15_3_RTM
+tls_version	1.2
+scenario	tls12
+extra_args	
+eq_method	RW:10000:0.1
+inferer	pylstar-tls
+repeat	1
+jobs	12
+start_epoch	1794934877.744835632
+end_epoch	1794942078.378618044
+wall_seconds	7200.6
+exit_code	143
+status	timeout
+loadavg_start	1.81 1.98 1.94
+loadavg_end	1.80 1.92 2.07
+host	VeryExpensiveSpaceHeater
+command	INFERER_IMAGE=tls-test-bed/pylstar-tls ./infer-server.sh tls-test-bed/nss:NSS_3_15_3_RTM 1.2 tls12 -E RW:10000:0.1

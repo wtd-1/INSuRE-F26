@@ -1,0 +1,49 @@
+NoRenegotiation TLS12CKE_0002_modified TLS12CKE_key_null TLS12CKE_longer_pms TLS12CKE_ok TLS12CKE_padding_inf_8 TLS12CKE_shorten_pms TLS12CKE_wrong_tls_version TLS12ClientHelloRSA TLSChangeCipherSpec TLSCloseNotify TLSHardCodedFinished
+0, 0, NoRenegotiation, EOF
+0, 0, TLS12CKE_0002_modified, EOF
+0, 0, TLS12CKE_key_null, EOF
+0, 0, TLS12CKE_longer_pms, EOF
+0, 0, TLS12CKE_ok, EOF
+0, 0, TLS12CKE_padding_inf_8, EOF
+0, 0, TLS12CKE_shorten_pms, EOF
+0, 0, TLS12CKE_wrong_tls_version, EOF
+0, 1, TLS12ClientHelloRSA, TLSServerHello+TLSCertificate+TLSServerHelloDone
+0, 0, TLSChangeCipherSpec, EOF
+0, 0, TLSCloseNotify, EOF
+0, 0, TLSHardCodedFinished, EOF
+1, 0, NoRenegotiation, EOF
+1, 2, TLS12CKE_0002_modified, No RSP
+1, 2, TLS12CKE_key_null, No RSP
+1, 2, TLS12CKE_longer_pms, No RSP
+1, 2, TLS12CKE_ok, No RSP
+1, 2, TLS12CKE_padding_inf_8, No RSP
+1, 2, TLS12CKE_shorten_pms, No RSP
+1, 2, TLS12CKE_wrong_tls_version, No RSP
+1, 0, TLS12ClientHelloRSA, EOF
+1, 0, TLSChangeCipherSpec, EOF
+1, 0, TLSCloseNotify, EOF
+1, 0, TLSHardCodedFinished, EOF
+2, 0, NoRenegotiation, FatalAlert(unexpected_message)
+2, 0, TLS12CKE_0002_modified, FatalAlert(unexpected_message)
+2, 0, TLS12CKE_key_null, FatalAlert(unexpected_message)
+2, 0, TLS12CKE_longer_pms, FatalAlert(unexpected_message)
+2, 0, TLS12CKE_ok, FatalAlert(unexpected_message)
+2, 0, TLS12CKE_padding_inf_8, FatalAlert(unexpected_message)
+2, 0, TLS12CKE_shorten_pms, FatalAlert(unexpected_message)
+2, 0, TLS12CKE_wrong_tls_version, FatalAlert(unexpected_message)
+2, 0, TLS12ClientHelloRSA, FatalAlert(unexpected_message)
+2, 3, TLSChangeCipherSpec, No RSP
+2, 0, TLSCloseNotify, EOF
+2, 0, TLSHardCodedFinished, EOF
+3, 0, NoRenegotiation, FatalAlert(bad_record_mac)
+3, 0, TLS12CKE_0002_modified, FatalAlert(bad_record_mac)
+3, 0, TLS12CKE_key_null, FatalAlert(bad_record_mac)
+3, 0, TLS12CKE_longer_pms, FatalAlert(bad_record_mac)
+3, 0, TLS12CKE_ok, FatalAlert(bad_record_mac)
+3, 0, TLS12CKE_padding_inf_8, FatalAlert(bad_record_mac)
+3, 0, TLS12CKE_shorten_pms, FatalAlert(bad_record_mac)
+3, 0, TLS12CKE_wrong_tls_version, FatalAlert(bad_record_mac)
+3, 0, TLS12ClientHelloRSA, FatalAlert(bad_record_mac)
+3, 0, TLSChangeCipherSpec, FatalAlert(bad_record_mac)
+3, 0, TLSCloseNotify, FatalAlert(bad_record_mac)
+3, 0, TLSHardCodedFinished, FatalAlert(bad_record_mac)

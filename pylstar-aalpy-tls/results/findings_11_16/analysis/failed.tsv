@@ -1,0 +1,4 @@
+# Failed or timed-out runs, with --timeout 3 added. Rerun with:
+#   ./run-experiments.sh --campaign <name>-retry analysis/failed.tsv
+server	nss:NSS_3_15_5_RTM	1.2	tls12	--timeout 3	# failed: server--nss_NSS_3_15_5_RTM--tls12--v1.2--pylstar-tls--r1
+server	nss:NSS_3_15_5_RTM	1.2	tls12	--timeout 3	# failed: server--nss_NSS_3_15_5_RTM--tls12--v1.2--pylstar-tls-lsharp--r1

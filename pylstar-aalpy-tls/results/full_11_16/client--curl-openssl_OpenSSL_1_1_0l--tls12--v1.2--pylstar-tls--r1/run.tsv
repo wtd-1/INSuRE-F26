@@ -1,0 +1,19 @@
+campaign	full_11_16
+kind	client
+image	tls-test-bed/curl-openssl:OpenSSL_1_1_0l
+tls_version	1.2
+scenario	tls12
+extra_args	
+eq_method	RW:10000:0.1
+inferer	pylstar-tls
+repeat	1
+jobs	12
+start_epoch	1794905021.908397487
+end_epoch	1794905205.898577093
+wall_seconds	184.0
+exit_code	0
+status	ok
+loadavg_start	13.52 14.34 21.32
+loadavg_end	16.82 14.33 20.00
+host	VeryExpensiveSpaceHeater
+command	INFERER_IMAGE=tls-test-bed/pylstar-tls ./infer-client.sh tls-test-bed/curl-openssl:OpenSSL_1_1_0l 1.2 tls12 -E RW:10000:0.1

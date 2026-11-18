@@ -1,0 +1,88 @@
+9cc8135aeb1fb9bf8470b0bb9ce3a086c1b89d99817de7dcf51fa43a2ea45e60
+make: Entering directory '/mnt/c/Users/xace/OneDrive/Documents/GitHub/INSuRE-F26/pylstar-aalpy-tls/crypto'
+make: Leaving directory '/mnt/c/Users/xace/OneDrive/Documents/GitHub/INSuRE-F26/pylstar-aalpy-tls/crypto'
+/root/src/scapy/scapy/layers/tls/crypto/cipher_block.py:156: CryptographyDeprecationWarning: IDEA has been deprecated
+  pc_cls = algorithms.IDEA
+/root/src/scapy/scapy/layers/tls/crypto/cipher_block.py:162: CryptographyDeprecationWarning: SEED has been deprecated
+  pc_cls = algorithms.SEED
+/root/src/scapy/scapy/layers/ipsec.py:471: CryptographyDeprecationWarning: Blowfish has been deprecated
+  cipher=algorithms.Blowfish,
+/root/src/scapy/scapy/layers/ipsec.py:485: CryptographyDeprecationWarning: CAST5 has been deprecated
+  cipher=algorithms.CAST5,
+learner: L# (AALpy 2.0.0)
+input_letters ['TLS13ServerHello', 'TLS13SH_WITH_00_RandBytes', 'TLSChangeCipherSpec', 'TLS13EncryptedExtensions', 'TLS13CertificateRequest', 'TLS13Certificate_valid', 'TLS13Certificate_invalid', 'TLS13Certificate_untrusted', 'TLS13EmptyCertificate', 'TLS13CertificateVerify', 'TLS13InvalidCertificateVerify', 'TLSFinished', 'TLSApplicationData', 'TLSApplicationDataEmpty', 'TLSCloseNotify', 'NoRenegotiation']
+eqtests: RandomWalk(10000, 0.1)
+timeout: 1.0
+2769: [INFO] StoreHypotheses:find_counterexample: Storing hyptohesis #0 in /results/0.automaton
+2769: [INFO] StoreHypotheses:write_stats:   time spent so far: 2.261883020401001
+2769: [INFO] StoreHypotheses:write_stats:   n_states: 1
+2769: [INFO] StoreHypotheses:write_stats:   n_queries=16
+2769: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=16
+2769: [INFO] StoreHypotheses:write_stats:   n_letters=16
+2769: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=16
+2774: [INFO] HappyPathFirst:find_counterexample: Starting the HappyPath Algorithm to search for a counter-example
+4789: [INFO] HappyPathFirst:__check_equivalence: Found a counter-example : input: '[Letter('TLS13ServerHello'), Letter('TLS13EncryptedExtensions'), Letter('TLS13CertificateRequest'), Letter('TLS13EmptyCertificate'), Letter('TLS13InvalidCertificateVerify'), Letter('TLSFinished')]', expected: '[Letter('TLSChangeCipherSpec'), Letter('FatalAlert(unexpected_message)'), Letter('FatalAlert(unexpected_message)'), Letter('FatalAlert(unexpected_message)'), Letter('FatalAlert(unexpected_message)'), Letter('FatalAlert(unexpected_message)')]', observed: '[Letter('TLSChangeCipherSpec'), Letter('No RSP'), Letter('No RSP'), Letter('FatalAlert(decode_error)'), Letter('EOF'), Letter('EOF')]'
+4789: [INFO] StoreHypotheses:write_stats: Found a counterexample: OutputQuery(I = [Letter('TLS13ServerHello'), Letter('TLS13EncryptedExtensions'), Letter('TLS13CertificateRequest'), Letter('TLS13EmptyCertificate'), Letter('TLS13InvalidCertificateVerify'), Letter('TLSFinished')], O = [Letter('TLSChangeCipherSpec'), Letter('No RSP'), Letter('No RSP'), Letter('FatalAlert(decode_error)'), Letter('EOF'), Letter('EOF')])
+4789: [INFO] StoreHypotheses:write_stats:   time spent so far: 4.282017946243286
+4789: [INFO] StoreHypotheses:write_stats:   n_states: 1
+4789: [INFO] StoreHypotheses:write_stats:   n_queries=17
+4789: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=17
+4789: [INFO] StoreHypotheses:write_stats:   n_letters=22
+4789: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=22
+10410: [INFO] StoreHypotheses:find_counterexample: Storing hyptohesis #1 in /results/1.automaton
+10410: [INFO] StoreHypotheses:write_stats:   time spent so far: 9.90267539024353
+10410: [INFO] StoreHypotheses:write_stats:   n_states: 4
+10410: [INFO] StoreHypotheses:write_stats:   n_queries=79
+10410: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=78
+10410: [INFO] StoreHypotheses:write_stats:   n_letters=211
+10410: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=205
+10419: [INFO] HappyPathFirst:find_counterexample: Starting the HappyPath Algorithm to search for a counter-example
+11481: [INFO] HappyPathFirst:__check_equivalence: Found a counter-example : input: '[Letter('TLS13ServerHello'), Letter('TLS13EncryptedExtensions'), Letter('TLS13CertificateRequest'), Letter('TLS13Certificate_untrusted'), Letter('TLS13CertificateVerify'), Letter('TLSFinished'), Letter('TLSApplicationData')]', expected: '[Letter('TLSChangeCipherSpec'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('FatalAlert(unexpected_message)'), Letter('EOF'), Letter('EOF')]', observed: '[Letter('TLSChangeCipherSpec'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('FatalAlert(bad_certificate)'), Letter('EOF'), Letter('EOF')]'
+11481: [INFO] StoreHypotheses:write_stats: Found a counterexample: OutputQuery(I = [Letter('TLS13ServerHello'), Letter('TLS13EncryptedExtensions'), Letter('TLS13CertificateRequest'), Letter('TLS13Certificate_untrusted'), Letter('TLS13CertificateVerify'), Letter('TLSFinished'), Letter('TLSApplicationData')], O = [Letter('TLSChangeCipherSpec'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('FatalAlert(bad_certificate)'), Letter('EOF'), Letter('EOF')])
+11481: [INFO] StoreHypotheses:write_stats:   time spent so far: 10.973417043685913
+11481: [INFO] StoreHypotheses:write_stats:   n_states: 4
+11481: [INFO] StoreHypotheses:write_stats:   n_queries=86
+11481: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=85
+11481: [INFO] StoreHypotheses:write_stats:   n_letters=263
+11481: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=257
+14654: [INFO] StoreHypotheses:find_counterexample: Storing hyptohesis #2 in /results/2.automaton
+14654: [INFO] StoreHypotheses:write_stats:   time spent so far: 14.14721131324768
+14655: [INFO] StoreHypotheses:write_stats:   n_states: 6
+14655: [INFO] StoreHypotheses:write_stats:   n_queries=124
+14655: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=122
+14655: [INFO] StoreHypotheses:write_stats:   n_letters=452
+14655: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=439
+14659: [INFO] HappyPathFirst:find_counterexample: Starting the HappyPath Algorithm to search for a counter-example
+19825: [INFO] HappyPathFirst:__check_equivalence: Found a counter-example : input: '[Letter('TLS13ServerHello'), Letter('TLS13EncryptedExtensions'), Letter('TLS13CertificateRequest'), Letter('TLS13Certificate_valid'), Letter('TLS13CertificateVerify'), Letter('TLSFinished'), Letter('TLSApplicationData')]', expected: '[Letter('TLSChangeCipherSpec'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('FatalAlert(unexpected_message)'), Letter('EOF')]', observed: '[Letter('TLSChangeCipherSpec'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('TLS13Certificate+TLSFinished+Warning(close_notify)'), Letter('No RSP')]'
+19825: [INFO] StoreHypotheses:write_stats: Found a counterexample: OutputQuery(I = [Letter('TLS13ServerHello'), Letter('TLS13EncryptedExtensions'), Letter('TLS13CertificateRequest'), Letter('TLS13Certificate_valid'), Letter('TLS13CertificateVerify'), Letter('TLSFinished'), Letter('TLSApplicationData')], O = [Letter('TLSChangeCipherSpec'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('No RSP'), Letter('TLS13Certificate+TLSFinished+Warning(close_notify)'), Letter('No RSP')])
+19825: [INFO] StoreHypotheses:write_stats:   time spent so far: 19.31816267967224
+19826: [INFO] StoreHypotheses:write_stats:   n_states: 6
+19826: [INFO] StoreHypotheses:write_stats:   n_queries=126
+19826: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=124
+19826: [INFO] StoreHypotheses:write_stats:   n_letters=466
+19826: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=453
+37035: [INFO] StoreHypotheses:find_counterexample: Storing hyptohesis #3 in /results/3.automaton
+37035: [INFO] StoreHypotheses:write_stats:   time spent so far: 36.52788496017456
+37035: [INFO] StoreHypotheses:write_stats:   n_states: 11
+37035: [INFO] StoreHypotheses:write_stats:   n_queries=351
+37035: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=347
+37035: [INFO] StoreHypotheses:write_stats:   n_letters=1653
+37035: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=1628
+37061: [INFO] HappyPathFirst:find_counterexample: Starting the HappyPath Algorithm to search for a counter-example
+37175: [INFO] RandomWalkMethod:find_counterexample: Starting the RandomWalk Algorithm to search for a counter-example
+49595: [INFO] StoreHypotheses:write_stats: Inference converged
+49595: [INFO] StoreHypotheses:write_stats:   time spent so far: 49.08742308616638
+49595: [INFO] StoreHypotheses:write_stats:   n_states: 11
+49595: [INFO] StoreHypotheses:write_stats:   n_queries=1228
+49595: [INFO] StoreHypotheses:write_stats:   n_submitted_queries=1157
+49595: [INFO] StoreHypotheses:write_stats:   n_letters=11650
+49595: [INFO] StoreHypotheses:write_stats:   n_submitted_letters=11478
+
+time spent in lstar.learn(): 49.09047174453735
+n_states: 11
+n_queries=1228
+n_submitted_queries=1157
+n_letters=11650
+n_submitted_letters=11478
+L# learning rounds: 4, learning time: 28.26s, equivalence query time: 20.83s
+Results are in /mnt/c/Users/xace/OneDrive/Documents/GitHub/INSuRE-F26/pylstar-aalpy-tls/results/full_11_16/client--gnutls_3.6.16--tls13--v1.3--pylstar-tls-lsharp--r1

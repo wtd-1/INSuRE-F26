@@ -1,0 +1,19 @@
+campaign	full_11_16
+kind	client
+image	tls-test-bed/curl-wolfssl:v4.4.0-stable
+tls_version	1.0
+scenario	freak
+extra_args	
+eq_method	RW:10000:0.1
+inferer	pylstar-tls
+repeat	1
+jobs	12
+start_epoch	1794908135.705196900
+end_epoch	1794908146.345765864
+wall_seconds	10.6
+exit_code	0
+status	ok
+loadavg_start	7.98 9.50 11.24
+loadavg_end	8.05 9.47 11.21
+host	VeryExpensiveSpaceHeater
+command	INFERER_IMAGE=tls-test-bed/pylstar-tls ./infer-client.sh tls-test-bed/curl-wolfssl:v4.4.0-stable 1.0 freak -E RW:10000:0.1
