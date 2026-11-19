@@ -1,0 +1,33 @@
+{
+  "success": false,
+  "properties_verified": [
+    "AF call_isolate_host",
+    "AG (call_create_incident_ticket -> AF (call_resolve_incident | call_escalate_to_ir_team))",
+    "AG (call_scan_attachments -> AX !call_isolate_host)",
+    "AG (call_block_ip -> !ip_tainted)",
+    "AG (call_resolve_incident -> AG !(((call_isolate_host | call_block_ip) | call_disable_account) | call_escalate_to_ir_team))",
+    "A [ !call_isolate_host U confirm_host_called ]",
+    "AG (((call_isolate_host | call_escalate_to_ir_team) | call_request_ir_approval) -> create_incident_ticket_called)",
+    "AG (call_create_incident_ticket -> !title_tainted)",
+    "AG (call_isolate_host -> ((check_sender_reputation_called & (scan_attachments_called | check_urls_called)) & confirm_host_called))"
+  ],
+  "properties_violated": [
+    "AG (((call_isolate_host | call_block_ip) | call_disable_account) -> request_ir_approval_called)"
+  ],
+  "counterexamples": [
+    {
+      "property": "AG (((call_isolate_host | call_block_ip) | call_disable_account) -> request_ir_approval_called)",
+      "description": "",
+      "trace_length": 7,
+      "tool_calls": [
+        "get_last_alert",
+        "check_sender_reputation",
+        "scan_attachments",
+        "confirm_host",
+        "create_incident_ticket",
+        "isolate_host"
+      ],
+      "violations": []
+    }
+  ]
+}

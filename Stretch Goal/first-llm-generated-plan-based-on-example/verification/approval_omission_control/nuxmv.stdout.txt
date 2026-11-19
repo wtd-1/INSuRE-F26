@@ -1,0 +1,124 @@
+*** This is nuXmv 2.1.0 (compiled on Thu Nov 28 16:15:03 2024)
+*** Copyright (c) 2014-2024, Fondazione Bruno Kessler
+*** For more information on nuXmv see https://nuxmv.fbk.eu
+*** or email to <nuxmv@fbk.eu>.
+*** Please report bugs at Please report bugs to <nusmv-users@fbk.eu>
+*** (click on "Login Anonymously" to access)
+*** Alternatively write to <nuxmv@fbk.eu>.
+
+*** This version of nuXmv is linked to NuSMV 2.7.0.
+*** For more information on NuSMV see <http://nusmv.fbk.eu>
+*** or email to <nusmv-users@fbk.eu>.
+*** Copyright (C) 2010-2024, Fondazione Bruno Kessler
+
+*** This version of nuXmv is linked to the CUDD library version 2.4.1
+*** Copyright (c) 1995-2004, Regents of the University of Colorado
+
+*** This version of nuXmv is linked to the MiniSat SAT solver. 
+*** See http://minisat.se/MiniSat.html
+*** Copyright (c) 2003-2006, Niklas Een, Niklas Sorensson
+*** Copyright (c) 2007-2010, Niklas Sorensson
+
+*** This version of nuXmv is linked to MathSAT
+*** Copyright (C) 2009-2019 by Fondazione Bruno Kessler
+*** Copyright (C) 2009-2019 by University of Trento and others
+*** See http://mathsat.fbk.eu
+
+-- specification AF call_isolate_host  is true
+-- specification AG (call_create_incident_ticket -> AF (call_resolve_incident | call_escalate_to_ir_team))  is true
+-- specification AG (call_scan_attachments -> AX !call_isolate_host)  is true
+-- specification AG (call_block_ip -> !ip_tainted)  is true
+-- specification AG (call_resolve_incident -> AG !(((call_isolate_host | call_block_ip) | call_disable_account) | call_escalate_to_ir_team))  is true
+-- specification A [ !call_isolate_host U confirm_host_called ]   is true
+-- specification AG (((call_isolate_host | call_block_ip) | call_disable_account) -> request_ir_approval_called)  is false
+-- as demonstrated by the following execution sequence
+Trace Description: CTL Counterexample 
+Trace Type: Counterexample 
+  -> State: 1.1 <-
+    current_state = INITIAL
+    ticket_defined = FALSE
+    severity_trusted = FALSE
+    alert_trusted = FALSE
+    confirmed_trusted = FALSE
+    title_tainted = FALSE
+    create_incident_ticket_called = FALSE
+    sender_trusted = FALSE
+    isolate_host_called = FALSE
+    get_last_alert_called = FALSE
+    ticket_trusted = FALSE
+    check_sender_reputation_called = FALSE
+    alert_tainted = FALSE
+    description_tainted = FALSE
+    incident_trusted = FALSE
+    hostname_trusted = FALSE
+    ip_tainted = FALSE
+    alert_defined = FALSE
+    check_urls_called = FALSE
+    request_ir_approval_called = FALSE
+    confirm_host_called = FALSE
+    severity_tainted = FALSE
+    resolve_incident_called = FALSE
+    hostname_tainted = FALSE
+    description_trusted = FALSE
+    scan_attachments_called = FALSE
+    sender_tainted = FALSE
+    incident_tainted = FALSE
+    confirmed_defined = FALSE
+    title_trusted = FALSE
+    call_scan_attachments = FALSE
+    call_resolve_incident = FALSE
+    call_request_ir_approval = FALSE
+    call_isolate_host = FALSE
+    call_get_last_alert = FALSE
+    call_escalate_to_ir_team = FALSE
+    call_disable_account = FALSE
+    call_create_incident_ticket = FALSE
+    call_confirm_host = FALSE
+    call_check_sender_reputation = FALSE
+    call_block_ip = FALSE
+    done = FALSE
+    at_initial = TRUE
+  -> State: 1.2 <-
+    current_state = CALL_get_last_alert_0
+    severity_trusted = TRUE
+    alert_trusted = TRUE
+    get_last_alert_called = TRUE
+    alert_defined = TRUE
+    call_get_last_alert = TRUE
+    at_initial = FALSE
+  -> State: 1.3 <-
+    current_state = CALL_check_sender_reputation_1
+    sender_trusted = TRUE
+    check_sender_reputation_called = TRUE
+    call_get_last_alert = FALSE
+    call_check_sender_reputation = TRUE
+  -> State: 1.4 <-
+    current_state = CALL_scan_attachments_2
+    scan_attachments_called = TRUE
+    call_scan_attachments = TRUE
+    call_check_sender_reputation = FALSE
+  -> State: 1.5 <-
+    current_state = CALL_confirm_host_3
+    confirmed_trusted = TRUE
+    hostname_trusted = TRUE
+    confirm_host_called = TRUE
+    confirmed_defined = TRUE
+    call_scan_attachments = FALSE
+    call_confirm_host = TRUE
+  -> State: 1.6 <-
+    current_state = CALL_create_incident_ticket_4
+    ticket_defined = TRUE
+    create_incident_ticket_called = TRUE
+    ticket_trusted = TRUE
+    description_trusted = TRUE
+    title_trusted = TRUE
+    call_create_incident_ticket = TRUE
+    call_confirm_host = FALSE
+  -> State: 1.7 <-
+    current_state = CALL_isolate_host_5
+    isolate_host_called = TRUE
+    call_isolate_host = TRUE
+    call_create_incident_ticket = FALSE
+-- specification AG (((call_isolate_host | call_escalate_to_ir_team) | call_request_ir_approval) -> create_incident_ticket_called)  is true
+-- specification AG (call_create_incident_ticket -> !title_tainted)  is true
+-- specification AG (call_isolate_host -> ((check_sender_reputation_called & (scan_attachments_called | check_urls_called)) & confirm_host_called))  is true

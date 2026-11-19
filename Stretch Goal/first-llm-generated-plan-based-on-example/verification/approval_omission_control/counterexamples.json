@@ -1,0 +1,129 @@
+[
+  {
+    "property_name": "AG (((call_isolate_host | call_block_ip) | call_disable_account) -> request_ir_approval_called)",
+    "property_description": "",
+    "trace_type": "Counterexample",
+    "states": [
+      {
+        "state_num": "1.1",
+        "state_name": "INITIAL",
+        "variables": {
+          "current_state": "INITIAL",
+          "ticket_defined": "FALSE",
+          "severity_trusted": "FALSE",
+          "alert_trusted": "FALSE",
+          "confirmed_trusted": "FALSE",
+          "title_tainted": "FALSE",
+          "create_incident_ticket_called": "FALSE",
+          "sender_trusted": "FALSE",
+          "isolate_host_called": "FALSE",
+          "get_last_alert_called": "FALSE",
+          "ticket_trusted": "FALSE",
+          "check_sender_reputation_called": "FALSE",
+          "alert_tainted": "FALSE",
+          "description_tainted": "FALSE",
+          "incident_trusted": "FALSE",
+          "hostname_trusted": "FALSE",
+          "ip_tainted": "FALSE",
+          "alert_defined": "FALSE",
+          "check_urls_called": "FALSE",
+          "request_ir_approval_called": "FALSE",
+          "confirm_host_called": "FALSE",
+          "severity_tainted": "FALSE",
+          "resolve_incident_called": "FALSE",
+          "hostname_tainted": "FALSE",
+          "description_trusted": "FALSE",
+          "scan_attachments_called": "FALSE",
+          "sender_tainted": "FALSE",
+          "incident_tainted": "FALSE",
+          "confirmed_defined": "FALSE",
+          "title_trusted": "FALSE",
+          "call_scan_attachments": "FALSE",
+          "call_resolve_incident": "FALSE",
+          "call_request_ir_approval": "FALSE",
+          "call_isolate_host": "FALSE",
+          "call_get_last_alert": "FALSE",
+          "call_escalate_to_ir_team": "FALSE",
+          "call_disable_account": "FALSE",
+          "call_create_incident_ticket": "FALSE",
+          "call_confirm_host": "FALSE",
+          "call_check_sender_reputation": "FALSE",
+          "call_block_ip": "FALSE",
+          "done": "FALSE",
+          "at_initial": "TRUE"
+        }
+      },
+      {
+        "state_num": "1.2",
+        "state_name": "CALL_get_last_alert_0",
+        "variables": {
+          "current_state": "CALL_get_last_alert_0",
+          "severity_trusted": "TRUE",
+          "alert_trusted": "TRUE",
+          "get_last_alert_called": "TRUE",
+          "alert_defined": "TRUE",
+          "call_get_last_alert": "TRUE",
+          "at_initial": "FALSE"
+        }
+      },
+      {
+        "state_num": "1.3",
+        "state_name": "CALL_check_sender_reputation_1",
+        "variables": {
+          "current_state": "CALL_check_sender_reputation_1",
+          "sender_trusted": "TRUE",
+          "check_sender_reputation_called": "TRUE",
+          "call_get_last_alert": "FALSE",
+          "call_check_sender_reputation": "TRUE"
+        }
+      },
+      {
+        "state_num": "1.4",
+        "state_name": "CALL_scan_attachments_2",
+        "variables": {
+          "current_state": "CALL_scan_attachments_2",
+          "scan_attachments_called": "TRUE",
+          "call_scan_attachments": "TRUE",
+          "call_check_sender_reputation": "FALSE"
+        }
+      },
+      {
+        "state_num": "1.5",
+        "state_name": "CALL_confirm_host_3",
+        "variables": {
+          "current_state": "CALL_confirm_host_3",
+          "confirmed_trusted": "TRUE",
+          "hostname_trusted": "TRUE",
+          "confirm_host_called": "TRUE",
+          "confirmed_defined": "TRUE",
+          "call_scan_attachments": "FALSE",
+          "call_confirm_host": "TRUE"
+        }
+      },
+      {
+        "state_num": "1.6",
+        "state_name": "CALL_create_incident_ticket_4",
+        "variables": {
+          "current_state": "CALL_create_incident_ticket_4",
+          "ticket_defined": "TRUE",
+          "create_incident_ticket_called": "TRUE",
+          "ticket_trusted": "TRUE",
+          "description_trusted": "TRUE",
+          "title_trusted": "TRUE",
+          "call_create_incident_ticket": "TRUE",
+          "call_confirm_host": "FALSE"
+        }
+      },
+      {
+        "state_num": "1.7",
+        "state_name": "CALL_isolate_host_5",
+        "variables": {
+          "current_state": "CALL_isolate_host_5",
+          "isolate_host_called": "TRUE",
+          "call_isolate_host": "TRUE",
+          "call_create_incident_ticket": "FALSE"
+        }
+      }
+    ]
+  }
+]

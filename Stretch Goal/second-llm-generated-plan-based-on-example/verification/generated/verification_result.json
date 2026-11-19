@@ -1,0 +1,9 @@
+{
+  "success": true,
+  "properties_verified": [
+    "AG (call_block_ip -> !ip_tainted)",
+    "AG (call_create_incident_ticket -> !title_tainted)"
+  ],
+  "properties_violated": [],
+  "counterexamples": []
+}

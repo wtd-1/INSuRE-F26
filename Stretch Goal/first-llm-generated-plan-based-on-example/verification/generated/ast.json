@@ -1,0 +1,184 @@
+{
+  "success": true,
+  "num_regions": 8,
+  "regions": [
+    {
+      "region_id": 0,
+      "region_type": "tool_call",
+      "line_start": 1,
+      "line_end": 1,
+      "metadata": {
+        "tool_name": "get_last_alert",
+        "targets": [
+          "alert"
+        ],
+        "arguments": {
+          "severity": "'HIGH'"
+        },
+        "arg_variables": {
+          "severity": []
+        }
+      }
+    },
+    {
+      "region_id": 1,
+      "region_type": "tool_call",
+      "line_start": 2,
+      "line_end": 2,
+      "metadata": {
+        "tool_name": "check_sender_reputation",
+        "targets": [
+          "sender_reputation"
+        ],
+        "arguments": {
+          "sender": "'alerts@example.com'"
+        },
+        "arg_variables": {
+          "sender": []
+        }
+      }
+    },
+    {
+      "region_id": 2,
+      "region_type": "tool_call",
+      "line_start": 3,
+      "line_end": 3,
+      "metadata": {
+        "tool_name": "check_urls",
+        "targets": [
+          "url_findings"
+        ],
+        "arguments": {
+          "alert": "alert"
+        },
+        "arg_variables": {
+          "alert": [
+            "alert"
+          ]
+        }
+      }
+    },
+    {
+      "region_id": 3,
+      "region_type": "tool_call",
+      "line_start": 4,
+      "line_end": 4,
+      "metadata": {
+        "tool_name": "confirm_host",
+        "targets": [
+          "confirmed_host"
+        ],
+        "arguments": {
+          "hostname": "'workstation-17'"
+        },
+        "arg_variables": {
+          "hostname": []
+        }
+      }
+    },
+    {
+      "region_id": 4,
+      "region_type": "tool_call",
+      "line_start": 5,
+      "line_end": 5,
+      "metadata": {
+        "tool_name": "create_incident_ticket",
+        "targets": [
+          "incident"
+        ],
+        "arguments": {
+          "title": "'High-severity alert on workstation-17'",
+          "description": "'High-severity alert from alerts@example.com affecting workstation-17.'"
+        },
+        "arg_variables": {
+          "title": [],
+          "description": []
+        }
+      }
+    },
+    {
+      "region_id": 5,
+      "region_type": "tool_call",
+      "line_start": 6,
+      "line_end": 6,
+      "metadata": {
+        "tool_name": "request_ir_approval",
+        "targets": [],
+        "arguments": {
+          "incident": "incident"
+        },
+        "arg_variables": {
+          "incident": [
+            "incident"
+          ]
+        },
+        "standalone": true
+      }
+    },
+    {
+      "region_id": 6,
+      "region_type": "tool_call",
+      "line_start": 7,
+      "line_end": 7,
+      "metadata": {
+        "tool_name": "isolate_host",
+        "targets": [],
+        "arguments": {
+          "hostname": "confirmed_host"
+        },
+        "arg_variables": {
+          "hostname": [
+            "confirmed_host"
+          ]
+        },
+        "standalone": true
+      }
+    },
+    {
+      "region_id": 7,
+      "region_type": "tool_call",
+      "line_start": 8,
+      "line_end": 8,
+      "metadata": {
+        "tool_name": "resolve_incident",
+        "targets": [],
+        "arguments": {
+          "incident": "incident"
+        },
+        "arg_variables": {
+          "incident": [
+            "incident"
+          ]
+        },
+        "standalone": true
+      }
+    }
+  ],
+  "variable_assignments": {
+    "alert": {
+      "source": "tool_call",
+      "tool": "get_last_alert",
+      "region_id": 0
+    },
+    "sender_reputation": {
+      "source": "tool_call",
+      "tool": "check_sender_reputation",
+      "region_id": 1
+    },
+    "url_findings": {
+      "source": "tool_call",
+      "tool": "check_urls",
+      "region_id": 2
+    },
+    "confirmed_host": {
+      "source": "tool_call",
+      "tool": "confirm_host",
+      "region_id": 3
+    },
+    "incident": {
+      "source": "tool_call",
+      "tool": "create_incident_ticket",
+      "region_id": 4
+    }
+  }
+}

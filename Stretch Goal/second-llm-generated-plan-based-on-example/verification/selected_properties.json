@@ -1,0 +1,28 @@
+[
+  {
+    "name": "block_ip_argument_not_tainted",
+    "formula": "AG(call_block_ip -> !ip_tainted)",
+    "description": "block_ip must never be called with an IP derived from attacker-influenced data.",
+    "severity": "critical",
+    "applicable_user_tasks": null,
+    "id": null,
+    "status": "experimental",
+    "author": null,
+    "date": null,
+    "level": "critical",
+    "tags": []
+  },
+  {
+    "name": "ticket_title_not_tainted",
+    "formula": "AG(call_create_incident_ticket -> !title_tainted)",
+    "description": "Incident ticket titles must not be derived from attacker-influenced data. Descriptions can summarise tainted logs; titles must remain operator-authored.",
+    "severity": "high",
+    "applicable_user_tasks": null,
+    "id": null,
+    "status": "experimental",
+    "author": null,
+    "date": null,
+    "level": "high",
+    "tags": []
+  }
+]

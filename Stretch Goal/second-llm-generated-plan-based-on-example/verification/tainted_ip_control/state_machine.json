@@ -1,0 +1,158 @@
+{
+  "states": [
+    {
+      "id": "INITIAL",
+      "type": "INITIAL",
+      "metadata": {}
+    },
+    {
+      "id": "DONE",
+      "type": "DONE",
+      "metadata": {}
+    },
+    {
+      "id": "CALL_query_logs_0",
+      "type": "TOOL_CALL",
+      "metadata": {
+        "tool": "query_logs",
+        "region_id": 0,
+        "targets": [
+          "logs"
+        ],
+        "arguments": {
+          "host": "'netflow-server'"
+        },
+        "arg_provenance": {
+          "host": "trusted"
+        }
+      }
+    },
+    {
+      "id": "CALL_query_ai_assistant_1",
+      "type": "TOOL_CALL",
+      "metadata": {
+        "tool": "query_ai_assistant",
+        "region_id": 1,
+        "targets": [
+          "analysis"
+        ],
+        "arguments": {
+          "query": "str(logs)"
+        },
+        "arg_provenance": {
+          "query": "qllm"
+        }
+      }
+    },
+    {
+      "id": "CALL_create_incident_ticket_2",
+      "type": "TOOL_CALL",
+      "metadata": {
+        "tool": "create_incident_ticket",
+        "region_id": 2,
+        "targets": [
+          "ticket"
+        ],
+        "arguments": {
+          "title": "'Suspicious netflow activity'",
+          "description": "'Potential malicious source detected in netflow logs'"
+        },
+        "arg_provenance": {
+          "title": "trusted",
+          "description": "trusted"
+        }
+      }
+    },
+    {
+      "id": "CALL_block_ip_3",
+      "type": "TOOL_CALL",
+      "metadata": {
+        "tool": "block_ip",
+        "region_id": 3,
+        "targets": [],
+        "arguments": {
+          "ip": "analysis.source_ip"
+        },
+        "arg_provenance": {
+          "ip": "qllm"
+        }
+      }
+    }
+  ],
+  "transitions": [
+    {
+      "from": "INITIAL",
+      "to": "CALL_query_logs_0",
+      "guard": "TRUE",
+      "effect": [
+        "logs_defined = true",
+        "query_logs_called = true",
+        "logs_tainted = true",
+        "host_trusted = true",
+        "host_tainted = false"
+      ]
+    },
+    {
+      "from": "CALL_query_logs_0",
+      "to": "CALL_query_ai_assistant_1",
+      "guard": "TRUE",
+      "effect": [
+        "analysis_defined = true",
+        "query_ai_assistant_called = true",
+        "analysis_tainted = true",
+        "query_tainted = true",
+        "query_trusted = false"
+      ]
+    },
+    {
+      "from": "CALL_query_ai_assistant_1",
+      "to": "CALL_create_incident_ticket_2",
+      "guard": "TRUE",
+      "effect": [
+        "ticket_defined = true",
+        "create_incident_ticket_called = true",
+        "ticket_tainted = true",
+        "title_trusted = true",
+        "title_tainted = false",
+        "description_trusted = true",
+        "description_tainted = false"
+      ]
+    },
+    {
+      "from": "CALL_create_incident_ticket_2",
+      "to": "CALL_block_ip_3",
+      "guard": "TRUE",
+      "effect": [
+        "block_ip_called = true",
+        "ip_tainted = true",
+        "ip_trusted = false"
+      ]
+    },
+    {
+      "from": "CALL_block_ip_3",
+      "to": "DONE",
+      "guard": "TRUE",
+      "effect": []
+    }
+  ],
+  "atomic_propositions": {
+    "init": "current_state = INITIAL",
+    "done": "current_state = DONE",
+    "call_query_logs": "current_state = CALL_query_logs_0",
+    "query_logs_called": "query_logs_called = true",
+    "call_query_ai_assistant": "current_state = CALL_query_ai_assistant_1",
+    "query_ai_assistant_called": "query_ai_assistant_called = true",
+    "call_create_incident_ticket": "current_state = CALL_create_incident_ticket_2",
+    "create_incident_ticket_called": "create_incident_ticket_called = true",
+    "call_block_ip": "current_state = CALL_block_ip_3",
+    "block_ip_called": "block_ip_called = true"
+  },
+  "ctl_properties": [
+    "AF(done)",
+    "AG(call_query_ai_assistant -> query_logs_called)",
+    "AG(done -> AG(!call_query_logs))",
+    "AG(done -> AG(!call_query_ai_assistant))",
+    "AG(done -> AG(!call_create_incident_ticket))",
+    "AG(done -> AG(!call_block_ip))"
+  ]
+}

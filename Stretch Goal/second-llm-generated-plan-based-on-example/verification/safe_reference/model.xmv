@@ -1,0 +1,164 @@
+MODULE main
+VAR
+  -- all possible states, vaguely ordered for legibility
+  current_state : {CALL_block_ip_3, CALL_create_incident_ticket_2, CALL_query_ai_assistant_1, CALL_query_logs_0, DONE, INITIAL};
+
+  -- all internal booleans
+  title_tainted                 : boolean;
+  query_tainted                 : boolean;
+  ip_tainted                    : boolean;
+  ticket_defined                : boolean;
+  query_ai_assistant_called     : boolean;
+  ip_trusted                    : boolean;
+  title_trusted                 : boolean;
+  analysis_defined              : boolean;
+  logs_defined                  : boolean;
+  logs_tainted                  : boolean;
+  query_trusted                 : boolean;
+  host_tainted                  : boolean;
+  block_ip_called               : boolean;
+  host_trusted                  : boolean;
+  query_logs_called             : boolean;
+  analysis_tainted              : boolean;
+  description_trusted           : boolean;
+  create_incident_ticket_called : boolean;
+  description_tainted           : boolean;
+  ticket_tainted                : boolean;
+
+  -- define our transition system. quite messy, might need to clean up.
+ASSIGN
+  init(current_state) := INITIAL;
+  next(current_state) := case
+    current_state = INITIAL : CALL_query_logs_0;
+    current_state = CALL_query_logs_0 : CALL_query_ai_assistant_1;
+    current_state = CALL_query_ai_assistant_1 : CALL_create_incident_ticket_2;
+    current_state = CALL_create_incident_ticket_2 : CALL_block_ip_3;
+    current_state = CALL_block_ip_3 : DONE;
+    current_state = DONE : DONE;
+    TRUE : current_state;
+  esac;
+
+  init(analysis_defined) := FALSE;
+  next(analysis_defined) := case
+    current_state = CALL_query_logs_0 & next(current_state) = CALL_query_ai_assistant_1 : TRUE;
+    TRUE                                                                                : analysis_defined;
+  esac;
+  init(analysis_tainted) := FALSE;
+  next(analysis_tainted) := case
+    current_state = CALL_query_logs_0 & next(current_state) = CALL_query_ai_assistant_1 : TRUE;
+    TRUE                                                                                : analysis_tainted;
+  esac;
+  init(block_ip_called) := FALSE;
+  next(block_ip_called) := case
+    current_state = CALL_create_incident_ticket_2 & next(current_state) = CALL_block_ip_3 : TRUE;
+    TRUE                                                                                  : block_ip_called;
+  esac;
+  init(create_incident_ticket_called) := FALSE;
+  next(create_incident_ticket_called) := case
+    current_state = CALL_query_ai_assistant_1 & next(current_state) = CALL_create_incident_ticket_2 : TRUE;
+    TRUE                                                                                            : create_incident_ticket_called;
+  esac;
+  init(description_tainted) := FALSE;
+  next(description_tainted) := case
+    current_state = CALL_query_ai_assistant_1 & next(current_state) = CALL_create_incident_ticket_2 : FALSE;
+    TRUE                                                                                            : description_tainted;
+  esac;
+  init(description_trusted) := FALSE;
+  next(description_trusted) := case
+    current_state = CALL_query_ai_assistant_1 & next(current_state) = CALL_create_incident_ticket_2 : TRUE;
+    TRUE                                                                                            : description_trusted;
+  esac;
+  init(host_tainted) := FALSE;
+  next(host_tainted) := case
+    current_state = INITIAL & next(current_state) = CALL_query_logs_0 : FALSE;
+    TRUE                                                              : host_tainted;
+  esac;
+  init(host_trusted) := FALSE;
+  next(host_trusted) := case
+    current_state = INITIAL & next(current_state) = CALL_query_logs_0 : TRUE;
+    TRUE                                                              : host_trusted;
+  esac;
+  init(ip_tainted) := FALSE;
+  next(ip_tainted) := case
+    current_state = CALL_create_incident_ticket_2 & next(current_state) = CALL_block_ip_3 : FALSE;
+    TRUE                                                                                  : ip_tainted;
+  esac;
+  init(ip_trusted) := FALSE;
+  next(ip_trusted) := case
+    current_state = CALL_create_incident_ticket_2 & next(current_state) = CALL_block_ip_3 : TRUE;
+    TRUE                                                                                  : ip_trusted;
+  esac;
+  init(logs_defined) := FALSE;
+  next(logs_defined) := case
+    current_state = INITIAL & next(current_state) = CALL_query_logs_0 : TRUE;
+    TRUE                                                              : logs_defined;
+  esac;
+  init(logs_tainted) := FALSE;
+  next(logs_tainted) := case
+    current_state = INITIAL & next(current_state) = CALL_query_logs_0 : TRUE;
+    TRUE                                                              : logs_tainted;
+  esac;
+  init(query_ai_assistant_called) := FALSE;
+  next(query_ai_assistant_called) := case
+    current_state = CALL_query_logs_0 & next(current_state) = CALL_query_ai_assistant_1 : TRUE;
+    TRUE                                                                                : query_ai_assistant_called;
+  esac;
+  init(query_logs_called) := FALSE;
+  next(query_logs_called) := case
+    current_state = INITIAL & next(current_state) = CALL_query_logs_0 : TRUE;
+    TRUE                                                              : query_logs_called;
+  esac;
+  init(query_tainted) := FALSE;
+  next(query_tainted) := case
+    current_state = CALL_query_logs_0 & next(current_state) = CALL_query_ai_assistant_1 : TRUE;
+    TRUE                                                                                : query_tainted;
+  esac;
+  init(query_trusted) := FALSE;
+  next(query_trusted) := case
+    current_state = CALL_query_logs_0 & next(current_state) = CALL_query_ai_assistant_1 : FALSE;
+    TRUE                                                                                : query_trusted;
+  esac;
+  init(ticket_defined) := FALSE;
+  next(ticket_defined) := case
+    current_state = CALL_query_ai_assistant_1 & next(current_state) = CALL_create_incident_ticket_2 : TRUE;
+    TRUE                                                                                            : ticket_defined;
+  esac;
+  init(ticket_tainted) := FALSE;
+  next(ticket_tainted) := case
+    current_state = CALL_query_ai_assistant_1 & next(current_state) = CALL_create_incident_ticket_2 : TRUE;
+    TRUE                                                                                            : ticket_tainted;
+  esac;
+  init(title_tainted) := FALSE;
+  next(title_tainted) := case
+    current_state = CALL_query_ai_assistant_1 & next(current_state) = CALL_create_incident_ticket_2 : FALSE;
+    TRUE                                                                                            : title_tainted;
+  esac;
+  init(title_trusted) := FALSE;
+  next(title_trusted) := case
+    current_state = CALL_query_ai_assistant_1 & next(current_state) = CALL_create_incident_ticket_2 : TRUE;
+    TRUE                                                                                            : title_trusted;
+  esac;
+
+DEFINE
+  at_initial := current_state = INITIAL;
+  done := current_state = DONE;
+  call_block_ip := current_state = CALL_block_ip_3;
+  call_create_incident_ticket := current_state = CALL_create_incident_ticket_2;
+  call_query_ai_assistant := current_state = CALL_query_ai_assistant_1;
+  call_query_logs := current_state = CALL_query_logs_0;
+
+-- ============================================================================
+-- CTL SECURITY PROPERTIES
+-- Auto-generated from ctl_policies module
+-- ============================================================================
+
+-- Property: block_ip_argument_not_tainted
+-- Description: block_ip must never be called with an IP derived from attacker-influenced data.
+-- Severity: critical
+CTLSPEC AG(call_block_ip -> !ip_tainted);
+
+-- Property: ticket_title_not_tainted
+-- Description: Incident ticket titles must not be derived from attacker-influenced data. Descriptions can summarise tainted logs; titles must remain operator-authored.
+-- Severity: high
+CTLSPEC AG(call_create_incident_ticket -> !title_tainted);
+

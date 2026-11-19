@@ -1,0 +1,8 @@
+alert = get_last_alert(severity="HIGH")
+sender_reputation = check_sender_reputation(sender="alerts@example.com")
+url_findings = check_urls(alert=alert)
+confirmed_host = confirm_host(hostname="workstation-17")
+incident = create_incident_ticket(title="High-severity alert on workstation-17", description="High-severity alert from alerts@example.com affecting workstation-17.")
+request_ir_approval(incident=incident)
+isolate_host(hostname=confirmed_host)
+resolve_incident(incident=incident)

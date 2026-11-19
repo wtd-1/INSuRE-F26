@@ -1,0 +1,35 @@
+{
+  "generated": {
+    "states": 10,
+    "transitions": 9,
+    "properties_selected": 10,
+    "properties_checked": 10,
+    "properties_passed": 10,
+    "properties_failed": 0,
+    "counterexamples": 0,
+    "checker_exit_code": 0,
+    "camelot_verified": true
+  },
+  "safe_reference": {
+    "states": 10,
+    "transitions": 9,
+    "properties_selected": 10,
+    "properties_checked": 10,
+    "properties_passed": 10,
+    "properties_failed": 0,
+    "counterexamples": 0,
+    "checker_exit_code": 0,
+    "camelot_verified": true
+  },
+  "approval_omission_control": {
+    "states": 9,
+    "transitions": 8,
+    "properties_selected": 10,
+    "properties_checked": 10,
+    "properties_passed": 9,
+    "properties_failed": 1,
+    "counterexamples": 1,
+    "checker_exit_code": 0,
+    "camelot_verified": false
+  }
+}

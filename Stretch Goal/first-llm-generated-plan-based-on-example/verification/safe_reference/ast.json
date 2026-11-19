@@ -1,0 +1,172 @@
+{
+  "success": true,
+  "num_regions": 8,
+  "regions": [
+    {
+      "region_id": 0,
+      "region_type": "tool_call",
+      "line_start": 1,
+      "line_end": 1,
+      "metadata": {
+        "tool_name": "get_last_alert",
+        "targets": [
+          "alert"
+        ],
+        "arguments": {
+          "severity": "'HIGH'"
+        },
+        "arg_variables": {
+          "severity": []
+        }
+      }
+    },
+    {
+      "region_id": 1,
+      "region_type": "tool_call",
+      "line_start": 2,
+      "line_end": 2,
+      "metadata": {
+        "tool_name": "check_sender_reputation",
+        "targets": [],
+        "arguments": {
+          "sender": "'alerts@example.com'"
+        },
+        "arg_variables": {
+          "sender": []
+        },
+        "standalone": true
+      }
+    },
+    {
+      "region_id": 2,
+      "region_type": "tool_call",
+      "line_start": 3,
+      "line_end": 3,
+      "metadata": {
+        "tool_name": "scan_attachments",
+        "targets": [],
+        "arguments": {
+          "alert": "alert"
+        },
+        "arg_variables": {
+          "alert": [
+            "alert"
+          ]
+        },
+        "standalone": true
+      }
+    },
+    {
+      "region_id": 3,
+      "region_type": "tool_call",
+      "line_start": 4,
+      "line_end": 4,
+      "metadata": {
+        "tool_name": "confirm_host",
+        "targets": [
+          "confirmed"
+        ],
+        "arguments": {
+          "hostname": "'workstation-17'"
+        },
+        "arg_variables": {
+          "hostname": []
+        }
+      }
+    },
+    {
+      "region_id": 4,
+      "region_type": "tool_call",
+      "line_start": 5,
+      "line_end": 8,
+      "metadata": {
+        "tool_name": "create_incident_ticket",
+        "targets": [
+          "ticket"
+        ],
+        "arguments": {
+          "title": "'High-severity alert'",
+          "description": "'Potential compromise requiring isolation'"
+        },
+        "arg_variables": {
+          "title": [],
+          "description": []
+        }
+      }
+    },
+    {
+      "region_id": 5,
+      "region_type": "tool_call",
+      "line_start": 9,
+      "line_end": 9,
+      "metadata": {
+        "tool_name": "request_ir_approval",
+        "targets": [],
+        "arguments": {
+          "incident": "ticket"
+        },
+        "arg_variables": {
+          "incident": [
+            "ticket"
+          ]
+        },
+        "standalone": true
+      }
+    },
+    {
+      "region_id": 6,
+      "region_type": "tool_call",
+      "line_start": 10,
+      "line_end": 10,
+      "metadata": {
+        "tool_name": "isolate_host",
+        "targets": [],
+        "arguments": {
+          "hostname": "confirmed"
+        },
+        "arg_variables": {
+          "hostname": [
+            "confirmed"
+          ]
+        },
+        "standalone": true
+      }
+    },
+    {
+      "region_id": 7,
+      "region_type": "tool_call",
+      "line_start": 11,
+      "line_end": 11,
+      "metadata": {
+        "tool_name": "resolve_incident",
+        "targets": [],
+        "arguments": {
+          "incident": "ticket"
+        },
+        "arg_variables": {
+          "incident": [
+            "ticket"
+          ]
+        },
+        "standalone": true
+      }
+    }
+  ],
+  "variable_assignments": {
+    "alert": {
+      "source": "tool_call",
+      "tool": "get_last_alert",
+      "region_id": 0
+    },
+    "confirmed": {
+      "source": "tool_call",
+      "tool": "confirm_host",
+      "region_id": 3
+    },
+    "ticket": {
+      "source": "tool_call",
+      "tool": "create_incident_ticket",
+      "region_id": 4
+    }
+  }
+}

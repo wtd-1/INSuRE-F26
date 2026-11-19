@@ -1,0 +1,242 @@
+{
+  "states": [
+    {
+      "id": "INITIAL",
+      "type": "INITIAL",
+      "metadata": {}
+    },
+    {
+      "id": "DONE",
+      "type": "DONE",
+      "metadata": {}
+    },
+    {
+      "id": "CALL_get_last_alert_0",
+      "type": "TOOL_CALL",
+      "metadata": {
+        "tool": "get_last_alert",
+        "region_id": 0,
+        "targets": [
+          "alert"
+        ],
+        "arguments": {
+          "severity": "'HIGH'"
+        },
+        "arg_provenance": {
+          "severity": "trusted"
+        }
+      }
+    },
+    {
+      "id": "CALL_check_sender_reputation_1",
+      "type": "TOOL_CALL",
+      "metadata": {
+        "tool": "check_sender_reputation",
+        "region_id": 1,
+        "targets": [],
+        "arguments": {
+          "sender": "'alerts@example.com'"
+        },
+        "arg_provenance": {
+          "sender": "trusted"
+        }
+      }
+    },
+    {
+      "id": "CALL_scan_attachments_2",
+      "type": "TOOL_CALL",
+      "metadata": {
+        "tool": "scan_attachments",
+        "region_id": 2,
+        "targets": [],
+        "arguments": {
+          "alert": "alert"
+        },
+        "arg_provenance": {
+          "alert": "trusted"
+        }
+      }
+    },
+    {
+      "id": "CALL_confirm_host_3",
+      "type": "TOOL_CALL",
+      "metadata": {
+        "tool": "confirm_host",
+        "region_id": 3,
+        "targets": [
+          "confirmed"
+        ],
+        "arguments": {
+          "hostname": "'workstation-17'"
+        },
+        "arg_provenance": {
+          "hostname": "trusted"
+        }
+      }
+    },
+    {
+      "id": "CALL_create_incident_ticket_4",
+      "type": "TOOL_CALL",
+      "metadata": {
+        "tool": "create_incident_ticket",
+        "region_id": 4,
+        "targets": [
+          "ticket"
+        ],
+        "arguments": {
+          "title": "'High-severity alert'",
+          "description": "'Potential compromise requiring isolation'"
+        },
+        "arg_provenance": {
+          "title": "trusted",
+          "description": "trusted"
+        }
+      }
+    },
+    {
+      "id": "CALL_isolate_host_5",
+      "type": "TOOL_CALL",
+      "metadata": {
+        "tool": "isolate_host",
+        "region_id": 5,
+        "targets": [],
+        "arguments": {
+          "hostname": "confirmed"
+        },
+        "arg_provenance": {
+          "hostname": "trusted"
+        }
+      }
+    },
+    {
+      "id": "CALL_resolve_incident_6",
+      "type": "TOOL_CALL",
+      "metadata": {
+        "tool": "resolve_incident",
+        "region_id": 6,
+        "targets": [],
+        "arguments": {
+          "incident": "ticket"
+        },
+        "arg_provenance": {
+          "incident": "trusted"
+        }
+      }
+    }
+  ],
+  "transitions": [
+    {
+      "from": "INITIAL",
+      "to": "CALL_get_last_alert_0",
+      "guard": "TRUE",
+      "effect": [
+        "alert_defined = true",
+        "get_last_alert_called = true",
+        "alert_trusted = true",
+        "severity_trusted = true",
+        "severity_tainted = false"
+      ]
+    },
+    {
+      "from": "CALL_get_last_alert_0",
+      "to": "CALL_check_sender_reputation_1",
+      "guard": "TRUE",
+      "effect": [
+        "check_sender_reputation_called = true",
+        "sender_trusted = true",
+        "sender_tainted = false"
+      ]
+    },
+    {
+      "from": "CALL_check_sender_reputation_1",
+      "to": "CALL_scan_attachments_2",
+      "guard": "TRUE",
+      "effect": [
+        "scan_attachments_called = true",
+        "alert_trusted = true",
+        "alert_tainted = false"
+      ]
+    },
+    {
+      "from": "CALL_scan_attachments_2",
+      "to": "CALL_confirm_host_3",
+      "guard": "TRUE",
+      "effect": [
+        "confirmed_defined = true",
+        "confirm_host_called = true",
+        "confirmed_trusted = true",
+        "hostname_trusted = true",
+        "hostname_tainted = false"
+      ]
+    },
+    {
+      "from": "CALL_confirm_host_3",
+      "to": "CALL_create_incident_ticket_4",
+      "guard": "TRUE",
+      "effect": [
+        "ticket_defined = true",
+        "create_incident_ticket_called = true",
+        "ticket_trusted = true",
+        "title_trusted = true",
+        "title_tainted = false",
+        "description_trusted = true",
+        "description_tainted = false"
+      ]
+    },
+    {
+      "from": "CALL_create_incident_ticket_4",
+      "to": "CALL_isolate_host_5",
+      "guard": "TRUE",
+      "effect": [
+        "isolate_host_called = true",
+        "hostname_trusted = true",
+        "hostname_tainted = false"
+      ]
+    },
+    {
+      "from": "CALL_isolate_host_5",
+      "to": "CALL_resolve_incident_6",
+      "guard": "TRUE",
+      "effect": [
+        "resolve_incident_called = true",
+        "incident_trusted = true",
+        "incident_tainted = false"
+      ]
+    },
+    {
+      "from": "CALL_resolve_incident_6",
+      "to": "DONE",
+      "guard": "TRUE",
+      "effect": []
+    }
+  ],
+  "atomic_propositions": {
+    "init": "current_state = INITIAL",
+    "done": "current_state = DONE",
+    "call_get_last_alert": "current_state = CALL_get_last_alert_0",
+    "get_last_alert_called": "get_last_alert_called = true",
+    "call_check_sender_reputation": "current_state = CALL_check_sender_reputation_1",
+    "check_sender_reputation_called": "check_sender_reputation_called = true",
+    "call_scan_attachments": "current_state = CALL_scan_attachments_2",
+    "scan_attachments_called": "scan_attachments_called = true",
+    "call_confirm_host": "current_state = CALL_confirm_host_3",
+    "confirm_host_called": "confirm_host_called = true",
+    "call_create_incident_ticket": "current_state = CALL_create_incident_ticket_4",
+    "create_incident_ticket_called": "create_incident_ticket_called = true",
+    "call_isolate_host": "current_state = CALL_isolate_host_5",
+    "isolate_host_called": "isolate_host_called = true",
+    "call_resolve_incident": "current_state = CALL_resolve_incident_6",
+    "resolve_incident_called": "resolve_incident_called = true"
+  },
+  "ctl_properties": [
+    "AF(done)",
+    "AG(call_check_sender_reputation -> get_last_alert_called)",
+    "AG(done -> AG(!call_get_last_alert))",
+    "AG(done -> AG(!call_check_sender_reputation))",
+    "AG(done -> AG(!call_scan_attachments))",
+    "AG(done -> AG(!call_confirm_host))",
+    "AG(done -> AG(!call_create_incident_ticket))",
+    "AG(done -> AG(!call_isolate_host))",
+    "AG(done -> AG(!call_resolve_incident))"
+  ]
+}

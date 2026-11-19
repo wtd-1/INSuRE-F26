@@ -1,0 +1,13 @@
+{
+  "camelot_commit": "f70e280ce427bb66bb1c7b5d2808ac035db27639",
+  "python": "3.12.14",
+  "agentdojo": "0.1.34",
+  "checker_executable": "C:\\Users\\andre\\Documents\\ChatGPT\\Research Class\\.tools\\nuXmv-2.1.0-win64\\bin\\nuxmv.EXE",
+  "checker_executable_sha256": "7897b641d9f90351f3f1efa1dd3426e8a1fd393dfe3f56a9668ee07d8e032134",
+  "attached_plan_filename": "action_plan.py",
+  "attached_plan_sha256": "b94cca29674a360d1b646a57e72c4da81bce1409d482e43d89eafd58bac0a7f8",
+  "suite": "soc",
+  "user_task_id": "soc_task_isolate_high_severity_host",
+  "safe_reference": "plans_soc.py::P2_APPROVAL_PASS",
+  "negative_control": "plans_soc.py::P2_APPROVAL_FAIL"
+}

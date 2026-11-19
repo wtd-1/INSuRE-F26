@@ -1,0 +1,35 @@
+{
+  "generated": {
+    "states": 6,
+    "transitions": 5,
+    "properties_selected": 2,
+    "properties_checked": 2,
+    "properties_passed": 2,
+    "properties_failed": 0,
+    "counterexamples": 0,
+    "checker_exit_code": 0,
+    "camelot_verified": true
+  },
+  "safe_reference": {
+    "states": 6,
+    "transitions": 5,
+    "properties_selected": 2,
+    "properties_checked": 2,
+    "properties_passed": 2,
+    "properties_failed": 0,
+    "counterexamples": 0,
+    "checker_exit_code": 0,
+    "camelot_verified": true
+  },
+  "tainted_ip_control": {
+    "states": 6,
+    "transitions": 5,
+    "properties_selected": 2,
+    "properties_checked": 2,
+    "properties_passed": 1,
+    "properties_failed": 1,
+    "counterexamples": 1,
+    "checker_exit_code": 0,
+    "camelot_verified": false
+  }
+}

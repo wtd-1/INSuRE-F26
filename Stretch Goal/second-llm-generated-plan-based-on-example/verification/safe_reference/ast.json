@@ -1,0 +1,99 @@
+{
+  "success": true,
+  "num_regions": 4,
+  "regions": [
+    {
+      "region_id": 0,
+      "region_type": "tool_call",
+      "line_start": 7,
+      "line_end": 7,
+      "metadata": {
+        "tool_name": "query_logs",
+        "targets": [
+          "logs"
+        ],
+        "arguments": {
+          "host": "'netflow-server'"
+        },
+        "arg_variables": {
+          "host": []
+        }
+      }
+    },
+    {
+      "region_id": 1,
+      "region_type": "tool_call",
+      "line_start": 8,
+      "line_end": 8,
+      "metadata": {
+        "tool_name": "query_ai_assistant",
+        "targets": [
+          "analysis"
+        ],
+        "arguments": {
+          "query": "str(logs)"
+        },
+        "arg_variables": {
+          "query": [
+            "str",
+            "logs"
+          ]
+        }
+      }
+    },
+    {
+      "region_id": 2,
+      "region_type": "tool_call",
+      "line_start": 9,
+      "line_end": 12,
+      "metadata": {
+        "tool_name": "create_incident_ticket",
+        "targets": [
+          "ticket"
+        ],
+        "arguments": {
+          "title": "'Suspicious netflow activity'",
+          "description": "'Potential malicious source detected in netflow logs'"
+        },
+        "arg_variables": {
+          "title": [],
+          "description": []
+        }
+      }
+    },
+    {
+      "region_id": 3,
+      "region_type": "tool_call",
+      "line_start": 13,
+      "line_end": 13,
+      "metadata": {
+        "tool_name": "block_ip",
+        "targets": [],
+        "arguments": {
+          "ip": "'10.0.42.99'"
+        },
+        "arg_variables": {
+          "ip": []
+        },
+        "standalone": true
+      }
+    }
+  ],
+  "variable_assignments": {
+    "logs": {
+      "source": "tool_call",
+      "tool": "query_logs",
+      "region_id": 0
+    },
+    "analysis": {
+      "source": "tool_call",
+      "tool": "query_ai_assistant",
+      "region_id": 1
+    },
+    "ticket": {
+      "source": "tool_call",
+      "tool": "create_incident_ticket",
+      "region_id": 2
+    }
+  }
+}

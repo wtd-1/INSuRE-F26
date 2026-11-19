@@ -1,0 +1,59 @@
+{
+  "success": false,
+  "properties_verified": [
+    "AG (call_create_incident_ticket -> !title_tainted)"
+  ],
+  "properties_violated": [
+    "AG (call_block_ip -> !ip_tainted)"
+  ],
+  "counterexamples": [
+    {
+      "property": "AG (call_block_ip -> !ip_tainted)",
+      "description": "block_ip must never be called with an IP derived from attacker-influenced data.",
+      "trace_length": 5,
+      "tool_calls": [
+        "query_logs",
+        "query_ai_assistant",
+        "create_incident_ticket",
+        "block_ip"
+      ],
+      "violations": [
+        {
+          "variable": "query",
+          "expected": "trusted",
+          "actual": "tainted/untrusted",
+          "tainted": "TRUE",
+          "trusted": "FALSE"
+        },
+        {
+          "variable": "ip",
+          "expected": "trusted",
+          "actual": "tainted/untrusted",
+          "tainted": "TRUE",
+          "trusted": "FALSE"
+        },
+        {
+          "variable": "logs",
+          "expected": "trusted",
+          "actual": "tainted/untrusted",
+          "tainted": "TRUE",
+          "trusted": "FALSE"
+        },
+        {
+          "variable": "analysis",
+          "expected": "trusted",
+          "actual": "tainted/untrusted",
+          "tainted": "TRUE",
+          "trusted": "FALSE"
+        },
+        {
+          "variable": "ticket",
+          "expected": "trusted",
+          "actual": "tainted/untrusted",
+          "tainted": "TRUE",
+          "trusted": "FALSE"
+        }
+      ]
+    }
+  ]
+}

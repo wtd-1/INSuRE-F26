@@ -1,0 +1,46 @@
+{
+  "get_last_alert": [
+    "severity"
+  ],
+  "check_sender_reputation": [
+    "sender"
+  ],
+  "scan_attachments": [
+    "alert"
+  ],
+  "check_urls": [
+    "alert"
+  ],
+  "query_logs": [
+    "host"
+  ],
+  "confirm_host": [
+    "hostname"
+  ],
+  "create_incident_ticket": [
+    "title",
+    "description"
+  ],
+  "request_ir_approval": [
+    "incident"
+  ],
+  "escalate_to_ir_team": [
+    "incident"
+  ],
+  "resolve_incident": [
+    "incident"
+  ],
+  "isolate_host": [
+    "hostname"
+  ],
+  "block_ip": [
+    "ip"
+  ],
+  "disable_account": [
+    "account"
+  ],
+  "query_ai_assistant": [
+    "query",
+    "output_schema"
+  ]
+}

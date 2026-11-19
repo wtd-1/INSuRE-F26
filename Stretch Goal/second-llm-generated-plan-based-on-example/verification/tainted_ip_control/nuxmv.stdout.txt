@@ -1,0 +1,90 @@
+*** This is nuXmv 2.1.0 (compiled on Thu Nov 28 16:15:03 2024)
+*** Copyright (c) 2014-2024, Fondazione Bruno Kessler
+*** For more information on nuXmv see https://nuxmv.fbk.eu
+*** or email to <nuxmv@fbk.eu>.
+*** Please report bugs at Please report bugs to <nusmv-users@fbk.eu>
+*** (click on "Login Anonymously" to access)
+*** Alternatively write to <nuxmv@fbk.eu>.
+
+*** This version of nuXmv is linked to NuSMV 2.7.0.
+*** For more information on NuSMV see <http://nusmv.fbk.eu>
+*** or email to <nusmv-users@fbk.eu>.
+*** Copyright (C) 2010-2024, Fondazione Bruno Kessler
+
+*** This version of nuXmv is linked to the CUDD library version 2.4.1
+*** Copyright (c) 1995-2004, Regents of the University of Colorado
+
+*** This version of nuXmv is linked to the MiniSat SAT solver. 
+*** See http://minisat.se/MiniSat.html
+*** Copyright (c) 2003-2006, Niklas Een, Niklas Sorensson
+*** Copyright (c) 2007-2010, Niklas Sorensson
+
+*** This version of nuXmv is linked to MathSAT
+*** Copyright (C) 2009-2019 by Fondazione Bruno Kessler
+*** Copyright (C) 2009-2019 by University of Trento and others
+*** See http://mathsat.fbk.eu
+
+-- specification AG (call_block_ip -> !ip_tainted)  is false
+-- as demonstrated by the following execution sequence
+Trace Description: CTL Counterexample 
+Trace Type: Counterexample 
+  -> State: 1.1 <-
+    current_state = INITIAL
+    title_tainted = FALSE
+    query_tainted = FALSE
+    ip_tainted = FALSE
+    ticket_defined = FALSE
+    query_ai_assistant_called = FALSE
+    ip_trusted = FALSE
+    title_trusted = FALSE
+    analysis_defined = FALSE
+    logs_defined = FALSE
+    logs_tainted = FALSE
+    query_trusted = FALSE
+    host_tainted = FALSE
+    block_ip_called = FALSE
+    host_trusted = FALSE
+    query_logs_called = FALSE
+    analysis_tainted = FALSE
+    description_trusted = FALSE
+    create_incident_ticket_called = FALSE
+    description_tainted = FALSE
+    ticket_tainted = FALSE
+    call_query_logs = FALSE
+    call_query_ai_assistant = FALSE
+    call_create_incident_ticket = FALSE
+    call_block_ip = FALSE
+    done = FALSE
+    at_initial = TRUE
+  -> State: 1.2 <-
+    current_state = CALL_query_logs_0
+    logs_defined = TRUE
+    logs_tainted = TRUE
+    host_trusted = TRUE
+    query_logs_called = TRUE
+    call_query_logs = TRUE
+    at_initial = FALSE
+  -> State: 1.3 <-
+    current_state = CALL_query_ai_assistant_1
+    query_tainted = TRUE
+    query_ai_assistant_called = TRUE
+    analysis_defined = TRUE
+    analysis_tainted = TRUE
+    call_query_logs = FALSE
+    call_query_ai_assistant = TRUE
+  -> State: 1.4 <-
+    current_state = CALL_create_incident_ticket_2
+    ticket_defined = TRUE
+    title_trusted = TRUE
+    description_trusted = TRUE
+    create_incident_ticket_called = TRUE
+    ticket_tainted = TRUE
+    call_query_ai_assistant = FALSE
+    call_create_incident_ticket = TRUE
+  -> State: 1.5 <-
+    current_state = CALL_block_ip_3
+    ip_tainted = TRUE
+    block_ip_called = TRUE
+    call_create_incident_ticket = FALSE
+    call_block_ip = TRUE
+-- specification AG (call_create_incident_ticket -> !title_tainted)  is true
