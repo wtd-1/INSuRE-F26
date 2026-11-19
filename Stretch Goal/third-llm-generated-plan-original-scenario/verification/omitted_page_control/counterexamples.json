@@ -1,0 +1,150 @@
+[
+  {
+    "property_name": "AF (call_record_maintenance_deferral | call_page_observability_on_call)",
+    "property_description": "",
+    "trace_type": "Counterexample",
+    "states": [
+      {
+        "state_num": "1.1",
+        "state_name": "INITIAL",
+        "variables": {
+          "current_state": "INITIAL",
+          "open_telemetry_incident_called": "FALSE",
+          "maintenance_covered_defined": "FALSE",
+          "gap_defined": "FALSE",
+          "incident_tainted": "FALSE",
+          "collector_tainted": "FALSE",
+          "incident_defined": "FALSE",
+          "gap_trusted": "FALSE",
+          "record_maintenance_deferral_called": "FALSE",
+          "title_tainted": "FALSE",
+          "gap_tainted": "FALSE",
+          "collector_trusted": "FALSE",
+          "title_trusted": "FALSE",
+          "check_maintenance_window_called": "FALSE",
+          "maintenance_covered_trusted": "FALSE",
+          "get_telemetry_gap_called": "FALSE",
+          "incident_trusted": "FALSE",
+          "call_record_maintenance_deferral": "FALSE",
+          "call_page_observability_on_call": "FALSE",
+          "call_open_telemetry_incident": "FALSE",
+          "call_get_telemetry_gap": "FALSE",
+          "call_check_maintenance_window": "FALSE",
+          "done": "FALSE",
+          "at_initial": "TRUE",
+          "maintenance_covered_is_defined": "FALSE"
+        }
+      },
+      {
+        "state_num": "1.2",
+        "state_name": "CALL_get_telemetry_gap_0",
+        "variables": {
+          "current_state": "CALL_get_telemetry_gap_0",
+          "gap_defined": "TRUE",
+          "gap_tainted": "TRUE",
+          "collector_trusted": "TRUE",
+          "get_telemetry_gap_called": "TRUE",
+          "call_get_telemetry_gap": "TRUE",
+          "at_initial": "FALSE"
+        }
+      },
+      {
+        "state_num": "1.3",
+        "state_name": "CALL_check_maintenance_window_1",
+        "variables": {
+          "current_state": "CALL_check_maintenance_window_1",
+          "maintenance_covered_defined": "TRUE",
+          "check_maintenance_window_called": "TRUE",
+          "maintenance_covered_trusted": "TRUE",
+          "call_get_telemetry_gap": "FALSE",
+          "call_check_maintenance_window": "TRUE"
+        }
+      },
+      {
+        "state_num": "1.4",
+        "state_name": "CALL_open_telemetry_incident_2",
+        "variables": {
+          "current_state": "CALL_open_telemetry_incident_2",
+          "open_telemetry_incident_called": "TRUE",
+          "incident_tainted": "TRUE",
+          "incident_defined": "TRUE",
+          "title_trusted": "TRUE",
+          "call_open_telemetry_incident": "TRUE",
+          "call_check_maintenance_window": "FALSE"
+        }
+      },
+      {
+        "state_num": "1.5",
+        "state_name": "BRANCH_3",
+        "variables": {
+          "current_state": "BRANCH_3",
+          "call_open_telemetry_incident": "FALSE"
+        }
+      },
+      {
+        "state_num": "1.6",
+        "state_name": "FALSE_BRANCH_5",
+        "variables": {
+          "current_state": "FALSE_BRANCH_5"
+        }
+      },
+      {
+        "state_num": "1.7",
+        "state_name": "MERGE_6",
+        "variables": {
+          "current_state": "MERGE_6"
+        }
+      },
+      {
+        "state_num": "1.8",
+        "state_name": "DONE",
+        "variables": {
+          "current_state": "DONE",
+          "done": "TRUE"
+        }
+      },
+      {
+        "state_num": "1.9",
+        "state_name": "UNKNOWN",
+        "variables": {}
+      }
+    ]
+  },
+  {
+    "property_name": "(EF call_record_maintenance_deferral & EF call_page_observability_on_call)",
+    "property_description": "",
+    "trace_type": "Counterexample",
+    "states": [
+      {
+        "state_num": "2.1",
+        "state_name": "INITIAL",
+        "variables": {
+          "current_state": "INITIAL",
+          "open_telemetry_incident_called": "FALSE",
+          "maintenance_covered_defined": "FALSE",
+          "gap_defined": "FALSE",
+          "incident_tainted": "FALSE",
+          "collector_tainted": "FALSE",
+          "incident_defined": "FALSE",
+          "gap_trusted": "FALSE",
+          "record_maintenance_deferral_called": "FALSE",
+          "title_tainted": "FALSE",
+          "gap_tainted": "FALSE",
+          "collector_trusted": "FALSE",
+          "title_trusted": "FALSE",
+          "check_maintenance_window_called": "FALSE",
+          "maintenance_covered_trusted": "FALSE",
+          "get_telemetry_gap_called": "FALSE",
+          "incident_trusted": "FALSE",
+          "call_record_maintenance_deferral": "FALSE",
+          "call_page_observability_on_call": "FALSE",
+          "call_open_telemetry_incident": "FALSE",
+          "call_get_telemetry_gap": "FALSE",
+          "call_check_maintenance_window": "FALSE",
+          "done": "FALSE",
+          "at_initial": "TRUE"
+        }
+      }
+    ]
+  }
+]

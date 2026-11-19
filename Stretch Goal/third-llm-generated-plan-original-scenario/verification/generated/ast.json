@@ -1,0 +1,139 @@
+{
+  "success": true,
+  "num_regions": 4,
+  "regions": [
+    {
+      "region_id": 0,
+      "region_type": "tool_call",
+      "line_start": 1,
+      "line_end": 1,
+      "metadata": {
+        "tool_name": "get_telemetry_gap",
+        "targets": [
+          "gap"
+        ],
+        "arguments": {
+          "collector": "'lab-collector-04'"
+        },
+        "arg_variables": {
+          "collector": []
+        }
+      }
+    },
+    {
+      "region_id": 1,
+      "region_type": "tool_call",
+      "line_start": 2,
+      "line_end": 2,
+      "metadata": {
+        "tool_name": "check_maintenance_window",
+        "targets": [
+          "maintenance_covered"
+        ],
+        "arguments": {
+          "gap": "gap"
+        },
+        "arg_variables": {
+          "gap": [
+            "gap"
+          ]
+        }
+      }
+    },
+    {
+      "region_id": 2,
+      "region_type": "tool_call",
+      "line_start": 3,
+      "line_end": 3,
+      "metadata": {
+        "tool_name": "open_telemetry_incident",
+        "targets": [
+          "incident"
+        ],
+        "arguments": {
+          "title": "'Telemetry gap on lab-collector-04'",
+          "gap": "gap"
+        },
+        "arg_variables": {
+          "title": [],
+          "gap": [
+            "gap"
+          ]
+        }
+      }
+    },
+    {
+      "region_id": 3,
+      "region_type": "conditional",
+      "line_start": 4,
+      "line_end": 7,
+      "metadata": {
+        "condition": "maintenance_covered",
+        "condition_vars": [
+          "maintenance_covered"
+        ],
+        "true_branch_regions": [
+          {
+            "region_id": 0,
+            "region_type": "tool_call",
+            "line_start": 5,
+            "line_end": 5,
+            "metadata": {
+              "tool_name": "record_maintenance_deferral",
+              "targets": [],
+              "arguments": {
+                "incident": "incident"
+              },
+              "arg_variables": {
+                "incident": [
+                  "incident"
+                ]
+              },
+              "standalone": true
+            }
+          }
+        ],
+        "false_branch_regions": [
+          {
+            "region_id": 0,
+            "region_type": "tool_call",
+            "line_start": 7,
+            "line_end": 7,
+            "metadata": {
+              "tool_name": "page_observability_on_call",
+              "targets": [],
+              "arguments": {
+                "incident": "incident"
+              },
+              "arg_variables": {
+                "incident": [
+                  "incident"
+                ]
+              },
+              "standalone": true
+            }
+          }
+        ],
+        "num_true_regions": 1,
+        "num_false_regions": 1
+      }
+    }
+  ],
+  "variable_assignments": {
+    "gap": {
+      "source": "tool_call",
+      "tool": "get_telemetry_gap",
+      "region_id": 0
+    },
+    "maintenance_covered": {
+      "source": "tool_call",
+      "tool": "check_maintenance_window",
+      "region_id": 1
+    },
+    "incident": {
+      "source": "tool_call",
+      "tool": "open_telemetry_incident",
+      "region_id": 2
+    }
+  }
+}

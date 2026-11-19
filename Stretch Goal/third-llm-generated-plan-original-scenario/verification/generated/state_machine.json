@@ -1,0 +1,247 @@
+{
+  "states": [
+    {
+      "id": "INITIAL",
+      "type": "INITIAL",
+      "metadata": {}
+    },
+    {
+      "id": "DONE",
+      "type": "DONE",
+      "metadata": {}
+    },
+    {
+      "id": "CALL_get_telemetry_gap_0",
+      "type": "TOOL_CALL",
+      "metadata": {
+        "tool": "get_telemetry_gap",
+        "region_id": 0,
+        "targets": [
+          "gap"
+        ],
+        "arguments": {
+          "collector": "'lab-collector-04'"
+        },
+        "arg_provenance": {
+          "collector": "trusted"
+        }
+      }
+    },
+    {
+      "id": "CALL_check_maintenance_window_1",
+      "type": "TOOL_CALL",
+      "metadata": {
+        "tool": "check_maintenance_window",
+        "region_id": 1,
+        "targets": [
+          "maintenance_covered"
+        ],
+        "arguments": {
+          "gap": "gap"
+        },
+        "arg_provenance": {
+          "gap": "untrusted"
+        }
+      }
+    },
+    {
+      "id": "CALL_open_telemetry_incident_2",
+      "type": "TOOL_CALL",
+      "metadata": {
+        "tool": "open_telemetry_incident",
+        "region_id": 2,
+        "targets": [
+          "incident"
+        ],
+        "arguments": {
+          "title": "'Telemetry gap on lab-collector-04'",
+          "gap": "gap"
+        },
+        "arg_provenance": {
+          "title": "trusted",
+          "gap": "untrusted"
+        }
+      }
+    },
+    {
+      "id": "BRANCH_3",
+      "type": "CONDITIONAL",
+      "metadata": {
+        "region_id": 3,
+        "condition": "maintenance_covered"
+      }
+    },
+    {
+      "id": "CALL_record_maintenance_deferral_7",
+      "type": "TOOL_CALL",
+      "metadata": {
+        "tool": "record_maintenance_deferral",
+        "region_id": 0,
+        "targets": [],
+        "arguments": {
+          "incident": "incident"
+        },
+        "arg_provenance": {
+          "incident": "untrusted"
+        }
+      }
+    },
+    {
+      "id": "TRUE_BRANCH_4",
+      "type": "TRUE_BRANCH",
+      "metadata": {
+        "region_id": 3,
+        "branch_expanded": true
+      }
+    },
+    {
+      "id": "CALL_page_observability_on_call_8",
+      "type": "TOOL_CALL",
+      "metadata": {
+        "tool": "page_observability_on_call",
+        "region_id": 0,
+        "targets": [],
+        "arguments": {
+          "incident": "incident"
+        },
+        "arg_provenance": {
+          "incident": "untrusted"
+        }
+      }
+    },
+    {
+      "id": "FALSE_BRANCH_5",
+      "type": "FALSE_BRANCH",
+      "metadata": {
+        "region_id": 3,
+        "branch_expanded": true
+      }
+    },
+    {
+      "id": "MERGE_6",
+      "type": "MERGE",
+      "metadata": {
+        "region_id": 3
+      }
+    }
+  ],
+  "transitions": [
+    {
+      "from": "INITIAL",
+      "to": "CALL_get_telemetry_gap_0",
+      "guard": "TRUE",
+      "effect": [
+        "gap_defined = true",
+        "get_telemetry_gap_called = true",
+        "gap_tainted = true",
+        "collector_trusted = true",
+        "collector_tainted = false"
+      ]
+    },
+    {
+      "from": "CALL_get_telemetry_gap_0",
+      "to": "CALL_check_maintenance_window_1",
+      "guard": "TRUE",
+      "effect": [
+        "maintenance_covered_defined = true",
+        "check_maintenance_window_called = true",
+        "maintenance_covered_trusted = true",
+        "gap_tainted = true",
+        "gap_trusted = false"
+      ]
+    },
+    {
+      "from": "CALL_check_maintenance_window_1",
+      "to": "CALL_open_telemetry_incident_2",
+      "guard": "TRUE",
+      "effect": [
+        "incident_defined = true",
+        "open_telemetry_incident_called = true",
+        "incident_tainted = true",
+        "title_trusted = true",
+        "title_tainted = false",
+        "gap_tainted = true",
+        "gap_trusted = false"
+      ]
+    },
+    {
+      "from": "TRUE_BRANCH_4",
+      "to": "CALL_record_maintenance_deferral_7",
+      "guard": "TRUE",
+      "effect": [
+        "record_maintenance_deferral_called = true",
+        "incident_tainted = true",
+        "incident_trusted = false"
+      ]
+    },
+    {
+      "from": "FALSE_BRANCH_5",
+      "to": "CALL_page_observability_on_call_8",
+      "guard": "TRUE",
+      "effect": [
+        "page_observability_on_call_called = true",
+        "incident_tainted = true",
+        "incident_trusted = false"
+      ]
+    },
+    {
+      "from": "CALL_open_telemetry_incident_2",
+      "to": "BRANCH_3",
+      "guard": "TRUE",
+      "effect": []
+    },
+    {
+      "from": "BRANCH_3",
+      "to": "TRUE_BRANCH_4",
+      "guard": "maintenance_covered_is_defined",
+      "effect": []
+    },
+    {
+      "from": "BRANCH_3",
+      "to": "FALSE_BRANCH_5",
+      "guard": "!maintenance_covered_is_defined",
+      "effect": []
+    },
+    {
+      "from": "CALL_record_maintenance_deferral_7",
+      "to": "MERGE_6",
+      "guard": "TRUE",
+      "effect": []
+    },
+    {
+      "from": "CALL_page_observability_on_call_8",
+      "to": "MERGE_6",
+      "guard": "TRUE",
+      "effect": []
+    },
+    {
+      "from": "MERGE_6",
+      "to": "DONE",
+      "guard": "TRUE",
+      "effect": []
+    }
+  ],
+  "atomic_propositions": {
+    "init": "current_state = INITIAL",
+    "done": "current_state = DONE",
+    "call_get_telemetry_gap": "current_state = CALL_get_telemetry_gap_0",
+    "get_telemetry_gap_called": "get_telemetry_gap_called = true",
+    "call_check_maintenance_window": "current_state = CALL_check_maintenance_window_1",
+    "check_maintenance_window_called": "check_maintenance_window_called = true",
+    "call_open_telemetry_incident": "current_state = CALL_open_telemetry_incident_2",
+    "open_telemetry_incident_called": "open_telemetry_incident_called = true",
+    "call_record_maintenance_deferral": "current_state = CALL_record_maintenance_deferral_7",
+    "record_maintenance_deferral_called": "record_maintenance_deferral_called = true",
+    "call_page_observability_on_call": "current_state = CALL_page_observability_on_call_8",
+    "page_observability_on_call_called": "page_observability_on_call_called = true"
+  },
+  "ctl_properties": [
+    "AF(done)",
+    "AG(call_check_maintenance_window -> get_telemetry_gap_called)",
+    "AG(done -> AG(!call_get_telemetry_gap))",
+    "AG(done -> AG(!call_check_maintenance_window))",
+    "AG(done -> AG(!call_open_telemetry_incident))",
+    "AG(done -> AG(!call_record_maintenance_deferral))",
+    "AG(done -> AG(!call_page_observability_on_call))"
+  ]
+}

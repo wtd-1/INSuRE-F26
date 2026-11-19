@@ -1,0 +1,18 @@
+{
+  "check_maintenance_window": [
+    "gap"
+  ],
+  "get_telemetry_gap": [
+    "collector"
+  ],
+  "open_telemetry_incident": [
+    "title",
+    "gap"
+  ],
+  "page_observability_on_call": [
+    "incident"
+  ],
+  "record_maintenance_deferral": [
+    "incident"
+  ]
+}

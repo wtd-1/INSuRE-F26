@@ -1,0 +1,57 @@
+Observability action-plan verification — telemetry-gap routing
+
+Generation setup
+
+The generation inputs were task_requirements.py and tool_interface.py.
+The researcher supplied observability_action_plan.py as the generated plan.
+The prompt prepared for the external model appears below. This scenario
+uses an original task brief and its own five tool signatures.
+
+Static verification
+
+We read the submitted Python as text and checked it with CaMeLoT commit
+f70e280ce427bb66bb1c7b5d2808ac035db27639 and FBK's nuXmv 2.1.0. The
+verification script registered seven properties written for this exercise.
+It used the upstream parser, model builder, exporter, and checker runner.
+
+                      CTL passed   States   Transitions   Counterexamples
+Submitted plan        7/7          11       11            0
+Omitted-page control  5/7          10       10            2
+
+The properties cover prerequisite order, exactly one routing action on
+every modeled path, at most one ticket, reachability of both outcomes,
+and ticket-title provenance. In the control, the else body was replaced
+with pass. The checker found that paging was unreachable and that a path
+could end without taking a routing action.
+
+The checker explores both paths through an abstract Boolean branch guard.
+It does not receive the return value of a real maintenance registry. We
+separately inspected the submitted source and confirmed that it checks the
+specified collector, reuses the same gap and incident references, and routes
+True to deferral and False to paging. No live tools were called.
+
+The verification folder contains the selected properties, input hashes,
+generated models, checker output, and parsed counterexamples. The script
+verify_observability.py records the task-specific policy and can rerun the
+static check with the project's CaMeLoT and nuXmv setup.
+
+Prompt prepared for the external model
+
+Create a Python action plan for an observability assistant responding to the
+telemetry outage described in task_requirements.py.
+
+Use tool_interface.py to understand the available actions and their inputs
+and outputs. Use the task facts, goal, and requirements in task_requirements.py
+to decide which tools are necessary and how to order them. The listed
+requirements are constraints, not an execution sequence.
+
+Construct your own plan from these inputs. Do not search for example plans,
+consult external repositories, or use a reference solution. You do not need
+to use every available tool.
+
+Follow the required plan format. Treat the tool names as already available:
+do not import or execute the attached files. Do not implement tools or
+perform any actions.
+
+Return only the proposed Python source, without Markdown fences or
+explanation.

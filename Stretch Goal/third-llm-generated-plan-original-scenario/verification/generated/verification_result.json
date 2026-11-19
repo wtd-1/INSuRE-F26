@@ -1,0 +1,14 @@
+{
+  "success": true,
+  "properties_verified": [
+    "AF (call_record_maintenance_deferral | call_page_observability_on_call)",
+    "AG ((call_record_maintenance_deferral | call_page_observability_on_call) -> AX (AG !(call_record_maintenance_deferral | call_page_observability_on_call)))",
+    "AG (call_open_telemetry_incident -> AX (AG !call_open_telemetry_incident))",
+    "(EF call_record_maintenance_deferral & EF call_page_observability_on_call)",
+    "AG ((call_check_maintenance_window | call_open_telemetry_incident) -> get_telemetry_gap_called)",
+    "AG (call_open_telemetry_incident -> !title_tainted)",
+    "AG ((call_record_maintenance_deferral | call_page_observability_on_call) -> (check_maintenance_window_called & open_telemetry_incident_called))"
+  ],
+  "properties_violated": [],
+  "counterexamples": []
+}

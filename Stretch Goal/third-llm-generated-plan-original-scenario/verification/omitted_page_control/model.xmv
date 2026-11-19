@@ -1,0 +1,179 @@
+MODULE main
+VAR
+  -- all possible states, vaguely ordered for legibility
+  current_state : {BRANCH_3, CALL_check_maintenance_window_1, CALL_get_telemetry_gap_0, CALL_open_telemetry_incident_2, CALL_record_maintenance_deferral_7, DONE, FALSE_BRANCH_5, INITIAL, MERGE_6, TRUE_BRANCH_4};
+
+  -- all internal booleans
+  open_telemetry_incident_called     : boolean;
+  maintenance_covered_defined        : boolean;
+  gap_defined                        : boolean;
+  incident_tainted                   : boolean;
+  collector_tainted                  : boolean;
+  incident_defined                   : boolean;
+  gap_trusted                        : boolean;
+  record_maintenance_deferral_called : boolean;
+  title_tainted                      : boolean;
+  gap_tainted                        : boolean;
+  collector_trusted                  : boolean;
+  title_trusted                      : boolean;
+  check_maintenance_window_called    : boolean;
+  maintenance_covered_trusted        : boolean;
+  get_telemetry_gap_called           : boolean;
+  incident_trusted                   : boolean;
+
+IVAR
+  -- define our input variables
+  maintenance_covered_is_defined : boolean;
+
+  -- define our transition system. quite messy, might need to clean up.
+ASSIGN
+  init(current_state) := INITIAL;
+  next(current_state) := case
+    current_state = INITIAL : CALL_get_telemetry_gap_0;
+    current_state = CALL_get_telemetry_gap_0 : CALL_check_maintenance_window_1;
+    current_state = CALL_check_maintenance_window_1 : CALL_open_telemetry_incident_2;
+    current_state = TRUE_BRANCH_4 : CALL_record_maintenance_deferral_7;
+    current_state = CALL_open_telemetry_incident_2 : BRANCH_3;
+    current_state = BRANCH_3 & maintenance_covered_is_defined : TRUE_BRANCH_4;
+    current_state = BRANCH_3 & !maintenance_covered_is_defined : FALSE_BRANCH_5;
+    current_state = CALL_record_maintenance_deferral_7 : MERGE_6;
+    current_state = FALSE_BRANCH_5 : MERGE_6;
+    current_state = MERGE_6 : DONE;
+    current_state = DONE : DONE;
+    TRUE : current_state;
+  esac;
+
+  init(check_maintenance_window_called) := FALSE;
+  next(check_maintenance_window_called) := case
+    current_state = CALL_get_telemetry_gap_0 & next(current_state) = CALL_check_maintenance_window_1 : TRUE;
+    TRUE                                                                                             : check_maintenance_window_called;
+  esac;
+  init(collector_tainted) := FALSE;
+  next(collector_tainted) := case
+    current_state = INITIAL & next(current_state) = CALL_get_telemetry_gap_0 : FALSE;
+    TRUE                                                                     : collector_tainted;
+  esac;
+  init(collector_trusted) := FALSE;
+  next(collector_trusted) := case
+    current_state = INITIAL & next(current_state) = CALL_get_telemetry_gap_0 : TRUE;
+    TRUE                                                                     : collector_trusted;
+  esac;
+  init(gap_defined) := FALSE;
+  next(gap_defined) := case
+    current_state = INITIAL & next(current_state) = CALL_get_telemetry_gap_0 : TRUE;
+    TRUE                                                                     : gap_defined;
+  esac;
+  init(gap_tainted) := FALSE;
+  next(gap_tainted) := case
+    current_state = INITIAL & next(current_state) = CALL_get_telemetry_gap_0                               : TRUE;
+    current_state = CALL_get_telemetry_gap_0 & next(current_state) = CALL_check_maintenance_window_1       : TRUE;
+    current_state = CALL_check_maintenance_window_1 & next(current_state) = CALL_open_telemetry_incident_2 : TRUE;
+    TRUE                                                                                                   : gap_tainted;
+  esac;
+  init(gap_trusted) := FALSE;
+  next(gap_trusted) := case
+    current_state = CALL_get_telemetry_gap_0 & next(current_state) = CALL_check_maintenance_window_1       : FALSE;
+    current_state = CALL_check_maintenance_window_1 & next(current_state) = CALL_open_telemetry_incident_2 : FALSE;
+    TRUE                                                                                                   : gap_trusted;
+  esac;
+  init(get_telemetry_gap_called) := FALSE;
+  next(get_telemetry_gap_called) := case
+    current_state = INITIAL & next(current_state) = CALL_get_telemetry_gap_0 : TRUE;
+    TRUE                                                                     : get_telemetry_gap_called;
+  esac;
+  init(incident_defined) := FALSE;
+  next(incident_defined) := case
+    current_state = CALL_check_maintenance_window_1 & next(current_state) = CALL_open_telemetry_incident_2 : TRUE;
+    TRUE                                                                                                   : incident_defined;
+  esac;
+  init(incident_tainted) := FALSE;
+  next(incident_tainted) := case
+    current_state = CALL_check_maintenance_window_1 & next(current_state) = CALL_open_telemetry_incident_2 : TRUE;
+    current_state = TRUE_BRANCH_4 & next(current_state) = CALL_record_maintenance_deferral_7               : TRUE;
+    TRUE                                                                                                   : incident_tainted;
+  esac;
+  init(incident_trusted) := FALSE;
+  next(incident_trusted) := case
+    current_state = TRUE_BRANCH_4 & next(current_state) = CALL_record_maintenance_deferral_7 : FALSE;
+    TRUE                                                                                     : incident_trusted;
+  esac;
+  init(maintenance_covered_defined) := FALSE;
+  next(maintenance_covered_defined) := case
+    current_state = CALL_get_telemetry_gap_0 & next(current_state) = CALL_check_maintenance_window_1 : TRUE;
+    TRUE                                                                                             : maintenance_covered_defined;
+  esac;
+  init(maintenance_covered_trusted) := FALSE;
+  next(maintenance_covered_trusted) := case
+    current_state = CALL_get_telemetry_gap_0 & next(current_state) = CALL_check_maintenance_window_1 : TRUE;
+    TRUE                                                                                             : maintenance_covered_trusted;
+  esac;
+  init(open_telemetry_incident_called) := FALSE;
+  next(open_telemetry_incident_called) := case
+    current_state = CALL_check_maintenance_window_1 & next(current_state) = CALL_open_telemetry_incident_2 : TRUE;
+    TRUE                                                                                                   : open_telemetry_incident_called;
+  esac;
+  init(record_maintenance_deferral_called) := FALSE;
+  next(record_maintenance_deferral_called) := case
+    current_state = TRUE_BRANCH_4 & next(current_state) = CALL_record_maintenance_deferral_7 : TRUE;
+    TRUE                                                                                     : record_maintenance_deferral_called;
+  esac;
+  init(title_tainted) := FALSE;
+  next(title_tainted) := case
+    current_state = CALL_check_maintenance_window_1 & next(current_state) = CALL_open_telemetry_incident_2 : FALSE;
+    TRUE                                                                                                   : title_tainted;
+  esac;
+  init(title_trusted) := FALSE;
+  next(title_trusted) := case
+    current_state = CALL_check_maintenance_window_1 & next(current_state) = CALL_open_telemetry_incident_2 : TRUE;
+    TRUE                                                                                                   : title_trusted;
+  esac;
+
+DEFINE
+  at_initial := current_state = INITIAL;
+  done := current_state = DONE;
+  call_check_maintenance_window := current_state = CALL_check_maintenance_window_1;
+  call_get_telemetry_gap := current_state = CALL_get_telemetry_gap_0;
+  call_open_telemetry_incident := current_state = CALL_open_telemetry_incident_2;
+  call_page_observability_on_call := FALSE;
+  call_record_maintenance_deferral := current_state = CALL_record_maintenance_deferral_7;
+
+-- ============================================================================
+-- CTL SECURITY PROPERTIES
+-- Auto-generated from ctl_policies module
+-- ============================================================================
+
+-- Property: gap_before_triage
+-- Description: A gap lookup precedes the maintenance check and ticket creation.
+-- Severity: medium
+CTLSPEC AG((call_check_maintenance_window | call_open_telemetry_incident) -> get_telemetry_gap_called);
+
+-- Property: routing_requires_check_and_ticket
+-- Description: Both routing actions require a prior maintenance check and ticket creation.
+-- Severity: medium
+CTLSPEC AG((call_record_maintenance_deferral | call_page_observability_on_call) -> (check_maintenance_window_called & open_telemetry_incident_called));
+
+-- Property: every_path_routes
+-- Description: Every modeled path eventually records a deferral or pages on-call.
+-- Severity: medium
+CTLSPEC AF((call_record_maintenance_deferral | call_page_observability_on_call));
+
+-- Property: at_most_one_routing_action
+-- Description: Once a route is taken, neither routing action can happen again.
+-- Severity: medium
+CTLSPEC AG((call_record_maintenance_deferral | call_page_observability_on_call) -> AX(AG(!(call_record_maintenance_deferral | call_page_observability_on_call))));
+
+-- Property: at_most_one_ticket
+-- Description: Once a ticket is created, no further ticket can be created.
+-- Severity: medium
+CTLSPEC AG(call_open_telemetry_incident -> AX(AG(!call_open_telemetry_incident)));
+
+-- Property: both_routes_reachable
+-- Description: Each of the two routing actions is reachable in the model.
+-- Severity: medium
+CTLSPEC EF(call_record_maintenance_deferral) & EF(call_page_observability_on_call);
+
+-- Property: ticket_title_untainted
+-- Description: The modeled ticket title is untainted.
+-- Severity: medium
+CTLSPEC AG(call_open_telemetry_incident -> !title_tainted);
+
