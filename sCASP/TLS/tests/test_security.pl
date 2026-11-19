@@ -53,17 +53,27 @@ test_application_key_secrecy :-
 
 test_encrypted_server_flight_protection :-
 
-    intruder_knows(
-        enc(
-            server_flight_ciphertext,
-            hash(dh_secret(client_x, server_y),
-                 's hs traffic',
-                 cr,
-                 sr)
+    tls13_security_exchange(
+        exchange(
+            _,
+            _,
+            EncryptedServerFlight,
+            _,
+            _,
+            _
         )
     ),
 
-    not intruder_knows(server_flight_ciphertext).
+    intruder_knows(EncryptedServerFlight),
+
+    EncryptedServerFlight =
+        enc(ServerFlight, ServerHandshakeKey),
+
+    tls13_security_keys(
+        keys(_, ServerHandshakeKey, _, _)
+    ),
+
+    not intruder_knows(ServerFlight).
 
 % --------------------------------------------------
 % Test 6: Client rejects a forged CertificateVerify

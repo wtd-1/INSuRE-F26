@@ -61,50 +61,55 @@ tls13_security_keys(
 network_message(exp(gen, client_x)).
 network_message(exp(gen, server_y)).
 
-% The server flight is encrypted with the server
-% handshake traffic key.
-network_message(
-    enc(
-        server_flight_ciphertext,
-        hash(dh_secret(client_x, server_y),
-             's hs traffic',
-             cr,
-             sr)
-    )
-).
+% Construct one complete honest TLS 1.3 exchange.
+% The application payloads are symbolic placeholders.
+tls13_security_exchange(Exchange) :-
+    tls13_honest_exchange(
+        cr,
+        sr,
+        client_x,
+        server_y,
+        server,
+        server_pk,
+        server_sk,
+        ca,
+        application_request,
+        application_response,
+        Exchange
+    ).
 
-% The client Finished message is encrypted with the
-% client handshake traffic key.
-network_message(
-    enc(
-        client_finished_ciphertext,
-        hash(dh_secret(client_x, server_y),
-             'c hs traffic',
-             cr,
-             sr)
-    )
-).
+% All messages below are taken from the same
+% constructed honest exchange.
 
-% Application data records.
-network_message(
-    enc(
-        application_request_ciphertext,
-        hash('c ap traffic',
-             cr,
-             sr,
-             hash(dh_secret(client_x, server_y), derived))
-    )
-).
+network_message(ClientHello) :-
+    tls13_security_exchange(
+        exchange(ClientHello, _, _, _, _, _)
+    ).
 
-network_message(
-    enc(
-        application_response_ciphertext,
-        hash('s ap traffic',
-             cr,
-             sr,
-             hash(dh_secret(client_x, server_y), derived))
-    )
-).
+network_message(ServerHello) :-
+    tls13_security_exchange(
+        exchange(_, ServerHello, _, _, _, _)
+    ).
+
+network_message(EncryptedServerFlight) :-
+    tls13_security_exchange(
+        exchange(_, _, EncryptedServerFlight, _, _, _)
+    ).
+
+network_message(EncryptedClientFinished) :-
+    tls13_security_exchange(
+        exchange(_, _, _, EncryptedClientFinished, _, _)
+    ).
+
+network_message(EncryptedRequest) :-
+    tls13_security_exchange(
+        exchange(_, _, _, _, EncryptedRequest, _)
+    ).
+
+network_message(EncryptedResponse) :-
+    tls13_security_exchange(
+        exchange(_, _, _, _, _, EncryptedResponse)
+    ).
 
 % --------------------------------------------------
 % 4. Server flight delivery
@@ -114,15 +119,30 @@ network_message(
 % The client can decrypt it using its independently
 % derived server handshake traffic key.
 
-server_flight_delivered :-
-    network_message(
-        enc(
-            server_flight_ciphertext,
-            hash(dh_secret(client_x, server_y),
-                 's hs traffic',
-                 cr,
-                 sr)
+server_flight_delivered(Certificate, CertificateVerify, Finished) :-
+    tls13_security_exchange(
+        exchange(
+            _,
+            _,
+            EncryptedServerFlight,
+            _,
+            _,
+            _
         )
+    ),
+
+    EncryptedServerFlight =
+        enc(
+            server_flight(
+                Certificate,
+                CertificateVerify,
+                Finished
+            ),
+            ServerHandshakeKey
+        ),
+
+    tls13_security_keys(
+        keys(_, ServerHandshakeKey, _, _)
     ).
 
 % --------------------------------------------------
@@ -183,7 +203,11 @@ client_accepts_server(
     Finished
 ) :-
 
-    server_flight_delivered,
+    server_flight_delivered(
+        Certificate,
+        CertificateVerify,
+        Finished
+    ),
 
     valid_server_certificate(Certificate),
 
