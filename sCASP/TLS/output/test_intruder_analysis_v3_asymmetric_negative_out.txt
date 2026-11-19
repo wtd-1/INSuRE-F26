@@ -1,0 +1,23 @@
+[?2004h% Query
+?- test_cannot_decrypt_without_private_key.
+% ΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇò
+%                         Answer 1 (0.000 sec)                          
+% ΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇò
+% Model
+{ test_cannot_decrypt_without_private_key,
+  asymmetric_key(pubk(bob)),
+  not intruder_knows(bob_secret),
+  not known_decryption_key(privk(bob)),
+  not network_message(_ | {_ Γêë [enc(bob_secret,pubk(bob))]}),
+  not network_message(privk(bob)),
+  network_message(enc(bob_secret,pubk(bob))),
+  not extract(enc(bob_secret,pubk(bob)),bob_secret),
+  not initial_knowledge(mallory,bob_secret),
+  not initial_knowledge(mallory,privk(bob)),
+  not inverse_key(pubk(bob),_ | {_ Γêë [privk(bob),pubk(bob)]}),
+  inverse_key(pubk(bob),privk(bob)),
+  not inverse_key(pubk(bob),pubk(bob))
+}
+% No bindings
+true
+

@@ -1,0 +1,22 @@
+[?2004h% Query
+?- test_protection_without_key.
+% ΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇò
+%                         Answer 1 (0.000 sec)                          
+% ΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇò
+% Model
+{ test_protection_without_key,
+  not asymmetric_key(unknown_session_key),
+  not intruder_knows(protected_secret),
+  not known_decryption_key(unknown_session_key),
+  not network_message(_ | {_ Γêë [enc(protected_secret,unknown_session_key)]}),
+  not network_message(unknown_session_key),
+  network_message(enc(protected_secret,unknown_session_key)),
+  not extract(enc(protected_secret,unknown_session_key),protected_secret),
+  not initial_knowledge(mallory,protected_secret),
+  not initial_knowledge(mallory,unknown_session_key),
+  not inverse_key(unknown_session_key,_ | {_ Γêë [unknown_session_key]}),
+  inverse_key(unknown_session_key,unknown_session_key)
+}
+% No bindings
+true
+

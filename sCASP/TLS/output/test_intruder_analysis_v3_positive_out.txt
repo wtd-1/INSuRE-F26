@@ -1,0 +1,19 @@
+[?2004h% Query
+?- test_decryption_with_observed_key.
+% ΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇò
+%                         Answer 1 (0.000 sec)                          
+% ΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇò
+% Model
+{ test_decryption_with_observed_key,
+  not asymmetric_key(unknown_session_key),
+  intruder_knows(protected_secret),
+  known_decryption_key(unknown_session_key),
+  network_message(unknown_session_key),
+  network_message(enc(protected_secret,unknown_session_key)),
+  extract(protected_secret,protected_secret),
+  extract(enc(protected_secret,unknown_session_key),protected_secret),
+  inverse_key(unknown_session_key,unknown_session_key)
+}
+% No bindings
+true
+

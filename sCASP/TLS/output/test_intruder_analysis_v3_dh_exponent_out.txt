@@ -1,0 +1,16 @@
+[?2004h% Query
+?- test_public_share_does_not_reveal_exponent.
+% ΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇò
+%                         Answer 1 (0.000 sec)                          
+% ΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇò
+% Model
+{ test_public_share_does_not_reveal_exponent,
+  not intruder_knows(alice_x),
+  not network_message(_ | {_ Γêë [exp(gen,alice_x)]}),
+  network_message(exp(gen,alice_x)),
+  not extract(exp(gen,alice_x),alice_x),
+  not initial_knowledge(mallory,alice_x)
+}
+% No bindings
+true
+

@@ -1,0 +1,24 @@
+[?2004h% Query
+?- test_cannot_extract_encrypted_certificate.
+% ΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇò
+%                         Answer 1 (0.000 sec)                          
+% ΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇò
+% Model
+{ test_cannot_extract_encrypted_certificate,
+  not asymmetric_key(unknown_session_key),
+  not intruder_knows(certificate),
+  not known_decryption_key(unknown_session_key),
+  not network_message(_ | {_ Γêë [cat(client_hello,enc(server_flight(certificate,certificate_verify,server_finished),unknown_session_key))]}),
+  not network_message(unknown_session_key),
+  network_message(cat(client_hello,enc(server_flight(certificate,certificate_verify,server_finished),unknown_session_key))),
+  not extract(client_hello,certificate),
+  not extract(cat(client_hello,enc(server_flight(certificate,certificate_verify,server_finished),unknown_session_key)),certificate),
+  not extract(enc(server_flight(certificate,certificate_verify,server_finished),unknown_session_key),certificate),
+  not initial_knowledge(mallory,certificate),
+  not initial_knowledge(mallory,unknown_session_key),
+  not inverse_key(unknown_session_key,_ | {_ Γêë [unknown_session_key]}),
+  inverse_key(unknown_session_key,unknown_session_key)
+}
+% No bindings
+true
+

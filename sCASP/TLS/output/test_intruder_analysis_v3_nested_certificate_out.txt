@@ -1,0 +1,21 @@
+[?2004h% Query
+?- test_extract_certificate.
+% ΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇò
+%                         Answer 1 (0.000 sec)                          
+% ΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇò
+% Model
+{ test_extract_certificate,
+  not asymmetric_key(unknown_session_key),
+  intruder_knows(certificate),
+  known_decryption_key(unknown_session_key),
+  network_message(unknown_session_key),
+  network_message(cat(client_hello,enc(server_flight(certificate,certificate_verify,server_finished),unknown_session_key))),
+  extract(certificate,certificate),
+  extract(cat(client_hello,enc(server_flight(certificate,certificate_verify,server_finished),unknown_session_key)),certificate),
+  extract(enc(server_flight(certificate,certificate_verify,server_finished),unknown_session_key),certificate),
+  extract(server_flight(certificate,certificate_verify,server_finished),certificate),
+  inverse_key(unknown_session_key,unknown_session_key)
+}
+% No bindings
+true
+

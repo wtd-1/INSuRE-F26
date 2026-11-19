@@ -1,0 +1,18 @@
+[?2004h% Query
+?- test_session_keys.
+% ΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇò
+%                         Answer 1 (0.000 sec)                          
+% ΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇòΓÇò
+% Model
+{ test_session_keys,
+  master_secret(dh_secret(client_x,server_y),hash(dh_secret(client_x,server_y),derived)),
+  dh_shared(client_x,server_y,dh_secret(client_x,server_y)),
+  client_application_key(cr,sr,hash(dh_secret(client_x,server_y),derived),hash('c ap traffic',cr,sr,hash(dh_secret(client_x,server_y),derived))),
+  client_handshake_key(cr,sr,dh_secret(client_x,server_y),hash(dh_secret(client_x,server_y),'c hs traffic',cr,sr)),
+  server_application_key(cr,sr,hash(dh_secret(client_x,server_y),derived),hash('s ap traffic',cr,sr,hash(dh_secret(client_x,server_y),derived))),
+  server_handshake_key(cr,sr,dh_secret(client_x,server_y),hash(dh_secret(client_x,server_y),'s hs traffic',cr,sr)),
+  tls13_session_keys(cr,sr,client_x,server_y,keys(hash(dh_secret(client_x,server_y),'c hs traffic',cr,sr),hash(dh_secret(client_x,server_y),'s hs traffic',cr,sr),hash('c ap traffic',cr,sr,hash(dh_secret(client_x,server_y),derived)),hash('s ap traffic',cr,sr,hash(dh_secret(client_x,server_y),derived))))
+}
+% No bindings
+true
+
