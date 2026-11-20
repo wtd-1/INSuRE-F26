@@ -245,6 +245,56 @@ client_accepts_server(
     ).
 
 % --------------------------------------------------
+% 8.1 Client handshake completion
+% --------------------------------------------------
+
+% The client completes its handshake only after successfully
+% authenticating the server and validating the server Finished.
+%
+% The client then generates its own Finished message using
+% its independently derived client handshake traffic key.
+
+client_completes_handshake(
+    Certificate,
+    CertificateVerify,
+    ServerFinished,
+    EncryptedClientFinished
+) :-
+
+    % Authenticate the server and validate its Finished.
+    client_accepts_server(
+        Certificate,
+        CertificateVerify,
+        ServerFinished
+    ),
+
+    % Reconstruct the server handshake transcript.
+    server_finished_transcript(
+        cr,
+        sr,
+        client_x,
+        server_y,
+        server,
+        server_pk,
+        ca,
+        server_sk,
+        ServerTranscript
+    ),
+
+    % Derive the client's handshake traffic key.
+    tls13_security_keys(
+        keys(ClientHandshakeKey, _, _, _)
+    ),
+
+    % Generate and encrypt the client's Finished message.
+    tls13_client_finished(
+        ServerTranscript,
+        ServerFinished,
+        ClientHandshakeKey,
+        EncryptedClientFinished
+    ).
+
+% --------------------------------------------------
 % 9. Construct the honest server authentication data
 % --------------------------------------------------
 
